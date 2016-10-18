@@ -2,5 +2,11 @@ version: '2'
 services:
     cargowhaledocker-app:
         image: cargo-whale-docker
+        external_links:
+            - socat-docker:socat
         ports:
             - 8081:8081
+    socat-docker:
+        extends:
+          file: socat.yml
+          service: socat-docker
