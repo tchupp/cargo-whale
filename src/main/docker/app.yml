@@ -1,0 +1,6 @@
+version: '2'
+services:
+    cargowhaledocker-app:
+        image: cargo-whale-docker
+        ports:
+            - 8081:8081
