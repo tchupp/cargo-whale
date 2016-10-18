@@ -1,11 +1,10 @@
 FROM ubuntu:16.04
 
 ENV DOCKER_PORT 2375
-ENV HOST 127.0.0.1
 
 RUN apt-get update && apt-get install -y socat
 
 EXPOSE 2375/tcp
 
-CMD echo "Starting socat portforward for ${HOST} on port ${DOCKER_PORT}" && \
-    socat -v TCP-LISTEN:${DOCKER_PORT},reuseaddr,fork,bind=${HOST} UNIX-CLIENT:/var/run/docker.sock
+CMD echo "Starting socat portforward on port ${DOCKER_PORT}" && \
+    socat -v TCP-LISTEN:${DOCKER_PORT},reuseaddr,fork UNIX-CLIENT:/var/run/docker.sock
