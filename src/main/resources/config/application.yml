@@ -12,8 +12,16 @@
 # ===================================================================
 
 spring:
-    application:
-        name: CargoWhaleDocker
+  application:
+    name: CargoWhaleDocker
 
 server:
-    port: 8081
+  port: 8081
+
+# ===================================================================
+# CargoWhale specific properties
+# ===================================================================
+
+cargowhale:
+  docker:
+    uri: http://socat:2375
