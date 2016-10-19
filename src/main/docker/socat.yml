@@ -1,12 +1,12 @@
 version: '2'
 services:
-    socat-docker:
-        build:
-            context: ./
-            dockerfile: socat-Dockerfile
-        container_name: socat-docker
-        image: rxnctrllabs/socat
-        volumes:
-            - /var/run/docker.sock:/var/run/docker.sock
-        ports:
-            - 2375:2375
+  socat-docker:
+    build:
+      context: ./
+      dockerfile: socat-Dockerfile
+    container_name: socat-docker
+    image: rxnctrllabs/socat
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 2375:2375
