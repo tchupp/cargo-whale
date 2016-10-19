@@ -19,7 +19,7 @@ public class DockerController {
     @RequestMapping(value = "/images",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> getImages() {
-        return this.restTemplate.getForEntity(this.socatUri + "/images/json", String.class);
+    public String getImages() {
+        return this.restTemplate.getForEntity(this.socatUri + "/images/json", String.class).getBody();
     }
 }
