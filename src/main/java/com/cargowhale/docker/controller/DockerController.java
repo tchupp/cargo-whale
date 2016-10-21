@@ -38,4 +38,28 @@ public class DockerController {
         return this.restTemplate.getForEntity(this.socatUri + "/containers/json?filters={filterString}", String.class, filterString).getBody();
     }
 
+    @RequestMapping(value = "/containers/{name}/start", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public String startContainer(@PathVariable("name") String name){
+        this.restTemplate.postForEntity(this.socatUri + "/containers/{name}/start", "",String.class, name);
+        return name;
+    }
+
+    @RequestMapping(value = "/containers/{name}/stop", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public String stopContainer(@PathVariable("name") String name){
+        this.restTemplate.postForEntity(this.socatUri + "/containers/{name}/stop", "",String.class, name);
+        return name;
+    }
+
+    @RequestMapping(value = "/containers/{name}/restart", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public String restartContainer(@PathVariable("name") String name){
+        this.restTemplate.postForEntity(this.socatUri + "/containers/{name}/restart", "",String.class, name);
+        return name;
+    }
+
+    @RequestMapping(value = "/containers/{name}/kill", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public String killContainer(@PathVariable("name") String name){
+        this.restTemplate.postForEntity(this.socatUri + "/containers/{name}/kill", "",String.class, name);
+        return name;
+    }
+
 }
