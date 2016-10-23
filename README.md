@@ -7,17 +7,14 @@ To start in the dev profile, run:
 
     mvn spring-boot:run
 
-## Testing
-
-To launch the tests, run:
-
-    mvn clean test
-    
 ## Using Docker
+
+Docker and Docker Compose are utilized to run the application in a production environment.
+Docker v1.10+ and Docker Compose v1.8+ are required.
 
 To fully dockerize the application and all the services that it depends on, run:
 
-    mvn package docker:build
+    mvn package -Pprod docker:build
 
 Then run:
 
