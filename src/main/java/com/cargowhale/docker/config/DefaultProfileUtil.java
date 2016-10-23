@@ -1,6 +1,7 @@
 package com.cargowhale.docker.config;
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.core.env.Environment;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,5 +20,13 @@ public class DefaultProfileUtil {
         */
         properties.put(SPRING_PROFILE_DEFAULT, Constants.SPRING_PROFILE_DEVELOPMENT);
         app.setDefaultProperties(properties);
+    }
+
+    public static String[] getActiveProfiles(Environment env) {
+        String[] profiles = env.getActiveProfiles();
+        if (profiles.length == 0) {
+            return env.getDefaultProfiles();
+        }
+        return profiles;
     }
 }

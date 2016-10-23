@@ -11,3 +11,11 @@
 # http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
 # ===================================================================
 
+
+# ===================================================================
+# CargoWhale specific properties
+# ===================================================================
+
+cargowhale:
+  docker:
+    uri: http://localhost:2375
