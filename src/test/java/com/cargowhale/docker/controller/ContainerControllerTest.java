@@ -29,4 +29,14 @@ public class ContainerControllerTest {
 
         assertThat(actual, is(expected));
     }
+
+    @Test
+    public void getFilteredContainersReturnsFilteredContainersFromService(){
+        String expected = "ALL RUNNING CATALOGS";
+        String filter = "running";
+        when(this.service.getFilteredContainers(filter)).thenReturn(expected);
+        String actual = this.controller.getFilteredContainers(filter);
+        verify(this.service).getFilteredContainers(filter);
+        assertThat(actual, is(expected));
+    }
 }

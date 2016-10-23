@@ -21,4 +21,12 @@ public class ContainerService {
         String dockerUri = this.properties.getDockerUri();
         return this.restTemplate.getForObject(dockerUri + "/containers/json?all=1", String.class);
     }
+
+    //Filter options are: [created, restarting, running, paused, exited, dead]
+    public String getFilteredContainers(String filter){
+        String dockerUri = this.properties.getDockerUri();
+
+        String filterString = "{\"status\":[\""+filter+"\"]}";
+        return this.restTemplate.getForObject(dockerUri + "/containers/json?filters={filterString}", String.class, filterString);
+    }
 }
