@@ -26,18 +26,6 @@ public class DockerController {
         return this.restTemplate.getForEntity(this.socatUri + "/images/json", String.class).getBody();
     }
 
-    @RequestMapping(value = "/get/containers", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public String getAllContainers() {
-        return this.restTemplate.getForEntity(this.socatUri + "/containers/json?all=1", String.class).getBody();
-    }
-
-    //Filter options are: [created, restarting, running, paused, exited, dead]
-    @RequestMapping(value = "/get/containers/{filter}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public String getFilteredContainers(@PathVariable("filter") String filter) {
-        String filterString = "{\"status\":[\""+filter+"\"]}";
-        return this.restTemplate.getForEntity(this.socatUri + "/containers/json?filters={filterString}", String.class, filterString).getBody();
-    }
-
     @RequestMapping(value = "/containers/{name}/start", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public String startContainer(@PathVariable("name") String name){
         this.restTemplate.postForEntity(this.socatUri + "/containers/{name}/start", "",String.class, name);

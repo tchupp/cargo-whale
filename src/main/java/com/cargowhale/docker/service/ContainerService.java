@@ -11,11 +11,17 @@ import org.springframework.web.client.RestTemplate;
 public class ContainerService {
 
     @Value("${cargowhale.docker.uri}")
-    private String socatUri;
+    protected String socatUri;
 
     private RestTemplate restTemplate = new RestTemplate();
 
     public String getAllContainers() {
         return this.restTemplate.getForEntity(this.socatUri + "/containers/json?all=1", String.class).getBody();
+    }
+
+    //Filter options are: [created, restarting, running, paused, exited, dead]
+    public String getFilteredContainers(String filter){
+        String filterString = "{\"status\":[\""+filter+"\"]}";
+        return this.restTemplate.getForEntity(this.socatUri + "/containers/json?filters={filterString}", String.class, filterString).getBody();
     }
 }
