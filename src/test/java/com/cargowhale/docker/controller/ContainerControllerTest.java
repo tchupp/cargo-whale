@@ -21,7 +21,7 @@ public class ContainerControllerTest {
     private ContainerService service;
 
     @Test
-    public void getAllContainersReturnsEveryContainerFromService(){
+    public void getAllContainersReturnsEveryContainerFromService() {
         String expected = "ALL THE CATALOGS";
         when(this.service.getAllContainers()).thenReturn(expected);
 
@@ -31,12 +31,14 @@ public class ContainerControllerTest {
     }
 
     @Test
-    public void getFilteredContainersReturnsFilteredContainersFromService(){
+    public void getFilteredContainersReturnsFilteredContainersFromService() {
         String expected = "ALL RUNNING CATALOGS";
         String filter = "running";
+
         when(this.service.getFilteredContainers(filter)).thenReturn(expected);
+
         String actual = this.controller.getFilteredContainers(filter);
-        verify(this.service).getFilteredContainers(filter);
+
         assertThat(actual, is(expected));
     }
 }

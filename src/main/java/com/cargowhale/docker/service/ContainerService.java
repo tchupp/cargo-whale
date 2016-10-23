@@ -19,6 +19,7 @@ public class ContainerService {
 
     public String getAllContainers() {
         String dockerUri = this.properties.getDockerUri();
+
         return this.restTemplate.getForObject(dockerUri + "/containers/json?all=1", String.class);
     }
 

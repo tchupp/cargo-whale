@@ -5,11 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -19,7 +15,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class ContainerServiceTest {
 
-    private static final String socatUri = "http://socat:2375";
+    private static final String DOCKER_URI = "http://this.is.docker:yo";
 
     @InjectMocks
     private ContainerService service;
@@ -31,12 +27,12 @@ public class ContainerServiceTest {
     private RestTemplate template;
 
     @Test
-    public void getAllContainersReturnsEveryContainerFromDockerApi(){
+    public void getAllContainersReturnsEveryContainerFromDockerApi() {
         final String expectedContainers = "ALL CONTAINERS";
-        final String dockerUri = "http://this.is.docker:yo";
 
-        when(this.properties.getDockerUri()).thenReturn(dockerUri);
-        when(this.template.getForObject(dockerUri + "/containers/json?all=1", String.class)).thenReturn(expectedContainers);
+        when(this.properties.getDockerUri()).thenReturn(DOCKER_URI);
+        when(this.template.getForObject(DOCKER_URI + "/containers/json?all=1", String.class))
+                .thenReturn(expectedContainers);
 
         String actualContainers = this.service.getAllContainers();
 
@@ -44,25 +40,22 @@ public class ContainerServiceTest {
     }
 
     @Test
-    public void getFilteredContainersReturnsSelectedTypesOfContainers(){
+    public void getFilteredContainersReturnsSelectedTypesOfContainers() {
         String expected = "ALL RUNNING CONTAINERS";
         String filter = "running";
         String filterString = createFilterString(filter);
-        ResponseEntity<String> expectedEntity = new ResponseEntity<>("ALL RUNNING CONTAINERS", HttpStatus.OK);
-        when(this.template.getForEntity(this.socatUri + "/containers/json?filters={filterString}",
-                String.class, filterString)).thenReturn(expectedEntity);
+
+        when(this.properties.getDockerUri()).thenReturn(DOCKER_URI);
+        when(this.template.getForObject(DOCKER_URI + "/containers/json?filters={filterString}", String.class, filterString))
+                .thenReturn(expected);
+
         String actual = this.service.getFilteredContainers(filter);
+
         assertThat(actual, is(expected));
     }
 
-    private String createFilterString(String filter){
-        return "{\"status\":[\""+filter+"\"]}";
-    }
-
-    private class MockContainerService extends ContainerService{
-        public MockContainerService(String socatUri) {
-            this.socatUri = socatUri;
-        }
+    private String createFilterString(String filter) {
+        return "{\"status\":[\"" + filter + "\"]}";
     }
 }
 
