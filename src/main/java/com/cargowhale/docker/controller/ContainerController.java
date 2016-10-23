@@ -7,18 +7,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
- * Created by nick on 21/10/16.
- */
 @RestController
 public class ContainerController {
 
-    @Autowired
-    private ContainerService service;
+    private final ContainerService service;
 
-    @RequestMapping(value = "/containers", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Autowired
+    public ContainerController(final ContainerService service) {
+        this.service = service;
+    }
+
+    @RequestMapping(value = "/containers",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
     public String getAllContainers() {
         return this.service.getAllContainers();
     }
-
 }

@@ -1,21 +1,24 @@
 package com.cargowhale.docker.service;
 
-import org.springframework.beans.factory.annotation.Value;
+import com.cargowhale.docker.config.CargoWhaleProperties;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-/**
- * Created by nick on 22/10/16.
- */
 @Component
 public class ContainerService {
 
-    @Value("${cargowhale.docker.uri}")
-    private String socatUri;
+    private final CargoWhaleProperties properties;
+    private final RestTemplate restTemplate;
 
-    private RestTemplate restTemplate = new RestTemplate();
+    @Autowired
+    public ContainerService(final RestTemplate restTemplate, final CargoWhaleProperties properties) {
+        this.restTemplate = restTemplate;
+        this.properties = properties;
+    }
 
     public String getAllContainers() {
-        return this.restTemplate.getForEntity(this.socatUri + "/containers/json?all=1", String.class).getBody();
+        String dockerUri = this.properties.getDockerUri();
+        return this.restTemplate.getForObject(dockerUri + "/containers/json?all=1", String.class);
     }
 }
