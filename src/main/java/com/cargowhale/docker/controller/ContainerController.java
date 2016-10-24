@@ -3,10 +3,9 @@ package com.cargowhale.docker.controller;
 import com.cargowhale.docker.service.ContainerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 public class ContainerController {
@@ -30,6 +29,13 @@ public class ContainerController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public String getFilteredContainers(@PathVariable("filter") String filter) {
         return this.service.getFilteredContainers(filter);
+    }
+
+    @RequestMapping(value = "/containers/{name}",
+            method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public String setContainerStatus(@PathVariable("name") String name, @RequestBody Map<String, String> statusMap){
+        return this.service.setContainerStatus(name, statusMap.get("status"));
     }
 
 }

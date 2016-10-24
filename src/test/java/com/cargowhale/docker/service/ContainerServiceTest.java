@@ -10,6 +10,8 @@ import org.springframework.web.client.RestTemplate;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -52,6 +54,20 @@ public class ContainerServiceTest {
         String actual = this.service.getFilteredContainers(filter);
 
         assertThat(actual, is(expected));
+    }
+
+    @Test
+    public void setContainerStatusSetsContainerToRunning(){
+        String name = "testContainer";
+        String status = "start";
+        String body = "";
+
+        when(this.properties.getDockerUri()).thenReturn(DOCKER_URI);
+
+        String actual = this.service.setContainerStatus(name, status);
+
+        verify(this.template).postForObject(DOCKER_URI + "/containers/{name}/{status}", body, String.class, name, status);
+        assertThat(actual, is(name));
     }
 
     private String createFilterString(String filter) {

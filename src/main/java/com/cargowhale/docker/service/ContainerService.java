@@ -30,4 +30,11 @@ public class ContainerService {
         String filterString = "{\"status\":[\""+filter+"\"]}";
         return this.restTemplate.getForObject(dockerUri + "/containers/json?filters={filterString}", String.class, filterString);
     }
+
+    //Status options are: [start, stop, restart, kill]
+    public String setContainerStatus(String name, String status) {
+        String dockerUri = this.properties.getDockerUri();
+        this.restTemplate.postForObject(dockerUri + "/containers/{name}/{status}", "", String.class, name, status);
+        return name;
+    }
 }
