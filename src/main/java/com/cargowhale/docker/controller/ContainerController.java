@@ -1,6 +1,6 @@
 package com.cargowhale.docker.controller;
 
-import com.cargowhale.docker.service.ContainerService;
+import com.cargowhale.docker.client.ContainerClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -10,10 +10,10 @@ import java.util.Map;
 @RestController
 public class ContainerController {
 
-    private final ContainerService service;
+    private final ContainerClient service;
 
     @Autowired
-    public ContainerController(final ContainerService service) {
+    public ContainerController(final ContainerClient service) {
         this.service = service;
     }
 

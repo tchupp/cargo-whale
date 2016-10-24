@@ -1,4 +1,4 @@
-package com.cargowhale.docker.service;
+package com.cargowhale.docker.client;
 
 import com.cargowhale.docker.config.CargoWhaleProperties;
 import org.junit.Test;
@@ -10,17 +10,16 @@ import org.springframework.web.client.RestTemplate;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ContainerServiceTest {
+public class ContainerClientTest {
 
     private static final String DOCKER_URI = "http://this.is.docker:yo";
 
     @InjectMocks
-    private ContainerService service;
+    private ContainerClient service;
 
     @Mock
     private CargoWhaleProperties properties;

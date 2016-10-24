@@ -1,13 +1,12 @@
 package com.cargowhale.docker.controller;
 
-import com.cargowhale.docker.service.ContainerService;
+import com.cargowhale.docker.client.ContainerClient;
 import org.assertj.core.util.Maps;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.Map;
 
@@ -22,7 +21,7 @@ public class ContainerControllerTest {
     private ContainerController controller;
 
     @Mock
-    private ContainerService service;
+    private ContainerClient service;
 
     @Test
     public void getAllContainersReturnsEveryContainerFromService() {
