@@ -1,6 +1,7 @@
 package com.cargowhale.docker.client;
 
 import com.cargowhale.docker.config.CargoWhaleProperties;
+import com.cargowhale.docker.domain.ChangeStatusRequest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -23,6 +24,9 @@ public class ContainerClientTest {
 
     @Mock
     private CargoWhaleProperties properties;
+
+    @Mock
+    private ChangeStatusRequest statusRequest;
 
     @Mock
     private RestTemplate template;
@@ -59,13 +63,12 @@ public class ContainerClientTest {
     public void setContainerStatusSetsContainerToRunning(){
         String name = "testContainer";
         String status = "start";
-        String body = "";
 
         when(this.properties.getDockerUri()).thenReturn(DOCKER_URI);
 
         String actual = this.service.setContainerStatus(name, status);
 
-        verify(this.template).postForObject(DOCKER_URI + "/containers/{name}/{status}", body, String.class, name, status);
+        verify(this.template).postForObject(DOCKER_URI + "/containers/{name}/{status}", null, String.class, name, status);
         assertThat(actual, is(name));
     }
 

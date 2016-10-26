@@ -1,6 +1,9 @@
 package com.cargowhale.docker.controller;
 
 import com.cargowhale.docker.client.ContainerClient;
+import com.cargowhale.docker.domain.ChangeStatusRequest;
+import com.cargowhale.docker.domain.ChangeStatusResponse;
+import com.cargowhale.docker.service.ContainerService;
 import org.assertj.core.util.Maps;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,7 +24,10 @@ public class ContainerControllerTest {
     private ContainerController controller;
 
     @Mock
-    private ContainerClient service;
+    private ContainerClient client;
+
+    @Mock
+    private ContainerService service;
 
     @Test
     public void getAllContainersReturnsEveryContainerFromService() {
@@ -49,13 +55,13 @@ public class ContainerControllerTest {
     public void setContainerStatusSetsContainerToRunning(){
         String status = "running";
         String name = "testName";
-        String expected = "returnName";
+        ChangeStatusResponse expected = new ChangeStatusResponse().setName("returnName");
 
-        Map<String, String> requestMap = Maps.newHashMap("status", status);
+        ChangeStatusRequest statusRequest = new ChangeStatusRequest().setStatus(status);
 
-        when(this.service.setContainerStatus(name, status)).thenReturn(expected);
+        when(this.service.setContainerStatus(name, statusRequest)).thenReturn(expected);
 
-        String actual = this.controller.setContainerStatus(name, requestMap);
+        ChangeStatusResponse actual = this.controller.setContainerStatus(name, statusRequest);
 
         assertThat(actual, is(expected));
     }
