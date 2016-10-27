@@ -15,6 +15,7 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ContainerServiceTest {
+
     @InjectMocks
     private ContainerService service;
 
@@ -22,7 +23,7 @@ public class ContainerServiceTest {
     private ContainerClient client;
 
     @Test
-    public void getAllContainersReturnsAllContainersFromClient(){
+    public void getAllContainersReturnsAllContainersFromClient() {
         String expected = "ALL THE CATALOGS";
         when(this.client.getAllContainers()).thenReturn(expected);
 
@@ -32,7 +33,7 @@ public class ContainerServiceTest {
     }
 
     @Test
-    public void getFilteredContainersReturnsAllRunningContainers(){
+    public void getFilteredContainersReturnsAllRunningContainers() {
         String expected = "ALL RUNNING CATALOGS";
         String filter = "running";
 
@@ -44,12 +45,12 @@ public class ContainerServiceTest {
     }
 
     @Test
-    public void setContainerStateReturnsContainerNameFromClient(){
+    public void setContainerStateReturnsContainerNameFromClient() {
         String name = "stoppedContainer";
         String status = "start";
         String expectedName = "runningContainer";
 
-        ChangeStatusRequest request = new ChangeStatusRequest().setStatus(status);
+        ChangeStatusRequest request = new ChangeStatusRequest(status);
 
         when(this.client.setContainerStatus(name, status)).thenReturn(expectedName);
 

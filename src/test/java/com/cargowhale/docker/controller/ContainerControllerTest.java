@@ -4,14 +4,11 @@ import com.cargowhale.docker.client.ContainerClient;
 import com.cargowhale.docker.domain.ChangeStatusRequest;
 import com.cargowhale.docker.domain.ChangeStatusResponse;
 import com.cargowhale.docker.service.ContainerService;
-import org.assertj.core.util.Maps;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -57,7 +54,7 @@ public class ContainerControllerTest {
         String name = "testName";
         ChangeStatusResponse expected = new ChangeStatusResponse().setName("returnName");
 
-        ChangeStatusRequest statusRequest = new ChangeStatusRequest().setStatus(status);
+        ChangeStatusRequest statusRequest = new ChangeStatusRequest(status);
 
         when(this.service.setContainerStatus(name, statusRequest)).thenReturn(expected);
 

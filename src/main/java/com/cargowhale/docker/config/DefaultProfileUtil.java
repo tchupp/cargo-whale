@@ -14,7 +14,7 @@ public class DefaultProfileUtil {
     }
 
     public static void addDefaultProfile(SpringApplication app) {
-        Map<String, Object> properties =  new HashMap<>();
+        Map<String, Object> properties = new HashMap<>();
         /*
         * See https://github.com/spring-projects/spring-boot/issues/1219
         */

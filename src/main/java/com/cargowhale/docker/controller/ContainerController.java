@@ -1,6 +1,5 @@
 package com.cargowhale.docker.controller;
 
-import com.cargowhale.docker.client.ContainerClient;
 import com.cargowhale.docker.domain.ChangeStatusRequest;
 import com.cargowhale.docker.domain.ChangeStatusResponse;
 import com.cargowhale.docker.service.ContainerService;
@@ -8,18 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
-
 @RestController
 public class ContainerController {
 
     private final ContainerService service;
 
-    private final ContainerClient client;
-
     @Autowired
-    public ContainerController(final ContainerClient client, final ContainerService service) {
-        this.client = client;
+    public ContainerController(final ContainerService service) {
         this.service = service;
     }
 
@@ -39,10 +33,10 @@ public class ContainerController {
 
     @RequestMapping(value = "/containers/{name}",
             method = RequestMethod.POST,
-            consumes = {"application/json"},
+            consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ChangeStatusResponse setContainerStatus(@PathVariable("name") String name, @RequestBody ChangeStatusRequest statusRequest){
-                return this.service.setContainerStatus(name, statusRequest);
+    public ChangeStatusResponse setContainerStatus(@PathVariable("name") String name, @RequestBody ChangeStatusRequest statusRequest) {
+        return this.service.setContainerStatus(name, statusRequest);
     }
 
 }

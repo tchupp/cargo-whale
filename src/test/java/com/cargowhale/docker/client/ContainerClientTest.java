@@ -1,7 +1,6 @@
 package com.cargowhale.docker.client;
 
 import com.cargowhale.docker.config.CargoWhaleProperties;
-import com.cargowhale.docker.domain.ChangeStatusRequest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -24,9 +23,6 @@ public class ContainerClientTest {
 
     @Mock
     private CargoWhaleProperties properties;
-
-    @Mock
-    private ChangeStatusRequest statusRequest;
 
     @Mock
     private RestTemplate template;
@@ -60,7 +56,7 @@ public class ContainerClientTest {
     }
 
     @Test
-    public void setContainerStatusSetsContainerToRunning(){
+    public void setContainerStatusSetsContainerToRunning() {
         String name = "testContainer";
         String status = "start";
 

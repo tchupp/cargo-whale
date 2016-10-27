@@ -9,8 +9,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class ContainerService {
 
+    private final ContainerClient client;
+
     @Autowired
-    private ContainerClient client;
+    public ContainerService(final ContainerClient client) {
+        this.client = client;
+    }
 
     public String getFilteredContainers(String filter) {
         return this.client.getFilteredContainers(filter);
@@ -21,6 +25,9 @@ public class ContainerService {
     }
 
     public ChangeStatusResponse setContainerStatus(String name, ChangeStatusRequest statusRequest) {
-        return new ChangeStatusResponse().setName(this.client.setContainerStatus(name, statusRequest.getStatus()));
+        String newStatus = statusRequest.getStatus();
+        String containerName = this.client.setContainerStatus(name, newStatus);
+
+        return new ChangeStatusResponse(containerName);
     }
 }
