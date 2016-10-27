@@ -1,23 +1,95 @@
-target/
+######################
+# Project Specific
+######################
+/src/main/webapp/content/css/main.css
+/target/www/**
+
+
+######################
+# Node
+######################
+/node/**
+/node_tmp/**
+/node_modules/**
+
+
+######################
+# SASS
+######################
+.sass-cache/**
+
+
+######################
+# Intellij
+######################
+.idea/**
+*.iml
+*.iws
+*.ipr
+*.ids
+*.orig
+
+
+######################
+# Maven
+######################
+/log/**
+/target/**
+
+
+######################
+# Package Files
+######################
+*.jar
+*.war
+*.ear
+*.db
+
+######################
+# Mac OSX
+######################
+.DS_Store
+.svn
+
+# Thumbnails
+._*
+
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
+
+
+######################
+# Directories
+######################
+/build/**
+/bin/**
+/spring_loaded/**
+/deploy/**
+
+
+######################
+# Logs
+######################
+*.log
+
+
+######################
+# Others
+######################
+*.class
+*.*~
+*~
+.merge_file*
+
+
+######################
+# Maven Wrapper
+######################
 !.mvn/wrapper/maven-wrapper.jar
 
-### STS ###
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
 
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
-
-### NetBeans ###
-nbproject/private/
-build/
-nbbuild/
-dist/
-nbdist/
-.nb-gradle/
+######################
+# ESLint
+######################
+.eslintcache
