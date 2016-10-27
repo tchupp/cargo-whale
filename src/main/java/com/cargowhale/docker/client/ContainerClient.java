@@ -1,8 +1,11 @@
 package com.cargowhale.docker.client;
 
 import com.cargowhale.docker.config.CargoWhaleProperties;
+import com.cargowhale.docker.exception.BadFilterException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 
 @Component
@@ -24,11 +27,16 @@ public class ContainerClient {
     }
 
     //Filter options are: [created, restarting, running, paused, exited, dead]
-    public String getFilteredContainers(String filter) {
+    public String getFilteredContainers(String filter){
         String dockerUri = this.properties.getDockerUri();
 
         String filterString = "{\"status\":[\"" + filter + "\"]}";
-        return this.restTemplate.getForObject(dockerUri + "/containers/json?filters={filterString}", String.class, filterString);
+        try {
+            return this.restTemplate.getForObject(dockerUri + "/containers/json?filters={filterString}", String.class, filterString);
+        }
+        catch (HttpServerErrorException e){
+            return null;
+        }
     }
 
     //Status options are: [start, stop, restart, kill]
