@@ -16,8 +16,7 @@ public class GlobalControllerExceptionHandler {
     public ResponseEntity<String> handleBadFilter(HttpServerErrorException ex) throws HttpServerErrorException {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json");
-        ResponseEntity<String> response = new ResponseEntity<>(ex.getResponseBodyAsString(),headers,HttpStatus.BAD_REQUEST);
-        return response;
+        return new ResponseEntity<>(ex.getResponseBodyAsString(), headers, HttpStatus.BAD_REQUEST);
     }
 
 }

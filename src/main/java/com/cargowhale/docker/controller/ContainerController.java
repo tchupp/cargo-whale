@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 public class ContainerController {
 
-    private static final String BAD_FILTER_MESSAGE = "Unrecognised filter value for status: ";
-
     private final ContainerService service;
 
     @Autowired
@@ -31,8 +29,7 @@ public class ContainerController {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public String getFilteredContainers(@PathVariable("filter") String filter) {
-        String result = this.service.getFilteredContainers(filter);
-        return result;
+        return this.service.getFilteredContainers(filter);
     }
 
     @RequestMapping(value = "/containers/{name}",
