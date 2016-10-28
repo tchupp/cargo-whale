@@ -1,6 +1,5 @@
 package com.cargowhale.docker.client;
 
-import com.cargowhale.docker.config.CargoWhaleProperties;
 import com.cargowhale.docker.container.ContainerInfoVM;
 import org.assertj.core.util.Arrays;
 import org.junit.Test;
@@ -18,24 +17,23 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 public class ContainerClientTest {
 
-    private static final String DOCKER_URI = "http://this.is.docker:yo";
+    private static final String DOCKER_ENDPOINT = "http://this.is.docker:yo";
 
     @InjectMocks
     private ContainerClient service;
 
     @Mock
-    private CargoWhaleProperties properties;
+    private RestTemplate template;
 
     @Mock
-    private RestTemplate template;
+    private DockerEndpointCollection endpointCollection;
 
     @Test
     public void getAllContainersReturnsEveryContainerFromDockerApi() {
         final ContainerInfoVM[] containerInfoArray = Arrays.array(mock(ContainerInfoVM.class));
 
-        when(this.properties.getDockerUri()).thenReturn(DOCKER_URI);
-        when(this.template.getForObject(DOCKER_URI + "/v1.24/containers/json?all=1", ContainerInfoVM[].class))
-                .thenReturn(containerInfoArray);
+        when(this.endpointCollection.getContainersEndpoint()).thenReturn(DOCKER_ENDPOINT);
+        when(this.template.getForObject(DOCKER_ENDPOINT + "?all=1", ContainerInfoVM[].class)).thenReturn(containerInfoArray);
 
         assertThat(this.service.getAllContainers(), contains(containerInfoArray));
     }
@@ -46,8 +44,8 @@ public class ContainerClientTest {
         String filter = "running";
         String filterString = createFilterString(filter);
 
-        when(this.properties.getDockerUri()).thenReturn(DOCKER_URI);
-        when(this.template.getForObject(DOCKER_URI + "/v1.24/containers/json?filters={filterString}", String.class, filterString))
+        when(this.endpointCollection.getContainersEndpoint()).thenReturn(DOCKER_ENDPOINT);
+        when(this.template.getForObject(DOCKER_ENDPOINT + "?filters={filterString}", String.class, filterString))
                 .thenReturn(expected);
 
         String actual = this.service.getFilteredContainers(filter);
@@ -60,11 +58,11 @@ public class ContainerClientTest {
         String name = "testContainer";
         String status = "start";
 
-        when(this.properties.getDockerUri()).thenReturn(DOCKER_URI);
+        when(this.endpointCollection.getContainersEndpoint()).thenReturn(DOCKER_ENDPOINT);
 
         String actual = this.service.setContainerStatus(name, status);
 
-        verify(this.template).postForObject(DOCKER_URI + "/v1.24/containers/{name}/{status}", null, String.class, name, status);
+        verify(this.template).postForObject(DOCKER_ENDPOINT + "/{name}/{status}", null, String.class, name, status);
         assertThat(actual, is(name));
     }
 

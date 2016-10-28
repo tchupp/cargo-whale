@@ -1,6 +1,5 @@
 package com.cargowhale.docker.client;
 
-import com.cargowhale.docker.config.CargoWhaleProperties;
 import com.cargowhale.docker.container.ContainerInfoVM;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -12,35 +11,35 @@ import java.util.List;
 @Component
 public class ContainerClient {
 
-    private final CargoWhaleProperties properties;
     private final RestTemplate restTemplate;
+    private final DockerEndpointCollection endpointCollection;
 
     @Autowired
-    public ContainerClient(final RestTemplate restTemplate, final CargoWhaleProperties properties) {
+    public ContainerClient(final RestTemplate restTemplate, final DockerEndpointCollection endpointCollection) {
         this.restTemplate = restTemplate;
-        this.properties = properties;
+        this.endpointCollection = endpointCollection;
     }
 
     public List<ContainerInfoVM> getAllContainers() {
-        String dockerUri = this.properties.getDockerUri();
+        String containersEndpoint = this.endpointCollection.getContainersEndpoint();
 
-        ContainerInfoVM[] containerInfoArray = this.restTemplate.getForObject(dockerUri + "/v1.24/containers/json?all=1", ContainerInfoVM[].class);
+        ContainerInfoVM[] containerInfoArray = this.restTemplate.getForObject(containersEndpoint + "?all=1", ContainerInfoVM[].class);
         return Arrays.asList(containerInfoArray);
     }
 
     //Filter options are: [created, restarting, running, paused, exited, dead]
     public String getFilteredContainers(String filter){
-        String dockerUri = this.properties.getDockerUri();
-        String filterString = "{\"status\":[\"" + filter + "\"]}";
+        String containersEndpoint = this.endpointCollection.getContainersEndpoint();
 
-        return this.restTemplate.getForObject(dockerUri + "/v1.24/containers/json?filters={filterString}", String.class, filterString);
+        String filterString = "{\"status\":[\"" + filter + "\"]}";
+        return this.restTemplate.getForObject(containersEndpoint + "?filters={filterString}", String.class, filterString);
     }
 
     //Status options are: [start, stop, restart, kill]
     public String setContainerStatus(String name, String status) {
-        String dockerUri = this.properties.getDockerUri();
+        String containersEndpoint = this.endpointCollection.getContainersEndpoint();
 
-        this.restTemplate.postForObject(dockerUri + "/v1.24/containers/{name}/{status}", null, String.class, name, status);
+        this.restTemplate.postForObject(containersEndpoint + "/{name}/{status}", null, String.class, name, status);
         return name;
     }
 }
