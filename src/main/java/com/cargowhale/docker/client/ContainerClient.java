@@ -1,11 +1,8 @@
 package com.cargowhale.docker.client;
 
 import com.cargowhale.docker.config.CargoWhaleProperties;
-import com.cargowhale.docker.exception.BadFilterException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 
 @Component

@@ -2,13 +2,10 @@ package com.cargowhale.docker.controller;
 
 import com.cargowhale.docker.domain.ChangeStatusRequest;
 import com.cargowhale.docker.domain.ChangeStatusResponse;
-import com.cargowhale.docker.exception.BadFilterException;
 import com.cargowhale.docker.service.ContainerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpServerErrorException;
 
 @RestController
 @RequestMapping("/api")
@@ -33,7 +30,7 @@ public class ContainerController {
     @RequestMapping(value = "/containers/{filter}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public String getFilteredContainers(@PathVariable("filter") String filter) throws BadFilterException {
+    public String getFilteredContainers(@PathVariable("filter") String filter) {
         String result = this.service.getFilteredContainers(filter);
         return result;
     }
