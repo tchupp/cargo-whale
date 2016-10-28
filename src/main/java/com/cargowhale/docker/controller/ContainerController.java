@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpServerErrorException;
 
 @RestController
+@RequestMapping("/api")
 public class ContainerController {
 
     private static final String BAD_FILTER_MESSAGE = "Unrecognised filter value for status: ";
