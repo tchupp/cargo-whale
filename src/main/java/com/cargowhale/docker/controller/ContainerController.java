@@ -34,7 +34,6 @@ public class ContainerController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public String getFilteredContainers(@PathVariable("filter") String filter) throws BadFilterException {
         String result = this.service.getFilteredContainers(filter);
-        if(result == null) throw new BadFilterException(BAD_FILTER_MESSAGE + filter);
         return result;
     }
 

@@ -13,19 +13,11 @@ import org.springframework.web.client.HttpServerErrorException;
 public class GlobalControllerExceptionHandler {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(value = BadFilterException.class)
-    public ResponseEntity<String> handleBadFilter(BadFilterException ex) throws HttpServerErrorException {
+    @ExceptionHandler(value = HttpServerErrorException.class)
+    public ResponseEntity<String> handleBadFilter(HttpServerErrorException ex) throws HttpServerErrorException {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json");
-        ResponseEntity<String> response = new ResponseEntity<String>(errorBuilder(ex),headers,HttpStatus.BAD_REQUEST);
-        return response;
-
-    }
-
-    private String errorBuilder(BadFilterException ex){
-        String response = "{";
-        response += "\"error\":\""+ex.getMessage()+"\"";
-        response += "}";
+        ResponseEntity<String> response = new ResponseEntity<>(ex.getResponseBodyAsString(),headers,HttpStatus.BAD_REQUEST);
         return response;
     }
 

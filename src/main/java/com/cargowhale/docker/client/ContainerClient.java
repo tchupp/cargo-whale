@@ -29,14 +29,8 @@ public class ContainerClient {
     //Filter options are: [created, restarting, running, paused, exited, dead]
     public String getFilteredContainers(String filter){
         String dockerUri = this.properties.getDockerUri();
-
         String filterString = "{\"status\":[\"" + filter + "\"]}";
-        try {
-            return this.restTemplate.getForObject(dockerUri + "/containers/json?filters={filterString}", String.class, filterString);
-        }
-        catch (HttpServerErrorException e){
-            return null;
-        }
+        return this.restTemplate.getForObject(dockerUri + "/containers/json?filters={filterString}", String.class, filterString);
     }
 
     //Status options are: [start, stop, restart, kill]
