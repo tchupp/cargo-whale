@@ -32,7 +32,7 @@ public class ContainerClientTest {
         final String expectedContainers = "ALL CONTAINERS";
 
         when(this.properties.getDockerUri()).thenReturn(DOCKER_URI);
-        when(this.template.getForObject(DOCKER_URI + "/containers/json?all=1", String.class))
+        when(this.template.getForObject(DOCKER_URI + "/v1.24/containers/json?all=1", String.class))
                 .thenReturn(expectedContainers);
 
         String actualContainers = this.service.getAllContainers();
@@ -47,7 +47,7 @@ public class ContainerClientTest {
         String filterString = createFilterString(filter);
 
         when(this.properties.getDockerUri()).thenReturn(DOCKER_URI);
-        when(this.template.getForObject(DOCKER_URI + "/containers/json?filters={filterString}", String.class, filterString))
+        when(this.template.getForObject(DOCKER_URI + "/v1.24/containers/json?filters={filterString}", String.class, filterString))
                 .thenReturn(expected);
 
         String actual = this.service.getFilteredContainers(filter);
@@ -64,7 +64,7 @@ public class ContainerClientTest {
 
         String actual = this.service.setContainerStatus(name, status);
 
-        verify(this.template).postForObject(DOCKER_URI + "/containers/{name}/{status}", null, String.class, name, status);
+        verify(this.template).postForObject(DOCKER_URI + "/v1.24/containers/{name}/{status}", null, String.class, name, status);
         assertThat(actual, is(name));
     }
 
