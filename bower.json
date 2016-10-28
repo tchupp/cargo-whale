@@ -1,0 +1,17 @@
+{
+  "name": "cargo-whale-docker",
+  "version": "0.0.0",
+  "appPath": "src/main/webapp/",
+  "testPath": "src/test/javascript/spec",
+  "dependencies": {
+    "bootstrap-sass": "3.3.6"
+  },
+  "overrides": {
+    "bootstrap-sass": {
+      "main": [
+        "assets/stylesheets/_bootstrap.scss"
+      ]
+    }
+  },
+  "private": true
+}

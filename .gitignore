@@ -14,6 +14,12 @@
 
 
 ######################
+# Bower
+######################
+src/main/webapp/bower_components/
+src/main/webapp/content/
+
+######################
 # SASS
 ######################
 .sass-cache/**
