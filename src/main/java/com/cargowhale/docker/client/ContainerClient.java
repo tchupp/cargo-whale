@@ -20,20 +20,20 @@ public class ContainerClient {
     public String getAllContainers() {
         String dockerUri = this.properties.getDockerUri();
 
-        return this.restTemplate.getForObject(dockerUri + "/containers/json?all=1", String.class);
+        return this.restTemplate.getForObject(dockerUri + "/v1.24/containers/json?all=1", String.class);
     }
 
     //Filter options are: [created, restarting, running, paused, exited, dead]
     public String getFilteredContainers(String filter){
         String dockerUri = this.properties.getDockerUri();
         String filterString = "{\"status\":[\"" + filter + "\"]}";
-        return this.restTemplate.getForObject(dockerUri + "/containers/json?filters={filterString}", String.class, filterString);
+        return this.restTemplate.getForObject(dockerUri + "/v1.24/containers/json?filters={filterString}", String.class, filterString);
     }
 
     //Status options are: [start, stop, restart, kill]
     public String setContainerStatus(String name, String status) {
         String dockerUri = this.properties.getDockerUri();
-        this.restTemplate.postForObject(dockerUri + "/containers/{name}/{status}", null, String.class, name, status);
+        this.restTemplate.postForObject(dockerUri + "/v1.24/containers/{name}/{status}", null, String.class, name, status);
         return name;
     }
 }
