@@ -1,6 +1,7 @@
 package com.cargowhale.docker.controller;
 
 import com.cargowhale.docker.client.ContainerClient;
+import com.cargowhale.docker.container.ContainerInfoCollectionVM;
 import com.cargowhale.docker.domain.ChangeStatusRequest;
 import com.cargowhale.docker.domain.ChangeStatusResponse;
 import com.cargowhale.docker.service.ContainerService;
@@ -12,6 +13,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -28,12 +30,11 @@ public class ContainerControllerTest {
 
     @Test
     public void getAllContainersReturnsEveryContainerFromService() {
-        String expected = "ALL THE CATALOGS";
-        when(this.service.getAllContainers()).thenReturn(expected);
+        ContainerInfoCollectionVM containerInfoCollectionVM = mock(ContainerInfoCollectionVM.class);
 
-        String actual = this.controller.getAllContainers();
+        when(this.service.getAllContainers()).thenReturn(containerInfoCollectionVM);
 
-        assertThat(actual, is(expected));
+        assertThat(this.controller.getAllContainers(), is(containerInfoCollectionVM));
     }
 
     @Test
@@ -43,23 +44,19 @@ public class ContainerControllerTest {
 
         when(this.service.getFilteredContainers(filter)).thenReturn(expected);
 
-        String actual = this.controller.getFilteredContainers(filter);
-
-        assertThat(actual, is(expected));
+        assertThat(this.controller.getFilteredContainers(filter), is(expected));
     }
 
     @Test
     public void setContainerStatusSetsContainerToRunning(){
         String status = "running";
         String name = "testName";
-        ChangeStatusResponse expected = new ChangeStatusResponse().setName("returnName");
+        ChangeStatusResponse expected = new ChangeStatusResponse("returnName");
 
         ChangeStatusRequest statusRequest = new ChangeStatusRequest(status);
 
         when(this.service.setContainerStatus(name, statusRequest)).thenReturn(expected);
 
-        ChangeStatusResponse actual = this.controller.setContainerStatus(name, statusRequest);
-
-        assertThat(actual, is(expected));
+        assertThat(this.controller.setContainerStatus(name, statusRequest), is(expected));
     }
 }

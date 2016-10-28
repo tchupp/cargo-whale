@@ -1,5 +1,6 @@
 package com.cargowhale.docker.controller;
 
+import com.cargowhale.docker.container.ContainerInfoCollectionVM;
 import com.cargowhale.docker.domain.ChangeStatusRequest;
 import com.cargowhale.docker.domain.ChangeStatusResponse;
 import com.cargowhale.docker.service.ContainerService;
@@ -21,7 +22,7 @@ public class ContainerController {
     @RequestMapping(value = "/containers",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public String getAllContainers() {
+    public ContainerInfoCollectionVM getAllContainers() {
         return this.service.getAllContainers();
     }
 

@@ -1,6 +1,8 @@
 package com.cargowhale.docker.service;
 
 import com.cargowhale.docker.client.ContainerClient;
+import com.cargowhale.docker.container.ContainerInfoCollectionVM;
+import com.cargowhale.docker.container.ContainerInfoVM;
 import com.cargowhale.docker.domain.ChangeStatusRequest;
 import com.cargowhale.docker.domain.ChangeStatusResponse;
 import org.junit.Test;
@@ -9,8 +11,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.Collections;
+import java.util.List;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -24,12 +30,13 @@ public class ContainerServiceTest {
 
     @Test
     public void getAllContainersReturnsAllContainersFromClient() {
-        String expected = "ALL THE CATALOGS";
-        when(this.client.getAllContainers()).thenReturn(expected);
+        List<ContainerInfoVM> expectedContainerList = Collections.singletonList(mock(ContainerInfoVM.class));
 
-        String actual = this.service.getAllContainers();
+        when(this.client.getAllContainers()).thenReturn(expectedContainerList);
 
-        assertThat(actual, is(expected));
+        ContainerInfoCollectionVM actual = this.service.getAllContainers();
+
+        assertThat(actual.getContainers(), is(expectedContainerList));
     }
 
     @Test

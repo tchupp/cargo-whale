@@ -1,12 +1,25 @@
 package com.cargowhale.docker.container;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public enum ContainerState {
 
+    @JsonProperty("created")
     CREATED("created"),
+
+    @JsonProperty("restarting")
     RESTARTING("restarting"),
+
+    @JsonProperty("running")
     RUNNING("running"),
+
+    @JsonProperty("paused")
     PAUSED("paused"),
+
+    @JsonProperty("exited")
     EXITED("exited"),
+
+    @JsonProperty("dead")
     DEAD("dead");
 
     public final String state;
