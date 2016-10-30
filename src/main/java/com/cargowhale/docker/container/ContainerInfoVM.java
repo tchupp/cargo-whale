@@ -19,15 +19,15 @@ public class ContainerInfoVM {
     }
 
     public List<String> getNames() {
-        return names;
+        return this.names;
     }
 
     public String getImage() {
-        return image;
+        return this.image;
     }
 
     public ContainerState getState() {
-        return state;
+        return this.state;
     }
 
     @Override
@@ -40,7 +40,7 @@ public class ContainerInfoVM {
         if (names != null ? !names.equals(that.names) : that.names != null) return false;
         if (image != null ? !image.equals(that.image) : that.image != null) return false;
 
-        return state == that.state;
+        return this.state == that.state;
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.cargowhale.docker.client;
 
-import com.cargowhale.docker.container.ContainerStatus;
+import com.cargowhale.docker.container.ContainerState;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.assertj.core.util.Arrays;
 import org.junit.Before;
@@ -27,7 +27,7 @@ public class DockerContainerFiltersTest {
     @Test
     public void serializeJson_OneOfEach() throws Exception {
         String containerFiltersJson = "{\"status\":[\"created\",\"running\"]}";
-        ContainerStatus[] statusSet = Arrays.array(ContainerStatus.CREATED, ContainerStatus.RUNNING);
+        ContainerState[] statusSet = Arrays.array(ContainerState.CREATED, ContainerState.RUNNING);
 
         DockerContainerFilters containerFilters = new DockerContainerFilters(statusSet);
 
@@ -37,7 +37,7 @@ public class DockerContainerFiltersTest {
     @Test
     public void serializeJson_StatusIsNotRepeated() throws Exception {
         String containerFiltersJson = "{\"status\":[\"created\"]}";
-        ContainerStatus[] statusSet = Arrays.array(ContainerStatus.CREATED, ContainerStatus.CREATED);
+        ContainerState[] statusSet = Arrays.array(ContainerState.CREATED, ContainerState.CREATED);
 
         DockerContainerFilters containerFilters = new DockerContainerFilters(statusSet);
 
@@ -47,7 +47,7 @@ public class DockerContainerFiltersTest {
     @Test
     public void serializeJson_EmptyArray() throws Exception {
         String containerFiltersJson = "{\"status\":[]}";
-        ContainerStatus[] statusSet = Arrays.array();
+        ContainerState[] statusSet = Arrays.array();
 
         DockerContainerFilters containerFilters = new DockerContainerFilters(statusSet);
 
