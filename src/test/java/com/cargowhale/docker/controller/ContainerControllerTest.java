@@ -1,7 +1,7 @@
 package com.cargowhale.docker.controller;
 
-import com.cargowhale.docker.client.ContainerClient;
 import com.cargowhale.docker.container.ContainerInfoCollectionVM;
+import com.cargowhale.docker.container.StateFilters;
 import com.cargowhale.docker.domain.ChangeStatusRequest;
 import com.cargowhale.docker.domain.ChangeStatusResponse;
 import com.cargowhale.docker.service.ContainerService;
@@ -23,9 +23,6 @@ public class ContainerControllerTest {
     private ContainerController controller;
 
     @Mock
-    private ContainerClient client;
-
-    @Mock
     private ContainerService service;
 
     @Test
@@ -38,13 +35,13 @@ public class ContainerControllerTest {
     }
 
     @Test
-    public void getFilteredContainersReturnsFilteredContainersFromService() {
-        String expected = "ALL RUNNING CATALOGS";
-        String filter = "running";
+    public void getContainersFilterByStatusReturnsFilteredContainersFromService() {
+        ContainerInfoCollectionVM containerInfoCollectionVM = mock(ContainerInfoCollectionVM.class);
+        StateFilters stateFilters = mock(StateFilters.class);
 
-        when(this.service.getFilteredContainers(filter)).thenReturn(expected);
+        when(this.service.getContainersFilterByStatus(stateFilters)).thenReturn(containerInfoCollectionVM);
 
-        assertThat(this.controller.getFilteredContainers(filter), is(expected));
+        assertThat(this.controller.getContainersFilterByStatus(stateFilters), is(containerInfoCollectionVM));
     }
 
     @Test

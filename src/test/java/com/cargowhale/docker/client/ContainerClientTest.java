@@ -40,17 +40,14 @@ public class ContainerClientTest {
 
     @Test
     public void getFilteredContainersReturnsSelectedTypesOfContainers() {
-        String expected = "ALL RUNNING CONTAINERS";
-        String filter = "running";
-        String filterString = createFilterString(filter);
+        DockerContainerFilters filters = mock(DockerContainerFilters.class);
+        final ContainerInfoVM[] containerInfoArray = Arrays.array(mock(ContainerInfoVM.class));
 
         when(this.endpointCollection.getContainersEndpoint()).thenReturn(DOCKER_ENDPOINT);
-        when(this.template.getForObject(DOCKER_ENDPOINT + "?filters={filterString}", String.class, filterString))
-                .thenReturn(expected);
+        when(this.template.getForObject(DOCKER_ENDPOINT + "?filters={filters}", ContainerInfoVM[].class, filters))
+                .thenReturn(containerInfoArray);
 
-        String actual = this.service.getFilteredContainers(filter);
-
-        assertThat(actual, is(expected));
+        assertThat(this.service.getFilteredContainers(filters), contains(containerInfoArray));
     }
 
     @Test

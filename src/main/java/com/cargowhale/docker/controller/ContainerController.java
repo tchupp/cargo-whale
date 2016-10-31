@@ -1,6 +1,7 @@
 package com.cargowhale.docker.controller;
 
 import com.cargowhale.docker.container.ContainerInfoCollectionVM;
+import com.cargowhale.docker.container.StateFilters;
 import com.cargowhale.docker.domain.ChangeStatusRequest;
 import com.cargowhale.docker.domain.ChangeStatusResponse;
 import com.cargowhale.docker.service.ContainerService;
@@ -26,11 +27,12 @@ public class ContainerController {
         return this.service.getAllContainers();
     }
 
-    @RequestMapping(value = "/containers/{filter}",
+    @RequestMapping(value = "/containers",
+            params = "state",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public String getFilteredContainers(@PathVariable("filter") String filter) {
-        return this.service.getFilteredContainers(filter);
+    public ContainerInfoCollectionVM getContainersFilterByStatus(StateFilters stateFilters) {
+        return this.service.getContainersFilterByStatus(stateFilters);
     }
 
     @RequestMapping(value = "/containers/{name}",

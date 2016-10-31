@@ -27,12 +27,11 @@ public class ContainerClient {
         return Arrays.asList(containerInfoArray);
     }
 
-    //Filter options are: [created, restarting, running, paused, exited, dead]
-    public String getFilteredContainers(String filter){
+    public List<ContainerInfoVM> getFilteredContainers(DockerContainerFilters filters) {
         String containersEndpoint = this.endpointCollection.getContainersEndpoint();
 
-        String filterString = "{\"status\":[\"" + filter + "\"]}";
-        return this.restTemplate.getForObject(containersEndpoint + "?filters={filterString}", String.class, filterString);
+        ContainerInfoVM[] containerInfoArray = this.restTemplate.getForObject(containersEndpoint + "?filters={filters}", ContainerInfoVM[].class, filters);
+        return Arrays.asList(containerInfoArray);
     }
 
     //Status options are: [start, stop, restart, kill]

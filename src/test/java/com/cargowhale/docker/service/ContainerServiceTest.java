@@ -1,10 +1,14 @@
 package com.cargowhale.docker.service;
 
 import com.cargowhale.docker.client.ContainerClient;
+import com.cargowhale.docker.client.DockerContainerFilters;
 import com.cargowhale.docker.container.ContainerInfoCollectionVM;
 import com.cargowhale.docker.container.ContainerInfoVM;
+import com.cargowhale.docker.container.ContainerState;
+import com.cargowhale.docker.container.StateFilters;
 import com.cargowhale.docker.domain.ChangeStatusRequest;
 import com.cargowhale.docker.domain.ChangeStatusResponse;
+import org.assertj.core.util.Arrays;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -40,15 +44,18 @@ public class ContainerServiceTest {
     }
 
     @Test
-    public void getFilteredContainersReturnsAllRunningContainers() {
-        String expected = "ALL RUNNING CATALOGS";
-        String filter = "running";
+    public void getFilteredContainersReturnsFilteredContainers() {
+        ContainerState[] containerStatuses = Arrays.array(ContainerState.DEAD, ContainerState.PAUSED);
 
-        when(this.client.getFilteredContainers(filter)).thenReturn(expected);
+        StateFilters stateFilters = new StateFilters(containerStatuses);
+        DockerContainerFilters filters = new DockerContainerFilters(containerStatuses);
+        List<ContainerInfoVM> expectedContainerList = Collections.singletonList(mock(ContainerInfoVM.class));
 
-        String actual = this.service.getFilteredContainers(filter);
+        when(this.client.getFilteredContainers(filters)).thenReturn(expectedContainerList);
 
-        assertThat(actual, is(expected));
+        ContainerInfoCollectionVM actual = this.service.getContainersFilterByStatus(stateFilters);
+
+        assertThat(actual.getContainers(), is(expectedContainerList));
     }
 
     @Test
