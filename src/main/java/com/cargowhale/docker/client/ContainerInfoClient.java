@@ -1,9 +1,7 @@
-package com.cargowhale.docker.container.info;
+package com.cargowhale.docker.client;
 
-import com.cargowhale.docker.client.DockerContainerFilters;
-import com.cargowhale.docker.client.DockerEndpointCollection;
-import com.cargowhale.docker.util.JsonConverter;
 import com.cargowhale.docker.container.ContainerInfoVM;
+import com.cargowhale.docker.util.JsonConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
