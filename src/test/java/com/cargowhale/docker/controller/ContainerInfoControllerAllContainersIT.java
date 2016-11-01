@@ -1,5 +1,6 @@
 package com.cargowhale.docker.controller;
 
+import com.cargowhale.docker.config.CargoWhaleProperties;
 import com.cargowhale.docker.container.ContainerInfoCollectionVM;
 import com.cargowhale.docker.container.ContainerInfoVM;
 import com.cargowhale.docker.container.ContainerState;
@@ -25,7 +26,7 @@ import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class ContainerControllerIT {
+public class ContainerInfoControllerAllContainersIT {
 
     @MockBean
     private RestTemplate restTemplate;
@@ -33,11 +34,16 @@ public class ContainerControllerIT {
     @Autowired
     private TestRestTemplate client;
 
+    @Autowired
+    private CargoWhaleProperties properties;
+
     @Test
     public void getAllContainers_NoContainers() {
+        String dockerUri = this.properties.getDockerUri();
+
         ContainerInfoVM[] containerInfoVMs = Arrays.array();
 
-        when(this.restTemplate.getForObject("http://fakehost:fakeport/v1.24/containers/json?all=1", ContainerInfoVM[].class)).thenReturn(containerInfoVMs);
+        when(this.restTemplate.getForObject(dockerUri + "/v1.24/containers/json?all=1", ContainerInfoVM[].class)).thenReturn(containerInfoVMs);
 
         ResponseEntity<ContainerInfoCollectionVM> response = this.client.getForEntity("/api/containers", ContainerInfoCollectionVM.class);
 
@@ -50,10 +56,12 @@ public class ContainerControllerIT {
 
     @Test
     public void getAllContainers_OneContainers() {
+        String dockerUri = this.properties.getDockerUri();
+
         ContainerInfoVM containerInfoVM1 = new ContainerInfoVM(Collections.singletonList("test-container1"), "test-image", ContainerState.CREATED);
         ContainerInfoVM[] containerInfoVMs = Arrays.array(containerInfoVM1);
 
-        when(this.restTemplate.getForObject("http://fakehost:fakeport/v1.24/containers/json?all=1", ContainerInfoVM[].class)).thenReturn(containerInfoVMs);
+        when(this.restTemplate.getForObject(dockerUri + "/v1.24/containers/json?all=1", ContainerInfoVM[].class)).thenReturn(containerInfoVMs);
 
         ResponseEntity<ContainerInfoCollectionVM> response = this.client.getForEntity("/api/containers", ContainerInfoCollectionVM.class);
 
@@ -68,11 +76,13 @@ public class ContainerControllerIT {
 
     @Test
     public void getAllContainers_MultipleContainers() {
+        String dockerUri = this.properties.getDockerUri();
+
         ContainerInfoVM containerInfoVM1 = new ContainerInfoVM(Collections.singletonList("test-container1"), "test-image", ContainerState.CREATED);
         ContainerInfoVM containerInfoVM2 = new ContainerInfoVM(Collections.singletonList("test-container2"), "test-image", ContainerState.RUNNING);
         ContainerInfoVM[] containerInfoVMs = Arrays.array(containerInfoVM1, containerInfoVM2);
 
-        when(this.restTemplate.getForObject("http://fakehost:fakeport/v1.24/containers/json?all=1", ContainerInfoVM[].class)).thenReturn(containerInfoVMs);
+        when(this.restTemplate.getForObject(dockerUri + "/v1.24/containers/json?all=1", ContainerInfoVM[].class)).thenReturn(containerInfoVMs);
 
         ResponseEntity<ContainerInfoCollectionVM> response = this.client.getForEntity("/api/containers", ContainerInfoCollectionVM.class);
 
