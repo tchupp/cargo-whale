@@ -13,11 +13,13 @@ public class ContainerClient {
 
     private final RestTemplate restTemplate;
     private final DockerEndpointCollection endpointCollection;
+    private final JsonConverter converter;
 
     @Autowired
-    public ContainerClient(final RestTemplate restTemplate, final DockerEndpointCollection endpointCollection) {
+    public ContainerClient(final RestTemplate restTemplate, final DockerEndpointCollection endpointCollection, final JsonConverter converter) {
         this.restTemplate = restTemplate;
         this.endpointCollection = endpointCollection;
+        this.converter = converter;
     }
 
     public List<ContainerInfoVM> getAllContainers() {
@@ -29,8 +31,9 @@ public class ContainerClient {
 
     public List<ContainerInfoVM> getFilteredContainers(DockerContainerFilters filters) {
         String containersEndpoint = this.endpointCollection.getContainersEndpoint();
+        String filterJson = this.converter.toJson(filters);
 
-        ContainerInfoVM[] containerInfoArray = this.restTemplate.getForObject(containersEndpoint + "?filters={filters}", ContainerInfoVM[].class, filters);
+        ContainerInfoVM[] containerInfoArray = this.restTemplate.getForObject(containersEndpoint + "?filters={filters}", ContainerInfoVM[].class, filterJson);
         return Arrays.asList(containerInfoArray);
     }
 

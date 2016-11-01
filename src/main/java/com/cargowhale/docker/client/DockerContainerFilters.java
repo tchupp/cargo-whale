@@ -1,8 +1,6 @@
 package com.cargowhale.docker.client;
 
 import com.cargowhale.docker.container.ContainerState;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Arrays;
 import java.util.LinkedHashSet;
@@ -33,16 +31,5 @@ public class DockerContainerFilters {
     @Override
     public int hashCode() {
         return status != null ? status.hashCode() : 0;
-    }
-
-    @Override
-    public String toString() {
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            return objectMapper.writeValueAsString(this);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 }

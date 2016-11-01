@@ -28,6 +28,9 @@ public class ContainerClientTest {
     @Mock
     private DockerEndpointCollection endpointCollection;
 
+    @Mock
+    private JsonConverter converter;
+
     @Test
     public void getAllContainersReturnsEveryContainerFromDockerApi() {
         final ContainerInfoVM[] containerInfoArray = Arrays.array(mock(ContainerInfoVM.class));
@@ -40,11 +43,14 @@ public class ContainerClientTest {
 
     @Test
     public void getFilteredContainersReturnsSelectedTypesOfContainers() {
+        String filterJson = "json filter string";
+
         DockerContainerFilters filters = mock(DockerContainerFilters.class);
         final ContainerInfoVM[] containerInfoArray = Arrays.array(mock(ContainerInfoVM.class));
 
         when(this.endpointCollection.getContainersEndpoint()).thenReturn(DOCKER_ENDPOINT);
-        when(this.template.getForObject(DOCKER_ENDPOINT + "?filters={filters}", ContainerInfoVM[].class, filters))
+        when(this.converter.toJson(filters)).thenReturn(filterJson);
+        when(this.template.getForObject(DOCKER_ENDPOINT + "?filters={filters}", ContainerInfoVM[].class, filterJson))
                 .thenReturn(containerInfoArray);
 
         assertThat(this.service.getFilteredContainers(filters), contains(containerInfoArray));
@@ -61,10 +67,6 @@ public class ContainerClientTest {
 
         verify(this.template).postForObject(DOCKER_ENDPOINT + "/{name}/{status}", null, String.class, name, status);
         assertThat(actual, is(name));
-    }
-
-    private String createFilterString(String filter) {
-        return "{\"status\":[\"" + filter + "\"]}";
     }
 }
 

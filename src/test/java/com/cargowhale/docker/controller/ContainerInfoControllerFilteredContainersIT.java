@@ -1,6 +1,5 @@
 package com.cargowhale.docker.controller;
 
-import com.cargowhale.docker.client.DockerContainerFilters;
 import com.cargowhale.docker.config.CargoWhaleProperties;
 import com.cargowhale.docker.container.ContainerInfoCollectionVM;
 import com.cargowhale.docker.container.ContainerInfoVM;
@@ -74,9 +73,7 @@ public class ContainerInfoControllerFilteredContainersIT {
         ContainerInfoVM containerInfoVM1 = new ContainerInfoVM(Collections.singletonList("test-container1"), "test-image", containerState);
         ContainerInfoVM[] containerInfoVMs = Arrays.array(containerInfoVM1);
 
-        DockerContainerFilters dockerContainerFilters = new DockerContainerFilters(Arrays.array(containerState));
-
-        when(this.restTemplate.getForObject(dockerUri + "/v1.24/containers/json?filters={filters}", ContainerInfoVM[].class, dockerContainerFilters))
+        when(this.restTemplate.getForObject(dockerUri + "/v1.24/containers/json?filters={filters}", ContainerInfoVM[].class, "{\"status\":[\"" + containerState.state + "\"]}"))
                 .thenReturn(containerInfoVMs);
 
         ResponseEntity<ContainerInfoCollectionVM> response = this.client.getForEntity("/api/containers?state=" + containerState.state.toUpperCase(), ContainerInfoCollectionVM.class);
