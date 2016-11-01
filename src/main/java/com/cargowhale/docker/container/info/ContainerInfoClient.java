@@ -1,5 +1,8 @@
-package com.cargowhale.docker.client;
+package com.cargowhale.docker.container.info;
 
+import com.cargowhale.docker.client.DockerContainerFilters;
+import com.cargowhale.docker.client.DockerEndpointCollection;
+import com.cargowhale.docker.util.JsonConverter;
 import com.cargowhale.docker.container.ContainerInfoVM;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -9,14 +12,14 @@ import java.util.Arrays;
 import java.util.List;
 
 @Component
-public class ContainerClient {
+public class ContainerInfoClient {
 
     private final RestTemplate restTemplate;
     private final DockerEndpointCollection endpointCollection;
     private final JsonConverter converter;
 
     @Autowired
-    public ContainerClient(final RestTemplate restTemplate, final DockerEndpointCollection endpointCollection, final JsonConverter converter) {
+    public ContainerInfoClient(final RestTemplate restTemplate, final DockerEndpointCollection endpointCollection, final JsonConverter converter) {
         this.restTemplate = restTemplate;
         this.endpointCollection = endpointCollection;
         this.converter = converter;

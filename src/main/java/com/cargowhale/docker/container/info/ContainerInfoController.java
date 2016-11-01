@@ -1,22 +1,21 @@
-package com.cargowhale.docker.controller;
+package com.cargowhale.docker.container.info;
 
 import com.cargowhale.docker.container.ContainerInfoCollectionVM;
 import com.cargowhale.docker.container.StateFilters;
 import com.cargowhale.docker.domain.ChangeStatusRequest;
 import com.cargowhale.docker.domain.ChangeStatusResponse;
-import com.cargowhale.docker.service.ContainerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
-public class ContainerController {
+public class ContainerInfoController {
 
-    private final ContainerService service;
+    private final ContainerInfoService service;
 
     @Autowired
-    public ContainerController(final ContainerService service) {
+    public ContainerInfoController(final ContainerInfoService service) {
         this.service = service;
     }
 

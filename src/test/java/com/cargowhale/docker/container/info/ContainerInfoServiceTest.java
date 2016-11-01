@@ -1,6 +1,5 @@
-package com.cargowhale.docker.service;
+package com.cargowhale.docker.container.info;
 
-import com.cargowhale.docker.client.ContainerClient;
 import com.cargowhale.docker.client.DockerContainerFilters;
 import com.cargowhale.docker.container.ContainerInfoCollectionVM;
 import com.cargowhale.docker.container.ContainerInfoVM;
@@ -24,13 +23,13 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ContainerServiceTest {
+public class ContainerInfoServiceTest {
 
     @InjectMocks
-    private ContainerService service;
+    private ContainerInfoService service;
 
     @Mock
-    private ContainerClient client;
+    private ContainerInfoClient client;
 
     @Test
     public void getAllContainersReturnsAllContainersFromClient() {

@@ -1,10 +1,7 @@
-package com.cargowhale.docker.controller;
+package com.cargowhale.docker.container.info;
 
 import com.cargowhale.docker.container.ContainerInfoCollectionVM;
 import com.cargowhale.docker.container.StateFilters;
-import com.cargowhale.docker.domain.ChangeStatusRequest;
-import com.cargowhale.docker.domain.ChangeStatusResponse;
-import com.cargowhale.docker.service.ContainerService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -17,13 +14,13 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ContainerControllerTest {
+public class ContainerInfoControllerTest {
 
     @InjectMocks
-    private ContainerController controller;
+    private ContainerInfoController controller;
 
     @Mock
-    private ContainerService service;
+    private ContainerInfoService service;
 
     @Test
     public void getAllContainersReturnsEveryContainerFromService() {
@@ -42,18 +39,5 @@ public class ContainerControllerTest {
         when(this.service.getContainersFilterByStatus(stateFilters)).thenReturn(containerInfoCollectionVM);
 
         assertThat(this.controller.getContainersFilterByStatus(stateFilters), is(containerInfoCollectionVM));
-    }
-
-    @Test
-    public void setContainerStatusSetsContainerToRunning(){
-        String status = "running";
-        String name = "testName";
-        ChangeStatusResponse expected = new ChangeStatusResponse("returnName");
-
-        ChangeStatusRequest statusRequest = new ChangeStatusRequest(status);
-
-        when(this.service.setContainerStatus(name, statusRequest)).thenReturn(expected);
-
-        assertThat(this.controller.setContainerStatus(name, statusRequest), is(expected));
     }
 }

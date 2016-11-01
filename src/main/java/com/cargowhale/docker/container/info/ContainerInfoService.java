@@ -1,6 +1,5 @@
-package com.cargowhale.docker.service;
+package com.cargowhale.docker.container.info;
 
-import com.cargowhale.docker.client.ContainerClient;
 import com.cargowhale.docker.client.DockerContainerFilters;
 import com.cargowhale.docker.container.ContainerInfoCollectionVM;
 import com.cargowhale.docker.container.ContainerInfoVM;
@@ -13,12 +12,12 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class ContainerService {
+public class ContainerInfoService {
 
-    private final ContainerClient client;
+    private final ContainerInfoClient client;
 
     @Autowired
-    public ContainerService(final ContainerClient client) {
+    public ContainerInfoService(final ContainerInfoClient client) {
         this.client = client;
     }
 

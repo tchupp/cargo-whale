@@ -1,4 +1,4 @@
-package com.cargowhale.docker.client;
+package com.cargowhale.docker.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

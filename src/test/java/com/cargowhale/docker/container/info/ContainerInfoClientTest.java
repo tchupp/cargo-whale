@@ -1,5 +1,8 @@
-package com.cargowhale.docker.client;
+package com.cargowhale.docker.container.info;
 
+import com.cargowhale.docker.client.DockerContainerFilters;
+import com.cargowhale.docker.client.DockerEndpointCollection;
+import com.cargowhale.docker.util.JsonConverter;
 import com.cargowhale.docker.container.ContainerInfoVM;
 import org.assertj.core.util.Arrays;
 import org.junit.Test;
@@ -15,12 +18,12 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ContainerClientTest {
+public class ContainerInfoClientTest {
 
     private static final String DOCKER_ENDPOINT = "http://this.is.docker:yo";
 
     @InjectMocks
-    private ContainerClient service;
+    private ContainerInfoClient service;
 
     @Mock
     private RestTemplate template;
