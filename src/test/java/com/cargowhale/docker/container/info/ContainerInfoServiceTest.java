@@ -1,12 +1,11 @@
 package com.cargowhale.docker.container.info;
 
+import com.cargowhale.docker.client.ContainerInfoClient;
 import com.cargowhale.docker.client.DockerContainerFilters;
 import com.cargowhale.docker.container.ContainerInfoCollectionVM;
 import com.cargowhale.docker.container.ContainerInfoVM;
 import com.cargowhale.docker.container.ContainerState;
 import com.cargowhale.docker.container.StateFilters;
-import com.cargowhale.docker.domain.ChangeStatusRequest;
-import com.cargowhale.docker.domain.ChangeStatusResponse;
 import org.assertj.core.util.Arrays;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -55,19 +54,5 @@ public class ContainerInfoServiceTest {
         ContainerInfoCollectionVM actual = this.service.getContainersFilterByStatus(stateFilters);
 
         assertThat(actual.getContainers(), is(expectedContainerList));
-    }
-
-    @Test
-    public void setContainerStateReturnsContainerNameFromClient() {
-        String name = "stoppedContainer";
-        String status = "start";
-        String expectedName = "runningContainer";
-
-        ChangeStatusRequest request = new ChangeStatusRequest(status);
-
-        when(this.client.setContainerStatus(name, status)).thenReturn(expectedName);
-
-        ChangeStatusResponse actual = this.service.setContainerStatus(name, request);
-        assertThat(actual.getName(), is(expectedName));
     }
 }

@@ -1,13 +1,13 @@
 package com.cargowhale.docker.domain;
 
-public class ChangeStatusRequest {
+public class ChangeStateRequest {
 
     private String status;
 
-    public ChangeStatusRequest() {
+    public ChangeStateRequest() {
     }
 
-    public ChangeStatusRequest(final String status) {
+    public ChangeStateRequest(final String status) {
         this.status = status;
     }
 
@@ -15,7 +15,7 @@ public class ChangeStatusRequest {
         return this.status;
     }
 
-    public ChangeStatusRequest setStatus(String status) {
+    public ChangeStateRequest setStatus(String status) {
         this.status = status;
         return this;
     }
