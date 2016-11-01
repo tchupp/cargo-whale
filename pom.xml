@@ -68,6 +68,7 @@
                     <sortPlugins>groupId,artifactId</sortPlugins>
                     <keepBlankLines>true</keepBlankLines>
                     <expandEmptyElements>false</expandEmptyElements>
+                    <createBackupFile>false</createBackupFile>
                 </configuration>
             </plugin>
             <plugin>
@@ -115,8 +116,27 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                        <configuration>
+                            <excludes>
+                                <exclude>none</exclude>
+                            </excludes>
+                            <includes>
+                                <include>**/*IT.java</include>
+                            </includes>
+                        </configuration>
+                    </execution>
+                </executions>
                 <configuration>
                     <runOrder>alphabetical</runOrder>
+                    <excludes>
+                        <exclude>**/*IT.java</exclude>
+                    </excludes>
                 </configuration>
             </plugin>
             <plugin>
