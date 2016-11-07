@@ -5,9 +5,9 @@ import {Container} from "./container.model";
 
 @Component({
     selector: 'cw-containers',
-    template: '<pre>{{containerList | json}}</pre>'
+    templateUrl: 'app/layouts/containers/container-list.html'
 })
-export class ContainersComponent implements OnInit {
+export class ContainerListComponent implements OnInit {
 
     private containerList: Container[];
 
