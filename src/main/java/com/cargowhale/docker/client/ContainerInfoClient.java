@@ -37,12 +37,4 @@ public class ContainerInfoClient {
         ContainerInfoVM[] containerInfoArray = this.restTemplate.getForObject(containersEndpoint + "?filters={filters}", ContainerInfoVM[].class, filterJson);
         return Arrays.asList(containerInfoArray);
     }
-
-    //Status options are: [start, stop, restart, kill]
-    public String setContainerStatus(String name, String status) {
-        String containersEndpoint = this.endpointCollection.getContainersEndpoint();
-
-        this.restTemplate.postForObject(containersEndpoint + "/{name}/{status}", null, String.class, name, status);
-        return name;
-    }
 }
