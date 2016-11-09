@@ -7,7 +7,7 @@ module.exports = {
     bower: 'src/main/webapp/bower_components/',
     sassSrc: 'src/main/webapp/scss/**/*.{scss,sass}',
     sassVendor: 'src/main/webapp/scss/vendor.scss',
-    cssDir: 'target/www/content/css',
+    cssDir: 'src/main/webapp/content/css',
     tmp: 'target/tmp',
     revManifest: 'target/tmp/rev-manifest.json',
     port: 9000,
