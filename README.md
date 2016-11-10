@@ -2,10 +2,24 @@
 
 ## Development
 
+Make sure you have NodeJS 4.5+ installed.
+To install the frontend dev tools, run:
+
+    npm install
+
+Gulp is used as the frontend build system.
+To install gulp globally, run:
+
+    npm install -g gulp-cli
+
 Maven 3+ is required to build the application.
-To start in the dev profile, run:
+To start spring with the dev profile, run:
 
     mvn spring-boot:run
+
+To start the frontend for development, run:
+
+    gulp serve
 
 ## Using Docker
 
@@ -14,7 +28,7 @@ Docker v1.10+ and Docker Compose v1.8+ are required.
 
 To fully dockerize the application and all the services that it depends on, run:
 
-    mvn package -Pprod docker:build
+    mvn clean verify -Pprod docker:build
 
 Then run:
 
