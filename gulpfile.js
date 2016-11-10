@@ -41,7 +41,8 @@ gulp.task('copy', [
     'copy:fonts',
     'copy:html',
     'copy:common',
-    'copy:deps'
+    'copy:deps',
+    'copy:configjs'
 ]);
 
 gulp.task('copy:html', copy.html);
@@ -56,6 +57,12 @@ gulp.task('copy:temp', function () {
     return gulp.src([config.app + '/**/*', '!' + config.app + '/**/*.ts', '!' + config.sassSrc])
         .pipe(plumber({errorHandler: handleErrors}))
         .pipe(changed(config.dist))
+        .pipe(gulp.dest(config.dist));
+});
+
+gulp.task('copy:configjs', function () {
+    return gulp.src([config.app + 'system.config.js'])
+        .pipe(plumber({errorHandler: handleErrors}))
         .pipe(gulp.dest(config.dist));
 });
 
