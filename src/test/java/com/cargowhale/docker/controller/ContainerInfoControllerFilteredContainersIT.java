@@ -76,7 +76,7 @@ public class ContainerInfoControllerFilteredContainersIT {
         when(this.restTemplate.getForObject(dockerUri + "/v1.24/containers/json?filters={filters}", ContainerInfoVM[].class, "{\"status\":[\"" + containerState.state + "\"]}"))
                 .thenReturn(containerInfoVMs);
 
-        ResponseEntity<ContainerInfoCollectionVM> response = this.client.getForEntity("/api/containers?state=" + containerState.state.toUpperCase(), ContainerInfoCollectionVM.class);
+        ResponseEntity<ContainerInfoCollectionVM> response = this.client.getForEntity("/api/containers?state=" + containerState.state, ContainerInfoCollectionVM.class);
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
 
