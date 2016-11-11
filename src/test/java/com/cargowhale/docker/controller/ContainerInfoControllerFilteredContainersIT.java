@@ -14,6 +14,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Collections;
@@ -85,5 +86,18 @@ public class ContainerInfoControllerFilteredContainersIT {
         assertThat(containerInfoVMList.size(), is(1));
 
         assertThat(containerInfoVMList.get(0), equalTo(containerInfoVM1));
+    }
+
+    @Test
+    public void verifyBadFilterReturnsHttpBadRequest(){
+        String dockerUri = this.properties.getDockerUri();
+        String state = "I_AM_A_TEAPOT";
+
+        when(this.restTemplate.getForObject(dockerUri + "/v1.24/containers/json?filters={filters}", ContainerInfoVM[].class, "{\"status\":[\"" + state + "\"]}"))
+                .thenThrow(new HttpServerErrorException(HttpStatus.I_AM_A_TEAPOT));
+
+        ResponseEntity<ContainerInfoCollectionVM> response = this.client.getForEntity("/api/containers?state=" + state, ContainerInfoCollectionVM.class);
+
+        assertThat(response.getStatusCode(), is(HttpStatus.BAD_REQUEST));
     }
 }
