@@ -6,16 +6,23 @@ import java.util.List;
 
 public class ContainerInfoVM {
 
+    private final String id;
     private final List<String> names;
     private final String image;
     private final ContainerState state;
 
-    public ContainerInfoVM(@JsonProperty("Names") final List<String> names,
+    public ContainerInfoVM(@JsonProperty("Id") final String id,
+                           @JsonProperty("Names") final List<String> names,
                            @JsonProperty("Image") final String image,
                            @JsonProperty("State") final ContainerState state) {
+        this.id = id;
         this.names = names;
         this.image = image;
         this.state = state;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public List<String> getNames() {

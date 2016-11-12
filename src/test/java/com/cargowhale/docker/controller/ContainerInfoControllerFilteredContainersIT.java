@@ -70,7 +70,7 @@ public class ContainerInfoControllerFilteredContainersIT {
     private void verifySingleStateFilter(final ContainerState containerState) {
         String dockerUri = this.properties.getDockerUri();
 
-        ContainerInfoVM containerInfoVM1 = new ContainerInfoVM(Collections.singletonList("test-container1"), "test-image", containerState);
+        ContainerInfoVM containerInfoVM1 = new ContainerInfoVM("test-id", Collections.singletonList("test-container1"), "test-image", containerState);
         ContainerInfoVM[] containerInfoVMs = Arrays.array(containerInfoVM1);
 
         when(this.restTemplate.getForObject(dockerUri + "/v1.24/containers/json?filters={filters}", ContainerInfoVM[].class, "{\"status\":[\"" + containerState.state + "\"]}"))

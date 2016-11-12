@@ -15,5 +15,4 @@ public class GlobalControllerExceptionHandler {
     public ResponseEntity<String> handleBadFilter(HttpServerErrorException ex) throws HttpServerErrorException {
         return new ResponseEntity<>(ex.getResponseBodyAsString(), HttpStatus.BAD_REQUEST);
     }
-
 }
