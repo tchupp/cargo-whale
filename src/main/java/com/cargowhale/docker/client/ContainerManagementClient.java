@@ -8,17 +8,17 @@ import org.springframework.web.client.RestTemplate;
 public class ContainerManagementClient {
 
     private final RestTemplate restTemplate;
-    private final DockerEndpointCollection endpointCollection;
+    private final DockerEndpointBuilder endpointBuilder;
 
     @Autowired
-    public ContainerManagementClient(final RestTemplate restTemplate, final DockerEndpointCollection endpointCollection) {
+    public ContainerManagementClient(final RestTemplate restTemplate, final DockerEndpointBuilder endpointBuilder) {
         this.restTemplate = restTemplate;
-        this.endpointCollection = endpointCollection;
+        this.endpointBuilder = endpointBuilder;
     }
 
     //Status options are: [start, stop, restart, kill]
     public String setContainerStatus(String name, String status) {
-        String containersEndpoint = this.endpointCollection.getContainersEndpoint();
+        String containersEndpoint = this.endpointBuilder.getContainersEndpoint();
 
         this.restTemplate.postForObject(containersEndpoint + "/{name}/{status}", null, String.class, name, status);
         return name;

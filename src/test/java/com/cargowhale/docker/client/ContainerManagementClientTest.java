@@ -24,14 +24,14 @@ public class ContainerManagementClientTest {
     private RestTemplate template;
 
     @Mock
-    private DockerEndpointCollection endpointCollection;
+    private DockerEndpointBuilder endpointBuilder;
 
     @Test
     public void setContainerStatusSetsContainerToRunning() {
         String name = "testContainer";
         String status = "start";
 
-        when(this.endpointCollection.getContainersEndpoint()).thenReturn(DOCKER_ENDPOINT);
+        when(this.endpointBuilder.getContainersEndpoint()).thenReturn(DOCKER_ENDPOINT);
 
         String actual = this.client.setContainerStatus(name, status);
 

@@ -13,25 +13,25 @@ import java.util.List;
 public class ContainerInfoClient {
 
     private final RestTemplate restTemplate;
-    private final DockerEndpointCollection endpointCollection;
+    private final DockerEndpointBuilder endpointBuilder;
     private final JsonConverter converter;
 
     @Autowired
-    public ContainerInfoClient(final RestTemplate restTemplate, final DockerEndpointCollection endpointCollection, final JsonConverter converter) {
+    public ContainerInfoClient(final RestTemplate restTemplate, final DockerEndpointBuilder endpointBuilder, final JsonConverter converter) {
         this.restTemplate = restTemplate;
-        this.endpointCollection = endpointCollection;
+        this.endpointBuilder = endpointBuilder;
         this.converter = converter;
     }
 
     public List<ContainerInfoVM> getAllContainers() {
-        String containersEndpoint = this.endpointCollection.getContainersEndpoint();
+        String containersEndpoint = this.endpointBuilder.getContainersEndpoint();
 
         ContainerInfoVM[] containerInfoArray = this.restTemplate.getForObject(containersEndpoint + "?all=1", ContainerInfoVM[].class);
         return Arrays.asList(containerInfoArray);
     }
 
     public List<ContainerInfoVM> getFilteredContainers(DockerContainerFilters filters) {
-        String containersEndpoint = this.endpointCollection.getContainersEndpoint();
+        String containersEndpoint = this.endpointBuilder.getContainersEndpoint();
         String filterJson = this.converter.toJson(filters);
 
         ContainerInfoVM[] containerInfoArray = this.restTemplate.getForObject(containersEndpoint + "?filters={filters}", ContainerInfoVM[].class, filterJson);
