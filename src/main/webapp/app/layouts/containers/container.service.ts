@@ -17,7 +17,7 @@ export class ContainerService {
     }
 
     private static extractContainerList(res: Response) {
-        return res.json() || {};
+        return res.json().containers || {};
     }
 
     private static handleError (error: Response | any) {

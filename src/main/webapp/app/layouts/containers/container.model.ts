@@ -1,4 +1,5 @@
 export class Container {
-    Image: string;
-    Names: string[];
+    image: string;
+    names: string[];
+    state: string;
 }
