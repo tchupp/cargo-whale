@@ -1,9 +1,13 @@
 package com.cargowhale.docker.container.info;
 
+import com.cargowhale.docker.container.ContainerEnumConverter;
 import com.cargowhale.docker.container.ContainerInfoCollectionVM;
+import com.cargowhale.docker.container.ContainerState;
 import com.cargowhale.docker.container.StateFilters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,6 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api")
 public class ContainerInfoController {
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        binder.registerCustomEditor(ContainerState.class, new ContainerEnumConverter());
+    }
 
     private final ContainerInfoService service;
 

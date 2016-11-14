@@ -18,4 +18,4 @@
 
 cargowhale:
   docker:
-    uri: http://socat:2375
+    uri: http://localhost:2375

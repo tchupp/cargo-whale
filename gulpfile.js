@@ -3,8 +3,10 @@
 var gulp = require('gulp'),
     expect = require('gulp-expect-file'),
     sass = require('gulp-sass'),
+    rev = require('gulp-rev'),
     templateCache = require('gulp-angular-templatecache'),
     htmlmin = require('gulp-htmlmin'),
+    imagemin = require('gulp-imagemin'),
     ngConstant = require('gulp-ng-constant'),
     rename = require('gulp-rename'),
     eslint = require('gulp-eslint'),
@@ -23,7 +25,8 @@ var handleErrors = require('./gulp/handle-errors'),
     serve = require('./gulp/serve'),
     util = require('./gulp/utils'),
     copy = require('./gulp/copy'),
-    inject = require('./gulp/inject');
+    inject = require('./gulp/inject'),
+    build = require('./gulp/build');
 
 var tsProject = ts.createProject('tsconfig.json');
 var config = require('./gulp/config');
@@ -38,12 +41,15 @@ gulp.task('copy', [
     'copy:fonts',
     'copy:html',
     'copy:common',
-    'copy:deps'
+    'copy:deps',
+    'copy:configjs'
 ]);
 
 gulp.task('copy:html', copy.html);
 
 gulp.task('copy:fonts', copy.fonts);
+
+gulp.task('copy:common', copy.common);
 
 gulp.task('copy:deps', copy.deps);
 
@@ -52,6 +58,27 @@ gulp.task('copy:temp', function () {
         .pipe(plumber({errorHandler: handleErrors}))
         .pipe(changed(config.dist))
         .pipe(gulp.dest(config.dist));
+});
+
+gulp.task('copy:configjs', function () {
+    return gulp.src([config.app + 'system.config.js'])
+        .pipe(plumber({errorHandler: handleErrors}))
+        .pipe(gulp.dest(config.dist));
+});
+
+gulp.task('images', function () {
+    return gulp.src(config.app + 'content/images/**')
+        .pipe(plumber({errorHandler: handleErrors}))
+        .pipe(changed(config.dist + 'content/images'))
+        .pipe(imagemin({optimizationLevel: 5, progressive: true, interlaced: true}))
+        .pipe(rev())
+        .pipe(gulp.dest(config.dist + 'content/images'))
+        .pipe(rev.manifest(config.revManifest, {
+            base: config.dist,
+            merge: true
+        }))
+        .pipe(gulp.dest(config.dist))
+        .pipe(browserSync.reload({stream: true}));
 });
 
 
@@ -97,9 +124,12 @@ gulp.task('inject:vendor', inject.vendor);
 // gulp.task('inject:test', inject.test);
 
 
+gulp.task('assets:prod', ['images', 'styles', 'html'/*, 'copy:swagger'*/], build);
+
+
 gulp.task('html', function () {
     return gulp.src(config.app + 'app/**/*.html')
-    .pipe(htmlmin({collapseWhitespace: true}))
+        .pipe(htmlmin({collapseWhitespace: true}))
         .pipe(templateCache({
             module: 'cargoWhaleDockerApp',
             root: 'app/',

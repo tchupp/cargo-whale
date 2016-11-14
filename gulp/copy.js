@@ -4,6 +4,7 @@ var gulp = require('gulp'),
     rev = require('gulp-rev'),
     flatten = require('gulp-flatten'),
     plumber = require('gulp-plumber'),
+    es = require('event-stream'),
     changed = require('gulp-changed');
 
 var handleErrors = require('./handle-errors');
@@ -12,6 +13,7 @@ var config = require('./config');
 module.exports = {
     html: html,
     fonts: fonts,
+    common: common,
     deps: deps
 };
 
@@ -37,6 +39,13 @@ function fonts() {
             }))
             .pipe(gulp.dest(config.dist))
     );
+}
+
+function common() {
+    return gulp.src([config.app + 'robots.txt', config.app + 'favicon.ico', config.app + '.htaccess'], { dot: true })
+        .pipe(plumber({errorHandler: handleErrors}))
+        .pipe(changed(config.dist))
+        .pipe(gulp.dest(config.dist));
 }
 
 function deps() {

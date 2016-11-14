@@ -58,7 +58,7 @@ public class ContainerInfoControllerAllContainersIT {
     public void getAllContainers_OneContainers() {
         String dockerUri = this.properties.getDockerUri();
 
-        ContainerInfoVM containerInfoVM1 = new ContainerInfoVM(Collections.singletonList("test-container1"), "test-image", ContainerState.CREATED);
+        ContainerInfoVM containerInfoVM1 = new ContainerInfoVM("hjf7y2nj1", Collections.singletonList("test-container1"), "test-image", ContainerState.CREATED);
         ContainerInfoVM[] containerInfoVMs = Arrays.array(containerInfoVM1);
 
         when(this.restTemplate.getForObject(dockerUri + "/v1.24/containers/json?all=1", ContainerInfoVM[].class)).thenReturn(containerInfoVMs);
@@ -78,8 +78,8 @@ public class ContainerInfoControllerAllContainersIT {
     public void getAllContainers_MultipleContainers() {
         String dockerUri = this.properties.getDockerUri();
 
-        ContainerInfoVM containerInfoVM1 = new ContainerInfoVM(Collections.singletonList("test-container1"), "test-image", ContainerState.CREATED);
-        ContainerInfoVM containerInfoVM2 = new ContainerInfoVM(Collections.singletonList("test-container2"), "test-image", ContainerState.RUNNING);
+        ContainerInfoVM containerInfoVM1 = new ContainerInfoVM("78nm12hb3", Collections.singletonList("test-container1"), "test-image", ContainerState.CREATED);
+        ContainerInfoVM containerInfoVM2 = new ContainerInfoVM("nu91o2n3b", Collections.singletonList("test-container2"), "test-image", ContainerState.RUNNING);
         ContainerInfoVM[] containerInfoVMs = Arrays.array(containerInfoVM1, containerInfoVM2);
 
         when(this.restTemplate.getForObject(dockerUri + "/v1.24/containers/json?all=1", ContainerInfoVM[].class)).thenReturn(containerInfoVMs);

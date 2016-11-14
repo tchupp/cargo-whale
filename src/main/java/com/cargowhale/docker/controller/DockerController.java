@@ -28,5 +28,4 @@ public class DockerController {
 
         return this.restTemplate.getForObject(dockerUri + "/images/json", String.class);
     }
-
 }
