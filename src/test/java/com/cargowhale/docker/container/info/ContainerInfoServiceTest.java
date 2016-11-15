@@ -2,10 +2,7 @@ package com.cargowhale.docker.container.info;
 
 import com.cargowhale.docker.client.ContainerInfoClient;
 import com.cargowhale.docker.client.DockerContainerFilters;
-import com.cargowhale.docker.container.ContainerInfoCollectionVM;
-import com.cargowhale.docker.container.ContainerInfoVM;
-import com.cargowhale.docker.container.ContainerState;
-import com.cargowhale.docker.container.StateFilters;
+import com.cargowhale.docker.container.*;
 import org.assertj.core.util.Arrays;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -54,5 +51,15 @@ public class ContainerInfoServiceTest {
         ContainerInfoCollectionVM actual = this.service.getContainersFilterByStatus(stateFilters);
 
         assertThat(actual.getContainers(), is(expectedContainerList));
+    }
+
+    @Test
+    public void getContainerDetailsById() throws Exception {
+        String containerId = "container id string";
+        ContainerDetails containerDetails = mock(ContainerDetails.class);
+
+        when(this.client.getContainerDetailsById(containerId)).thenReturn(containerDetails);
+
+        assertThat(this.service.getContainerDetailsById(containerId), is(containerDetails));
     }
 }

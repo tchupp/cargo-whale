@@ -1,5 +1,6 @@
 package com.cargowhale.docker.container.info;
 
+import com.cargowhale.docker.container.ContainerDetails;
 import com.cargowhale.docker.container.ContainerInfoCollectionVM;
 import com.cargowhale.docker.container.StateFilters;
 import org.junit.Test;
@@ -39,5 +40,15 @@ public class ContainerInfoControllerTest {
         when(this.service.getContainersFilterByStatus(stateFilters)).thenReturn(containerInfoCollectionVM);
 
         assertThat(this.controller.getContainersFilterByStatus(stateFilters), is(containerInfoCollectionVM));
+    }
+
+    @Test
+    public void getContainerDetailsById() throws Exception {
+        String containerId = "container id!";
+        ContainerDetails containerDetails = mock(ContainerDetails.class);
+
+        when(this.service.getContainerDetailsById(containerId)).thenReturn(containerDetails);
+
+        assertThat(this.controller.getContainerById(containerId), is(containerDetails));
     }
 }

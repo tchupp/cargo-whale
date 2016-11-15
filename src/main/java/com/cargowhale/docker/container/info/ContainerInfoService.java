@@ -2,6 +2,7 @@ package com.cargowhale.docker.container.info;
 
 import com.cargowhale.docker.client.ContainerInfoClient;
 import com.cargowhale.docker.client.DockerContainerFilters;
+import com.cargowhale.docker.container.ContainerDetails;
 import com.cargowhale.docker.container.ContainerInfoCollectionVM;
 import com.cargowhale.docker.container.ContainerInfoVM;
 import com.cargowhale.docker.container.StateFilters;
@@ -30,5 +31,9 @@ public class ContainerInfoService {
 
         List<ContainerInfoVM> filteredContainers = this.client.getFilteredContainers(dockerContainerFilters);
         return new ContainerInfoCollectionVM(filteredContainers);
+    }
+
+    public ContainerDetails getContainerDetailsById(final String containerId) {
+        return this.client.getContainerDetailsById(containerId);
     }
 }
