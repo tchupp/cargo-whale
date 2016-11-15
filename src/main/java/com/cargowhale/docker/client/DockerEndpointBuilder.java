@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 public class DockerEndpointBuilder {
 
     private static final String API_VERSION = "/v1.24";
-    private static final String CONTAINERS_ENDPOINT = API_VERSION + "/containers";
+    private static final String CONTAINERS_ENDPOINT = "/containers";
     private static final String JSON = "/json";
 
     private final CargoWhaleProperties properties;
@@ -19,10 +19,10 @@ public class DockerEndpointBuilder {
     }
 
     public String getContainersEndpoint() {
-        return this.properties.getDockerUri() + CONTAINERS_ENDPOINT + JSON;
+        return this.properties.getDockerUri() + API_VERSION + CONTAINERS_ENDPOINT + JSON;
     }
 
     public String getContainerByIdEndpoint(final String containerId) {
-        return this.properties.getDockerUri() + CONTAINERS_ENDPOINT + "/" + containerId + JSON;
+        return this.properties.getDockerUri() + API_VERSION + CONTAINERS_ENDPOINT + "/" + containerId + JSON;
     }
 }
