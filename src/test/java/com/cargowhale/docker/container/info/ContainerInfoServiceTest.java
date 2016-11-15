@@ -2,7 +2,8 @@ package com.cargowhale.docker.container.info;
 
 import com.cargowhale.docker.client.ContainerInfoClient;
 import com.cargowhale.docker.client.DockerContainerFilters;
-import com.cargowhale.docker.container.*;
+import com.cargowhale.docker.container.ContainerState;
+import com.cargowhale.docker.container.StateFilters;
 import com.cargowhale.docker.container.info.model.ContainerDetails;
 import com.cargowhale.docker.container.info.model.ContainerInfo;
 import com.cargowhale.docker.container.info.model.ContainerInfoCollection;

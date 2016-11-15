@@ -1,9 +1,9 @@
 package com.cargowhale.docker.controller;
 
 import com.cargowhale.docker.config.CargoWhaleProperties;
-import com.cargowhale.docker.container.info.model.ContainerInfoCollection;
-import com.cargowhale.docker.container.info.model.ContainerInfo;
 import com.cargowhale.docker.container.ContainerState;
+import com.cargowhale.docker.container.info.model.ContainerInfo;
+import com.cargowhale.docker.container.info.model.ContainerInfoCollection;
 import org.assertj.core.util.Arrays;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -85,5 +85,14 @@ public class ContainerInfoControllerFilteredContainersIT {
         assertThat(containerInfoList.size(), is(1));
 
         assertThat(containerInfoList.get(0), equalTo(containerInfo1));
+    }
+
+    @Test
+    public void verifyBadFilterReturnsHttpBadRequest() {
+        String state = "I_AM_A_TEAPOT";
+
+        ResponseEntity<ContainerInfoCollection> response = this.client.getForEntity("/api/containers?state=" + state, ContainerInfoCollection.class);
+
+        assertThat(response.getStatusCode(), is(HttpStatus.BAD_REQUEST));
     }
 }

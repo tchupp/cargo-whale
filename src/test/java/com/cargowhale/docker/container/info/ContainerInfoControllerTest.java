@@ -1,8 +1,8 @@
 package com.cargowhale.docker.container.info;
 
+import com.cargowhale.docker.container.StateFilters;
 import com.cargowhale.docker.container.info.model.ContainerDetails;
 import com.cargowhale.docker.container.info.model.ContainerInfoCollection;
-import com.cargowhale.docker.container.StateFilters;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
