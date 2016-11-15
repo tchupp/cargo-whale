@@ -1,97 +1,25 @@
-cargowhale:
-  request:
-    method: GET
-    url: /api/containers
+request:
+  method: GET
+  url: /api/containers
 
-  response:
-    status: 200
-    body: >
+response:
+  status: 200
+  body: >
+  {
+    "containers": [
       {
-        "containers": [
-          {
-            "names": [
-              "cargo-whale-test"
-            ],
-            "image": "cargo-whale-docker",
-            "state": "exited"
-          },
-          {
-            "names": [
-              "cargo-whale-db"
-            ],
-            "image": "mysql:latest",
-            "state": "created"
-          }
-        ]
-      }
-
-  request:
-    method: GET
-    url: /api/containers?state=running
-
-  response:
-    status: 200
-    body: >
+        "names": [
+          "cargo-whale-test"
+        ],
+        "image": "cargo-whale-docker",
+        "state": "exited"
+      },
       {
-        "containers": [
-          {
-            "names": [
-              "/docker_cargowhaledocker-app_1"
-            ],
-            "image": "cargo-whale-docker",
-            "state": "running"
-          },
-          {
-            "names": [
-              "/socat-docker"
-            ],
-            "image": "rxnctrllabs/socat",
-            "state": "running"
-          }
-        ]
+        "names": [
+          "cargo-whale-db"
+        ],
+        "image": "mysql:latest",
+        "state": "created"
       }
-
-  request:
-    method: GET
-    url: /api/containers?state=running,exited
-
-  response:
-    status: 200
-    body: >
-      {
-        "containers": [
-          {
-            "names": [
-              "/docker_cargowhaledocker-app_1"
-            ],
-            "image": "cargo-whale-docker",
-            "state": "running"
-          },
-          {
-            "names": [
-              "/socat-docker"
-            ],
-            "image": "rxnctrllabs/socat",
-            "state": "running"
-          },
-          {
-            "names": [
-              "/drunk_goldwasser"
-            ],
-            "image": "ubuntu",
-            "state": "exited"
-          }
-        ]
-      }
-
-  request:
-    method: GET
-    url: /api/containers?state=BADSTATE
-
-  response:
-    status: 400
-    body: >
-    {
-      "error": "Bad Request",
-      "msg": "Bad Filter"
-    }
+    ]
+  }
