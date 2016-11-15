@@ -9,10 +9,10 @@ import groovy.transform.ToString
 @ToString
 class ContainerInfo {
 
-    private final String id
-    private final List<String> names
-    private final String image
-    private final ContainerState state
+    final String id
+    final List<String> names
+    final String image
+    final ContainerState state
 
     ContainerInfo(@JsonProperty("Id") final String id,
                   @JsonProperty("Names") final List<String> names,

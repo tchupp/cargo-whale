@@ -8,13 +8,9 @@ import groovy.transform.ToString
 @ToString
 class ContainerInfoCollection {
 
-    private final List<ContainerInfo> containers
+    final List<ContainerInfo> containers
 
     ContainerInfoCollection(@JsonProperty("containers") final List<ContainerInfo> containers) {
         this.containers = containers
-    }
-
-    List<ContainerInfo> getContainers() {
-        return this.containers
     }
 }

@@ -8,8 +8,8 @@ import groovy.transform.ToString
 @ToString
 class ContainerDetails {
 
-    private final String id
-    private final String name
+    final String id
+    final String name
 
     ContainerDetails(@JsonProperty("Id") final String id,
                      @JsonProperty("Name") final String name) {

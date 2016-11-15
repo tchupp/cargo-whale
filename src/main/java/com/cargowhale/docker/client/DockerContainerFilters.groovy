@@ -8,13 +8,9 @@ import groovy.transform.ToString
 @ToString
 class DockerContainerFilters {
 
-    private final Set<ContainerState> status
+    final Set<ContainerState> status
 
     public DockerContainerFilters(final ContainerState[] status) {
         this.status = new LinkedHashSet<>(Arrays.asList(status))
-    }
-
-    public Set<ContainerState> getStatus() {
-        return this.status
     }
 }

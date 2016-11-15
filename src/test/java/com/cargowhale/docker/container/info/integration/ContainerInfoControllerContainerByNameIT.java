@@ -1,4 +1,4 @@
-package com.cargowhale.docker.controller;
+package com.cargowhale.docker.container.info.integration;
 
 import com.cargowhale.docker.config.CargoWhaleProperties;
 import com.cargowhale.docker.container.info.model.ContainerDetails;
