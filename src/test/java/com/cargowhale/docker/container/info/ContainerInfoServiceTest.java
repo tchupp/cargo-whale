@@ -33,7 +33,7 @@ public class ContainerInfoServiceTest {
 
         when(this.client.getAllContainers()).thenReturn(expectedContainerList);
 
-        ContainerInfoCollectionVM actual = this.service.getAllContainers();
+        ContainerInfoCollection actual = this.service.getAllContainers();
 
         assertThat(actual.getContainers(), is(expectedContainerList));
     }
@@ -48,7 +48,7 @@ public class ContainerInfoServiceTest {
 
         when(this.client.getFilteredContainers(filters)).thenReturn(expectedContainerList);
 
-        ContainerInfoCollectionVM actual = this.service.getContainersFilterByStatus(stateFilters);
+        ContainerInfoCollection actual = this.service.getContainersFilterByStatus(stateFilters);
 
         assertThat(actual.getContainers(), is(expectedContainerList));
     }

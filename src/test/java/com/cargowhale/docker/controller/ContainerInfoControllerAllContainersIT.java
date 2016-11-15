@@ -1,7 +1,7 @@
 package com.cargowhale.docker.controller;
 
 import com.cargowhale.docker.config.CargoWhaleProperties;
-import com.cargowhale.docker.container.ContainerInfoCollectionVM;
+import com.cargowhale.docker.container.ContainerInfoCollection;
 import com.cargowhale.docker.container.ContainerInfoVM;
 import com.cargowhale.docker.container.ContainerState;
 import org.assertj.core.util.Arrays;
@@ -45,12 +45,12 @@ public class ContainerInfoControllerAllContainersIT {
 
         when(this.restTemplate.getForObject(dockerUri + "/v1.24/containers/json?all=1", ContainerInfoVM[].class)).thenReturn(containerInfoVMs);
 
-        ResponseEntity<ContainerInfoCollectionVM> response = this.client.getForEntity("/api/containers", ContainerInfoCollectionVM.class);
+        ResponseEntity<ContainerInfoCollection> response = this.client.getForEntity("/api/containers", ContainerInfoCollection.class);
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
 
-        ContainerInfoCollectionVM infoCollectionVM = response.getBody();
-        List<ContainerInfoVM> containerInfoVMList = infoCollectionVM.getContainers();
+        ContainerInfoCollection containerInfoCollection = response.getBody();
+        List<ContainerInfoVM> containerInfoVMList = containerInfoCollection.getContainers();
         assertThat(containerInfoVMList.size(), is(0));
     }
 
@@ -63,12 +63,12 @@ public class ContainerInfoControllerAllContainersIT {
 
         when(this.restTemplate.getForObject(dockerUri + "/v1.24/containers/json?all=1", ContainerInfoVM[].class)).thenReturn(containerInfoVMs);
 
-        ResponseEntity<ContainerInfoCollectionVM> response = this.client.getForEntity("/api/containers", ContainerInfoCollectionVM.class);
+        ResponseEntity<ContainerInfoCollection> response = this.client.getForEntity("/api/containers", ContainerInfoCollection.class);
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
 
-        ContainerInfoCollectionVM infoCollectionVM = response.getBody();
-        List<ContainerInfoVM> containerInfoVMList = infoCollectionVM.getContainers();
+        ContainerInfoCollection containerInfoCollection = response.getBody();
+        List<ContainerInfoVM> containerInfoVMList = containerInfoCollection.getContainers();
         assertThat(containerInfoVMList.size(), is(1));
 
         assertThat(containerInfoVMList.get(0), equalTo(containerInfoVM1));
@@ -84,12 +84,12 @@ public class ContainerInfoControllerAllContainersIT {
 
         when(this.restTemplate.getForObject(dockerUri + "/v1.24/containers/json?all=1", ContainerInfoVM[].class)).thenReturn(containerInfoVMs);
 
-        ResponseEntity<ContainerInfoCollectionVM> response = this.client.getForEntity("/api/containers", ContainerInfoCollectionVM.class);
+        ResponseEntity<ContainerInfoCollection> response = this.client.getForEntity("/api/containers", ContainerInfoCollection.class);
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
 
-        ContainerInfoCollectionVM infoCollectionVM = response.getBody();
-        List<ContainerInfoVM> containerInfoVMList = infoCollectionVM.getContainers();
+        ContainerInfoCollection containerInfoCollection = response.getBody();
+        List<ContainerInfoVM> containerInfoVMList = containerInfoCollection.getContainers();
         assertThat(containerInfoVMList.size(), is(2));
 
         assertThat(containerInfoVMList.get(0), equalTo(containerInfoVM1));

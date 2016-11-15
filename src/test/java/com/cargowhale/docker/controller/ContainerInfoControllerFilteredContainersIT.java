@@ -1,7 +1,7 @@
 package com.cargowhale.docker.controller;
 
 import com.cargowhale.docker.config.CargoWhaleProperties;
-import com.cargowhale.docker.container.ContainerInfoCollectionVM;
+import com.cargowhale.docker.container.ContainerInfoCollection;
 import com.cargowhale.docker.container.ContainerInfoVM;
 import com.cargowhale.docker.container.ContainerState;
 import org.assertj.core.util.Arrays;
@@ -76,12 +76,12 @@ public class ContainerInfoControllerFilteredContainersIT {
         when(this.restTemplate.getForObject(dockerUri + "/v1.24/containers/json?filters={filters}", ContainerInfoVM[].class, "{\"status\":[\"" + containerState.state + "\"]}"))
                 .thenReturn(containerInfoVMs);
 
-        ResponseEntity<ContainerInfoCollectionVM> response = this.client.getForEntity("/api/containers?state=" + containerState.state, ContainerInfoCollectionVM.class);
+        ResponseEntity<ContainerInfoCollection> response = this.client.getForEntity("/api/containers?state=" + containerState.state, ContainerInfoCollection.class);
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
 
-        ContainerInfoCollectionVM infoCollectionVM = response.getBody();
-        List<ContainerInfoVM> containerInfoVMList = infoCollectionVM.getContainers();
+        ContainerInfoCollection containerInfoCollection = response.getBody();
+        List<ContainerInfoVM> containerInfoVMList = containerInfoCollection.getContainers();
         assertThat(containerInfoVMList.size(), is(1));
 
         assertThat(containerInfoVMList.get(0), equalTo(containerInfoVM1));

@@ -1,7 +1,7 @@
 package com.cargowhale.docker.container.info;
 
 import com.cargowhale.docker.container.ContainerDetails;
-import com.cargowhale.docker.container.ContainerInfoCollectionVM;
+import com.cargowhale.docker.container.ContainerInfoCollection;
 import com.cargowhale.docker.container.StateFilters;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,21 +25,21 @@ public class ContainerInfoControllerTest {
 
     @Test
     public void getAllContainersReturnsEveryContainerFromService() {
-        ContainerInfoCollectionVM containerInfoCollectionVM = mock(ContainerInfoCollectionVM.class);
+        ContainerInfoCollection containerInfoCollection = mock(ContainerInfoCollection.class);
 
-        when(this.service.getAllContainers()).thenReturn(containerInfoCollectionVM);
+        when(this.service.getAllContainers()).thenReturn(containerInfoCollection);
 
-        assertThat(this.controller.getAllContainers(), is(containerInfoCollectionVM));
+        assertThat(this.controller.getAllContainers(), is(containerInfoCollection));
     }
 
     @Test
     public void getContainersFilterByStatusReturnsFilteredContainersFromService() {
-        ContainerInfoCollectionVM containerInfoCollectionVM = mock(ContainerInfoCollectionVM.class);
+        ContainerInfoCollection containerInfoCollection = mock(ContainerInfoCollection.class);
         StateFilters stateFilters = mock(StateFilters.class);
 
-        when(this.service.getContainersFilterByStatus(stateFilters)).thenReturn(containerInfoCollectionVM);
+        when(this.service.getContainersFilterByStatus(stateFilters)).thenReturn(containerInfoCollection);
 
-        assertThat(this.controller.getContainersFilterByStatus(stateFilters), is(containerInfoCollectionVM));
+        assertThat(this.controller.getContainersFilterByStatus(stateFilters), is(containerInfoCollection));
     }
 
     @Test

@@ -4,11 +4,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-public class ContainerInfoCollectionVM {
+public class ContainerInfoCollection {
 
     private final List<ContainerInfoVM> containers;
 
-    public ContainerInfoCollectionVM(@JsonProperty("containers") final List<ContainerInfoVM> containers) {
+    public ContainerInfoCollection(@JsonProperty("containers") final List<ContainerInfoVM> containers) {
         this.containers = containers;
     }
 

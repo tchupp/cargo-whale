@@ -25,7 +25,7 @@ public class ContainerInfoController {
     @RequestMapping(value = "/containers",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ContainerInfoCollectionVM getAllContainers() {
+    public ContainerInfoCollection getAllContainers() {
         return this.service.getAllContainers();
     }
 
@@ -33,7 +33,7 @@ public class ContainerInfoController {
             params = "state",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ContainerInfoCollectionVM getContainersFilterByStatus(StateFilters stateFilters) {
+    public ContainerInfoCollection getContainersFilterByStatus(StateFilters stateFilters) {
         return this.service.getContainersFilterByStatus(stateFilters);
     }
 
