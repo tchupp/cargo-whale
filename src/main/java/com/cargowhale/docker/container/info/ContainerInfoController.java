@@ -17,8 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ContainerInfoController {
 
     @InitBinder
-    public void initBinder(WebDataBinder binder)
-    {
+    public void initBinder(WebDataBinder binder) {
         binder.registerCustomEditor(ContainerState.class, new ContainerEnumConverter());
     }
 
