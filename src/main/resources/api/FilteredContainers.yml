@@ -63,12 +63,13 @@ response:
 
 request:
   method: GET
-  url: /api/containers?state=BADSTATE
+  url: /api/containers?state=badState
 
 response:
   status: 400
   body: >
   {
-    "error": "Bad Request",
-    "msg": "Bad Filter"
+    "path": "/api/containers",
+    "message": "Bad Filter",
+    "error": "class org.springframework.validation.BindException"
   }
