@@ -6,13 +6,13 @@ import java.util.List;
 
 public class ContainerInfoCollection {
 
-    private final List<ContainerInfoVM> containers;
+    private final List<ContainerInfo> containers;
 
-    public ContainerInfoCollection(@JsonProperty("containers") final List<ContainerInfoVM> containers) {
+    public ContainerInfoCollection(@JsonProperty("containers") final List<ContainerInfo> containers) {
         this.containers = containers;
     }
 
-    public List<ContainerInfoVM> getContainers() {
+    public List<ContainerInfo> getContainers() {
         return containers;
     }
 }

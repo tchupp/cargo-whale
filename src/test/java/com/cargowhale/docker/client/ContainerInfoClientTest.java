@@ -1,7 +1,7 @@
 package com.cargowhale.docker.client;
 
 import com.cargowhale.docker.container.ContainerDetails;
-import com.cargowhale.docker.container.ContainerInfoVM;
+import com.cargowhale.docker.container.ContainerInfo;
 import com.cargowhale.docker.util.JsonConverter;
 import org.assertj.core.util.Arrays;
 import org.junit.Test;
@@ -36,10 +36,10 @@ public class ContainerInfoClientTest {
 
     @Test
     public void getAllContainersReturnsEveryContainerFromDockerApi() {
-        final ContainerInfoVM[] containerInfoArray = Arrays.array(mock(ContainerInfoVM.class));
+        final ContainerInfo[] containerInfoArray = Arrays.array(mock(ContainerInfo.class));
 
         when(this.endpointBuilder.getContainersEndpoint()).thenReturn(DOCKER_ENDPOINT);
-        when(this.template.getForObject(DOCKER_ENDPOINT + "?all=1", ContainerInfoVM[].class)).thenReturn(containerInfoArray);
+        when(this.template.getForObject(DOCKER_ENDPOINT + "?all=1", ContainerInfo[].class)).thenReturn(containerInfoArray);
 
         assertThat(this.client.getAllContainers(), contains(containerInfoArray));
     }
@@ -49,11 +49,11 @@ public class ContainerInfoClientTest {
         String filterJson = "json filter string";
 
         DockerContainerFilters filters = mock(DockerContainerFilters.class);
-        final ContainerInfoVM[] containerInfoArray = Arrays.array(mock(ContainerInfoVM.class));
+        final ContainerInfo[] containerInfoArray = Arrays.array(mock(ContainerInfo.class));
 
         when(this.endpointBuilder.getContainersEndpoint()).thenReturn(DOCKER_ENDPOINT);
         when(this.converter.toJson(filters)).thenReturn(filterJson);
-        when(this.template.getForObject(DOCKER_ENDPOINT + "?filters={filters}", ContainerInfoVM[].class, filterJson))
+        when(this.template.getForObject(DOCKER_ENDPOINT + "?filters={filters}", ContainerInfo[].class, filterJson))
                 .thenReturn(containerInfoArray);
 
         assertThat(this.client.getFilteredContainers(filters), contains(containerInfoArray));

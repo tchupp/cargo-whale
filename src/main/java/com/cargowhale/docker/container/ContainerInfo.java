@@ -4,17 +4,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-public class ContainerInfoVM {
+public class ContainerInfo {
 
     private final String id;
     private final List<String> names;
     private final String image;
     private final ContainerState state;
 
-    public ContainerInfoVM(@JsonProperty("Id") final String id,
-                           @JsonProperty("Names") final List<String> names,
-                           @JsonProperty("Image") final String image,
-                           @JsonProperty("State") final ContainerState state) {
+    public ContainerInfo(@JsonProperty("Id") final String id,
+                         @JsonProperty("Names") final List<String> names,
+                         @JsonProperty("Image") final String image,
+                         @JsonProperty("State") final ContainerState state) {
         this.id = id;
         this.names = names;
         this.image = image;
@@ -42,7 +42,7 @@ public class ContainerInfoVM {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        final ContainerInfoVM that = (ContainerInfoVM) o;
+        final ContainerInfo that = (ContainerInfo) o;
 
         if (names != null ? !names.equals(that.names) : that.names != null) return false;
         if (image != null ? !image.equals(that.image) : that.image != null) return false;

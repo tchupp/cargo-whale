@@ -4,7 +4,7 @@ import com.cargowhale.docker.client.ContainerInfoClient;
 import com.cargowhale.docker.client.DockerContainerFilters;
 import com.cargowhale.docker.container.ContainerDetails;
 import com.cargowhale.docker.container.ContainerInfoCollection;
-import com.cargowhale.docker.container.ContainerInfoVM;
+import com.cargowhale.docker.container.ContainerInfo;
 import com.cargowhale.docker.container.StateFilters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,14 +22,14 @@ public class ContainerInfoService {
     }
 
     public ContainerInfoCollection getAllContainers() {
-        List<ContainerInfoVM> allContainers = this.client.getAllContainers();
+        List<ContainerInfo> allContainers = this.client.getAllContainers();
         return new ContainerInfoCollection(allContainers);
     }
 
     public ContainerInfoCollection getContainersFilterByStatus(StateFilters stateFilters) {
         DockerContainerFilters dockerContainerFilters = new DockerContainerFilters(stateFilters.getState());
 
-        List<ContainerInfoVM> filteredContainers = this.client.getFilteredContainers(dockerContainerFilters);
+        List<ContainerInfo> filteredContainers = this.client.getFilteredContainers(dockerContainerFilters);
         return new ContainerInfoCollection(filteredContainers);
     }
 

@@ -29,7 +29,7 @@ public class ContainerInfoServiceTest {
 
     @Test
     public void getAllContainersReturnsAllContainersFromClient() {
-        List<ContainerInfoVM> expectedContainerList = Collections.singletonList(mock(ContainerInfoVM.class));
+        List<ContainerInfo> expectedContainerList = Collections.singletonList(mock(ContainerInfo.class));
 
         when(this.client.getAllContainers()).thenReturn(expectedContainerList);
 
@@ -44,7 +44,7 @@ public class ContainerInfoServiceTest {
 
         StateFilters stateFilters = new StateFilters(containerStatuses);
         DockerContainerFilters filters = new DockerContainerFilters(containerStatuses);
-        List<ContainerInfoVM> expectedContainerList = Collections.singletonList(mock(ContainerInfoVM.class));
+        List<ContainerInfo> expectedContainerList = Collections.singletonList(mock(ContainerInfo.class));
 
         when(this.client.getFilteredContainers(filters)).thenReturn(expectedContainerList);
 

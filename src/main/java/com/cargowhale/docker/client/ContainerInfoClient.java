@@ -1,7 +1,7 @@
 package com.cargowhale.docker.client;
 
 import com.cargowhale.docker.container.ContainerDetails;
-import com.cargowhale.docker.container.ContainerInfoVM;
+import com.cargowhale.docker.container.ContainerInfo;
 import com.cargowhale.docker.util.JsonConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -24,18 +24,18 @@ public class ContainerInfoClient {
         this.converter = converter;
     }
 
-    public List<ContainerInfoVM> getAllContainers() {
+    public List<ContainerInfo> getAllContainers() {
         String containersEndpoint = this.endpointBuilder.getContainersEndpoint();
 
-        ContainerInfoVM[] containerInfoArray = this.restTemplate.getForObject(containersEndpoint + "?all=1", ContainerInfoVM[].class);
+        ContainerInfo[] containerInfoArray = this.restTemplate.getForObject(containersEndpoint + "?all=1", ContainerInfo[].class);
         return Arrays.asList(containerInfoArray);
     }
 
-    public List<ContainerInfoVM> getFilteredContainers(DockerContainerFilters filters) {
+    public List<ContainerInfo> getFilteredContainers(DockerContainerFilters filters) {
         String containersEndpoint = this.endpointBuilder.getContainersEndpoint();
         String filterJson = this.converter.toJson(filters);
 
-        ContainerInfoVM[] containerInfoArray = this.restTemplate.getForObject(containersEndpoint + "?filters={filters}", ContainerInfoVM[].class, filterJson);
+        ContainerInfo[] containerInfoArray = this.restTemplate.getForObject(containersEndpoint + "?filters={filters}", ContainerInfo[].class, filterJson);
         return Arrays.asList(containerInfoArray);
     }
 

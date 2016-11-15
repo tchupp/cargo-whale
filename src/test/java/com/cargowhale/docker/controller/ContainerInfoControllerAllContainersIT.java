@@ -2,7 +2,7 @@ package com.cargowhale.docker.controller;
 
 import com.cargowhale.docker.config.CargoWhaleProperties;
 import com.cargowhale.docker.container.ContainerInfoCollection;
-import com.cargowhale.docker.container.ContainerInfoVM;
+import com.cargowhale.docker.container.ContainerInfo;
 import com.cargowhale.docker.container.ContainerState;
 import org.assertj.core.util.Arrays;
 import org.junit.Test;
@@ -41,58 +41,58 @@ public class ContainerInfoControllerAllContainersIT {
     public void getAllContainers_NoContainers() {
         String dockerUri = this.properties.getDockerUri();
 
-        ContainerInfoVM[] containerInfoVMs = Arrays.array();
+        ContainerInfo[] containerInfoArray = Arrays.array();
 
-        when(this.restTemplate.getForObject(dockerUri + "/v1.24/containers/json?all=1", ContainerInfoVM[].class)).thenReturn(containerInfoVMs);
+        when(this.restTemplate.getForObject(dockerUri + "/v1.24/containers/json?all=1", ContainerInfo[].class)).thenReturn(containerInfoArray);
 
         ResponseEntity<ContainerInfoCollection> response = this.client.getForEntity("/api/containers", ContainerInfoCollection.class);
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
 
         ContainerInfoCollection containerInfoCollection = response.getBody();
-        List<ContainerInfoVM> containerInfoVMList = containerInfoCollection.getContainers();
-        assertThat(containerInfoVMList.size(), is(0));
+        List<ContainerInfo> containerInfoList = containerInfoCollection.getContainers();
+        assertThat(containerInfoList.size(), is(0));
     }
 
     @Test
     public void getAllContainers_OneContainers() {
         String dockerUri = this.properties.getDockerUri();
 
-        ContainerInfoVM containerInfoVM1 = new ContainerInfoVM("hjf7y2nj1", Collections.singletonList("test-container1"), "test-image", ContainerState.CREATED);
-        ContainerInfoVM[] containerInfoVMs = Arrays.array(containerInfoVM1);
+        ContainerInfo containerInfo1 = new ContainerInfo("hjf7y2nj1", Collections.singletonList("test-container1"), "test-image", ContainerState.CREATED);
+        ContainerInfo[] containerInfoArray = Arrays.array(containerInfo1);
 
-        when(this.restTemplate.getForObject(dockerUri + "/v1.24/containers/json?all=1", ContainerInfoVM[].class)).thenReturn(containerInfoVMs);
+        when(this.restTemplate.getForObject(dockerUri + "/v1.24/containers/json?all=1", ContainerInfo[].class)).thenReturn(containerInfoArray);
 
         ResponseEntity<ContainerInfoCollection> response = this.client.getForEntity("/api/containers", ContainerInfoCollection.class);
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
 
         ContainerInfoCollection containerInfoCollection = response.getBody();
-        List<ContainerInfoVM> containerInfoVMList = containerInfoCollection.getContainers();
-        assertThat(containerInfoVMList.size(), is(1));
+        List<ContainerInfo> containerInfoList = containerInfoCollection.getContainers();
+        assertThat(containerInfoList.size(), is(1));
 
-        assertThat(containerInfoVMList.get(0), equalTo(containerInfoVM1));
+        assertThat(containerInfoList.get(0), equalTo(containerInfo1));
     }
 
     @Test
     public void getAllContainers_MultipleContainers() {
         String dockerUri = this.properties.getDockerUri();
 
-        ContainerInfoVM containerInfoVM1 = new ContainerInfoVM("78nm12hb3", Collections.singletonList("test-container1"), "test-image", ContainerState.CREATED);
-        ContainerInfoVM containerInfoVM2 = new ContainerInfoVM("nu91o2n3b", Collections.singletonList("test-container2"), "test-image", ContainerState.RUNNING);
-        ContainerInfoVM[] containerInfoVMs = Arrays.array(containerInfoVM1, containerInfoVM2);
+        ContainerInfo containerInfo1 = new ContainerInfo("78nm12hb3", Collections.singletonList("test-container1"), "test-image", ContainerState.CREATED);
+        ContainerInfo containerInfo2 = new ContainerInfo("nu91o2n3b", Collections.singletonList("test-container2"), "test-image", ContainerState.RUNNING);
+        ContainerInfo[] containerInfoArray = Arrays.array(containerInfo1, containerInfo2);
 
-        when(this.restTemplate.getForObject(dockerUri + "/v1.24/containers/json?all=1", ContainerInfoVM[].class)).thenReturn(containerInfoVMs);
+        when(this.restTemplate.getForObject(dockerUri + "/v1.24/containers/json?all=1", ContainerInfo[].class)).thenReturn(containerInfoArray);
 
         ResponseEntity<ContainerInfoCollection> response = this.client.getForEntity("/api/containers", ContainerInfoCollection.class);
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
 
         ContainerInfoCollection containerInfoCollection = response.getBody();
-        List<ContainerInfoVM> containerInfoVMList = containerInfoCollection.getContainers();
-        assertThat(containerInfoVMList.size(), is(2));
+        List<ContainerInfo> containerInfoList = containerInfoCollection.getContainers();
+        assertThat(containerInfoList.size(), is(2));
 
-        assertThat(containerInfoVMList.get(0), equalTo(containerInfoVM1));
-        assertThat(containerInfoVMList.get(1), equalTo(containerInfoVM2));
+        assertThat(containerInfoList.get(0), equalTo(containerInfo1));
+        assertThat(containerInfoList.get(1), equalTo(containerInfo2));
     }
 }

@@ -2,7 +2,7 @@ package com.cargowhale.docker.controller;
 
 import com.cargowhale.docker.config.CargoWhaleProperties;
 import com.cargowhale.docker.container.ContainerInfoCollection;
-import com.cargowhale.docker.container.ContainerInfoVM;
+import com.cargowhale.docker.container.ContainerInfo;
 import com.cargowhale.docker.container.ContainerState;
 import org.assertj.core.util.Arrays;
 import org.junit.Test;
@@ -70,20 +70,20 @@ public class ContainerInfoControllerFilteredContainersIT {
     private void verifySingleStateFilter(final ContainerState containerState) {
         String dockerUri = this.properties.getDockerUri();
 
-        ContainerInfoVM containerInfoVM1 = new ContainerInfoVM("test-id", Collections.singletonList("test-container1"), "test-image", containerState);
-        ContainerInfoVM[] containerInfoVMs = Arrays.array(containerInfoVM1);
+        ContainerInfo containerInfo1 = new ContainerInfo("test-id", Collections.singletonList("test-container1"), "test-image", containerState);
+        ContainerInfo[] containerInfoArray = Arrays.array(containerInfo1);
 
-        when(this.restTemplate.getForObject(dockerUri + "/v1.24/containers/json?filters={filters}", ContainerInfoVM[].class, "{\"status\":[\"" + containerState.state + "\"]}"))
-                .thenReturn(containerInfoVMs);
+        when(this.restTemplate.getForObject(dockerUri + "/v1.24/containers/json?filters={filters}", ContainerInfo[].class, "{\"status\":[\"" + containerState.state + "\"]}"))
+                .thenReturn(containerInfoArray);
 
         ResponseEntity<ContainerInfoCollection> response = this.client.getForEntity("/api/containers?state=" + containerState.state, ContainerInfoCollection.class);
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
 
         ContainerInfoCollection containerInfoCollection = response.getBody();
-        List<ContainerInfoVM> containerInfoVMList = containerInfoCollection.getContainers();
-        assertThat(containerInfoVMList.size(), is(1));
+        List<ContainerInfo> containerInfoList = containerInfoCollection.getContainers();
+        assertThat(containerInfoList.size(), is(1));
 
-        assertThat(containerInfoVMList.get(0), equalTo(containerInfoVM1));
+        assertThat(containerInfoList.get(0), equalTo(containerInfo1));
     }
 }
