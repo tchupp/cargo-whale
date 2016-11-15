@@ -1,5 +1,6 @@
 package com.cargowhale.docker.client;
 
+import com.cargowhale.docker.container.ContainerDetails;
 import com.cargowhale.docker.container.ContainerInfoVM;
 import com.cargowhale.docker.util.JsonConverter;
 import org.assertj.core.util.Arrays;
@@ -12,6 +13,7 @@ import org.springframework.web.client.RestTemplate;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -59,10 +61,13 @@ public class ContainerInfoClientTest {
 
     @Test
     public void getContainerByIdReturnsCorrectContainer() throws Exception {
-        ContainerInfoVM containerInfo = mock(ContainerInfoVM.class);
+        String containerId = "container id yo";
+        ContainerDetails containerDetails = mock(ContainerDetails.class);
 
-        when(this.endpointBuilder.getContainersEndpoint()).thenReturn(DOCKER_ENDPOINT);
-        when(this.template.getForObject(DOCKER_ENDPOINT + "", ContainerInfoVM.class)).thenReturn(containerInfo);
+        when(this.endpointBuilder.getContainerByIdEndpoint(containerId)).thenReturn(DOCKER_ENDPOINT + containerId);
+        when(this.template.getForObject(DOCKER_ENDPOINT + containerId, ContainerDetails.class)).thenReturn(containerDetails);
+
+        assertThat(this.client.getContainerDetailsById(containerId), is(containerDetails));
     }
 }
 

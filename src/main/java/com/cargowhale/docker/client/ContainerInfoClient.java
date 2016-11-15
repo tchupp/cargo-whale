@@ -1,5 +1,6 @@
 package com.cargowhale.docker.client;
 
+import com.cargowhale.docker.container.ContainerDetails;
 import com.cargowhale.docker.container.ContainerInfoVM;
 import com.cargowhale.docker.util.JsonConverter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,5 +37,11 @@ public class ContainerInfoClient {
 
         ContainerInfoVM[] containerInfoArray = this.restTemplate.getForObject(containersEndpoint + "?filters={filters}", ContainerInfoVM[].class, filterJson);
         return Arrays.asList(containerInfoArray);
+    }
+
+    public ContainerDetails getContainerDetailsById(final String containerId) {
+        String containerByIdEndpoint = this.endpointBuilder.getContainerByIdEndpoint(containerId);
+
+        return this.restTemplate.getForObject(containerByIdEndpoint, ContainerDetails.class);
     }
 }
