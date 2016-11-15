@@ -25,27 +25,73 @@ cargowhale:
         ]
       }
 
-docker:
   request:
     method: GET
-    url: /v1.24/containers/json?all=1
+    url: /api/containers?state=running
 
   response:
     status: 200
     body: >
-      [
-        {
-          "names": [
-            "cargo-whale-test"
-          ],
-          "image": "cargo-whale-docker",
-          "state": "exited"
-        },
-        {
-          "names": [
-            "cargo-whale-db"
-          ],
-          "image": "mysql:latest",
-          "state": "created"
-        }
-      ]
+      {
+        "containers": [
+          {
+            "names": [
+              "/docker_cargowhaledocker-app_1"
+            ],
+            "image": "cargo-whale-docker",
+            "state": "running"
+          },
+          {
+            "names": [
+              "/socat-docker"
+            ],
+            "image": "rxnctrllabs/socat",
+            "state": "running"
+          }
+        ]
+      }
+
+  request:
+    method: GET
+    url: /api/containers?state=running,exited
+
+  response:
+    status: 200
+    body: >
+      {
+        "containers": [
+          {
+            "names": [
+              "/docker_cargowhaledocker-app_1"
+            ],
+            "image": "cargo-whale-docker",
+            "state": "running"
+          },
+          {
+            "names": [
+              "/socat-docker"
+            ],
+            "image": "rxnctrllabs/socat",
+            "state": "running"
+          },
+          {
+            "names": [
+              "/drunk_goldwasser"
+            ],
+            "image": "ubuntu",
+            "state": "exited"
+          }
+        ]
+      }
+
+  request:
+    method: GET
+    url: /api/containers?state=BADSTATE
+
+  response:
+    status: 400
+    body: >
+    {
+      "error": "Bad Request",
+      "msg": "Bad Filter"
+    }

@@ -93,9 +93,6 @@ public class ContainerInfoControllerFilteredContainersIT {
         String dockerUri = this.properties.getDockerUri();
         String state = "I_AM_A_TEAPOT";
 
-        when(this.restTemplate.getForObject(dockerUri + "/v1.24/containers/json?filters={filters}", ContainerInfoVM[].class, "{\"status\":[\"" + state + "\"]}"))
-                .thenThrow(new HttpServerErrorException(HttpStatus.I_AM_A_TEAPOT));
-
         ResponseEntity<ContainerInfoCollectionVM> response = this.client.getForEntity("/api/containers?state=" + state, ContainerInfoCollectionVM.class);
 
         assertThat(response.getStatusCode(), is(HttpStatus.BAD_REQUEST));
