@@ -1,51 +1,25 @@
-cargowhale:
-  request:
-    method: GET
-    url: /api/containers
+request:
+  method: GET
+  url: /api/containers
 
-  response:
-    status: 200
-    body: >
+response:
+  status: 200
+  body: >
+  {
+    "containers": [
       {
-        "containers": [
-          {
-            "names": [
-              "cargo-whale-test"
-            ],
-            "image": "cargo-whale-docker",
-            "state": "exited"
-          },
-          {
-            "names": [
-              "cargo-whale-db"
-            ],
-            "image": "mysql:latest",
-            "state": "created"
-          }
-        ]
+        "names": [
+          "cargo-whale-test"
+        ],
+        "image": "cargo-whale-docker",
+        "state": "exited"
+      },
+      {
+        "names": [
+          "cargo-whale-db"
+        ],
+        "image": "mysql:latest",
+        "state": "created"
       }
-
-docker:
-  request:
-    method: GET
-    url: /v1.24/containers/json?all=1
-
-  response:
-    status: 200
-    body: >
-      [
-        {
-          "names": [
-            "cargo-whale-test"
-          ],
-          "image": "cargo-whale-docker",
-          "state": "exited"
-        },
-        {
-          "names": [
-            "cargo-whale-db"
-          ],
-          "image": "mysql:latest",
-          "state": "created"
-        }
-      ]
+    ]
+  }
