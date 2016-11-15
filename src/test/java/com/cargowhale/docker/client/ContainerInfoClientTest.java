@@ -1,7 +1,7 @@
 package com.cargowhale.docker.client;
 
-import com.cargowhale.docker.container.ContainerDetails;
-import com.cargowhale.docker.container.ContainerInfo;
+import com.cargowhale.docker.container.info.model.ContainerDetails;
+import com.cargowhale.docker.container.info.model.ContainerInfo;
 import com.cargowhale.docker.util.JsonConverter;
 import org.assertj.core.util.Arrays;
 import org.junit.Test;

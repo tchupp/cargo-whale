@@ -1,6 +1,8 @@
 package com.cargowhale.docker.container.info;
 
 import com.cargowhale.docker.container.*;
+import com.cargowhale.docker.container.info.model.ContainerDetails;
+import com.cargowhale.docker.container.info.model.ContainerInfoCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.WebDataBinder;

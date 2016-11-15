@@ -1,7 +1,7 @@
 package com.cargowhale.docker.container.info;
 
-import com.cargowhale.docker.container.ContainerDetails;
-import com.cargowhale.docker.container.ContainerInfoCollection;
+import com.cargowhale.docker.container.info.model.ContainerDetails;
+import com.cargowhale.docker.container.info.model.ContainerInfoCollection;
 import com.cargowhale.docker.container.StateFilters;
 import org.junit.Test;
 import org.junit.runner.RunWith;

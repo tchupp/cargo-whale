@@ -1,8 +1,8 @@
 package com.cargowhale.docker.controller;
 
 import com.cargowhale.docker.config.CargoWhaleProperties;
-import com.cargowhale.docker.container.ContainerInfoCollection;
-import com.cargowhale.docker.container.ContainerInfo;
+import com.cargowhale.docker.container.info.model.ContainerInfoCollection;
+import com.cargowhale.docker.container.info.model.ContainerInfo;
 import com.cargowhale.docker.container.ContainerState;
 import org.assertj.core.util.Arrays;
 import org.junit.Test;
