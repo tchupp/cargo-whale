@@ -20,15 +20,15 @@ node {
             }
         } finally {
             stage('Status - Final') {
-                /*step([$class      : 'GitHubPRBuildStatusPublisher',
+                step([$class      : 'GitHubPRBuildStatusPublisher',
                       buildMessage: [failureMsg: [content: 'Build failed..'],
                                      successMsg: [content: 'Build succeeded!']],
                       statusMsg   : [content: '${GITHUB_PR_COND_REF} run ended'],
                       unstableAs  : 'FAILURE']
-                )*/
-                step([$class       : 'GitHubCommitStatusSetter',
+                )
+                /*step([$class       : 'GitHubCommitStatusSetter',
                       contextSource: [$class: 'ManuallyEnteredCommitContextSource', context: 'build_status'],
-                      errorHandlers: [[$class: 'ShallowAnyErrorHandler']]])
+                      errorHandlers: [[$class: 'ShallowAnyErrorHandler']]])*/
             }
         }
 
