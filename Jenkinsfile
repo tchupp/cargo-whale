@@ -21,5 +21,9 @@ node {
         stage('Integration Tests') {
             sh 'mvn verify'
         }
+
+        stage('Cleanup') {
+            step([$class: 'WsCleanup'])
+        }
     }
 }
