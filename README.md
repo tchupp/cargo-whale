@@ -1,5 +1,5 @@
 # CargoWhaleDocker
-[![Build Status](http://jenkins.rxnctrllabs.tech/buildStatus/icon?job=Cargo_Whale_Docker_Branches/CW-33&build=9)](http://jenkins.rxnctrllabs.tech/job/Cargo_Whale_Docker_Branches/job/CW-33/9/)
+[![Build Status](http://jenkins.rxnctrllabs.tech/buildStatus/icon?job=Cargo_Whale_Docker_Master)](http://jenkins.rxnctrllabs.tech/job/Cargo_Whale_Docker_Master/)
 
 ## Development
 
