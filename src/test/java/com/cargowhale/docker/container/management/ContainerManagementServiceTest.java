@@ -1,6 +1,6 @@
 package com.cargowhale.docker.container.management;
 
-import com.cargowhale.docker.client.ContainerInfoClient;
+import com.cargowhale.docker.client.ContainerManagementClient;
 import com.cargowhale.docker.domain.ChangeStateRequest;
 import com.cargowhale.docker.domain.ChangeStateResponse;
 import org.junit.Test;
@@ -20,7 +20,7 @@ public class ContainerManagementServiceTest {
     private ContainerManagementService service;
 
     @Mock
-    private ContainerInfoClient client;
+    private ContainerManagementClient client;
 
     @Test
     public void setContainerStateReturnsContainerNameFromClient() {
