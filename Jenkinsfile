@@ -7,10 +7,6 @@ node {
                 fileExists 'pom.xml'
             }
 
-            stage('Status - Pending') {
-                step([$class: 'GitHubSetCommitStatusBuilder'])
-            }
-
             stage('Clean') {
                 sh 'mvn clean'
             }
@@ -24,7 +20,13 @@ node {
             }
         } finally {
             stage('Status - Final') {
-                step([$class: 'GitHubCommitStatusSetter'])
+                step([$class      : 'GitHubPRBuildStatusPublisher',
+                      buildMessage: [failureMsg: [content: 'Build failed..'],
+                                     successMsg: [content: 'Build succeeded!']],
+                      errorHandler: [buildStatus: < object of type hudson.model.Result >],
+                      statusMsg   : [content: '${GITHUB_PR_COND_REF} run ended'],
+                      unstableAs  : 'FAILURE']
+                )
             }
         }
 
