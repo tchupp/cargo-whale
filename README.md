@@ -1,4 +1,5 @@
 # CargoWhaleDocker
+[![Build Status](http://jenkins.rxnctrllabs.tech/buildStatus/icon?job=Cargo_Whale_Docker_Master)](http://jenkins.rxnctrllabs.tech/job/Cargo_Whale_Docker_Master/)
 
 ## Development
 
@@ -43,3 +44,7 @@ To run as a daemon.
 To stop & remove the daemon, run:
 
     docker-compose -f src/main/docker/app.yml down
+
+## !IMPORTANT NOTE!
+
+"**Id**" not "**ID**"

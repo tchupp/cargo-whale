@@ -1,24 +1,21 @@
 package com.cargowhale.docker.container.info;
 
 import com.cargowhale.docker.container.ContainerEnumConverter;
-import com.cargowhale.docker.container.ContainerInfoCollectionVM;
 import com.cargowhale.docker.container.ContainerState;
 import com.cargowhale.docker.container.StateFilters;
+import com.cargowhale.docker.container.info.model.ContainerDetails;
+import com.cargowhale.docker.container.info.model.ContainerInfoCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
 public class ContainerInfoController {
 
     @InitBinder
-    public void initBinder(WebDataBinder binder)
-    {
+    public void initBinder(WebDataBinder binder) {
         binder.registerCustomEditor(ContainerState.class, new ContainerEnumConverter());
     }
 
@@ -32,7 +29,7 @@ public class ContainerInfoController {
     @RequestMapping(value = "/containers",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ContainerInfoCollectionVM getAllContainers() {
+    public ContainerInfoCollection getAllContainers() {
         return this.service.getAllContainers();
     }
 
@@ -40,7 +37,14 @@ public class ContainerInfoController {
             params = "state",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ContainerInfoCollectionVM getContainersFilterByStatus(StateFilters stateFilters) {
+    public ContainerInfoCollection getContainersFilterByStatus(StateFilters stateFilters) {
         return this.service.getContainersFilterByStatus(stateFilters);
+    }
+
+    @RequestMapping(value = "/containers/{containerId}",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ContainerDetails getContainerById(@PathVariable String containerId) {
+        return this.service.getContainerDetailsById(containerId);
     }
 }
