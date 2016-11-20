@@ -2,8 +2,9 @@ import {NgModule} from "@angular/core";
 import {BrowserModule} from "@angular/platform-browser";
 import {HttpModule} from "@angular/http";
 
-import {ContainerListComponent} from "./layouts/containers/container-list.component";
-import {ContainerService} from "./layouts/containers/container.service";
+import {MainComponent, SidebarComponent} from "./layouts";
+import {ContainerListComponent} from "./container/container-list.component";
+import {ContainerService} from "./container/container.service";
 
 
 @NgModule({
@@ -12,12 +13,14 @@ import {ContainerService} from "./layouts/containers/container.service";
         HttpModule
     ],
     declarations: [
-        ContainerListComponent
+        MainComponent,
+        ContainerListComponent,
+        SidebarComponent
     ],
     providers: [
         ContainerService
     ],
-    bootstrap: [ContainerListComponent]
+    bootstrap: [MainComponent]
 })
 export class CargoWhaleDockerAppModule {
 }
