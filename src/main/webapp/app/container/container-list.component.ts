@@ -5,7 +5,7 @@ import {Container} from "./container.model";
 
 @Component({
     selector: 'cw-containers',
-    templateUrl: 'app/layouts/containers/container-list.html'
+    templateUrl: 'app/container/container-list.html'
 })
 export class ContainerListComponent implements OnInit {
 
