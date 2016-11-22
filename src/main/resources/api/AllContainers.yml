@@ -8,28 +8,40 @@ response:
   {
     "containers": [
       {
-        "id": "81e08121071db811",
         "names": [
           "/evil_shaman"
         ],
         "image": "ubuntu",
-        "state": "running"
+        "state": "running",
+        "_links": {
+          "self": {
+            "href": "http://cargo-whale:8392/api/containers/81e08121071db811"
+          }
+        }
       },
       {
-        "id": "8cd9654e5d5edb054",
         "names": [
           "/cargowhaledocker-app_1"
         ],
         "image": "cargo-whale-docker",
-        "state": "exited"
+        "state": "exited",
+        "_links": {
+          "self": {
+            "href": "http://cargo-whale:8392/api/containers/8cd9654e5d5edb054"
+          }
+        }
       },
       {
-        "id": "f911b0f4e0b19e3da3",
         "names": [
           "/socket-docker-proxy"
         ],
         "image": "cargo_whale/socat",
-        "state": "running"
+        "state": "running",
+        "_links": {
+          "self": {
+            "href": "http://cargo-whale:8392/api/containers/f911b0f4e0b19e3da3"
+          }
+        }
       }
     ]
   }

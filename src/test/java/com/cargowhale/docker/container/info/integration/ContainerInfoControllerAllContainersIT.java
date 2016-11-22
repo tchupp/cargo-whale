@@ -11,6 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.hateoas.Resource;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -45,11 +49,11 @@ public class ContainerInfoControllerAllContainersIT {
 
         when(this.restTemplate.getForObject(dockerUri + "/v1.24/containers/json?all=1", ContainerSummary[].class)).thenReturn(containerSummaryArray);
 
-        ResponseEntity<ContainerSummaryIndex> response = this.client.getForEntity("/api/containers", ContainerSummaryIndex.class);
+        ResponseEntity<Resource<ContainerSummaryIndex>> response = exchange("/api/containers");
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
 
-        ContainerSummaryIndex containerSummaryIndex = response.getBody();
+        ContainerSummaryIndex containerSummaryIndex = response.getBody().getContent();
         List<ContainerSummary> containerSummaryList = containerSummaryIndex.getContainers();
         assertThat(containerSummaryList.size(), is(0));
     }
@@ -63,15 +67,15 @@ public class ContainerInfoControllerAllContainersIT {
 
         when(this.restTemplate.getForObject(dockerUri + "/v1.24/containers/json?all=1", ContainerSummary[].class)).thenReturn(containerSummaryArray);
 
-        ResponseEntity<ContainerSummaryIndex> response = this.client.getForEntity("/api/containers", ContainerSummaryIndex.class);
+        ResponseEntity<Resource<ContainerSummaryIndex>> response = exchange("/api/containers");
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
 
-        ContainerSummaryIndex containerSummaryIndex = response.getBody();
+        ContainerSummaryIndex containerSummaryIndex = response.getBody().getContent();
         List<ContainerSummary> containerSummaryList = containerSummaryIndex.getContainers();
         assertThat(containerSummaryList.size(), is(1));
 
-        assertThat(containerSummaryList.get(0), equalTo(containerSummary1));
+        assertThat(containerSummaryList.get(0), is(containerSummary1));
     }
 
     @Test
@@ -84,15 +88,22 @@ public class ContainerInfoControllerAllContainersIT {
 
         when(this.restTemplate.getForObject(dockerUri + "/v1.24/containers/json?all=1", ContainerSummary[].class)).thenReturn(containerSummaryArray);
 
-        ResponseEntity<ContainerSummaryIndex> response = this.client.getForEntity("/api/containers", ContainerSummaryIndex.class);
+        ResponseEntity<Resource<ContainerSummaryIndex>> response = exchange("/api/containers");
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
 
-        ContainerSummaryIndex containerSummaryIndex = response.getBody();
+        ContainerSummaryIndex containerSummaryIndex = response.getBody().getContent();
         List<ContainerSummary> containerSummaryList = containerSummaryIndex.getContainers();
         assertThat(containerSummaryList.size(), is(2));
 
         assertThat(containerSummaryList.get(0), equalTo(containerSummary1));
         assertThat(containerSummaryList.get(1), equalTo(containerSummary2));
+    }
+
+    private ResponseEntity<Resource<ContainerSummaryIndex>> exchange(final String url) {
+        HttpEntity<?> requestEntity = null;
+        ParameterizedTypeReference<Resource<ContainerSummaryIndex>> typeReference = new ParameterizedTypeReference<Resource<ContainerSummaryIndex>>() {};
+
+        return this.client.exchange(url, HttpMethod.GET, requestEntity, typeReference, Collections.emptyMap());
     }
 }

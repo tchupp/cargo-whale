@@ -7,13 +7,13 @@ import groovy.transform.ToString
 
 import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY
 
-@EqualsAndHashCode
+@EqualsAndHashCode(excludes = "id")
 @ToString
 class ContainerSummary {
 
     @JsonProperty(access = WRITE_ONLY)
     final String id
-    final String name
+    final List<String> names
     final String image
     final ContainerState state
 
@@ -22,7 +22,7 @@ class ContainerSummary {
                      @JsonProperty("Image") final String image,
                      @JsonProperty("State") final ContainerState state) {
         this.id = id
-        this.name = names.join(", ").replaceAll("/", "");
+        this.names = names
         this.image = image
         this.state = state
     }
