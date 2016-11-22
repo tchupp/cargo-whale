@@ -1,7 +1,7 @@
 package com.cargowhale.docker.client;
 
 import com.cargowhale.docker.container.info.model.ContainerDetails;
-import com.cargowhale.docker.container.info.model.ContainerInfo;
+import com.cargowhale.docker.container.info.model.ContainerSummary;
 import com.cargowhale.docker.util.JsonConverter;
 import org.assertj.core.util.Arrays;
 import org.junit.Test;
@@ -18,7 +18,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ContainerInfoClientTest {
+public class ContainerSummaryClientTest {
 
     private static final String DOCKER_ENDPOINT = "http://this.is.docker:yo";
 
@@ -36,12 +36,12 @@ public class ContainerInfoClientTest {
 
     @Test
     public void getAllContainersReturnsEveryContainerFromDockerApi() {
-        final ContainerInfo[] containerInfoArray = Arrays.array(mock(ContainerInfo.class));
+        final ContainerSummary[] containerSummaryArray = Arrays.array(mock(ContainerSummary.class));
 
         when(this.endpointBuilder.getContainersEndpoint()).thenReturn(DOCKER_ENDPOINT);
-        when(this.template.getForObject(DOCKER_ENDPOINT + "?all=1", ContainerInfo[].class)).thenReturn(containerInfoArray);
+        when(this.template.getForObject(DOCKER_ENDPOINT + "?all=1", ContainerSummary[].class)).thenReturn(containerSummaryArray);
 
-        assertThat(this.client.getAllContainers(), contains(containerInfoArray));
+        assertThat(this.client.getAllContainers(), contains(containerSummaryArray));
     }
 
     @Test
@@ -49,14 +49,14 @@ public class ContainerInfoClientTest {
         String filterJson = "json filter string";
 
         DockerContainerFilters filters = mock(DockerContainerFilters.class);
-        final ContainerInfo[] containerInfoArray = Arrays.array(mock(ContainerInfo.class));
+        final ContainerSummary[] containerSummaryArray = Arrays.array(mock(ContainerSummary.class));
 
         when(this.endpointBuilder.getContainersEndpoint()).thenReturn(DOCKER_ENDPOINT);
         when(this.converter.toJson(filters)).thenReturn(filterJson);
-        when(this.template.getForObject(DOCKER_ENDPOINT + "?filters={filters}", ContainerInfo[].class, filterJson))
-                .thenReturn(containerInfoArray);
+        when(this.template.getForObject(DOCKER_ENDPOINT + "?filters={filters}", ContainerSummary[].class, filterJson))
+                .thenReturn(containerSummaryArray);
 
-        assertThat(this.client.getFilteredContainers(filters), contains(containerInfoArray));
+        assertThat(this.client.getFilteredContainers(filters), contains(containerSummaryArray));
     }
 
     @Test

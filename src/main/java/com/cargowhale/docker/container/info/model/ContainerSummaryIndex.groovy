@@ -6,11 +6,11 @@ import groovy.transform.ToString
 
 @EqualsAndHashCode
 @ToString
-class ContainerInfoCollection {
+class ContainerSummaryIndex {
 
-    final List<ContainerInfo> containers
+    final List<ContainerSummary> containers
 
-    ContainerInfoCollection(@JsonProperty("containers") final List<ContainerInfo> containers) {
+    ContainerSummaryIndex(@JsonProperty("containers") final List<ContainerSummary> containers) {
         this.containers = containers
     }
 }
