@@ -1,9 +1,9 @@
-package com.cargowhale.docker.controller;
+package com.cargowhale.docker.container.info.integration;
 
 import com.cargowhale.docker.config.CargoWhaleProperties;
-import com.cargowhale.docker.container.ContainerInfoCollectionVM;
-import com.cargowhale.docker.container.ContainerInfoVM;
 import com.cargowhale.docker.container.ContainerState;
+import com.cargowhale.docker.container.info.model.ContainerInfo;
+import com.cargowhale.docker.container.info.model.ContainerInfoCollection;
 import org.assertj.core.util.Arrays;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,7 +14,6 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Collections;
@@ -71,29 +70,28 @@ public class ContainerInfoControllerFilteredContainersIT {
     private void verifySingleStateFilter(final ContainerState containerState) {
         String dockerUri = this.properties.getDockerUri();
 
-        ContainerInfoVM containerInfoVM1 = new ContainerInfoVM(Collections.singletonList("test-container1"), "test-image", containerState);
-        ContainerInfoVM[] containerInfoVMs = Arrays.array(containerInfoVM1);
+        ContainerInfo containerInfo1 = new ContainerInfo("test-id", Collections.singletonList("test-container1"), "test-image", containerState);
+        ContainerInfo[] containerInfoArray = Arrays.array(containerInfo1);
 
-        when(this.restTemplate.getForObject(dockerUri + "/v1.24/containers/json?filters={filters}", ContainerInfoVM[].class, "{\"status\":[\"" + containerState.state + "\"]}"))
-                .thenReturn(containerInfoVMs);
+        when(this.restTemplate.getForObject(dockerUri + "/v1.24/containers/json?filters={filters}", ContainerInfo[].class, "{\"status\":[\"" + containerState.state + "\"]}"))
+                .thenReturn(containerInfoArray);
 
-        ResponseEntity<ContainerInfoCollectionVM> response = this.client.getForEntity("/api/containers?state=" + containerState.state, ContainerInfoCollectionVM.class);
+        ResponseEntity<ContainerInfoCollection> response = this.client.getForEntity("/api/containers?state=" + containerState.state, ContainerInfoCollection.class);
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
 
-        ContainerInfoCollectionVM infoCollectionVM = response.getBody();
-        List<ContainerInfoVM> containerInfoVMList = infoCollectionVM.getContainers();
-        assertThat(containerInfoVMList.size(), is(1));
+        ContainerInfoCollection containerInfoCollection = response.getBody();
+        List<ContainerInfo> containerInfoList = containerInfoCollection.getContainers();
+        assertThat(containerInfoList.size(), is(1));
 
-        assertThat(containerInfoVMList.get(0), equalTo(containerInfoVM1));
+        assertThat(containerInfoList.get(0), equalTo(containerInfo1));
     }
 
     @Test
-    public void verifyBadFilterReturnsHttpBadRequest(){
-        String dockerUri = this.properties.getDockerUri();
+    public void verifyBadFilterReturnsHttpBadRequest() {
         String state = "I_AM_A_TEAPOT";
 
-        ResponseEntity<ContainerInfoCollectionVM> response = this.client.getForEntity("/api/containers?state=" + state, ContainerInfoCollectionVM.class);
+        ResponseEntity<ContainerInfoCollection> response = this.client.getForEntity("/api/containers?state=" + state, ContainerInfoCollection.class);
 
         assertThat(response.getStatusCode(), is(HttpStatus.BAD_REQUEST));
     }

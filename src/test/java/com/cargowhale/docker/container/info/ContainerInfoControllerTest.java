@@ -1,7 +1,8 @@
 package com.cargowhale.docker.container.info;
 
-import com.cargowhale.docker.container.ContainerInfoCollectionVM;
 import com.cargowhale.docker.container.StateFilters;
+import com.cargowhale.docker.container.info.model.ContainerDetails;
+import com.cargowhale.docker.container.info.model.ContainerInfoCollection;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -24,20 +25,30 @@ public class ContainerInfoControllerTest {
 
     @Test
     public void getAllContainersReturnsEveryContainerFromService() {
-        ContainerInfoCollectionVM containerInfoCollectionVM = mock(ContainerInfoCollectionVM.class);
+        ContainerInfoCollection containerInfoCollection = mock(ContainerInfoCollection.class);
 
-        when(this.service.getAllContainers()).thenReturn(containerInfoCollectionVM);
+        when(this.service.getAllContainers()).thenReturn(containerInfoCollection);
 
-        assertThat(this.controller.getAllContainers(), is(containerInfoCollectionVM));
+        assertThat(this.controller.getAllContainers(), is(containerInfoCollection));
     }
 
     @Test
     public void getContainersFilterByStatusReturnsFilteredContainersFromService() {
-        ContainerInfoCollectionVM containerInfoCollectionVM = mock(ContainerInfoCollectionVM.class);
+        ContainerInfoCollection containerInfoCollection = mock(ContainerInfoCollection.class);
         StateFilters stateFilters = mock(StateFilters.class);
 
-        when(this.service.getContainersFilterByStatus(stateFilters)).thenReturn(containerInfoCollectionVM);
+        when(this.service.getContainersFilterByStatus(stateFilters)).thenReturn(containerInfoCollection);
 
-        assertThat(this.controller.getContainersFilterByStatus(stateFilters), is(containerInfoCollectionVM));
+        assertThat(this.controller.getContainersFilterByStatus(stateFilters), is(containerInfoCollection));
+    }
+
+    @Test
+    public void getContainerDetailsById() throws Exception {
+        String containerId = "container id!";
+        ContainerDetails containerDetails = mock(ContainerDetails.class);
+
+        when(this.service.getContainerDetailsById(containerId)).thenReturn(containerDetails);
+
+        assertThat(this.controller.getContainerById(containerId), is(containerDetails));
     }
 }

@@ -1,6 +1,7 @@
 package com.cargowhale.docker.client;
 
-import com.cargowhale.docker.container.ContainerInfoVM;
+import com.cargowhale.docker.container.info.model.ContainerDetails;
+import com.cargowhale.docker.container.info.model.ContainerInfo;
 import com.cargowhale.docker.util.JsonConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,36 +14,34 @@ import java.util.List;
 public class ContainerInfoClient {
 
     private final RestTemplate restTemplate;
-    private final DockerEndpointCollection endpointCollection;
+    private final DockerEndpointBuilder endpointBuilder;
     private final JsonConverter converter;
 
     @Autowired
-    public ContainerInfoClient(final RestTemplate restTemplate, final DockerEndpointCollection endpointCollection, final JsonConverter converter) {
+    public ContainerInfoClient(final RestTemplate restTemplate, final DockerEndpointBuilder endpointBuilder, final JsonConverter converter) {
         this.restTemplate = restTemplate;
-        this.endpointCollection = endpointCollection;
+        this.endpointBuilder = endpointBuilder;
         this.converter = converter;
     }
 
-    public List<ContainerInfoVM> getAllContainers() {
-        String containersEndpoint = this.endpointCollection.getContainersEndpoint();
+    public List<ContainerInfo> getAllContainers() {
+        String containersEndpoint = this.endpointBuilder.getContainersEndpoint();
 
-        ContainerInfoVM[] containerInfoArray = this.restTemplate.getForObject(containersEndpoint + "?all=1", ContainerInfoVM[].class);
+        ContainerInfo[] containerInfoArray = this.restTemplate.getForObject(containersEndpoint + "?all=1", ContainerInfo[].class);
         return Arrays.asList(containerInfoArray);
     }
 
-    public List<ContainerInfoVM> getFilteredContainers(DockerContainerFilters filters) {
-        String containersEndpoint = this.endpointCollection.getContainersEndpoint();
+    public List<ContainerInfo> getFilteredContainers(DockerContainerFilters filters) {
+        String containersEndpoint = this.endpointBuilder.getContainersEndpoint();
         String filterJson = this.converter.toJson(filters);
 
-        ContainerInfoVM[] containerInfoArray = this.restTemplate.getForObject(containersEndpoint + "?filters={filters}", ContainerInfoVM[].class, filterJson);
+        ContainerInfo[] containerInfoArray = this.restTemplate.getForObject(containersEndpoint + "?filters={filters}", ContainerInfo[].class, filterJson);
         return Arrays.asList(containerInfoArray);
     }
 
-    //Status options are: [start, stop, restart, kill]
-    public String setContainerStatus(String name, String status) {
-        String containersEndpoint = this.endpointCollection.getContainersEndpoint();
+    public ContainerDetails getContainerDetailsById(final String containerId) {
+        String containerByIdEndpoint = this.endpointBuilder.getContainerByIdEndpoint(containerId);
 
-        this.restTemplate.postForObject(containersEndpoint + "/{name}/{status}", null, String.class, name, status);
-        return name;
+        return this.restTemplate.getForObject(containerByIdEndpoint, ContainerDetails.class);
     }
 }

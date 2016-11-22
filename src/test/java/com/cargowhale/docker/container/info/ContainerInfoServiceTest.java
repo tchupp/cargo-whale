@@ -2,10 +2,11 @@ package com.cargowhale.docker.container.info;
 
 import com.cargowhale.docker.client.ContainerInfoClient;
 import com.cargowhale.docker.client.DockerContainerFilters;
-import com.cargowhale.docker.container.ContainerInfoCollectionVM;
-import com.cargowhale.docker.container.ContainerInfoVM;
 import com.cargowhale.docker.container.ContainerState;
 import com.cargowhale.docker.container.StateFilters;
+import com.cargowhale.docker.container.info.model.ContainerDetails;
+import com.cargowhale.docker.container.info.model.ContainerInfo;
+import com.cargowhale.docker.container.info.model.ContainerInfoCollection;
 import org.assertj.core.util.Arrays;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,11 +33,11 @@ public class ContainerInfoServiceTest {
 
     @Test
     public void getAllContainersReturnsAllContainersFromClient() {
-        List<ContainerInfoVM> expectedContainerList = Collections.singletonList(mock(ContainerInfoVM.class));
+        List<ContainerInfo> expectedContainerList = Collections.singletonList(mock(ContainerInfo.class));
 
         when(this.client.getAllContainers()).thenReturn(expectedContainerList);
 
-        ContainerInfoCollectionVM actual = this.service.getAllContainers();
+        ContainerInfoCollection actual = this.service.getAllContainers();
 
         assertThat(actual.getContainers(), is(expectedContainerList));
     }
@@ -47,12 +48,22 @@ public class ContainerInfoServiceTest {
 
         StateFilters stateFilters = new StateFilters(containerStatuses);
         DockerContainerFilters filters = new DockerContainerFilters(containerStatuses);
-        List<ContainerInfoVM> expectedContainerList = Collections.singletonList(mock(ContainerInfoVM.class));
+        List<ContainerInfo> expectedContainerList = Collections.singletonList(mock(ContainerInfo.class));
 
         when(this.client.getFilteredContainers(filters)).thenReturn(expectedContainerList);
 
-        ContainerInfoCollectionVM actual = this.service.getContainersFilterByStatus(stateFilters);
+        ContainerInfoCollection actual = this.service.getContainersFilterByStatus(stateFilters);
 
         assertThat(actual.getContainers(), is(expectedContainerList));
+    }
+
+    @Test
+    public void getContainerDetailsById() throws Exception {
+        String containerId = "container id string";
+        ContainerDetails containerDetails = mock(ContainerDetails.class);
+
+        when(this.client.getContainerDetailsById(containerId)).thenReturn(containerDetails);
+
+        assertThat(this.service.getContainerDetailsById(containerId), is(containerDetails));
     }
 }

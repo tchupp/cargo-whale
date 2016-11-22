@@ -2,20 +2,28 @@ node {
     def maven = docker.image("maven:3.3.9-jdk-8")
 
     maven.inside {
+        stage('Checkout') {
+            checkout scm
+        }
+
+        stage('Verify Env') {
+            fileExists 'pom.xml'
+        }
+
         stage('Clean') {
             sh 'mvn clean'
         }
 
-        stage('Test') {
+        stage('Unit Test') {
             sh 'mvn test'
         }
 
-        stage('Package') {
-            sh 'mvn package -DskipTests'
+        stage('Integration Tests') {
+            sh 'mvn verify'
         }
 
-        stage('Build Docker') {
-            sh 'mvn docker:build'
+        stage('Cleanup') {
+            step([$class: 'WsCleanup'])
         }
     }
 }
