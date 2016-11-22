@@ -4,7 +4,7 @@ import com.cargowhale.docker.container.ContainerEnumConverter;
 import com.cargowhale.docker.container.ContainerState;
 import com.cargowhale.docker.container.StateFilters;
 import com.cargowhale.docker.container.info.model.ContainerDetails;
-import com.cargowhale.docker.container.info.model.ContainerInfoCollection;
+import com.cargowhale.docker.container.info.model.ContainerSummaryIndex;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.WebDataBinder;
@@ -29,7 +29,7 @@ public class ContainerInfoController {
     @RequestMapping(value = "/containers",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ContainerInfoCollection getAllContainers() {
+    public ContainerSummaryIndex getAllContainers() {
         return this.service.getAllContainers();
     }
 
@@ -37,7 +37,7 @@ public class ContainerInfoController {
             params = "state",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ContainerInfoCollection getContainersFilterByStatus(StateFilters stateFilters) {
+    public ContainerSummaryIndex getContainersFilterByStatus(StateFilters stateFilters) {
         return this.service.getContainersFilterByStatus(stateFilters);
     }
 

@@ -2,8 +2,8 @@ package com.cargowhale.docker.container.info.integration;
 
 import com.cargowhale.docker.config.CargoWhaleProperties;
 import com.cargowhale.docker.container.ContainerState;
-import com.cargowhale.docker.container.info.model.ContainerInfo;
-import com.cargowhale.docker.container.info.model.ContainerInfoCollection;
+import com.cargowhale.docker.container.info.model.ContainerSummary;
+import com.cargowhale.docker.container.info.model.ContainerSummaryIndex;
 import org.assertj.core.util.Arrays;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -41,58 +41,58 @@ public class ContainerInfoControllerAllContainersIT {
     public void getAllContainers_NoContainers() {
         String dockerUri = this.properties.getDockerUri();
 
-        ContainerInfo[] containerInfoArray = Arrays.array();
+        ContainerSummary[] containerSummaryArray = Arrays.array();
 
-        when(this.restTemplate.getForObject(dockerUri + "/v1.24/containers/json?all=1", ContainerInfo[].class)).thenReturn(containerInfoArray);
+        when(this.restTemplate.getForObject(dockerUri + "/v1.24/containers/json?all=1", ContainerSummary[].class)).thenReturn(containerSummaryArray);
 
-        ResponseEntity<ContainerInfoCollection> response = this.client.getForEntity("/api/containers", ContainerInfoCollection.class);
+        ResponseEntity<ContainerSummaryIndex> response = this.client.getForEntity("/api/containers", ContainerSummaryIndex.class);
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
 
-        ContainerInfoCollection containerInfoCollection = response.getBody();
-        List<ContainerInfo> containerInfoList = containerInfoCollection.getContainers();
-        assertThat(containerInfoList.size(), is(0));
+        ContainerSummaryIndex containerSummaryIndex = response.getBody();
+        List<ContainerSummary> containerSummaryList = containerSummaryIndex.getContainers();
+        assertThat(containerSummaryList.size(), is(0));
     }
 
     @Test
     public void getAllContainers_OneContainers() {
         String dockerUri = this.properties.getDockerUri();
 
-        ContainerInfo containerInfo1 = new ContainerInfo("hjf7y2nj1", Collections.singletonList("test-container1"), "test-image", ContainerState.CREATED);
-        ContainerInfo[] containerInfoArray = Arrays.array(containerInfo1);
+        ContainerSummary containerSummary1 = new ContainerSummary("hjf7y2nj1", Collections.singletonList("test-container1"), "test-image", ContainerState.CREATED);
+        ContainerSummary[] containerSummaryArray = Arrays.array(containerSummary1);
 
-        when(this.restTemplate.getForObject(dockerUri + "/v1.24/containers/json?all=1", ContainerInfo[].class)).thenReturn(containerInfoArray);
+        when(this.restTemplate.getForObject(dockerUri + "/v1.24/containers/json?all=1", ContainerSummary[].class)).thenReturn(containerSummaryArray);
 
-        ResponseEntity<ContainerInfoCollection> response = this.client.getForEntity("/api/containers", ContainerInfoCollection.class);
+        ResponseEntity<ContainerSummaryIndex> response = this.client.getForEntity("/api/containers", ContainerSummaryIndex.class);
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
 
-        ContainerInfoCollection containerInfoCollection = response.getBody();
-        List<ContainerInfo> containerInfoList = containerInfoCollection.getContainers();
-        assertThat(containerInfoList.size(), is(1));
+        ContainerSummaryIndex containerSummaryIndex = response.getBody();
+        List<ContainerSummary> containerSummaryList = containerSummaryIndex.getContainers();
+        assertThat(containerSummaryList.size(), is(1));
 
-        assertThat(containerInfoList.get(0), equalTo(containerInfo1));
+        assertThat(containerSummaryList.get(0), equalTo(containerSummary1));
     }
 
     @Test
     public void getAllContainers_MultipleContainers() {
         String dockerUri = this.properties.getDockerUri();
 
-        ContainerInfo containerInfo1 = new ContainerInfo("78nm12hb3", Collections.singletonList("test-container1"), "test-image", ContainerState.CREATED);
-        ContainerInfo containerInfo2 = new ContainerInfo("nu91o2n3b", Collections.singletonList("test-container2"), "test-image", ContainerState.RUNNING);
-        ContainerInfo[] containerInfoArray = Arrays.array(containerInfo1, containerInfo2);
+        ContainerSummary containerSummary1 = new ContainerSummary("78nm12hb3", Collections.singletonList("test-container1"), "test-image", ContainerState.CREATED);
+        ContainerSummary containerSummary2 = new ContainerSummary("nu91o2n3b", Collections.singletonList("test-container2"), "test-image", ContainerState.RUNNING);
+        ContainerSummary[] containerSummaryArray = Arrays.array(containerSummary1, containerSummary2);
 
-        when(this.restTemplate.getForObject(dockerUri + "/v1.24/containers/json?all=1", ContainerInfo[].class)).thenReturn(containerInfoArray);
+        when(this.restTemplate.getForObject(dockerUri + "/v1.24/containers/json?all=1", ContainerSummary[].class)).thenReturn(containerSummaryArray);
 
-        ResponseEntity<ContainerInfoCollection> response = this.client.getForEntity("/api/containers", ContainerInfoCollection.class);
+        ResponseEntity<ContainerSummaryIndex> response = this.client.getForEntity("/api/containers", ContainerSummaryIndex.class);
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
 
-        ContainerInfoCollection containerInfoCollection = response.getBody();
-        List<ContainerInfo> containerInfoList = containerInfoCollection.getContainers();
-        assertThat(containerInfoList.size(), is(2));
+        ContainerSummaryIndex containerSummaryIndex = response.getBody();
+        List<ContainerSummary> containerSummaryList = containerSummaryIndex.getContainers();
+        assertThat(containerSummaryList.size(), is(2));
 
-        assertThat(containerInfoList.get(0), equalTo(containerInfo1));
-        assertThat(containerInfoList.get(1), equalTo(containerInfo2));
+        assertThat(containerSummaryList.get(0), equalTo(containerSummary1));
+        assertThat(containerSummaryList.get(1), equalTo(containerSummary2));
     }
 }

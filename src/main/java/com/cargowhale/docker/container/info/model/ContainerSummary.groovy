@@ -7,18 +7,18 @@ import groovy.transform.ToString
 
 @EqualsAndHashCode
 @ToString
-class ContainerInfo {
+class ContainerSummary {
 
-    final String id
+    final String containerId
     final List<String> names
     final String image
     final ContainerState state
 
-    ContainerInfo(@JsonProperty("Id") final String id,
-                  @JsonProperty("Names") final List<String> names,
-                  @JsonProperty("Image") final String image,
-                  @JsonProperty("State") final ContainerState state) {
-        this.id = id
+    ContainerSummary(@JsonProperty("Id") final String containerId,
+                     @JsonProperty("Names") final List<String> names,
+                     @JsonProperty("Image") final String image,
+                     @JsonProperty("State") final ContainerState state) {
+        this.containerId = containerId
         this.names = names
         this.image = image
         this.state = state

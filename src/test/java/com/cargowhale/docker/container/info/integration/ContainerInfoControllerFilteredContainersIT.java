@@ -2,8 +2,8 @@ package com.cargowhale.docker.container.info.integration;
 
 import com.cargowhale.docker.config.CargoWhaleProperties;
 import com.cargowhale.docker.container.ContainerState;
-import com.cargowhale.docker.container.info.model.ContainerInfo;
-import com.cargowhale.docker.container.info.model.ContainerInfoCollection;
+import com.cargowhale.docker.container.info.model.ContainerSummary;
+import com.cargowhale.docker.container.info.model.ContainerSummaryIndex;
 import org.assertj.core.util.Arrays;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -70,28 +70,28 @@ public class ContainerInfoControllerFilteredContainersIT {
     private void verifySingleStateFilter(final ContainerState containerState) {
         String dockerUri = this.properties.getDockerUri();
 
-        ContainerInfo containerInfo1 = new ContainerInfo("test-id", Collections.singletonList("test-container1"), "test-image", containerState);
-        ContainerInfo[] containerInfoArray = Arrays.array(containerInfo1);
+        ContainerSummary containerSummary1 = new ContainerSummary("test-id", Collections.singletonList("test-container1"), "test-image", containerState);
+        ContainerSummary[] containerSummaryArray = Arrays.array(containerSummary1);
 
-        when(this.restTemplate.getForObject(dockerUri + "/v1.24/containers/json?filters={filters}", ContainerInfo[].class, "{\"status\":[\"" + containerState.state + "\"]}"))
-                .thenReturn(containerInfoArray);
+        when(this.restTemplate.getForObject(dockerUri + "/v1.24/containers/json?filters={filters}", ContainerSummary[].class, "{\"status\":[\"" + containerState.state + "\"]}"))
+                .thenReturn(containerSummaryArray);
 
-        ResponseEntity<ContainerInfoCollection> response = this.client.getForEntity("/api/containers?state=" + containerState.state, ContainerInfoCollection.class);
+        ResponseEntity<ContainerSummaryIndex> response = this.client.getForEntity("/api/containers?state=" + containerState.state, ContainerSummaryIndex.class);
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
 
-        ContainerInfoCollection containerInfoCollection = response.getBody();
-        List<ContainerInfo> containerInfoList = containerInfoCollection.getContainers();
-        assertThat(containerInfoList.size(), is(1));
+        ContainerSummaryIndex containerSummaryIndex = response.getBody();
+        List<ContainerSummary> containerSummaryList = containerSummaryIndex.getContainers();
+        assertThat(containerSummaryList.size(), is(1));
 
-        assertThat(containerInfoList.get(0), equalTo(containerInfo1));
+        assertThat(containerSummaryList.get(0), equalTo(containerSummary1));
     }
 
     @Test
     public void verifyBadFilterReturnsHttpBadRequest() {
         String state = "I_AM_A_TEAPOT";
 
-        ResponseEntity<ContainerInfoCollection> response = this.client.getForEntity("/api/containers?state=" + state, ContainerInfoCollection.class);
+        ResponseEntity<ContainerSummaryIndex> response = this.client.getForEntity("/api/containers?state=" + state, ContainerSummaryIndex.class);
 
         assertThat(response.getStatusCode(), is(HttpStatus.BAD_REQUEST));
     }
