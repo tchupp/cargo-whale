@@ -25,14 +25,14 @@ public class ContainerInfoClient {
     }
 
     public List<ContainerInfo> getAllContainers() {
-        String containersEndpoint = this.endpointBuilder.getContainersEndpoint();
+        String containersEndpoint = this.endpointBuilder.getContainersInfoEndpoint();
 
         ContainerInfo[] containerInfoArray = this.restTemplate.getForObject(containersEndpoint + "?all=1", ContainerInfo[].class);
         return Arrays.asList(containerInfoArray);
     }
 
     public List<ContainerInfo> getFilteredContainers(DockerContainerFilters filters) {
-        String containersEndpoint = this.endpointBuilder.getContainersEndpoint();
+        String containersEndpoint = this.endpointBuilder.getContainersInfoEndpoint();
         String filterJson = this.converter.toJson(filters);
 
         ContainerInfo[] containerInfoArray = this.restTemplate.getForObject(containersEndpoint + "?filters={filters}", ContainerInfo[].class, filterJson);
@@ -40,8 +40,19 @@ public class ContainerInfoClient {
     }
 
     public ContainerDetails getContainerDetailsById(final String containerId) {
-        String containerByIdEndpoint = this.endpointBuilder.getContainerByIdEndpoint(containerId);
+        String containerByIdEndpoint = this.endpointBuilder.getContainerInfoByIdEndpoint(containerId);
 
         return this.restTemplate.getForObject(containerByIdEndpoint, ContainerDetails.class);
+    }
+
+    public String getContainerLogsById(String containerId, String follow, String stdOut, String stdErr, String since, String timestamps, String tail) {
+        String containerLogEndpoint = this.endpointBuilder.getContainerLogByIdEndpoint(containerId);
+        containerLogEndpoint += "follow=" + follow;
+        containerLogEndpoint += "&stdout=" + stdOut;
+        containerLogEndpoint += "&stderr=" + stdErr;
+        containerLogEndpoint += "&since=" + since;
+        containerLogEndpoint += "&timestamps="+timestamps;
+        containerLogEndpoint += "&tail=" + tail;
+        return this.restTemplate.getForObject(containerLogEndpoint, String.class);
     }
 }

@@ -51,4 +51,20 @@ public class ContainerInfoControllerTest {
 
         assertThat(this.controller.getContainerById(containerId), is(containerDetails));
     }
+
+    @Test
+    public void getContainerLogsById(){
+        String containerId = "container id!";
+        String follow = "0";
+        String stdOut = "0";
+        String stdErr = "0";
+        String since = "0";
+        String timestamps = "0";
+        String tail = "0";
+        String containerLogs = "logs";
+
+        when(this.service.getContainerLogsById(containerId, follow, stdOut, stdErr, since, timestamps, tail)).thenReturn(containerLogs);
+
+        assertThat(this.controller.getContainerLogsById(containerId, follow, stdOut, stdErr, since, timestamps, tail), is(containerLogs));
+    }
 }

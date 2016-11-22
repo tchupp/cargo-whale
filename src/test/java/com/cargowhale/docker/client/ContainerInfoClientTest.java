@@ -38,7 +38,7 @@ public class ContainerInfoClientTest {
     public void getAllContainersReturnsEveryContainerFromDockerApi() {
         final ContainerInfo[] containerInfoArray = Arrays.array(mock(ContainerInfo.class));
 
-        when(this.endpointBuilder.getContainersEndpoint()).thenReturn(DOCKER_ENDPOINT);
+        when(this.endpointBuilder.getContainersInfoEndpoint()).thenReturn(DOCKER_ENDPOINT);
         when(this.template.getForObject(DOCKER_ENDPOINT + "?all=1", ContainerInfo[].class)).thenReturn(containerInfoArray);
 
         assertThat(this.client.getAllContainers(), contains(containerInfoArray));
@@ -51,7 +51,7 @@ public class ContainerInfoClientTest {
         DockerContainerFilters filters = mock(DockerContainerFilters.class);
         final ContainerInfo[] containerInfoArray = Arrays.array(mock(ContainerInfo.class));
 
-        when(this.endpointBuilder.getContainersEndpoint()).thenReturn(DOCKER_ENDPOINT);
+        when(this.endpointBuilder.getContainersInfoEndpoint()).thenReturn(DOCKER_ENDPOINT);
         when(this.converter.toJson(filters)).thenReturn(filterJson);
         when(this.template.getForObject(DOCKER_ENDPOINT + "?filters={filters}", ContainerInfo[].class, filterJson))
                 .thenReturn(containerInfoArray);
@@ -64,10 +64,35 @@ public class ContainerInfoClientTest {
         String containerId = "container id yo";
         ContainerDetails containerDetails = mock(ContainerDetails.class);
 
-        when(this.endpointBuilder.getContainerByIdEndpoint(containerId)).thenReturn(DOCKER_ENDPOINT + containerId);
+        when(this.endpointBuilder.getContainerInfoByIdEndpoint(containerId)).thenReturn(DOCKER_ENDPOINT + containerId);
         when(this.template.getForObject(DOCKER_ENDPOINT + containerId, ContainerDetails.class)).thenReturn(containerDetails);
 
         assertThat(this.client.getContainerDetailsById(containerId), is(containerDetails));
     }
+
+    @Test
+    public void getContainerLogsByIdReturnsCorrectContainerLogs() throws Exception {
+        String containerId = "container id yo";
+        String follow = "0";
+        String stdOut = "0";
+        String stdErr = "0";
+        String since = "0";
+        String timestamps = "0";
+        String tail = "0";
+        String logs = "logs";
+
+        String params = "follow=" + follow;
+        params += "&stdout=" + stdOut;
+        params += "&stderr=" + stdErr;
+        params += "&since=" + since;
+        params += "&timestamps="+timestamps;
+        params += "&tail=" + tail;
+
+        when(this.endpointBuilder.getContainerLogByIdEndpoint(containerId)).thenReturn(DOCKER_ENDPOINT + containerId);
+        when(this.template.getForObject(DOCKER_ENDPOINT + containerId + params, String.class)).thenReturn(logs);
+
+        assertThat(this.client.getContainerLogsById(containerId, follow, stdOut, stdErr, since, timestamps, tail), is(logs));
+    }
+
 }
 

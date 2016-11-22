@@ -36,4 +36,8 @@ public class ContainerInfoService {
     public ContainerDetails getContainerDetailsById(final String containerId) {
         return this.client.getContainerDetailsById(containerId);
     }
+
+    public String getContainerLogsById(String containerId, String follow, String stdOut, String stdErr, String since, String timestamps, String tail) {
+        return this.client.getContainerLogsById(containerId, follow, stdOut, stdErr, since, timestamps, tail);
+    }
 }

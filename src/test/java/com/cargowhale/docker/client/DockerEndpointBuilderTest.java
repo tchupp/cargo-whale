@@ -27,7 +27,7 @@ public class DockerEndpointBuilderTest {
         String expectedUri = DOCKER_URI + "/v1.24/containers/json";
         when(this.properties.getDockerUri()).thenReturn(DOCKER_URI);
 
-        assertThat(this.endpointBuilder.getContainersEndpoint(), is(expectedUri));
+        assertThat(this.endpointBuilder.getContainersInfoEndpoint(), is(expectedUri));
     }
 
     @Test
@@ -40,7 +40,35 @@ public class DockerEndpointBuilderTest {
 
         when(this.properties.getDockerUri()).thenReturn(DOCKER_URI);
 
-        assertThat(this.endpointBuilder.getContainerByIdEndpoint(containerId1), is(expectedUri1));
-        assertThat(this.endpointBuilder.getContainerByIdEndpoint(containerId2), is(expectedUri2));
+        assertThat(this.endpointBuilder.getContainerInfoByIdEndpoint(containerId1), is(expectedUri1));
+        assertThat(this.endpointBuilder.getContainerInfoByIdEndpoint(containerId2), is(expectedUri2));
+    }
+
+    @Test
+    public void setContainerByIdEndpointReturnsCorrectUri() throws Exception {
+        String containerId1 = "1fds78i1h";
+        String containerId2 = "4y712yui4";
+
+        String expectedUri1 = DOCKER_URI + "/v1.24/containers/" + containerId1 + "/";
+        String expectedUri2 = DOCKER_URI + "/v1.24/containers/" + containerId2 + "/";
+
+        when(this.properties.getDockerUri()).thenReturn(DOCKER_URI);
+
+        assertThat(this.endpointBuilder.setContainerByIdEndpoint(containerId1), is(expectedUri1));
+        assertThat(this.endpointBuilder.setContainerByIdEndpoint(containerId2), is(expectedUri2));
+    }
+
+    @Test
+    public void getContainerLogByIdEndpointReturnsCorrectUri() throws Exception {
+        String containerId1 = "1fds78i1h";
+        String containerId2 = "4y712yui4";
+
+        String expectedUri1 = DOCKER_URI + "/v1.24/containers/" + containerId1 + "/logs?";
+        String expectedUri2 = DOCKER_URI + "/v1.24/containers/" + containerId2 + "/logs?";
+
+        when(this.properties.getDockerUri()).thenReturn(DOCKER_URI);
+
+        assertThat(this.endpointBuilder.getContainerLogByIdEndpoint(containerId1), is(expectedUri1));
+        assertThat(this.endpointBuilder.getContainerLogByIdEndpoint(containerId2), is(expectedUri2));
     }
 }
