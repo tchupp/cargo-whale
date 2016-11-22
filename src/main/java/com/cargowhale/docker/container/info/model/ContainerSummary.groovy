@@ -5,21 +5,24 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
 
+import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY
+
 @EqualsAndHashCode
 @ToString
 class ContainerSummary {
 
-    final String containerId
-    final List<String> names
+    @JsonProperty(access = WRITE_ONLY)
+    final String id
+    final String name
     final String image
     final ContainerState state
 
-    ContainerSummary(@JsonProperty("Id") final String containerId,
+    ContainerSummary(@JsonProperty("Id") final String id,
                      @JsonProperty("Names") final List<String> names,
                      @JsonProperty("Image") final String image,
                      @JsonProperty("State") final ContainerState state) {
-        this.containerId = containerId
-        this.names = names
+        this.id = id
+        this.name = names.join(", ").replaceAll("/", "");
         this.image = image
         this.state = state
     }
