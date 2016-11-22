@@ -3,6 +3,8 @@ package com.cargowhale.docker.container.info;
 import com.cargowhale.docker.container.StateFilters;
 import com.cargowhale.docker.container.info.model.ContainerDetails;
 import com.cargowhale.docker.container.info.model.ContainerSummaryIndex;
+import com.cargowhale.docker.container.info.resource.ContainerSummaryIndexResource;
+import com.cargowhale.docker.container.info.resource.ContainerSummaryIndexResourceAssembler;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -23,23 +25,30 @@ public class ContainerSummaryControllerTest {
     @Mock
     private ContainerInfoService service;
 
+    @Mock
+    private ContainerSummaryIndexResourceAssembler indexResourceAssembler;
+
     @Test
     public void getAllContainersReturnsEveryContainerFromService() {
         ContainerSummaryIndex containerSummaryIndex = mock(ContainerSummaryIndex.class);
+        ContainerSummaryIndexResource containerSummaryIndexResource = mock(ContainerSummaryIndexResource.class);
 
         when(this.service.getAllContainers()).thenReturn(containerSummaryIndex);
+        when(this.indexResourceAssembler.toResource(containerSummaryIndex)).thenReturn(containerSummaryIndexResource);
 
-        assertThat(this.controller.getAllContainers(), is(containerSummaryIndex));
+        assertThat(this.controller.getAllContainers(), is(containerSummaryIndexResource));
     }
 
     @Test
     public void getContainersFilterByStatusReturnsFilteredContainersFromService() {
         ContainerSummaryIndex containerSummaryIndex = mock(ContainerSummaryIndex.class);
+        ContainerSummaryIndexResource containerSummaryIndexResource = mock(ContainerSummaryIndexResource.class);
         StateFilters stateFilters = mock(StateFilters.class);
 
         when(this.service.getContainersFilterByStatus(stateFilters)).thenReturn(containerSummaryIndex);
+        when(this.indexResourceAssembler.toResource(containerSummaryIndex)).thenReturn(containerSummaryIndexResource);
 
-        assertThat(this.controller.getContainersFilterByStatus(stateFilters), is(containerSummaryIndex));
+        assertThat(this.controller.getContainersFilterByStatus(stateFilters), is(containerSummaryIndexResource));
     }
 
     @Test
