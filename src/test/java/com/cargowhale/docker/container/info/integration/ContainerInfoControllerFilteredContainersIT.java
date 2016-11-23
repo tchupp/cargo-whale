@@ -2,8 +2,8 @@ package com.cargowhale.docker.container.info.integration;
 
 import com.cargowhale.docker.config.CargoWhaleProperties;
 import com.cargowhale.docker.container.ContainerState;
-import com.cargowhale.docker.container.info.model.ContainerInfo;
-import com.cargowhale.docker.container.info.model.ContainerInfoCollection;
+import com.cargowhale.docker.container.info.model.ContainerSummary;
+import com.cargowhale.docker.container.info.model.ContainerSummaryIndex;
 import org.assertj.core.util.Arrays;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,11 +11,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.hateoas.Resource;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.RestTemplate;
 
+import java.net.URISyntaxException;
 import java.util.Collections;
 import java.util.List;
 
@@ -38,61 +43,68 @@ public class ContainerInfoControllerFilteredContainersIT {
     private CargoWhaleProperties properties;
 
     @Test
-    public void getFilteredContainers_Created() {
+    public void getFilteredContainers_Created() throws Exception {
         verifySingleStateFilter(ContainerState.CREATED);
     }
 
     @Test
-    public void getFilteredContainers_Restarting() {
+    public void getFilteredContainers_Restarting() throws Exception {
         verifySingleStateFilter(ContainerState.RESTARTING);
     }
 
     @Test
-    public void getFilteredContainers_Running() {
+    public void getFilteredContainers_Running() throws Exception {
         verifySingleStateFilter(ContainerState.RUNNING);
     }
 
     @Test
-    public void getFilteredContainers_Paused() {
+    public void getFilteredContainers_Paused() throws Exception {
         verifySingleStateFilter(ContainerState.PAUSED);
     }
 
     @Test
-    public void getFilteredContainers_Exited() {
+    public void getFilteredContainers_Exited() throws Exception {
         verifySingleStateFilter(ContainerState.EXITED);
     }
 
     @Test
-    public void getFilteredContainers_Dead() {
+    public void getFilteredContainers_Dead() throws Exception {
         verifySingleStateFilter(ContainerState.DEAD);
     }
 
-    private void verifySingleStateFilter(final ContainerState containerState) {
+    private void verifySingleStateFilter(final ContainerState containerState) throws URISyntaxException {
         String dockerUri = this.properties.getDockerUri();
 
-        ContainerInfo containerInfo1 = new ContainerInfo("test-id", Collections.singletonList("test-container1"), "test-image", containerState);
-        ContainerInfo[] containerInfoArray = Arrays.array(containerInfo1);
+        ContainerSummary containerSummary = new ContainerSummary("test-id", Collections.singletonList("test-container1"), "test-image", containerState);
+        ContainerSummary[] containerSummaryArray = Arrays.array(containerSummary);
 
-        when(this.restTemplate.getForObject(dockerUri + "/v1.24/containers/json?filters={filters}", ContainerInfo[].class, "{\"status\":[\"" + containerState.state + "\"]}"))
-                .thenReturn(containerInfoArray);
+        when(this.restTemplate.getForObject(dockerUri + "/v1.24/containers/json?filters={filters}", ContainerSummary[].class, "{\"status\":[\"" + containerState.state + "\"]}"))
+                .thenReturn(containerSummaryArray);
 
-        ResponseEntity<ContainerInfoCollection> response = this.client.getForEntity("/api/containers?state=" + containerState.state, ContainerInfoCollection.class);
+        ResponseEntity<Resource<ContainerSummaryIndex>> response = exchange("/api/containers?state=" + containerState.state);
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
 
-        ContainerInfoCollection containerInfoCollection = response.getBody();
-        List<ContainerInfo> containerInfoList = containerInfoCollection.getContainers();
-        assertThat(containerInfoList.size(), is(1));
+        ContainerSummaryIndex containerSummaryIndex = response.getBody().getContent();
+        List<ContainerSummary> containerSummaryList = containerSummaryIndex.getContainers();
+        assertThat(containerSummaryList.size(), is(1));
 
-        assertThat(containerInfoList.get(0), equalTo(containerInfo1));
+        assertThat(containerSummaryList.get(0), equalTo(containerSummary));
     }
 
     @Test
     public void verifyBadFilterReturnsHttpBadRequest() {
         String state = "I_AM_A_TEAPOT";
 
-        ResponseEntity<ContainerInfoCollection> response = this.client.getForEntity("/api/containers?state=" + state, ContainerInfoCollection.class);
+        ResponseEntity<ContainerSummaryIndex> response = this.client.getForEntity("/api/containers?state=" + state, ContainerSummaryIndex.class);
 
         assertThat(response.getStatusCode(), is(HttpStatus.BAD_REQUEST));
+    }
+
+    private ResponseEntity<Resource<ContainerSummaryIndex>> exchange(final String url) {
+        HttpEntity<?> requestEntity = null;
+        ParameterizedTypeReference<Resource<ContainerSummaryIndex>> typeReference = new ParameterizedTypeReference<Resource<ContainerSummaryIndex>>() {};
+
+        return this.client.exchange(url, HttpMethod.GET, requestEntity, typeReference, Collections.emptyMap());
     }
 }
