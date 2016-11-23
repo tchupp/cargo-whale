@@ -1,7 +1,7 @@
 package com.cargowhale.docker.client;
 
 import com.cargowhale.docker.container.info.model.ContainerDetails;
-import com.cargowhale.docker.container.info.model.ContainerInfo;
+import com.cargowhale.docker.container.info.model.ContainerSummary;
 import com.cargowhale.docker.util.JsonConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -24,19 +24,29 @@ public class ContainerInfoClient {
         this.converter = converter;
     }
 
+//<<<<<<< HEAD
     public List<ContainerInfo> getAllContainers() {
         String containersEndpoint = this.endpointBuilder.getContainersInfoEndpoint();
+//=======
+    public List<ContainerSummary> getAllContainers() {
+        String containersEndpoint = this.endpointBuilder.getContainersEndpoint();
+//>>>>>>> master
 
-        ContainerInfo[] containerInfoArray = this.restTemplate.getForObject(containersEndpoint + "?all=1", ContainerInfo[].class);
-        return Arrays.asList(containerInfoArray);
+        ContainerSummary[] containerSummaryArray = this.restTemplate.getForObject(containersEndpoint + "?all=1", ContainerSummary[].class);
+        return Arrays.asList(containerSummaryArray);
     }
 
+//<<<<<<< HEAD
     public List<ContainerInfo> getFilteredContainers(DockerContainerFilters filters) {
         String containersEndpoint = this.endpointBuilder.getContainersInfoEndpoint();
+//=======
+    public List<ContainerSummary> getFilteredContainers(DockerContainerFilters filters) {
+        String containersEndpoint = this.endpointBuilder.getContainersEndpoint();
+//>>>>>>> master
         String filterJson = this.converter.toJson(filters);
 
-        ContainerInfo[] containerInfoArray = this.restTemplate.getForObject(containersEndpoint + "?filters={filters}", ContainerInfo[].class, filterJson);
-        return Arrays.asList(containerInfoArray);
+        ContainerSummary[] containerSummaryArray = this.restTemplate.getForObject(containersEndpoint + "?filters={filters}", ContainerSummary[].class, filterJson);
+        return Arrays.asList(containerSummaryArray);
     }
 
     public ContainerDetails getContainerDetailsById(final String containerId) {
