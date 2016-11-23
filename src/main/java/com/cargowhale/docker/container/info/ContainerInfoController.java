@@ -52,7 +52,7 @@ public class ContainerInfoController {
         return this.service.getContainerDetailsById(id);
     }
 
-    @RequestMapping(value = "/containers/{containerId}/logs",
+    @RequestMapping(value = "/{containerId}/logs",
             method = RequestMethod.GET,
             produces = MediaType.TEXT_PLAIN_VALUE)
     public String getContainerLogsById(@PathVariable String containerId,

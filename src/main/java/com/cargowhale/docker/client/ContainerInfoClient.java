@@ -24,25 +24,15 @@ public class ContainerInfoClient {
         this.converter = converter;
     }
 
-//<<<<<<< HEAD
-    public List<ContainerInfo> getAllContainers() {
-        String containersEndpoint = this.endpointBuilder.getContainersInfoEndpoint();
-//=======
     public List<ContainerSummary> getAllContainers() {
-        String containersEndpoint = this.endpointBuilder.getContainersEndpoint();
-//>>>>>>> master
+        String containersEndpoint = this.endpointBuilder.getContainersInfoEndpoint();
 
         ContainerSummary[] containerSummaryArray = this.restTemplate.getForObject(containersEndpoint + "?all=1", ContainerSummary[].class);
         return Arrays.asList(containerSummaryArray);
     }
 
-//<<<<<<< HEAD
-    public List<ContainerInfo> getFilteredContainers(DockerContainerFilters filters) {
-        String containersEndpoint = this.endpointBuilder.getContainersInfoEndpoint();
-//=======
     public List<ContainerSummary> getFilteredContainers(DockerContainerFilters filters) {
-        String containersEndpoint = this.endpointBuilder.getContainersEndpoint();
-//>>>>>>> master
+        String containersEndpoint = this.endpointBuilder.getContainersInfoEndpoint();
         String filterJson = this.converter.toJson(filters);
 
         ContainerSummary[] containerSummaryArray = this.restTemplate.getForObject(containersEndpoint + "?filters={filters}", ContainerSummary[].class, filterJson);

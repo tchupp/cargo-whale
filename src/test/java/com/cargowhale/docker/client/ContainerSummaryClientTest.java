@@ -38,13 +38,8 @@ public class ContainerSummaryClientTest {
     public void getAllContainersReturnsEveryContainerFromDockerApi() {
         final ContainerSummary[] containerSummaryArray = Arrays.array(mock(ContainerSummary.class));
 
-//<<<<<<< HEAD:src/test/java/com/cargowhale/docker/client/ContainerInfoClientTest.java
         when(this.endpointBuilder.getContainersInfoEndpoint()).thenReturn(DOCKER_ENDPOINT);
-        when(this.template.getForObject(DOCKER_ENDPOINT + "?all=1", ContainerInfo[].class)).thenReturn(containerInfoArray);
-//=======
-        when(this.endpointBuilder.getContainersEndpoint()).thenReturn(DOCKER_ENDPOINT);
         when(this.template.getForObject(DOCKER_ENDPOINT + "?all=1", ContainerSummary[].class)).thenReturn(containerSummaryArray);
-//>>>>>>> master:src/test/java/com/cargowhale/docker/client/ContainerSummaryClientTest.java
 
         assertThat(this.client.getAllContainers(), contains(containerSummaryArray));
     }
