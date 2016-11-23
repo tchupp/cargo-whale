@@ -56,12 +56,12 @@ public class ContainerInfoController {
             method = RequestMethod.GET,
             produces = MediaType.TEXT_PLAIN_VALUE)
     public String getContainerLogsById(@PathVariable String containerId,
-           @RequestParam(value = "follow", defaultValue = "0") String follow,
-           @RequestParam(value = "stdout", defaultValue = "1")String stdOut,
-           @RequestParam(value = "stderr", defaultValue = "1")String stdErr,
-           @RequestParam(value = "since", defaultValue = "0")String since,
-           @RequestParam(value = "timestamps", defaultValue = "1")String timestamps,
-           @RequestParam(value = "tail", defaultValue = "100")String tail) {
+                                       @RequestParam(value = "follow", defaultValue = "0") String follow,
+                                       @RequestParam(value = "stdout", defaultValue = "1") String stdOut,
+                                       @RequestParam(value = "stderr", defaultValue = "1") String stdErr,
+                                       @RequestParam(value = "since", defaultValue = "0") String since,
+                                       @RequestParam(value = "timestamps", defaultValue = "1") String timestamps,
+                                       @RequestParam(value = "tail", defaultValue = "100") String tail) {
         return this.service.getContainerLogsById(containerId, follow, stdOut, stdErr, since, timestamps, tail);
     }
 }

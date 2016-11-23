@@ -11,7 +11,7 @@ import static org.mockito.Mockito.when;
 
 public class ControllerTestUtils {
 
-    public static void setupMockRequestContextHolder () {
+    public static void setupMockRequestContextHolder() {
         String localHost = "http://localhost";
         HttpServletRequest httpServletRequestMock = mock(HttpServletRequest.class);
 

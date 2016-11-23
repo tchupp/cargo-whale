@@ -102,7 +102,8 @@ public class ContainerInfoControllerAllContainersIT {
 
     private ResponseEntity<Resource<ContainerSummaryIndex>> exchange(final String url) {
         HttpEntity<?> requestEntity = null;
-        ParameterizedTypeReference<Resource<ContainerSummaryIndex>> typeReference = new ParameterizedTypeReference<Resource<ContainerSummaryIndex>>() {};
+        ParameterizedTypeReference<Resource<ContainerSummaryIndex>> typeReference = new ParameterizedTypeReference<Resource<ContainerSummaryIndex>>() {
+        };
 
         return this.client.exchange(url, HttpMethod.GET, requestEntity, typeReference, Collections.emptyMap());
     }

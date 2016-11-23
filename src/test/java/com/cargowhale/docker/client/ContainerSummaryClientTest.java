@@ -85,7 +85,7 @@ public class ContainerSummaryClientTest {
         params += "&stdout=" + stdOut;
         params += "&stderr=" + stdErr;
         params += "&since=" + since;
-        params += "&timestamps="+timestamps;
+        params += "&timestamps=" + timestamps;
         params += "&tail=" + tail;
 
         when(this.endpointBuilder.getContainerLogByIdEndpoint(containerId)).thenReturn(DOCKER_ENDPOINT + containerId);

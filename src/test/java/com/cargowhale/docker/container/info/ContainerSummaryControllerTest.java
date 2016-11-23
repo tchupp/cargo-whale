@@ -62,7 +62,7 @@ public class ContainerSummaryControllerTest {
     }
 
     @Test
-    public void getContainerLogsById(){
+    public void getContainerLogsById() {
         String containerId = "container id!";
         String follow = "0";
         String stdOut = "0";

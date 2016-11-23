@@ -51,8 +51,9 @@ public class ContainerInfoClient {
         containerLogEndpoint += "&stdout=" + stdOut;
         containerLogEndpoint += "&stderr=" + stdErr;
         containerLogEndpoint += "&since=" + since;
-        containerLogEndpoint += "&timestamps="+timestamps;
+        containerLogEndpoint += "&timestamps=" + timestamps;
         containerLogEndpoint += "&tail=" + tail;
+        System.out.println(containerLogEndpoint);
         return this.restTemplate.getForObject(containerLogEndpoint, String.class);
     }
 }
