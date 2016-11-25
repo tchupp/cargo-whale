@@ -1,10 +1,16 @@
-<div>
-    <nav class="navbar navbar-default" role="navigation">
+<div class="sidebar">
+    <nav class="navbar" role="navigation">
+
         <div class="navbar-header">
             <a class="navbar-brand">
-                <div class="fa fa-ra icon"></div>
-                <div class="title"><strong>Cargo</strong>Whale</div>
+                <i class="glyphicon glyphicon-home icon"></i>
+                <span class="title"><strong>Cargo</strong>Whale</span>
             </a>
         </div>
+
+        <ul class="nav navbar-nav sidebar-list">
+            <cw-sidebar-item *ngFor="let item of sidebarItems" [sidebarItem]="item"></cw-sidebar-item>
+        </ul>
+
     </nav>
 </div>

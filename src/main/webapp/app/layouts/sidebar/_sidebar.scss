@@ -1,0 +1,121 @@
+$sidebar-width: 190px;
+$header-height: 70px;
+
+/* Structure */
+.sidebar {
+    width: $sidebar-width;
+    min-height: 100%;
+    height: 100%;
+    z-index: 1001;
+    display: block;
+    position: fixed;
+    overflow: auto;
+
+    background-color: $sidebar-bg;
+
+    .navbar-header {
+        width: 100%;
+
+        border-bottom: 4px solid $sidebar-shadow;
+
+        .navbar-brand {
+            width: 100%;
+            line-height: $header-height;
+            height: $header-height;
+            padding: 0;
+            overflow: hidden;
+
+            font-family: $font-family-roboto;
+            background-color: $sidebar;
+
+            .icon {
+                width: 60px;
+                text-align: center;
+                display: inline-block;
+            }
+
+            .title {
+                margin-left: -5px;
+                display: inline-block;
+            }
+        }
+    }
+
+    .navbar {
+        border: none;
+        padding-left: 0;
+    }
+
+    .sidebar-list {
+        width: 100%;
+        margin-top: 4px;
+
+        .sidebar-list-item {
+            display: block;
+            position: relative;
+            float: none;
+            padding: 0;
+            margin: 1px 5px;
+
+            background-color: $sidebar;
+
+            &.selected {
+                background-color: $sidebar-item;
+                border-right: 4px solid $primary;
+
+                a.al-sidebar-list-link {
+                    color: $sidebar-text;
+
+                    b {
+                        color: $sidebar-text;
+                    }
+                }
+            }
+        }
+
+        a.sidebar-list-link {
+            display: block;
+            height: 42px;
+            width: 100%;
+            line-height: 42px;
+            padding-left: 12px;
+            text-shadow: none;
+            text-decoration: none;
+            white-space: nowrap;
+            overflow: hidden;
+            cursor: pointer;
+
+            font-size: 13px;
+            color: $sidebar-text;
+
+            &:hover {
+                color: $primary;
+                b {
+                    color: $primary;
+                }
+            }
+            i {
+                margin-right: 18px;
+                width: 22px;
+                text-align: center;
+                display: inline-block;
+            }
+            b {
+                display: block;
+                opacity: 1;
+                width: 14px;
+                height: 14px;
+                line-height: 14px;
+                text-shadow: none;
+                font-size: 18px;
+                position: absolute;
+                right: 10px;
+                top: 12px;
+                padding: 0;
+                text-align: center;
+                color: $sidebar-text;
+                transition: transform 0.2s linear;
+            }
+        }
+    }
+}

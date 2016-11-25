@@ -5,6 +5,7 @@ import {HttpModule} from "@angular/http";
 import {MainComponent, SidebarComponent} from "./layouts";
 import {ContainerListComponent} from "./container/container-list.component";
 import {ContainerService} from "./container/container.service";
+import {SidebarItemComponent} from "./layouts/sidebar/sidebar-item/sidebar-item.component";
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import {ContainerService} from "./container/container.service";
     declarations: [
         MainComponent,
         ContainerListComponent,
-        SidebarComponent
+        SidebarComponent,
+        SidebarItemComponent
     ],
     providers: [
         ContainerService
