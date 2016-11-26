@@ -13,8 +13,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.hateoas.Resource;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -23,6 +21,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Collections;
 import java.util.List;
 
+import static com.cargowhale.docker.test.ControllerTestUtils.getForType;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
@@ -31,6 +30,9 @@ import static org.mockito.Mockito.when;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ContainerInfoControllerAllContainersIT {
+
+    private static class ContainerSummaryIndexResourceType extends ParameterizedTypeReference<Resource<ContainerSummaryIndex>> {
+    }
 
     @MockBean
     private RestTemplate restTemplate;
@@ -49,7 +51,7 @@ public class ContainerInfoControllerAllContainersIT {
 
         when(this.restTemplate.getForObject(dockerUri + "/v1.24/containers/json?all=1", ContainerSummary[].class)).thenReturn(containerSummaryArray);
 
-        ResponseEntity<Resource<ContainerSummaryIndex>> response = exchange("/api/containers");
+        ResponseEntity<Resource<ContainerSummaryIndex>> response = getForType(this.client, "/api/containers", new ContainerSummaryIndexResourceType());
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
 
@@ -67,7 +69,7 @@ public class ContainerInfoControllerAllContainersIT {
 
         when(this.restTemplate.getForObject(dockerUri + "/v1.24/containers/json?all=1", ContainerSummary[].class)).thenReturn(containerSummaryArray);
 
-        ResponseEntity<Resource<ContainerSummaryIndex>> response = exchange("/api/containers");
+        ResponseEntity<Resource<ContainerSummaryIndex>> response = getForType(this.client, "/api/containers", new ContainerSummaryIndexResourceType());
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
 
@@ -88,7 +90,7 @@ public class ContainerInfoControllerAllContainersIT {
 
         when(this.restTemplate.getForObject(dockerUri + "/v1.24/containers/json?all=1", ContainerSummary[].class)).thenReturn(containerSummaryArray);
 
-        ResponseEntity<Resource<ContainerSummaryIndex>> response = exchange("/api/containers");
+        ResponseEntity<Resource<ContainerSummaryIndex>> response = getForType(this.client, "/api/containers", new ContainerSummaryIndexResourceType());
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
 
@@ -98,13 +100,5 @@ public class ContainerInfoControllerAllContainersIT {
 
         assertThat(containerSummaryList.get(0), equalTo(containerSummary1));
         assertThat(containerSummaryList.get(1), equalTo(containerSummary2));
-    }
-
-    private ResponseEntity<Resource<ContainerSummaryIndex>> exchange(final String url) {
-        HttpEntity<?> requestEntity = null;
-        ParameterizedTypeReference<Resource<ContainerSummaryIndex>> typeReference = new ParameterizedTypeReference<Resource<ContainerSummaryIndex>>() {
-        };
-
-        return this.client.exchange(url, HttpMethod.GET, requestEntity, typeReference, Collections.emptyMap());
     }
 }

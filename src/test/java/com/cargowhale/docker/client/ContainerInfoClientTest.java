@@ -21,7 +21,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class ContainerInfoClientTest {
 
-    private static final String DOCKER_ENDPOINT = "http://this.is.docker:471828";
+    private static final String DOCKER_ENDPOINT = "http://this.is.docker:471828/";
 
     @InjectMocks
     private ContainerInfoClient client;

@@ -8,15 +8,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Collections;
-
+import static com.cargowhale.docker.test.ControllerTestUtils.getForType;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
@@ -24,6 +21,9 @@ import static org.mockito.Mockito.when;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ContainerInfoControllerGetLogsIT {
+
+    private static class ContainerLogsResourceType extends ParameterizedTypeReference<String> {
+    }
 
     @MockBean
     private RestTemplate restTemplate;
@@ -44,19 +44,11 @@ public class ContainerInfoControllerGetLogsIT {
         when(this.restTemplate.getForObject(dockerUri + "/v1.24/containers/" + container + queries, String.class))
                 .thenReturn(logs);
 
-        ResponseEntity<String> response = exchange("/api/containers/" + container + queries);
+        ResponseEntity<String> response = getForType(this.client, "/api/containers/" + container + queries, new ContainerLogsResourceType());
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
 
         String returnedLogs = response.getBody();
         assertThat(returnedLogs, is(logs));
-    }
-
-    private ResponseEntity<String> exchange(final String url) {
-        HttpEntity<?> requestEntity = null;
-        ParameterizedTypeReference<String> typeReference = new ParameterizedTypeReference<String>() {
-        };
-
-        return this.client.exchange(url, HttpMethod.GET, requestEntity, typeReference, Collections.emptyMap());
     }
 }
