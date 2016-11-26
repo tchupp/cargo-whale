@@ -1,7 +1,6 @@
 package com.cargowhale.docker.container.info;
 
 import com.cargowhale.docker.container.StateFilters;
-import com.cargowhale.docker.container.info.model.ContainerDetails;
 import com.cargowhale.docker.container.info.model.ContainerSummaryIndex;
 import com.cargowhale.docker.container.info.resource.ContainerSummaryIndexResource;
 import com.cargowhale.docker.container.info.resource.ContainerSummaryIndexResourceAssembler;
@@ -20,7 +19,7 @@ import static org.mockito.Mockito.when;
 public class ContainerSummaryControllerTest {
 
     @InjectMocks
-    private ContainerInfoController controller;
+    private ContainerSummaryController controller;
 
     @Mock
     private ContainerInfoService service;
@@ -49,31 +48,5 @@ public class ContainerSummaryControllerTest {
         when(this.indexResourceAssembler.toResource(containerSummaryIndex)).thenReturn(containerSummaryIndexResource);
 
         assertThat(this.controller.getContainersFilterByStatus(stateFilters), is(containerSummaryIndexResource));
-    }
-
-    @Test
-    public void getContainerDetailsById() throws Exception {
-        String containerId = "container id!";
-        ContainerDetails containerDetails = mock(ContainerDetails.class);
-
-        when(this.service.getContainerDetailsById(containerId)).thenReturn(containerDetails);
-
-        assertThat(this.controller.getContainerById(containerId), is(containerDetails));
-    }
-
-    @Test
-    public void getContainerLogsById() {
-        String containerId = "container id!";
-        String follow = "0";
-        String stdOut = "0";
-        String stdErr = "0";
-        String since = "0";
-        String timestamps = "0";
-        String tail = "0";
-        String containerLogs = "logs";
-
-        when(this.service.getContainerLogsById(containerId, follow, stdOut, stdErr, since, timestamps, tail)).thenReturn(containerLogs);
-
-        assertThat(this.controller.getContainerLogsById(containerId, follow, stdOut, stdErr, since, timestamps, tail), is(containerLogs));
     }
 }

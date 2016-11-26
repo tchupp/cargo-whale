@@ -1,6 +1,6 @@
 package com.cargowhale.docker.container.info.resource;
 
-import com.cargowhale.docker.container.info.ContainerInfoController;
+import com.cargowhale.docker.container.info.ContainerSummaryController;
 import com.cargowhale.docker.container.info.model.ContainerSummaryIndex;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
@@ -15,7 +15,7 @@ public class ContainerSummaryIndexResourceAssembler extends ResourceAssemblerSup
 
     @Autowired
     public ContainerSummaryIndexResourceAssembler(final ContainerSummaryResourceAssembler summaryResourceAssembler) {
-        super(ContainerInfoController.class, ContainerSummaryIndexResource.class);
+        super(ContainerSummaryController.class, ContainerSummaryIndexResource.class);
         this.summaryResourceAssembler = summaryResourceAssembler;
     }
 
