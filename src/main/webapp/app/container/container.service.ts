@@ -20,7 +20,7 @@ export class ContainerService {
         return res.json().containers || {};
     }
 
-    private static handleError (error: Response | any) {
+    private static handleError(error: Response | any) {
         let errMsg: string;
         if (error instanceof Response) {
             const body = error.json() || '';

@@ -6,5 +6,5 @@ import {SidebarItem} from "./sidebar-item.model";
     templateUrl: 'app/layouts/sidebar/sidebar-item/sidebar-item.html'
 })
 export class SidebarItemComponent {
-    @Input() sidebarItem:SidebarItem;
+    @Input() sidebarItem: SidebarItem;
 }

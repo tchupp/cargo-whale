@@ -1,4 +1,4 @@
 export class SidebarItem {
-    title:string;
-    icon:string;
+    title: string;
+    icon: string;
 }

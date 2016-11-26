@@ -6,9 +6,9 @@ import {SidebarItem} from "./sidebar-item/sidebar-item.model";
     templateUrl: 'app/layouts/sidebar/sidebar.html'
 })
 export class SidebarComponent implements OnInit {
-    private sidebarItems:SidebarItem[];
+    private sidebarItems: SidebarItem[];
 
-    ngOnInit():void {
+    ngOnInit(): void {
         this.sidebarItems = [{title: "Dashboard", icon: "dashboard"}, {title: "Containers", icon: "list"}];
     }
 }
