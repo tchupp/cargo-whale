@@ -1,5 +1,6 @@
 package com.cargowhale.docker.container.info;
 
+import com.cargowhale.docker.container.LogFilters;
 import com.cargowhale.docker.container.info.model.ContainerDetails;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,16 +35,19 @@ public class ContainerDetailsControllerTest {
     @Test
     public void getContainerLogsById() {
         String containerId = "container id!";
+
         String follow = "0";
-        String stdOut = "0";
+        String stdOut = "1";
         String stdErr = "0";
         String since = "0";
-        String timestamps = "0";
-        String tail = "0";
+        String timestamps = "1";
+        String tail = "1000";
+        LogFilters logFilters = new LogFilters(follow, stdOut, stdErr, since, timestamps, tail);
+
         String containerLogs = "logs";
 
-        when(this.service.getContainerLogsById(containerId, follow, stdOut, stdErr, since, timestamps, tail)).thenReturn(containerLogs);
+        when(this.service.getContainerLogsById(containerId, logFilters)).thenReturn(containerLogs);
 
-        assertThat(this.controller.getContainerLogsById(containerId, follow, stdOut, stdErr, since, timestamps, tail), is(containerLogs));
+        assertThat(this.controller.getContainerLogsById(containerId, logFilters), is(containerLogs));
     }
 }

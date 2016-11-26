@@ -1,11 +1,13 @@
 package com.cargowhale.docker.client;
 
+import com.cargowhale.docker.container.LogFilters;
 import com.cargowhale.docker.container.info.model.ContainerDetails;
 import com.cargowhale.docker.container.info.model.ContainerSummary;
 import com.cargowhale.docker.util.JsonConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.Arrays;
 import java.util.List;
@@ -45,15 +47,16 @@ public class ContainerInfoClient {
         return this.restTemplate.getForObject(containerByIdEndpoint, ContainerDetails.class);
     }
 
-    public String getContainerLogsById(String containerId, String follow, String stdOut, String stdErr, String since, String timestamps, String tail) {
+    public String getContainerLogsById(final String containerId, final LogFilters filters) {
         String containerLogEndpoint = this.endpointBuilder.getContainerLogByIdEndpoint(containerId);
-        containerLogEndpoint += "follow=" + follow;
-        containerLogEndpoint += "&stdout=" + stdOut;
-        containerLogEndpoint += "&stderr=" + stdErr;
-        containerLogEndpoint += "&since=" + since;
-        containerLogEndpoint += "&timestamps=" + timestamps;
-        containerLogEndpoint += "&tail=" + tail;
-        System.out.println(containerLogEndpoint);
-        return this.restTemplate.getForObject(containerLogEndpoint, String.class);
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(containerLogEndpoint)
+                .queryParam("follow", filters.getFollow())
+                .queryParam("stdout", filters.getStdout())
+                .queryParam("stderr", filters.getStderr())
+                .queryParam("since", filters.getSince())
+                .queryParam("timestamps", filters.getTimestamps())
+                .queryParam("tail", filters.getTail());
+
+        return this.restTemplate.getForObject(builder.toUriString(), String.class);
     }
 }

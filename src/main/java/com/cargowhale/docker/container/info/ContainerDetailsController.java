@@ -2,6 +2,7 @@ package com.cargowhale.docker.container.info;
 
 import com.cargowhale.docker.container.ContainerEnumConverter;
 import com.cargowhale.docker.container.ContainerState;
+import com.cargowhale.docker.container.LogFilters;
 import com.cargowhale.docker.container.info.model.ContainerDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -34,13 +35,7 @@ public class ContainerDetailsController {
     @RequestMapping(value = "/{id}/logs",
             method = RequestMethod.GET,
             produces = MediaType.TEXT_PLAIN_VALUE)
-    public String getContainerLogsById(@PathVariable String id,
-                                       @RequestParam(value = "follow", defaultValue = "0") String follow,
-                                       @RequestParam(value = "stdout", defaultValue = "1") String stdOut,
-                                       @RequestParam(value = "stderr", defaultValue = "1") String stdErr,
-                                       @RequestParam(value = "since", defaultValue = "0") String since,
-                                       @RequestParam(value = "timestamps", defaultValue = "1") String timestamps,
-                                       @RequestParam(value = "tail", defaultValue = "100") String tail) {
-        return this.service.getContainerLogsById(id, follow, stdOut, stdErr, since, timestamps, tail);
+    public String getContainerLogsById(@PathVariable String id, LogFilters logFilters) {
+        return this.service.getContainerLogsById(id, logFilters);
     }
 }

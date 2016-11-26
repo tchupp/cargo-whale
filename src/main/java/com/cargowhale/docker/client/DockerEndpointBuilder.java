@@ -10,7 +10,7 @@ public class DockerEndpointBuilder {
     private static final String API_VERSION = "/v1.24";
     private static final String CONTAINERS_ENDPOINT = "/containers";
     private static final String JSON = "/json";
-    private static final String LOGS = "/logs?";
+    private static final String LOGS = "/logs";
 
     private final CargoWhaleProperties properties;
 

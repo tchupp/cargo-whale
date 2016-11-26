@@ -63,8 +63,8 @@ public class DockerEndpointBuilderTest {
         String containerId1 = "1fds78i1h";
         String containerId2 = "4y712yui4";
 
-        String expectedUri1 = DOCKER_URI + "/v1.24/containers/" + containerId1 + "/logs?";
-        String expectedUri2 = DOCKER_URI + "/v1.24/containers/" + containerId2 + "/logs?";
+        String expectedUri1 = DOCKER_URI + "/v1.24/containers/" + containerId1 + "/logs";
+        String expectedUri2 = DOCKER_URI + "/v1.24/containers/" + containerId2 + "/logs";
 
         when(this.properties.getDockerUri()).thenReturn(DOCKER_URI);
 

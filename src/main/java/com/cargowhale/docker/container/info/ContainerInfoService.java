@@ -2,6 +2,7 @@ package com.cargowhale.docker.container.info;
 
 import com.cargowhale.docker.client.ContainerInfoClient;
 import com.cargowhale.docker.client.DockerContainerFilters;
+import com.cargowhale.docker.container.LogFilters;
 import com.cargowhale.docker.container.StateFilters;
 import com.cargowhale.docker.container.info.model.ContainerDetails;
 import com.cargowhale.docker.container.info.model.ContainerSummary;
@@ -26,7 +27,7 @@ public class ContainerInfoService {
         return new ContainerSummaryIndex(allContainers);
     }
 
-    public ContainerSummaryIndex getContainersFilterByStatus(StateFilters stateFilters) {
+    public ContainerSummaryIndex getContainersFilterByStatus(final StateFilters stateFilters) {
         DockerContainerFilters dockerContainerFilters = new DockerContainerFilters(stateFilters.getState());
 
         List<ContainerSummary> filteredContainers = this.client.getFilteredContainers(dockerContainerFilters);
@@ -37,7 +38,7 @@ public class ContainerInfoService {
         return this.client.getContainerDetailsById(containerId);
     }
 
-    public String getContainerLogsById(String containerId, String follow, String stdOut, String stdErr, String since, String timestamps, String tail) {
-        return this.client.getContainerLogsById(containerId, follow, stdOut, stdErr, since, timestamps, tail);
+    public String getContainerLogsById(final String containerId, final LogFilters logFilters) {
+        return this.client.getContainerLogsById(containerId, logFilters);
     }
 }

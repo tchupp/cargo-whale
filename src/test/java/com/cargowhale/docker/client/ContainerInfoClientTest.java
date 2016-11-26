@@ -1,5 +1,6 @@
 package com.cargowhale.docker.client;
 
+import com.cargowhale.docker.container.LogFilters;
 import com.cargowhale.docker.container.info.model.ContainerDetails;
 import com.cargowhale.docker.container.info.model.ContainerSummary;
 import com.cargowhale.docker.util.JsonConverter;
@@ -18,9 +19,9 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ContainerSummaryClientTest {
+public class ContainerInfoClientTest {
 
-    private static final String DOCKER_ENDPOINT = "http://this.is.docker:yo";
+    private static final String DOCKER_ENDPOINT = "http://this.is.docker:471828";
 
     @InjectMocks
     private ContainerInfoClient client;
@@ -61,7 +62,7 @@ public class ContainerSummaryClientTest {
 
     @Test
     public void getContainerByIdReturnsCorrectContainer() throws Exception {
-        String containerId = "container id yo";
+        String containerId = "container_id_yo";
         ContainerDetails containerDetails = mock(ContainerDetails.class);
 
         when(this.endpointBuilder.getContainerInfoByIdEndpoint(containerId)).thenReturn(DOCKER_ENDPOINT + containerId);
@@ -72,27 +73,24 @@ public class ContainerSummaryClientTest {
 
     @Test
     public void getContainerLogsByIdReturnsCorrectContainerLogs() throws Exception {
-        String containerId = "container id yo";
+        String containerId = "thisId";
+
         String follow = "0";
-        String stdOut = "0";
-        String stdErr = "0";
+        String stdOut = "1";
+        String stdErr = "1";
         String since = "0";
-        String timestamps = "0";
-        String tail = "0";
+        String timestamps = "1";
+        String tail = "265";
+        LogFilters filters = new LogFilters(follow, stdOut, stdErr, since, timestamps, tail);
+
         String logs = "logs";
 
-        String params = "follow=" + follow;
-        params += "&stdout=" + stdOut;
-        params += "&stderr=" + stdErr;
-        params += "&since=" + since;
-        params += "&timestamps=" + timestamps;
-        params += "&tail=" + tail;
+        String formattedParams = String.format("?follow=%s&stdout=%s&stderr=%s&since=%s&timestamps=%s&tail=%s", follow, stdOut, stdErr, since, timestamps, tail);
 
         when(this.endpointBuilder.getContainerLogByIdEndpoint(containerId)).thenReturn(DOCKER_ENDPOINT + containerId);
-        when(this.template.getForObject(DOCKER_ENDPOINT + containerId + params, String.class)).thenReturn(logs);
+        when(this.template.getForObject(DOCKER_ENDPOINT + containerId + formattedParams, String.class)).thenReturn(logs);
 
-        assertThat(this.client.getContainerLogsById(containerId, follow, stdOut, stdErr, since, timestamps, tail), is(logs));
+        assertThat(this.client.getContainerLogsById(containerId, filters), is(logs));
     }
-
 }
 
