@@ -20,8 +20,8 @@ public class ContainerSummaryController {
         binder.registerCustomEditor(ContainerState.class, new ContainerEnumConverter());
     }
 
-    private final ContainerSummaryIndexResourceAssembler indexResourceAssembler;
     private final ContainerInfoService service;
+    private final ContainerSummaryIndexResourceAssembler indexResourceAssembler;
 
     @Autowired
     public ContainerSummaryController(final ContainerInfoService service, final ContainerSummaryIndexResourceAssembler indexResourceAssembler) {

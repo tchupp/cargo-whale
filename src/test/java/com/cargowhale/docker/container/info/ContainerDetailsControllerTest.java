@@ -2,6 +2,8 @@ package com.cargowhale.docker.container.info;
 
 import com.cargowhale.docker.container.LogFilters;
 import com.cargowhale.docker.container.info.model.ContainerDetails;
+import com.cargowhale.docker.container.info.resource.ContainerDetailsResource;
+import com.cargowhale.docker.container.info.resource.ContainerDetailsResourceAssembler;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -22,14 +24,19 @@ public class ContainerDetailsControllerTest {
     @Mock
     private ContainerInfoService service;
 
+    @Mock
+    private ContainerDetailsResourceAssembler resourceAssembler;
+
     @Test
     public void getContainerDetailsById() throws Exception {
         String containerId = "container id!";
         ContainerDetails containerDetails = mock(ContainerDetails.class);
+        ContainerDetailsResource containerDetailsResource = mock(ContainerDetailsResource.class);
 
         when(this.service.getContainerDetailsById(containerId)).thenReturn(containerDetails);
+        when(this.resourceAssembler.toResource(containerDetails)).thenReturn(containerDetailsResource);
 
-        assertThat(this.controller.getContainerById(containerId), is(containerDetails));
+        assertThat(this.controller.getContainerById(containerId), is(containerDetailsResource));
     }
 
     @Test

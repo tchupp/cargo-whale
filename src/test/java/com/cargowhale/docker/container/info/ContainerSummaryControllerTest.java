@@ -25,7 +25,7 @@ public class ContainerSummaryControllerTest {
     private ContainerInfoService service;
 
     @Mock
-    private ContainerSummaryIndexResourceAssembler indexResourceAssembler;
+    private ContainerSummaryIndexResourceAssembler resourceAssembler;
 
     @Test
     public void getAllContainersReturnsEveryContainerFromService() {
@@ -33,7 +33,7 @@ public class ContainerSummaryControllerTest {
         ContainerSummaryIndexResource containerSummaryIndexResource = mock(ContainerSummaryIndexResource.class);
 
         when(this.service.getAllContainers()).thenReturn(containerSummaryIndex);
-        when(this.indexResourceAssembler.toResource(containerSummaryIndex)).thenReturn(containerSummaryIndexResource);
+        when(this.resourceAssembler.toResource(containerSummaryIndex)).thenReturn(containerSummaryIndexResource);
 
         assertThat(this.controller.getAllContainers(), is(containerSummaryIndexResource));
     }
@@ -45,7 +45,7 @@ public class ContainerSummaryControllerTest {
         StateFilters stateFilters = mock(StateFilters.class);
 
         when(this.service.getContainersFilterByStatus(stateFilters)).thenReturn(containerSummaryIndex);
-        when(this.indexResourceAssembler.toResource(containerSummaryIndex)).thenReturn(containerSummaryIndexResource);
+        when(this.resourceAssembler.toResource(containerSummaryIndex)).thenReturn(containerSummaryIndexResource);
 
         assertThat(this.controller.getContainersFilterByStatus(stateFilters), is(containerSummaryIndexResource));
     }
