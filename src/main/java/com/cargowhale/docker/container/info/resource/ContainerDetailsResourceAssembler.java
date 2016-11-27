@@ -1,9 +1,13 @@
 package com.cargowhale.docker.container.info.resource;
 
+import com.cargowhale.docker.container.LogFilters;
 import com.cargowhale.docker.container.info.ContainerDetailsController;
 import com.cargowhale.docker.container.info.model.ContainerDetails;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 import org.springframework.stereotype.Component;
+
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @Component
 public class ContainerDetailsResourceAssembler extends ResourceAssemblerSupport<ContainerDetails, ContainerDetailsResource> {
@@ -14,7 +18,11 @@ public class ContainerDetailsResourceAssembler extends ResourceAssemblerSupport<
 
     @Override
     public ContainerDetailsResource toResource(final ContainerDetails entity) {
-        return createResourceWithId(entity.getId(), entity);
+        ContainerDetailsResource resource = createResourceWithId(entity.getId(), entity);
+
+        resource.add(linkTo(methodOn(ContainerDetailsController.class).getContainerLogsById(entity.getId(), new LogFilters())).withRel("logs"));
+
+        return resource;
     }
 
     @Override
