@@ -57,10 +57,6 @@ function deps() {
         'node_modules/@angular/**/*.js',
         'node_modules/@ng-bootstrap/ng-bootstrap/**/*.js',
         'node_modules/rxjs/**/*.js',
-        'node_modules/angular-ui-router/**/*.js',
-        'node_modules/ui-router-ng1-to-ng2/**/*.js',
-        'node_modules/ui-router-ng2/**/*.js',
-        'node_modules/ui-router-visualizer/**/*.js',
         'node_modules/ng2-webstorage/bundles/**/*.js',
         'node_modules/jquery/dist/*.js'
     ], {base: 'node_modules'})
