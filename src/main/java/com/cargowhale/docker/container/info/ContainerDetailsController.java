@@ -4,6 +4,7 @@ import com.cargowhale.docker.container.ContainerEnumConverter;
 import com.cargowhale.docker.container.ContainerState;
 import com.cargowhale.docker.container.LogFilters;
 import com.cargowhale.docker.container.info.model.ContainerDetails;
+import com.cargowhale.docker.container.info.model.ContainerLogs;
 import com.cargowhale.docker.container.info.resource.ContainerDetailsResource;
 import com.cargowhale.docker.container.info.resource.ContainerDetailsResourceAssembler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,7 @@ public class ContainerDetailsController {
     @RequestMapping(value = "/{id}/logs",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public String getContainerLogsById(@PathVariable String id, LogFilters logFilters) {
+    public ContainerLogs getContainerLogsById(@PathVariable String id, LogFilters logFilters) {
         return this.service.getContainerLogsById(id, logFilters);
     }
 }

@@ -2,6 +2,7 @@ package com.cargowhale.docker.container.info;
 
 import com.cargowhale.docker.container.LogFilters;
 import com.cargowhale.docker.container.info.model.ContainerDetails;
+import com.cargowhale.docker.container.info.model.ContainerLogs;
 import com.cargowhale.docker.container.info.resource.ContainerDetailsResource;
 import com.cargowhale.docker.container.info.resource.ContainerDetailsResourceAssembler;
 import org.junit.Test;
@@ -51,7 +52,7 @@ public class ContainerDetailsControllerTest {
         String tail = "1000";
         LogFilters logFilters = new LogFilters(follow, stdOut, stdErr, since, timestamps, tail);
 
-        String containerLogs = "logs";
+        ContainerLogs containerLogs = mock(ContainerLogs.class);
 
         when(this.service.getContainerLogsById(containerId, logFilters)).thenReturn(containerLogs);
 

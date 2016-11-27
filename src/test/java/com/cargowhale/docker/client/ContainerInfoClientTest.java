@@ -2,6 +2,7 @@ package com.cargowhale.docker.client;
 
 import com.cargowhale.docker.container.LogFilters;
 import com.cargowhale.docker.container.info.model.ContainerDetails;
+import com.cargowhale.docker.container.info.model.ContainerLogs;
 import com.cargowhale.docker.container.info.model.ContainerSummary;
 import com.cargowhale.docker.util.JsonConverter;
 import org.assertj.core.util.Arrays;
@@ -83,14 +84,15 @@ public class ContainerInfoClientTest {
         String tail = "265";
         LogFilters filters = new LogFilters(follow, stdOut, stdErr, since, timestamps, tail);
 
-        String logs = "logs";
+        String logs = "These are some fancy logs!";
 
         String formattedParams = String.format("?follow=%s&stdout=%s&stderr=%s&since=%s&timestamps=%s&tail=%s", follow, stdOut, stdErr, since, timestamps, tail);
 
         when(this.endpointBuilder.getContainerLogByIdEndpoint(containerId)).thenReturn(DOCKER_ENDPOINT + containerId);
         when(this.template.getForObject(DOCKER_ENDPOINT + containerId + formattedParams, String.class)).thenReturn(logs);
 
-        assertThat(this.client.getContainerLogsById(containerId, filters), is(logs));
+        ContainerLogs containerLogs = this.client.getContainerLogsById(containerId, filters);
+        assertThat(containerLogs.getLogs(), is(logs));
     }
 }
 

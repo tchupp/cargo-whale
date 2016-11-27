@@ -6,6 +6,7 @@ import com.cargowhale.docker.container.ContainerState;
 import com.cargowhale.docker.container.LogFilters;
 import com.cargowhale.docker.container.StateFilters;
 import com.cargowhale.docker.container.info.model.ContainerDetails;
+import com.cargowhale.docker.container.info.model.ContainerLogs;
 import com.cargowhale.docker.container.info.model.ContainerSummary;
 import com.cargowhale.docker.container.info.model.ContainerSummaryIndex;
 import org.assertj.core.util.Arrays;
@@ -80,7 +81,7 @@ public class ContainerInfoServiceTest {
         String tail = "650";
         LogFilters filters = new LogFilters(follow, stdOut, stdErr, since, timestamps, tail);
 
-        String containerLogs = "logs";
+        ContainerLogs containerLogs = mock(ContainerLogs.class);
 
         when(this.client.getContainerLogsById(containerId, filters)).thenReturn(containerLogs);
 

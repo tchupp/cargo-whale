@@ -2,6 +2,7 @@ package com.cargowhale.docker.client;
 
 import com.cargowhale.docker.container.LogFilters;
 import com.cargowhale.docker.container.info.model.ContainerDetails;
+import com.cargowhale.docker.container.info.model.ContainerLogs;
 import com.cargowhale.docker.container.info.model.ContainerSummary;
 import com.cargowhale.docker.util.JsonConverter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +48,7 @@ public class ContainerInfoClient {
         return this.restTemplate.getForObject(containerByIdEndpoint, ContainerDetails.class);
     }
 
-    public String getContainerLogsById(final String containerId, final LogFilters filters) {
+    public ContainerLogs getContainerLogsById(final String containerId, final LogFilters filters) {
         String containerLogEndpoint = this.endpointBuilder.getContainerLogByIdEndpoint(containerId);
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(containerLogEndpoint)
                 .queryParam("follow", filters.getFollow())
@@ -57,6 +58,6 @@ public class ContainerInfoClient {
                 .queryParam("timestamps", filters.getTimestamps())
                 .queryParam("tail", filters.getTail());
 
-        return this.restTemplate.getForObject(builder.toUriString(), String.class);
+        return new ContainerLogs(this.restTemplate.getForObject(builder.toUriString(), String.class));
     }
 }
