@@ -31,7 +31,15 @@ response:
           }
         }
       }
-    ]
+    ],
+    "_links": {
+      "self": {
+        "href": "http://localhost:8081/api/containers"
+      },
+      "up": {
+        "href": "http://localhost:8081/api"
+      }
+    }
   }
 
 ---
@@ -81,7 +89,15 @@ response:
           }
         }
       }
-    ]
+    ],
+    "_links": {
+      "self": {
+        "href": "http://localhost:8081/api/containers"
+      },
+      "up": {
+        "href": "http://localhost:8081/api"
+      }
+    }
   }
 
 ---

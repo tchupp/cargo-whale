@@ -21,8 +21,8 @@ public class ContainerDetailsResourceAssembler extends ResourceAssemblerSupport<
     public ContainerDetailsResource toResource(final ContainerDetails entity) {
         ContainerDetailsResource resource = createResourceWithId(entity.getId(), entity);
 
+        resource.add(linkTo(methodOn(ContainerSummaryController.class).getAllContainers()).withRel("up"));
         resource.add(linkTo(methodOn(ContainerDetailsController.class).getContainerLogsById(entity.getId(), new LogFilters())).withRel("logs"));
-        resource.add(linkTo(methodOn(ContainerSummaryController.class).getAllContainers()).withRel("containers"));
 
         return resource;
     }

@@ -1,0 +1,14 @@
+request:
+  method: GET
+  url: /api
+
+response:
+  status: 200
+  body: >
+  {
+    "_links": {
+      "containers": {
+        "href": "http://localhost:8081/api/containers"
+      }
+    }
+  }

@@ -20,7 +20,7 @@ public class ContainerLogsResourceAssembler extends ResourceAssemblerSupport<Con
     public ContainerLogsResource toResource(final ContainerLogs entity) {
         ContainerLogsResource resource = createResourceWithId(entity.getId(), entity);
 
-        resource.add(linkTo(methodOn(ContainerDetailsController.class).getContainerById(entity.getId())).withRel("container"));
+        resource.add(linkTo(methodOn(ContainerDetailsController.class).getContainerById(entity.getId())).withRel("up"));
 
         return resource;
     }
