@@ -58,6 +58,6 @@ public class ContainerInfoClient {
                 .queryParam("timestamps", filters.getTimestamps())
                 .queryParam("tail", filters.getTail());
 
-        return new ContainerLogs(this.restTemplate.getForObject(builder.toUriString(), String.class));
+        return new ContainerLogs(containerId, this.restTemplate.getForObject(builder.toUriString(), String.class));
     }
 }

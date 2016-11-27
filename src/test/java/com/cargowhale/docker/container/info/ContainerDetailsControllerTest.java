@@ -5,6 +5,8 @@ import com.cargowhale.docker.container.info.model.ContainerDetails;
 import com.cargowhale.docker.container.info.model.ContainerLogs;
 import com.cargowhale.docker.container.info.resource.ContainerDetailsResource;
 import com.cargowhale.docker.container.info.resource.ContainerDetailsResourceAssembler;
+import com.cargowhale.docker.container.info.resource.ContainerLogsResource;
+import com.cargowhale.docker.container.info.resource.ContainerLogsResourceAssembler;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -26,7 +28,10 @@ public class ContainerDetailsControllerTest {
     private ContainerInfoService service;
 
     @Mock
-    private ContainerDetailsResourceAssembler resourceAssembler;
+    private ContainerDetailsResourceAssembler detailsResourceAssembler;
+
+    @Mock
+    private ContainerLogsResourceAssembler logsResourceAssembler;
 
     @Test
     public void getContainerDetailsById() throws Exception {
@@ -35,7 +40,7 @@ public class ContainerDetailsControllerTest {
         ContainerDetailsResource containerDetailsResource = mock(ContainerDetailsResource.class);
 
         when(this.service.getContainerDetailsById(containerId)).thenReturn(containerDetails);
-        when(this.resourceAssembler.toResource(containerDetails)).thenReturn(containerDetailsResource);
+        when(this.detailsResourceAssembler.toResource(containerDetails)).thenReturn(containerDetailsResource);
 
         assertThat(this.controller.getContainerById(containerId), is(containerDetailsResource));
     }
@@ -53,9 +58,11 @@ public class ContainerDetailsControllerTest {
         LogFilters logFilters = new LogFilters(follow, stdOut, stdErr, since, timestamps, tail);
 
         ContainerLogs containerLogs = mock(ContainerLogs.class);
+        ContainerLogsResource containerLogsResource = mock(ContainerLogsResource.class);
 
         when(this.service.getContainerLogsById(containerId, logFilters)).thenReturn(containerLogs);
+        when(this.logsResourceAssembler.toResource(containerLogs)).thenReturn(containerLogsResource);
 
-        assertThat(this.controller.getContainerLogsById(containerId, logFilters), is(containerLogs));
+        assertThat(this.controller.getContainerLogsById(containerId, logFilters), is(containerLogsResource));
     }
 }

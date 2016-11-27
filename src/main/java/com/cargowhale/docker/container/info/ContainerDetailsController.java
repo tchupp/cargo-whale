@@ -7,6 +7,8 @@ import com.cargowhale.docker.container.info.model.ContainerDetails;
 import com.cargowhale.docker.container.info.model.ContainerLogs;
 import com.cargowhale.docker.container.info.resource.ContainerDetailsResource;
 import com.cargowhale.docker.container.info.resource.ContainerDetailsResourceAssembler;
+import com.cargowhale.docker.container.info.resource.ContainerLogsResource;
+import com.cargowhale.docker.container.info.resource.ContainerLogsResourceAssembler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.WebDataBinder;
@@ -22,12 +24,14 @@ public class ContainerDetailsController {
     }
 
     private final ContainerInfoService service;
-    private final ContainerDetailsResourceAssembler resourceAssembler;
+    private final ContainerDetailsResourceAssembler detailsResourceAssembler;
+    private final ContainerLogsResourceAssembler logsResourceAssembler;
 
     @Autowired
-    public ContainerDetailsController(final ContainerInfoService service, final ContainerDetailsResourceAssembler resourceAssembler) {
+    public ContainerDetailsController(final ContainerInfoService service, final ContainerDetailsResourceAssembler detailsResourceAssembler, final ContainerLogsResourceAssembler logsResourceAssembler) {
         this.service = service;
-        this.resourceAssembler = resourceAssembler;
+        this.detailsResourceAssembler = detailsResourceAssembler;
+        this.logsResourceAssembler = logsResourceAssembler;
     }
 
     @RequestMapping(value = "/{id}",
@@ -35,13 +39,14 @@ public class ContainerDetailsController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ContainerDetailsResource getContainerById(@PathVariable String id) {
         ContainerDetails containerDetails = this.service.getContainerDetailsById(id);
-        return this.resourceAssembler.toResource(containerDetails);
+        return this.detailsResourceAssembler.toResource(containerDetails);
     }
 
     @RequestMapping(value = "/{id}/logs",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ContainerLogs getContainerLogsById(@PathVariable String id, LogFilters logFilters) {
-        return this.service.getContainerLogsById(id, logFilters);
+    public ContainerLogsResource getContainerLogsById(@PathVariable String id, LogFilters logFilters) {
+        ContainerLogs containerLogs = this.service.getContainerLogsById(id, logFilters);
+        return this.logsResourceAssembler.toResource(containerLogs);
     }
 }
