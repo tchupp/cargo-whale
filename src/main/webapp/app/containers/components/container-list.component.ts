@@ -4,8 +4,11 @@ import {ContainerService} from "./container.service";
 import {Container} from "./container.model";
 
 @Component({
-    selector: 'cw-containers',
-    templateUrl: 'app/container/container-list.html'
+    selector: 'cw-container-list',
+    templateUrl: 'app/containers/components/container-list.html',
+    providers: [
+        ContainerService
+    ]
 })
 export class ContainerListComponent implements OnInit {
 

@@ -15,12 +15,8 @@
         'jquery' : 'vendor/jquery/dist',
         'ng2-webstorage': 'vendor/ng2-webstorage',
         // app barrels
-        'account' : 'app/account',
-        'admin' : 'app/admin',
-        'components' : 'app/components',
-        'home' : 'app/home',
-        'layouts' : 'app/layouts',
-        'shared' : 'app/shared'
+        'containers': 'app/containers',
+        'layouts': 'app/layouts'
     };
     // packages tells the System loader how to load when no filename and/or no extension
     var packages = {
@@ -31,6 +27,7 @@
         'jquery': { main: 'jquery.min', defaultExtension: 'js' },
         'ng2-webstorage': { main: 'bundles/core.umd.js', defaultExtension: 'js' },
         // app barrels
+        'containers': {main: 'index', defaultExtension: 'js'},
         'layouts' : { main: 'index',  defaultExtension: 'js' }
     };
     var ngPackageNames = [
