@@ -3,10 +3,12 @@ import {CommonModule} from "@angular/common";
 
 import {ContainersComponent} from "./containers.component";
 import {ContainerListComponent} from "./components/container-list.component";
+import {containersRoutes} from "./containers.routes";
 
 @NgModule({
     imports: [
-        CommonModule
+        CommonModule,
+        containersRoutes
     ],
     declarations: [
         ContainersComponent,
