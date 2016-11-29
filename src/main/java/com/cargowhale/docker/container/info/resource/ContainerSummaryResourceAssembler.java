@@ -1,6 +1,6 @@
 package com.cargowhale.docker.container.info.resource;
 
-import com.cargowhale.docker.container.info.ContainerInfoController;
+import com.cargowhale.docker.container.info.ContainerSummaryController;
 import com.cargowhale.docker.container.info.model.ContainerSummary;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 import org.springframework.stereotype.Component;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 public class ContainerSummaryResourceAssembler extends ResourceAssemblerSupport<ContainerSummary, ContainerSummaryResource> {
 
     public ContainerSummaryResourceAssembler() {
-        super(ContainerInfoController.class, ContainerSummaryResource.class);
+        super(ContainerSummaryController.class, ContainerSummaryResource.class);
     }
 
     @Override

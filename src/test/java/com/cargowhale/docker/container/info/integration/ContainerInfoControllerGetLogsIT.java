@@ -1,9 +1,7 @@
 package com.cargowhale.docker.container.info.integration;
 
 import com.cargowhale.docker.config.CargoWhaleProperties;
-import com.cargowhale.docker.container.ContainerState;
-import com.cargowhale.docker.container.info.model.ContainerDetails;
-import com.cargowhale.docker.container.info.model.ContainerDetailsState;
+import com.cargowhale.docker.container.info.model.ContainerLogs;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +22,9 @@ import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class ContainerInfoControllerContainerByNameIT {
+public class ContainerInfoControllerGetLogsIT {
 
-    private static class ContainerDetailsResourceType extends ParameterizedTypeReference<Resource<ContainerDetails>> {
+    private static class ContainerLogsResourceType extends ParameterizedTypeReference<Resource<ContainerLogs>> {
     }
 
     @MockBean
@@ -39,20 +37,21 @@ public class ContainerInfoControllerContainerByNameIT {
     private CargoWhaleProperties properties;
 
     @Test
-    public void getContainerById() throws Exception {
-        String containerId = "7vbk17823b";
+    public void getLogsReturnsCorrectLogs() {
         String dockerUri = this.properties.getDockerUri();
+        String container = "TestContainer";
+        String logs = "These are definitely logs";
+        String queries = "/logs?follow=0&stdout=1&stderr=1&since=0&timestamps=1&tail=100";
 
-        ContainerDetailsState containerDetailsState = new ContainerDetailsState(123, ContainerState.RUNNING, "", 9, "2016-11-21T15:47:32Z");
-        ContainerDetails containerDetails = new ContainerDetails(containerId, "cool-container", "cool-image-id", "/bin/sh", containerDetailsState);
+        when(this.restTemplate.getForObject(dockerUri + "/v1.24/containers/" + container + queries, String.class)).thenReturn(logs);
 
-        when(this.restTemplate.getForObject(dockerUri + "/v1.24/containers/" + containerId + "/json", ContainerDetails.class)).thenReturn(containerDetails);
-
-        ResponseEntity<Resource<ContainerDetails>> response = getForType(this.client, "/api/containers/" + containerId, new ContainerDetailsResourceType());
+        ResponseEntity<Resource<ContainerLogs>> response = getForType(this.client, "/api/containers/" + container + queries, new ContainerLogsResourceType());
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
 
-        Resource<ContainerDetails> body = response.getBody();
-        assertThat(body.getContent(), is(containerDetails));
+        Resource<ContainerLogs> body = response.getBody();
+        ContainerLogs logsResource = body.getContent();
+
+        assertThat(logsResource.getLogs(), is(logs));
     }
 }

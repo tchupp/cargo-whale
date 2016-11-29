@@ -18,9 +18,9 @@ public class ContainerManagementClient {
 
     //Status options are: [start, stop, restart, kill]
     public String setContainerStatus(String name, String status) {
-        String containersEndpoint = this.endpointBuilder.getContainersEndpoint();
+        String containersEndpoint = this.endpointBuilder.setContainerByIdEndpoint(name);
 
-        this.restTemplate.postForObject(containersEndpoint + "/{name}/{status}", null, String.class, name, status);
+        this.restTemplate.postForObject(containersEndpoint + "{status}", null, String.class, status);
         return name;
     }
 }

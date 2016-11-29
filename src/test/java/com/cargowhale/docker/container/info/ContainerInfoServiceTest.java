@@ -3,8 +3,10 @@ package com.cargowhale.docker.container.info;
 import com.cargowhale.docker.client.ContainerInfoClient;
 import com.cargowhale.docker.client.DockerContainerFilters;
 import com.cargowhale.docker.container.ContainerState;
+import com.cargowhale.docker.container.LogFilters;
 import com.cargowhale.docker.container.StateFilters;
 import com.cargowhale.docker.container.info.model.ContainerDetails;
+import com.cargowhale.docker.container.info.model.ContainerLogs;
 import com.cargowhale.docker.container.info.model.ContainerSummary;
 import com.cargowhale.docker.container.info.model.ContainerSummaryIndex;
 import org.assertj.core.util.Arrays;
@@ -23,7 +25,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ContainerSummaryServiceTest {
+public class ContainerInfoServiceTest {
 
     @InjectMocks
     private ContainerInfoService service;
@@ -65,5 +67,24 @@ public class ContainerSummaryServiceTest {
         when(this.client.getContainerDetailsById(containerId)).thenReturn(containerDetails);
 
         assertThat(this.service.getContainerDetailsById(containerId), is(containerDetails));
+    }
+
+    @Test
+    public void getContainerLogsById() throws Exception {
+        String containerId = "container id string";
+
+        String follow = "0";
+        String stdOut = "1";
+        String stdErr = "1";
+        String since = "0";
+        String timestamps = "0";
+        String tail = "650";
+        LogFilters filters = new LogFilters(follow, stdOut, stdErr, since, timestamps, tail);
+
+        ContainerLogs containerLogs = mock(ContainerLogs.class);
+
+        when(this.client.getContainerLogsById(containerId, filters)).thenReturn(containerLogs);
+
+        assertThat(this.service.getContainerLogsById(containerId, filters), is(containerLogs));
     }
 }

@@ -31,11 +31,11 @@ public class ContainerManagementClientTest {
         String name = "testContainer";
         String status = "start";
 
-        when(this.endpointBuilder.getContainersEndpoint()).thenReturn(DOCKER_ENDPOINT);
+        when(this.endpointBuilder.setContainerByIdEndpoint(name)).thenReturn(DOCKER_ENDPOINT);
 
         String actual = this.client.setContainerStatus(name, status);
 
-        verify(this.template).postForObject(DOCKER_ENDPOINT + "/{name}/{status}", null, String.class, name, status);
+        verify(this.template).postForObject(DOCKER_ENDPOINT + "{status}", null, String.class, status);
         assertThat(actual, is(name));
     }
 

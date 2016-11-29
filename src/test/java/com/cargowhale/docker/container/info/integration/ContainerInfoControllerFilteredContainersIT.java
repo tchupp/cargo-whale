@@ -13,8 +13,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.hateoas.Resource;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -24,6 +22,7 @@ import java.net.URISyntaxException;
 import java.util.Collections;
 import java.util.List;
 
+import static com.cargowhale.docker.test.ControllerTestUtils.getForType;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
@@ -32,6 +31,9 @@ import static org.mockito.Mockito.when;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ContainerInfoControllerFilteredContainersIT {
+
+    private static class ContainerSummaryIndexResourceType extends ParameterizedTypeReference<Resource<ContainerSummaryIndex>> {
+    }
 
     @MockBean
     private RestTemplate restTemplate;
@@ -81,7 +83,7 @@ public class ContainerInfoControllerFilteredContainersIT {
         when(this.restTemplate.getForObject(dockerUri + "/v1.24/containers/json?filters={filters}", ContainerSummary[].class, "{\"status\":[\"" + containerState.state + "\"]}"))
                 .thenReturn(containerSummaryArray);
 
-        ResponseEntity<Resource<ContainerSummaryIndex>> response = exchange("/api/containers?state=" + containerState.state);
+        ResponseEntity<Resource<ContainerSummaryIndex>> response = getForType(this.client, "/api/containers?state=" + containerState.state, new ContainerSummaryIndexResourceType());
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
 
@@ -99,12 +101,5 @@ public class ContainerInfoControllerFilteredContainersIT {
         ResponseEntity<ContainerSummaryIndex> response = this.client.getForEntity("/api/containers?state=" + state, ContainerSummaryIndex.class);
 
         assertThat(response.getStatusCode(), is(HttpStatus.BAD_REQUEST));
-    }
-
-    private ResponseEntity<Resource<ContainerSummaryIndex>> exchange(final String url) {
-        HttpEntity<?> requestEntity = null;
-        ParameterizedTypeReference<Resource<ContainerSummaryIndex>> typeReference = new ParameterizedTypeReference<Resource<ContainerSummaryIndex>>() {};
-
-        return this.client.exchange(url, HttpMethod.GET, requestEntity, typeReference, Collections.emptyMap());
     }
 }
