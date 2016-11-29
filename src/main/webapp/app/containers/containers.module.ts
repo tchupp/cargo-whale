@@ -1,7 +1,7 @@
 import {NgModule, CUSTOM_ELEMENTS_SCHEMA} from "@angular/core";
 import {CommonModule} from "@angular/common";
 
-import {ContainersComponent} from "./containers.component";
+import {ContainersComponent} from "./components/container-detail.component";
 import {ContainerListComponent} from "./components/container-list.component";
 import {containersRoutes} from "./containers.routes";
 

@@ -1,4 +1,4 @@
-export class Container {
+export class ContainerSummary {
     image: string;
     names: string[];
     state: string;
