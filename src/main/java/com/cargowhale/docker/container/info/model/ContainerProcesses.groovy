@@ -8,15 +8,14 @@ import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY
 
 @EqualsAndHashCode(excludes = "id")
 @ToString
-class ContainerLogs {
+class ContainerProcesses {
 
     @JsonProperty(access = WRITE_ONLY)
-    final String id
-    final String logs;
+    final String id;
+    List<ContainerProcess> processes;
 
-    ContainerLogs(@JsonProperty("Id") final String id,
-                  @JsonProperty("Logs") final String logs) {
-        this.id = id
-        this.logs = logs
+    ContainerProcesses(final String id, List<ContainerProcess> processes) {
+        this.id = id;
+        this.processes = processes;
     }
 }

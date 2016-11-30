@@ -3,10 +3,8 @@ package com.cargowhale.docker.container.info;
 import com.cargowhale.docker.container.LogFilters;
 import com.cargowhale.docker.container.info.model.ContainerDetails;
 import com.cargowhale.docker.container.info.model.ContainerLogs;
-import com.cargowhale.docker.container.info.resource.ContainerDetailsResource;
-import com.cargowhale.docker.container.info.resource.ContainerDetailsResourceAssembler;
-import com.cargowhale.docker.container.info.resource.ContainerLogsResource;
-import com.cargowhale.docker.container.info.resource.ContainerLogsResourceAssembler;
+import com.cargowhale.docker.container.info.model.ContainerProcesses;
+import com.cargowhale.docker.container.info.resource.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -32,6 +30,9 @@ public class ContainerDetailsControllerTest {
 
     @Mock
     private ContainerLogsResourceAssembler logsResourceAssembler;
+
+    @Mock
+    private ContainerProcessesResourceAssembler processesResourceAssembler;
 
     @Test
     public void getContainerDetailsById() throws Exception {
@@ -64,5 +65,19 @@ public class ContainerDetailsControllerTest {
         when(this.logsResourceAssembler.toResource(containerLogs)).thenReturn(containerLogsResource);
 
         assertThat(this.controller.getContainerLogsById(containerId, logFilters), is(containerLogsResource));
+    }
+
+    @Test
+    public void getContainerProcessesById(){
+        String containerId = "container id!";
+        ContainerProcesses processes = mock(ContainerProcesses.class);
+        ContainerProcessesResource processesResource = mock(ContainerProcessesResource.class);
+
+        when(this.service.getContainerProcessesById(containerId)).thenReturn(processes);
+        when(this.processesResourceAssembler.toResource(processes)).thenReturn(processesResource);
+
+        assertThat(this.controller.getContainerProcessesById(containerId), is(processesResource));
+
+
     }
 }

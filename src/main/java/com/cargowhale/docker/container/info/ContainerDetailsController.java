@@ -5,10 +5,8 @@ import com.cargowhale.docker.container.ContainerState;
 import com.cargowhale.docker.container.LogFilters;
 import com.cargowhale.docker.container.info.model.ContainerDetails;
 import com.cargowhale.docker.container.info.model.ContainerLogs;
-import com.cargowhale.docker.container.info.resource.ContainerDetailsResource;
-import com.cargowhale.docker.container.info.resource.ContainerDetailsResourceAssembler;
-import com.cargowhale.docker.container.info.resource.ContainerLogsResource;
-import com.cargowhale.docker.container.info.resource.ContainerLogsResourceAssembler;
+import com.cargowhale.docker.container.info.model.ContainerProcesses;
+import com.cargowhale.docker.container.info.resource.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.WebDataBinder;
@@ -26,12 +24,14 @@ public class ContainerDetailsController {
     private final ContainerInfoService service;
     private final ContainerDetailsResourceAssembler detailsResourceAssembler;
     private final ContainerLogsResourceAssembler logsResourceAssembler;
+    private final ContainerProcessesResourceAssembler processesResourceAssembler;
 
     @Autowired
-    public ContainerDetailsController(final ContainerInfoService service, final ContainerDetailsResourceAssembler detailsResourceAssembler, final ContainerLogsResourceAssembler logsResourceAssembler) {
+    public ContainerDetailsController(final ContainerInfoService service, final ContainerDetailsResourceAssembler detailsResourceAssembler, final ContainerLogsResourceAssembler logsResourceAssembler, final ContainerProcessesResourceAssembler processesResourceAssembler) {
         this.service = service;
         this.detailsResourceAssembler = detailsResourceAssembler;
         this.logsResourceAssembler = logsResourceAssembler;
+        this.processesResourceAssembler = processesResourceAssembler;
     }
 
     @RequestMapping(value = "/{id}",
@@ -48,5 +48,13 @@ public class ContainerDetailsController {
     public ContainerLogsResource getContainerLogsById(@PathVariable String id, LogFilters logFilters) {
         ContainerLogs containerLogs = this.service.getContainerLogsById(id, logFilters);
         return this.logsResourceAssembler.toResource(containerLogs);
+    }
+
+    @RequestMapping(value = "/{id}/top",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    public ContainerProcessesResource getContainerProcessesById(@PathVariable String id) {
+        ContainerProcesses containerProcesses = this.service.getContainerProcessesById(id);
+        return this.processesResourceAssembler.toResource(containerProcesses);
     }
 }

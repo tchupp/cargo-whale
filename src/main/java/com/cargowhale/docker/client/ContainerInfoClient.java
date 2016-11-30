@@ -3,6 +3,7 @@ package com.cargowhale.docker.client;
 import com.cargowhale.docker.container.LogFilters;
 import com.cargowhale.docker.container.info.model.ContainerDetails;
 import com.cargowhale.docker.container.info.model.ContainerLogs;
+import com.cargowhale.docker.container.info.model.ContainerProcess;
 import com.cargowhale.docker.container.info.model.ContainerSummary;
 import com.cargowhale.docker.util.JsonConverter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,5 +60,9 @@ public class ContainerInfoClient {
                 .queryParam("tail", filters.getTail());
 
         return new ContainerLogs(containerId, this.restTemplate.getForObject(builder.toUriString(), String.class));
+    }
+
+    public List<ContainerProcess> getContainerProcessesById(final String containerId){
+        return null;
     }
 }
