@@ -1,6 +1,8 @@
 package com.cargowhale.docker.client;
 
+import com.cargowhale.docker.container.LogFilters;
 import com.cargowhale.docker.container.info.model.ContainerDetails;
+import com.cargowhale.docker.container.info.model.ContainerLogs;
 import com.cargowhale.docker.container.info.model.ContainerSummary;
 import com.cargowhale.docker.util.JsonConverter;
 import org.assertj.core.util.Arrays;
@@ -18,9 +20,9 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ContainerSummaryClientTest {
+public class ContainerInfoClientTest {
 
-    private static final String DOCKER_ENDPOINT = "http://this.is.docker:yo";
+    private static final String DOCKER_ENDPOINT = "http://this.is.docker:471828/";
 
     @InjectMocks
     private ContainerInfoClient client;
@@ -38,7 +40,7 @@ public class ContainerSummaryClientTest {
     public void getAllContainersReturnsEveryContainerFromDockerApi() {
         final ContainerSummary[] containerSummaryArray = Arrays.array(mock(ContainerSummary.class));
 
-        when(this.endpointBuilder.getContainersEndpoint()).thenReturn(DOCKER_ENDPOINT);
+        when(this.endpointBuilder.getContainersInfoEndpoint()).thenReturn(DOCKER_ENDPOINT);
         when(this.template.getForObject(DOCKER_ENDPOINT + "?all=1", ContainerSummary[].class)).thenReturn(containerSummaryArray);
 
         assertThat(this.client.getAllContainers(), contains(containerSummaryArray));
@@ -51,7 +53,7 @@ public class ContainerSummaryClientTest {
         DockerContainerFilters filters = mock(DockerContainerFilters.class);
         final ContainerSummary[] containerSummaryArray = Arrays.array(mock(ContainerSummary.class));
 
-        when(this.endpointBuilder.getContainersEndpoint()).thenReturn(DOCKER_ENDPOINT);
+        when(this.endpointBuilder.getContainersInfoEndpoint()).thenReturn(DOCKER_ENDPOINT);
         when(this.converter.toJson(filters)).thenReturn(filterJson);
         when(this.template.getForObject(DOCKER_ENDPOINT + "?filters={filters}", ContainerSummary[].class, filterJson))
                 .thenReturn(containerSummaryArray);
@@ -61,13 +63,36 @@ public class ContainerSummaryClientTest {
 
     @Test
     public void getContainerByIdReturnsCorrectContainer() throws Exception {
-        String containerId = "container id yo";
+        String containerId = "container_id_yo";
         ContainerDetails containerDetails = mock(ContainerDetails.class);
 
-        when(this.endpointBuilder.getContainerByIdEndpoint(containerId)).thenReturn(DOCKER_ENDPOINT + containerId);
+        when(this.endpointBuilder.getContainerInfoByIdEndpoint(containerId)).thenReturn(DOCKER_ENDPOINT + containerId);
         when(this.template.getForObject(DOCKER_ENDPOINT + containerId, ContainerDetails.class)).thenReturn(containerDetails);
 
         assertThat(this.client.getContainerDetailsById(containerId), is(containerDetails));
+    }
+
+    @Test
+    public void getContainerLogsByIdReturnsCorrectContainerLogs() throws Exception {
+        String containerId = "thisId";
+
+        String follow = "0";
+        String stdOut = "1";
+        String stdErr = "1";
+        String since = "0";
+        String timestamps = "1";
+        String tail = "265";
+        LogFilters filters = new LogFilters(follow, stdOut, stdErr, since, timestamps, tail);
+
+        String logs = "These are some fancy logs!";
+
+        String formattedParams = String.format("?follow=%s&stdout=%s&stderr=%s&since=%s&timestamps=%s&tail=%s", follow, stdOut, stdErr, since, timestamps, tail);
+
+        when(this.endpointBuilder.getContainerLogByIdEndpoint(containerId)).thenReturn(DOCKER_ENDPOINT + containerId);
+        when(this.template.getForObject(DOCKER_ENDPOINT + containerId + formattedParams, String.class)).thenReturn(logs);
+
+        ContainerLogs containerLogs = this.client.getContainerLogsById(containerId, filters);
+        assertThat(containerLogs.getLogs(), is(logs));
     }
 }
 

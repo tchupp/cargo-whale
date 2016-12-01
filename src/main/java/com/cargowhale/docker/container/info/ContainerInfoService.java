@@ -2,8 +2,10 @@ package com.cargowhale.docker.container.info;
 
 import com.cargowhale.docker.client.ContainerInfoClient;
 import com.cargowhale.docker.client.DockerContainerFilters;
+import com.cargowhale.docker.container.LogFilters;
 import com.cargowhale.docker.container.StateFilters;
 import com.cargowhale.docker.container.info.model.ContainerDetails;
+import com.cargowhale.docker.container.info.model.ContainerLogs;
 import com.cargowhale.docker.container.info.model.ContainerSummary;
 import com.cargowhale.docker.container.info.model.ContainerSummaryIndex;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +28,7 @@ public class ContainerInfoService {
         return new ContainerSummaryIndex(allContainers);
     }
 
-    public ContainerSummaryIndex getContainersFilterByStatus(StateFilters stateFilters) {
+    public ContainerSummaryIndex getContainersFilterByStatus(final StateFilters stateFilters) {
         DockerContainerFilters dockerContainerFilters = new DockerContainerFilters(stateFilters.getState());
 
         List<ContainerSummary> filteredContainers = this.client.getFilteredContainers(dockerContainerFilters);
@@ -35,5 +37,9 @@ public class ContainerInfoService {
 
     public ContainerDetails getContainerDetailsById(final String containerId) {
         return this.client.getContainerDetailsById(containerId);
+    }
+
+    public ContainerLogs getContainerLogsById(final String containerId, final LogFilters logFilters) {
+        return this.client.getContainerLogsById(containerId, logFilters);
     }
 }

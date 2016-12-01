@@ -1,7 +1,6 @@
 package com.cargowhale.docker.container.info;
 
 import com.cargowhale.docker.container.StateFilters;
-import com.cargowhale.docker.container.info.model.ContainerDetails;
 import com.cargowhale.docker.container.info.model.ContainerSummaryIndex;
 import com.cargowhale.docker.container.info.resource.ContainerSummaryIndexResource;
 import com.cargowhale.docker.container.info.resource.ContainerSummaryIndexResourceAssembler;
@@ -20,13 +19,13 @@ import static org.mockito.Mockito.when;
 public class ContainerSummaryControllerTest {
 
     @InjectMocks
-    private ContainerInfoController controller;
+    private ContainerSummaryController controller;
 
     @Mock
     private ContainerInfoService service;
 
     @Mock
-    private ContainerSummaryIndexResourceAssembler indexResourceAssembler;
+    private ContainerSummaryIndexResourceAssembler resourceAssembler;
 
     @Test
     public void getAllContainersReturnsEveryContainerFromService() {
@@ -34,7 +33,7 @@ public class ContainerSummaryControllerTest {
         ContainerSummaryIndexResource containerSummaryIndexResource = mock(ContainerSummaryIndexResource.class);
 
         when(this.service.getAllContainers()).thenReturn(containerSummaryIndex);
-        when(this.indexResourceAssembler.toResource(containerSummaryIndex)).thenReturn(containerSummaryIndexResource);
+        when(this.resourceAssembler.toResource(containerSummaryIndex)).thenReturn(containerSummaryIndexResource);
 
         assertThat(this.controller.getAllContainers(), is(containerSummaryIndexResource));
     }
@@ -46,18 +45,8 @@ public class ContainerSummaryControllerTest {
         StateFilters stateFilters = mock(StateFilters.class);
 
         when(this.service.getContainersFilterByStatus(stateFilters)).thenReturn(containerSummaryIndex);
-        when(this.indexResourceAssembler.toResource(containerSummaryIndex)).thenReturn(containerSummaryIndexResource);
+        when(this.resourceAssembler.toResource(containerSummaryIndex)).thenReturn(containerSummaryIndexResource);
 
         assertThat(this.controller.getContainersFilterByStatus(stateFilters), is(containerSummaryIndexResource));
-    }
-
-    @Test
-    public void getContainerDetailsById() throws Exception {
-        String containerId = "container id!";
-        ContainerDetails containerDetails = mock(ContainerDetails.class);
-
-        when(this.service.getContainerDetailsById(containerId)).thenReturn(containerDetails);
-
-        assertThat(this.controller.getContainerById(containerId), is(containerDetails));
     }
 }
