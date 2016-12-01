@@ -40,7 +40,7 @@ public class ContainerInfoService {
         return this.client.getContainerLogsById(containerId, logFilters);
     }
 
-    public ContainerProcesses getContainerProcessesById(String id) {
+    public ContainerProcessIndex getContainerProcessesById(String id) {
         return null;
     }
 }

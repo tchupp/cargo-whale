@@ -1,7 +1,7 @@
 package com.cargowhale.docker.container.info.resource;
 
 import com.cargowhale.docker.container.info.ContainerDetailsController;
-import com.cargowhale.docker.container.info.model.ContainerProcesses;
+import com.cargowhale.docker.container.info.model.ContainerProcessIndex;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 import org.springframework.stereotype.Component;
 
@@ -9,12 +9,12 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @Component
-public class ContainerProcessesResourceAssembler extends ResourceAssemblerSupport<ContainerProcesses, ContainerProcessesResource> {
+public class ContainerProcessesResourceAssembler extends ResourceAssemblerSupport<ContainerProcessIndex, ContainerProcessesResource> {
 
     public ContainerProcessesResourceAssembler() { super(ContainerDetailsController.class, ContainerProcessesResource.class); }
 
     @Override
-    public ContainerProcessesResource toResource(final ContainerProcesses entity) {
+    public ContainerProcessesResource toResource(final ContainerProcessIndex entity) {
         ContainerProcessesResource resource = createResourceWithId(entity.getId(), entity);
 
         resource.add(linkTo(methodOn(ContainerDetailsController.class).getContainerById(entity.getId())).withRel("up"));
@@ -23,7 +23,7 @@ public class ContainerProcessesResourceAssembler extends ResourceAssemblerSuppor
     }
 
     @Override
-    protected ContainerProcessesResource createResourceWithId(final Object id, final ContainerProcesses entity) {
+    protected ContainerProcessesResource createResourceWithId(final Object id, final ContainerProcessIndex entity) {
         ContainerProcessesResource resource = new ContainerProcessesResource(entity);
 
         resource.add(linkTo(methodOn(ContainerDetailsController.class).getContainerProcessesById(entity.getId())).withSelfRel());

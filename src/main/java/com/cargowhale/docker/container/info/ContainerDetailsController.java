@@ -5,7 +5,7 @@ import com.cargowhale.docker.container.ContainerState;
 import com.cargowhale.docker.container.LogFilters;
 import com.cargowhale.docker.container.info.model.ContainerDetails;
 import com.cargowhale.docker.container.info.model.ContainerLogs;
-import com.cargowhale.docker.container.info.model.ContainerProcesses;
+import com.cargowhale.docker.container.info.model.ContainerProcessIndex;
 import com.cargowhale.docker.container.info.resource.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -54,7 +54,7 @@ public class ContainerDetailsController {
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     public ContainerProcessesResource getContainerProcessesById(@PathVariable String id) {
-        ContainerProcesses containerProcesses = this.service.getContainerProcessesById(id);
-        return this.processesResourceAssembler.toResource(containerProcesses);
+        ContainerProcessIndex containerProcessIndex = this.service.getContainerProcessesById(id);
+        return this.processesResourceAssembler.toResource(containerProcessIndex);
     }
 }
