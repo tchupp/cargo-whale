@@ -4,10 +4,12 @@ import {CommonModule} from "@angular/common";
 import {ContainersComponent} from "./components/container-detail.component";
 import {ContainerListComponent} from "./components/container-list.component";
 import {containersRoutes} from "./containers.routes";
+import {LayoutsModule} from "../layouts/layouts.module";
 
 @NgModule({
     imports: [
         CommonModule,
+        LayoutsModule,
         containersRoutes
     ],
     declarations: [

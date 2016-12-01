@@ -3,8 +3,8 @@ import {BrowserModule} from "@angular/platform-browser";
 import {HttpModule} from "@angular/http";
 import {RouterModule} from "@angular/router";
 
-import {MainComponent, SidebarComponent, HeaderComponent, SidebarItemComponent} from "./layouts";
 import {ContainersModule} from "./containers";
+import {LayoutsModule, MainComponent} from "./layouts";
 import {appRoutes} from "./app.routes";
 
 @NgModule({
@@ -13,13 +13,8 @@ import {appRoutes} from "./app.routes";
         HttpModule,
         RouterModule,
         ContainersModule,
+        LayoutsModule,
         appRoutes
-    ],
-    declarations: [
-        MainComponent,
-        HeaderComponent,
-        SidebarComponent,
-        SidebarItemComponent
     ],
     bootstrap: [MainComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
