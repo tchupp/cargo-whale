@@ -106,7 +106,7 @@ gulp.task('styles', ['sass'], function () {
 });
 
 
-gulp.task('tscompile', function () {
+gulp.task('tscompile', ['tslint'], function () {
     return gulp.src([config.app + 'app/**/*.ts'])
         .pipe(sourcemaps.init())
         .pipe(tsProject())
