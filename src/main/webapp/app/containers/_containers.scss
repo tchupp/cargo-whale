@@ -1,26 +1,41 @@
 @import "../../scss/theme";
 @import "../../scss/variables";
 
-.container-state {
+.container-phase {
     @mixin state-color($color) {
         border-color: $color;
         color: $color;
     }
 
-    $state-circle-diameter: 150px;
+    $state-circle-diameter: 160px;
 
     display: block;
     margin: auto;
 
     width: $state-circle-diameter;
     height: $state-circle-diameter;
-    line-height: 145px;
+    line-height: $state-circle-diameter - 5px;
 
     border-radius: $state-circle-diameter / 2;
     border: 2px solid;
 
     text-transform: capitalize;
     text-align: center;
+
+    p {
+        margin: auto;
+        vertical-align: middle;
+        display: inline-block;
+        line-height: normal;
+
+        .container-state {
+            font-size: 14px;
+        }
+
+        .container-status {
+            font-size: 12px;
+        }
+    }
 
     &.created, &.restarting, &.paused {
         @include state-color($info);
@@ -36,13 +51,18 @@
     }
 }
 
-.container-image, .container-status {
-    display: inline-block;
-    margin: 10px auto;
+.container-image {
+    @include cw-clearfix;
 
+    margin: 10px auto;
     text-align: center;
 
     .title {
         color: $default;
+        float: left;
+    }
+
+    .name {
+        float: right;
     }
 }

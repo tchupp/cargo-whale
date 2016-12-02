@@ -36,7 +36,7 @@ body {
 
     background: #fafafa;
     font-family: $font-family;
-    color: #333;
+    color: #333333;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -53,4 +53,13 @@ h1, h2, h3, h4, h5, h6 {
     .content {
         padding: 8px 20px;
     }
+}
+
+.divider {
+    height: 1px;
+    width: 98%;
+    display: block;
+    margin: 16px auto;
+    overflow: hidden;
+    background-color: $default-text;
 }

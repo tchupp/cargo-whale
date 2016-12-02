@@ -1,7 +1,16 @@
 <div *ngFor="let container of containerList" class="col-md-4 col-sm-6 col-xs-12">
     <cw-card title="{{container.names}}">
-        <p class="container-state {{container.state}}">{{container.state}}</p>
-        <p class="container-image">{{container.image}}<br/><span class="title">Image</span></p>
-        <p class="container-status pull-right">{{container.status}}<br/><span class="title">Status</span></p>
+        <div class="container-phase {{container.state}}">
+            <p>
+                <span class="container-state">{{container.state}}</span>
+                <br/>
+                <span class="container-status">{{container.status}}</span>
+            </p>
+        </div>
+        <span class="divider"></span>
+        <div class="container-image">
+            <span class="title">Image</span>
+            <span class="name">{{container.image}}</span>
+        </div>
     </cw-card>
 </div>
