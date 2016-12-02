@@ -1,23 +1,23 @@
-import {NgModule} from "@angular/core";
+import {NgModule, CUSTOM_ELEMENTS_SCHEMA} from "@angular/core";
 import {BrowserModule} from "@angular/platform-browser";
 import {HttpModule} from "@angular/http";
+import {RouterModule} from "@angular/router";
 
-import {ContainerListComponent} from "./layouts/containers/container-list.component";
-import {ContainerService} from "./layouts/containers/container.service";
-
+import {ContainersModule} from "./containers";
+import {LayoutsModule, MainComponent} from "./layouts";
+import {appRoutes} from "./app.routes";
 
 @NgModule({
     imports: [
         BrowserModule,
-        HttpModule
+        HttpModule,
+        RouterModule,
+        ContainersModule,
+        LayoutsModule,
+        appRoutes
     ],
-    declarations: [
-        ContainerListComponent
-    ],
-    providers: [
-        ContainerService
-    ],
-    bootstrap: [ContainerListComponent]
+    bootstrap: [MainComponent],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class CargoWhaleDockerAppModule {
 }

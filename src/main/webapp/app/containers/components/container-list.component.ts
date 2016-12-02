@@ -1,15 +1,18 @@
 import {Component, OnInit} from "@angular/core";
 
 import {ContainerService} from "./container.service";
-import {Container} from "./container.model";
+import {ContainerSummary} from "./container-summary.model";
 
 @Component({
-    selector: 'cw-containers',
-    templateUrl: 'app/layouts/containers/container-list.html'
+    selector: 'cw-container-list',
+    templateUrl: 'app/containers/components/container-list.html',
+    providers: [
+        ContainerService
+    ]
 })
 export class ContainerListComponent implements OnInit {
 
-    private containerList: Container[];
+    private containerList: ContainerSummary[];
 
     constructor(private containerService: ContainerService) {
     }

@@ -77,7 +77,7 @@ public class ContainerInfoControllerFilteredContainersIT {
     private void verifySingleStateFilter(final ContainerState containerState) throws URISyntaxException {
         String dockerUri = this.properties.getDockerUri();
 
-        ContainerSummary containerSummary = new ContainerSummary("test-id", Collections.singletonList("test-container1"), "test-image", containerState);
+        ContainerSummary containerSummary = new ContainerSummary("test-id", Collections.singletonList("test-container1"), "test-image", "Exited (0) 9 days ago", containerState);
         ContainerSummary[] containerSummaryArray = Arrays.array(containerSummary);
 
         when(this.restTemplate.getForObject(dockerUri + "/v1.24/containers/json?filters={filters}", ContainerSummary[].class, "{\"status\":[\"" + containerState.state + "\"]}"))

@@ -64,7 +64,7 @@ public class ContainerInfoControllerAllContainersIT {
     public void getAllContainers_OneContainers() {
         String dockerUri = this.properties.getDockerUri();
 
-        ContainerSummary containerSummary1 = new ContainerSummary("hjf7y2nj1", Collections.singletonList("test-container1"), "test-image", ContainerState.CREATED);
+        ContainerSummary containerSummary1 = new ContainerSummary("hjf7y2nj1", Collections.singletonList("test-container1"), "test-image", "Created 4 hours ago", ContainerState.CREATED);
         ContainerSummary[] containerSummaryArray = Arrays.array(containerSummary1);
 
         when(this.restTemplate.getForObject(dockerUri + "/v1.24/containers/json?all=1", ContainerSummary[].class)).thenReturn(containerSummaryArray);
@@ -84,8 +84,8 @@ public class ContainerInfoControllerAllContainersIT {
     public void getAllContainers_MultipleContainers() {
         String dockerUri = this.properties.getDockerUri();
 
-        ContainerSummary containerSummary1 = new ContainerSummary("78nm12hb3", Collections.singletonList("test-container1"), "test-image", ContainerState.CREATED);
-        ContainerSummary containerSummary2 = new ContainerSummary("nu91o2n3b", Collections.singletonList("test-container2"), "test-image", ContainerState.RUNNING);
+        ContainerSummary containerSummary1 = new ContainerSummary("78nm12hb3", Collections.singletonList("test-container1"), "test-image", "Created 3 days ago", ContainerState.CREATED);
+        ContainerSummary containerSummary2 = new ContainerSummary("nu91o2n3b", Collections.singletonList("test-container2"), "test-image", "Up 6 days", ContainerState.RUNNING);
         ContainerSummary[] containerSummaryArray = Arrays.array(containerSummary1, containerSummary2);
 
         when(this.restTemplate.getForObject(dockerUri + "/v1.24/containers/json?all=1", ContainerSummary[].class)).thenReturn(containerSummaryArray);

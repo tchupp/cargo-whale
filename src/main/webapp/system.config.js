@@ -12,19 +12,11 @@
         'rxjs': 'vendor/rxjs',
         'main': 'app.main',
         '@ng-bootstrap': 'vendor/@ng-bootstrap',
-        'angular-ui-router': 'vendor/angular-ui-router/release/angular-ui-router.js',
-        'ui-router-ng2': 'vendor/ui-router-ng2/_bundles/ui-router-ng2.js',
-        'ui-router-ng1-to-ng2': 'vendor/ui-router-ng1-to-ng2/ng1-to-ng2.js',
-        'ui-router-visualizer': 'vendor/ui-router-visualizer/release/visualizer.min.js',
         'jquery' : 'vendor/jquery/dist',
         'ng2-webstorage': 'vendor/ng2-webstorage',
         // app barrels
-        'account' : 'app/account',
-        'admin' : 'app/admin',
-        'components' : 'app/components',
-        'home' : 'app/home',
-        'layouts' : 'app/layouts',
-        'shared' : 'app/shared'
+        'containers': 'app/containers',
+        'layouts': 'app/layouts'
     };
     // packages tells the System loader how to load when no filename and/or no extension
     var packages = {
@@ -35,6 +27,7 @@
         'jquery': { main: 'jquery.min', defaultExtension: 'js' },
         'ng2-webstorage': { main: 'bundles/core.umd.js', defaultExtension: 'js' },
         // app barrels
+        'containers': {main: 'index', defaultExtension: 'js'},
         'layouts' : { main: 'index',  defaultExtension: 'js' }
     };
     var ngPackageNames = [
@@ -45,7 +38,7 @@
         'http',
         'platform-browser',
         'platform-browser-dynamic',
-        'upgrade'
+        'router'
     ];
 
     // Individual files (~300 requests):

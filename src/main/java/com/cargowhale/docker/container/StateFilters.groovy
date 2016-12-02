@@ -3,7 +3,7 @@ package com.cargowhale.docker.container
 import groovy.transform.Canonical
 
 @Canonical
-public class StateFilters {
+class StateFilters {
 
     ContainerState[] state
 }
