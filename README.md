@@ -1,5 +1,5 @@
 # CargoWhaleDocker
-[![Build Status](http://jenkins.rxnctrllabs.tech/buildStatus/icon?job=Cargo_Whale_Docker_Master)](http://jenkins.rxnctrllabs.tech/job/Cargo_Whale_Docker_Master/)
+[![Build Status](https://travis-ci.org/tclchiam/cargo-whale-docker.svg?branch=master)](https://travis-ci.org/tclchiam/cargo-whale-docker)
 
 ## Development
 
