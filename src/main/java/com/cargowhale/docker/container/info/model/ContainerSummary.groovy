@@ -15,15 +15,18 @@ class ContainerSummary {
     final String id
     final List<String> names
     final String image
+    final String status
     final ContainerState state
 
     ContainerSummary(@JsonProperty("Id") final String id,
                      @JsonProperty("Names") final List<String> names,
                      @JsonProperty("Image") final String image,
+                     @JsonProperty("Status") final String status,
                      @JsonProperty("State") final ContainerState state) {
         this.id = id
         this.names = names
         this.image = image
+        this.status = status
         this.state = state
     }
 }

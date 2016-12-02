@@ -5,9 +5,9 @@ import org.springframework.hateoas.ResourceSupport
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo
 
-public class IndexResource extends ResourceSupport {
+class IndexResource extends ResourceSupport {
 
-    public IndexResource() {
+    IndexResource() {
         add(linkTo(ContainerSummaryController.class).withRel("containers"))
     }
 }

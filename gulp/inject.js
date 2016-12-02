@@ -38,5 +38,5 @@ function vendor() {
             name: 'bower',
             relative: true
         }))
-        .pipe(gulp.dest(config.scss)));
+        .pipe(gulp.dest(config.scssMainDir)));
 }

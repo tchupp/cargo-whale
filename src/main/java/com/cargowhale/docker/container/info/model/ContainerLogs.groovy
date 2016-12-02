@@ -8,7 +8,7 @@ import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY
 
 @EqualsAndHashCode(excludes = "id")
 @ToString
-public class ContainerLogs {
+class ContainerLogs {
 
     @JsonProperty(access = WRITE_ONLY)
     final String id

@@ -54,7 +54,7 @@ gulp.task('copy:common', copy.common);
 gulp.task('copy:deps', copy.deps);
 
 gulp.task('copy:temp', function () {
-    return gulp.src([config.app + '/**/*', '!' + config.app + '/**/*.ts', '!' + config.sassSrc])
+    return gulp.src([config.app + '/**/*', '!' + config.app + '/**/*.ts', '!' + config.sassMainSrc])
         .pipe(plumber({errorHandler: handleErrors}))
         .pipe(changed(config.dist))
         .pipe(gulp.dest(config.dist));
@@ -84,12 +84,13 @@ gulp.task('images', function () {
 
 gulp.task('sass', function () {
     return es.merge(
-        gulp.src(config.sassSrc)
+        gulp.src(config.sassMainSrc)
             .pipe(plumber({errorHandler: handleErrors}))
-            .pipe(expect(config.sassSrc))
-            .pipe(changed(config.cssDir, {extension: '.css'}))
-            .pipe(sass({includePaths: config.bower}).on('error', sass.logError))
-            .pipe(gulp.dest(config.cssDir)),
+            .pipe(expect(config.sassMainSrc))
+            // .pipe(changed(config.cssDir, {extension: '.css'}))
+            .pipe(sass({includePaths: [config.bower, config.scssMainDir]}).on('error', sass.logError))
+            .pipe(gulp.dest(config.cssDir))
+            .pipe(gulp.dest(config.cssTargetDir)),
         gulp.src(config.bower + '**/fonts/**/*.{woff,woff2,svg,ttf,eot,otf}')
             .pipe(plumber({errorHandler: handleErrors}))
             .pipe(changed(config.app + 'content/fonts'))
@@ -197,7 +198,7 @@ gulp.task('tslint', function () {
 gulp.task('watch', function () {
     gulp.watch('bower.json', ['install']);
     gulp.watch(['gulpfile.js', 'pom.xml'], ['ngconstant:dev']);
-    gulp.watch(config.sassSrc, ['styles']);
+    gulp.watch([config.sassMainSrc, config.sassAppSrc], ['styles']);
     gulp.watch(config.app + 'content/images/**', ['images']);
     gulp.watch(config.app + 'app/**/*.ts', ['tscompile']);
     gulp.watch(config.app + 'app/**/*.html', ['copy:html']);
