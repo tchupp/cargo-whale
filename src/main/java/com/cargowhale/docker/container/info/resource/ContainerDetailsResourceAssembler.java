@@ -23,6 +23,7 @@ public class ContainerDetailsResourceAssembler extends ResourceAssemblerSupport<
 
         resource.add(linkTo(methodOn(ContainerSummaryController.class).getAllContainers()).withRel("up"));
         resource.add(linkTo(methodOn(ContainerDetailsController.class).getContainerLogsById(entity.getId(), new LogFilters())).withRel("logs"));
+        resource.add(linkTo(methodOn(ContainerDetailsController.class).getContainerProcessesById(entity.getId())).withRel("processes"));
 
         return resource;
     }

@@ -16,14 +16,14 @@ class ContainerProcess {
     final String time;
     final String cmd;
 
-    ContainerProcess(List<String> process) {
-        this.uid = process.get(0);
-        this.pid = process.get(1);
-        this.ppid = process.get(2);
-        this.c = process.get(3);
-        this.sTime = process.get(4);
-        this.tty = process.get(5);
-        this.time = process.get(6);
-        this.cmd = process.get(7);
+    ContainerProcess(String uid, String pid, String ppid, String c, String sTime, String tty, String time, String cmd) {
+        this.uid = uid;
+        this.pid = pid;
+        this.ppid = ppid;
+        this.c = c;
+        this.sTime = sTime;
+        this.tty = tty;
+        this.time = time;
+        this.cmd = cmd;
     }
 }

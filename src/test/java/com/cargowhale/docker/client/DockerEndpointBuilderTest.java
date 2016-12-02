@@ -71,4 +71,18 @@ public class DockerEndpointBuilderTest {
         assertThat(this.endpointBuilder.getContainerLogByIdEndpoint(containerId1), is(expectedUri1));
         assertThat(this.endpointBuilder.getContainerLogByIdEndpoint(containerId2), is(expectedUri2));
     }
+
+    @Test
+    public void getContainerProcessesByIdEndpointReturnsCorrectUri() throws Exception {
+        String containerId1 = "1fds78i1h";
+        String containerId2 = "4y712yui4";
+
+        String expectedUri1 = DOCKER_URI + "/v1.24/containers/" + containerId1 + "/top";
+        String expectedUri2 = DOCKER_URI + "/v1.24/containers/" + containerId2 + "/top";
+
+        when(this.properties.getDockerUri()).thenReturn(DOCKER_URI);
+
+        assertThat(this.endpointBuilder.getContainerProcessesByIdEndpoint(containerId1), is(expectedUri1));
+        assertThat(this.endpointBuilder.getContainerProcessesByIdEndpoint(containerId2), is(expectedUri2));
+    }
 }

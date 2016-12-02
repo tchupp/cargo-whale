@@ -77,7 +77,5 @@ public class ContainerDetailsControllerTest {
         when(this.processesResourceAssembler.toResource(processes)).thenReturn(processesResource);
 
         assertThat(this.controller.getContainerProcessesById(containerId), is(processesResource));
-
-
     }
 }

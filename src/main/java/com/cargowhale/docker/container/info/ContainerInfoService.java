@@ -8,6 +8,7 @@ import com.cargowhale.docker.container.info.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -41,6 +42,22 @@ public class ContainerInfoService {
     }
 
     public ContainerProcessIndex getContainerProcessesById(String id) {
-        return null;
+        DockerContainerProcessIndex dockerIndex = this.client.getContainerProcessesById(id);
+
+        List<ContainerProcess> processes = new ArrayList<>();
+        for (List<String> dockerProcess : dockerIndex.getProcesses()) {
+            ContainerProcess process = new ContainerProcess(
+                    dockerProcess.get(0),
+                    dockerProcess.get(1),
+                    dockerProcess.get(2),
+                    dockerProcess.get(3),
+                    dockerProcess.get(4),
+                    dockerProcess.get(5),
+                    dockerProcess.get(6),
+                    dockerProcess.get(7));
+            processes.add(process);
+        }
+
+        return new ContainerProcessIndex(id, processes);
     }
 }

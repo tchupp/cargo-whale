@@ -10,6 +10,7 @@ public class DockerEndpointBuilder {
     private static final String API_VERSION = "/v1.24";
     private static final String CONTAINERS_ENDPOINT = "/containers";
     private static final String JSON = "/json";
+    private static final String PROCESSES = "/top";
     private static final String LOGS = "/logs";
 
     private final CargoWhaleProperties properties;
@@ -33,5 +34,9 @@ public class DockerEndpointBuilder {
 
     public String getContainerLogByIdEndpoint(final String containerId) {
         return this.properties.getDockerUri() + API_VERSION + CONTAINERS_ENDPOINT + "/" + containerId + LOGS;
+    }
+
+    public String getContainerProcessesByIdEndpoint(final String containerId) {
+        return this.properties.getDockerUri() + API_VERSION + CONTAINERS_ENDPOINT + "/" + containerId + PROCESSES;
     }
 }

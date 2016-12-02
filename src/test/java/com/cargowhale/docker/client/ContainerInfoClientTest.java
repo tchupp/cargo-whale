@@ -1,17 +1,24 @@
 package com.cargowhale.docker.client;
 
+import com.cargowhale.docker.config.CargoWhaleProperties;
 import com.cargowhale.docker.container.LogFilters;
 import com.cargowhale.docker.container.info.model.ContainerDetails;
 import com.cargowhale.docker.container.info.model.ContainerLogs;
 import com.cargowhale.docker.container.info.model.ContainerSummary;
+import com.cargowhale.docker.container.info.model.DockerContainerProcessIndex;
 import com.cargowhale.docker.util.JsonConverter;
 import org.assertj.core.util.Arrays;
+import org.assertj.core.util.Lists;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
@@ -93,6 +100,22 @@ public class ContainerInfoClientTest {
 
         ContainerLogs containerLogs = this.client.getContainerLogsById(containerId, filters);
         assertThat(containerLogs.getLogs(), is(logs));
+    }
+
+    @Test
+    public void getContainerProcessesByIdReturnsCorrectContainerProcesses(){
+        String containerId = "thisId";
+        DockerContainerProcessIndex dockerIndex = Mockito.mock(DockerContainerProcessIndex.class);
+        List<String> process = Lists.newArrayList("PROCESS");
+        List<List<String>> processes = Lists.newArrayList();
+        processes.add(process);
+
+        when(this.endpointBuilder.getContainerProcessesByIdEndpoint(containerId)).thenReturn(DOCKER_ENDPOINT + containerId);
+        when(this.template.getForObject(DOCKER_ENDPOINT + containerId, DockerContainerProcessIndex.class)).thenReturn(dockerIndex);
+        when(dockerIndex.getProcesses()).thenReturn(processes);
+
+        DockerContainerProcessIndex actual = this.client.getContainerProcessesById(containerId);
+        assertThat(actual.getProcesses(), is(processes));
     }
 }
 
