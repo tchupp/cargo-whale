@@ -1,9 +1,9 @@
-package com.cargowhale.docker.container
+package com.cargowhale.docker.client
 
 import groovy.transform.Canonical
 
 @Canonical
-public class LogFilters {
+class LogFilters {
 
     String follow
     String stdout

@@ -1,6 +1,6 @@
 package com.cargowhale.docker.container.info.resource;
 
-import com.cargowhale.docker.container.LogFilters;
+import com.cargowhale.docker.client.LogFilters;
 import com.cargowhale.docker.container.info.ContainerDetailsController;
 import com.cargowhale.docker.container.info.model.ContainerLogs;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;

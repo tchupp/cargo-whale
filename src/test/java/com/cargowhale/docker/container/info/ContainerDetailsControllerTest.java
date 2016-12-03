@@ -1,6 +1,6 @@
 package com.cargowhale.docker.container.info;
 
-import com.cargowhale.docker.container.LogFilters;
+import com.cargowhale.docker.client.LogFilters;
 import com.cargowhale.docker.container.info.model.ContainerDetails;
 import com.cargowhale.docker.container.info.model.ContainerLogs;
 import com.cargowhale.docker.container.info.resource.ContainerDetailsResource;

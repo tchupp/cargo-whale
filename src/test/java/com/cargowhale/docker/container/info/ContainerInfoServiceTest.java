@@ -3,7 +3,7 @@ package com.cargowhale.docker.container.info;
 import com.cargowhale.docker.client.ContainerInfoClient;
 import com.cargowhale.docker.client.DockerContainerFilters;
 import com.cargowhale.docker.container.ContainerState;
-import com.cargowhale.docker.container.LogFilters;
+import com.cargowhale.docker.client.LogFilters;
 import com.cargowhale.docker.container.StateFilters;
 import com.cargowhale.docker.container.info.model.ContainerDetails;
 import com.cargowhale.docker.container.info.model.ContainerLogs;
