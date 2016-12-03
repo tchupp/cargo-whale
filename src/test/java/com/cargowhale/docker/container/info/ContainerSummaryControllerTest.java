@@ -1,9 +1,9 @@
 package com.cargowhale.docker.container.info;
 
 import com.cargowhale.docker.container.StateFilters;
-import com.cargowhale.docker.container.info.model.ContainerSummaryIndex;
-import com.cargowhale.docker.container.info.resource.ContainerSummaryIndexResource;
-import com.cargowhale.docker.container.info.resource.ContainerSummaryIndexResourceAssembler;
+import com.cargowhale.docker.container.info.model.ContainerIndex;
+import com.cargowhale.docker.container.info.resource.ContainerIndexResource;
+import com.cargowhale.docker.container.info.resource.ContainerIndexResourceAssembler;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -25,28 +25,28 @@ public class ContainerSummaryControllerTest {
     private ContainerInfoService service;
 
     @Mock
-    private ContainerSummaryIndexResourceAssembler resourceAssembler;
+    private ContainerIndexResourceAssembler resourceAssembler;
 
     @Test
     public void getAllContainersReturnsEveryContainerFromService() {
-        ContainerSummaryIndex containerSummaryIndex = mock(ContainerSummaryIndex.class);
-        ContainerSummaryIndexResource containerSummaryIndexResource = mock(ContainerSummaryIndexResource.class);
+        ContainerIndex containerIndex = mock(ContainerIndex.class);
+        ContainerIndexResource containerIndexResource = mock(ContainerIndexResource.class);
 
-        when(this.service.getAllContainers()).thenReturn(containerSummaryIndex);
-        when(this.resourceAssembler.toResource(containerSummaryIndex)).thenReturn(containerSummaryIndexResource);
+        when(this.service.getAllContainers()).thenReturn(containerIndex);
+        when(this.resourceAssembler.toResource(containerIndex)).thenReturn(containerIndexResource);
 
-        assertThat(this.controller.getAllContainers(), is(containerSummaryIndexResource));
+        assertThat(this.controller.getAllContainers(), is(containerIndexResource));
     }
 
     @Test
     public void getContainersFilterByStatusReturnsFilteredContainersFromService() {
-        ContainerSummaryIndex containerSummaryIndex = mock(ContainerSummaryIndex.class);
-        ContainerSummaryIndexResource containerSummaryIndexResource = mock(ContainerSummaryIndexResource.class);
+        ContainerIndex containerIndex = mock(ContainerIndex.class);
+        ContainerIndexResource containerIndexResource = mock(ContainerIndexResource.class);
         StateFilters stateFilters = mock(StateFilters.class);
 
-        when(this.service.getContainersFilterByStatus(stateFilters)).thenReturn(containerSummaryIndex);
-        when(this.resourceAssembler.toResource(containerSummaryIndex)).thenReturn(containerSummaryIndexResource);
+        when(this.service.getContainersFilterByStatus(stateFilters)).thenReturn(containerIndex);
+        when(this.resourceAssembler.toResource(containerIndex)).thenReturn(containerIndexResource);
 
-        assertThat(this.controller.getContainersFilterByStatus(stateFilters), is(containerSummaryIndexResource));
+        assertThat(this.controller.getContainersFilterByStatus(stateFilters), is(containerIndexResource));
     }
 }

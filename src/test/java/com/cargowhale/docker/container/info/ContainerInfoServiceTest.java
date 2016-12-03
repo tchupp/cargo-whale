@@ -8,7 +8,7 @@ import com.cargowhale.docker.container.StateFilters;
 import com.cargowhale.docker.container.info.model.ContainerDetails;
 import com.cargowhale.docker.container.info.model.ContainerLogs;
 import com.cargowhale.docker.container.info.model.ContainerSummary;
-import com.cargowhale.docker.container.info.model.ContainerSummaryIndex;
+import com.cargowhale.docker.container.info.model.ContainerIndex;
 import org.assertj.core.util.Arrays;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,7 +39,7 @@ public class ContainerInfoServiceTest {
 
         when(this.client.getAllContainers()).thenReturn(expectedContainerList);
 
-        ContainerSummaryIndex actual = this.service.getAllContainers();
+        ContainerIndex actual = this.service.getAllContainers();
 
         assertThat(actual.getContainers(), is(expectedContainerList));
     }
@@ -54,7 +54,7 @@ public class ContainerInfoServiceTest {
 
         when(this.client.getFilteredContainers(filters)).thenReturn(expectedContainerList);
 
-        ContainerSummaryIndex actual = this.service.getContainersFilterByStatus(stateFilters);
+        ContainerIndex actual = this.service.getContainersFilterByStatus(stateFilters);
 
         assertThat(actual.getContainers(), is(expectedContainerList));
     }
