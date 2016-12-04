@@ -17,22 +17,24 @@ import java.util.List;
 public class ContainerInfoService {
 
     private final ContainerInfoClient client;
+    private final ContainerIndexBuilder builder;
 
     @Autowired
-    public ContainerInfoService(final ContainerInfoClient client) {
+    public ContainerInfoService(final ContainerInfoClient client, final ContainerIndexBuilder builder) {
         this.client = client;
+        this.builder = builder;
     }
 
     ContainerIndex getAllContainers() {
-        List<ContainerSummary> allContainers = this.client.getAllContainers();
-        return new ContainerIndex(allContainers);
+        List<ContainerSummary> containerSummaryList = this.client.getAllContainers();
+        return this.builder.buildContainerIndex(containerSummaryList);
     }
 
     ContainerIndex getContainersFilterByStatus(final StateFilters stateFilters) {
         DockerContainerFilters dockerContainerFilters = new DockerContainerFilters(stateFilters.getState());
 
-        List<ContainerSummary> filteredContainers = this.client.getFilteredContainers(dockerContainerFilters);
-        return new ContainerIndex(filteredContainers);
+        List<ContainerSummary> containerSummaryList = this.client.getFilteredContainers(dockerContainerFilters);
+        return this.builder.buildContainerIndex(containerSummaryList);
     }
 
     ContainerDetails getContainerDetailsById(final String containerId) {

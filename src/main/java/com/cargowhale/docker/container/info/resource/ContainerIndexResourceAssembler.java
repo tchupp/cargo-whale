@@ -35,6 +35,6 @@ public class ContainerIndexResourceAssembler extends ResourceAssemblerSupport<Co
     @Override
     protected ContainerIndexResource instantiateResource(final ContainerIndex entity) {
         List<ContainerSummaryResource> summaryResourceList = this.summaryResourceAssembler.toResources(entity.getContainers());
-        return new ContainerIndexResource(summaryResourceList);
+        return new ContainerIndexResource(summaryResourceList, entity.getStateMetadata());
     }
 }
