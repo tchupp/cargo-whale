@@ -8,11 +8,11 @@ $card-header-font-size: 16px;
     margin-bottom: 24px;
     position: relative;
     border: 0;
-    border-radius: $bootstrap-panel-radius;
+    border-radius: $card-border-radius;
 
     color: $content-text;
-    background-color: $bootstrap-panel-bg;
-    box-shadow: $bootstrap-panel-shadow;
+    background-color: $card-panel-bg;
+    box-shadow: $card-panel-shadow;
 
     &.animated {
         animation-duration: 0.5s;

@@ -1,12 +1,36 @@
 @import "../../scss/theme";
 @import "../../scss/variables";
 
-.container-phase {
-    @mixin state-color($color) {
-        border-color: $color;
-        color: $color;
-    }
+@mixin state-color($color) {
+    border-color: $color;
+    color: $color;
+}
 
+.created {
+    @include state-color($success);
+}
+
+.restarting {
+    @include state-color($info);
+}
+
+.paused {
+    @include state-color($warning);
+}
+
+.running {
+    @include state-color($primary);
+}
+
+.exited {
+    @include state-color($danger);
+}
+
+.dead {
+    @include state-color($disabled);
+}
+
+.container-phase {
     $state-circle-diameter: 160px;
 
     display: block;
@@ -36,19 +60,6 @@
             font-size: 12px;
         }
     }
-
-    &.created, &.restarting, &.paused {
-        @include state-color($info);
-    }
-    &.running {
-        @include state-color($primary);
-    }
-    &.exited {
-        @include state-color($danger);
-    }
-    &.dead {
-        @include state-color($danger);
-    }
 }
 
 .container-image {
@@ -64,5 +75,32 @@
 
     .name {
         float: right;
+    }
+}
+
+.container-btn {
+    color: $default;
+    background-color: $content-item;
+
+    border: $bootstrap-panel-header-border;
+    text-transform: capitalize;
+
+    &:hover, &:focus, &:active {
+        color: $default;
+        background-color: $content-item-selected;
+    }
+
+    .state-icon {
+        width: 8px;
+        height: 8px;
+        display: inline-block;
+
+        border: 4px solid;
+        border-radius: 4px;
+    }
+
+    .state-badge {
+        color: $content-item;
+        background-color: $default;
     }
 }
