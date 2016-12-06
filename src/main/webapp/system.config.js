@@ -16,7 +16,8 @@
         'ng2-webstorage': 'vendor/ng2-webstorage',
         // app barrels
         'containers': 'app/containers',
-        'layouts': 'app/layouts'
+        'layouts': 'app/layouts',
+        'shared': 'app/shared'
     };
     // packages tells the System loader how to load when no filename and/or no extension
     var packages = {
@@ -28,7 +29,8 @@
         'ng2-webstorage': { main: 'bundles/core.umd.js', defaultExtension: 'js' },
         // app barrels
         'containers': {main: 'index', defaultExtension: 'js'},
-        'layouts' : { main: 'index',  defaultExtension: 'js' }
+        'layouts': {main: 'index', defaultExtension: 'js'},
+        'shared': {main: 'index', defaultExtension: 'js'}
     };
     var ngPackageNames = [
         'common',

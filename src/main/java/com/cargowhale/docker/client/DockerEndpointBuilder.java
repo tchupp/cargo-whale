@@ -29,7 +29,7 @@ public class DockerEndpointBuilder {
     }
 
     public String setContainerByIdEndpoint(final String containerId) {
-        return this.properties.getDockerUri() + API_VERSION + CONTAINERS_ENDPOINT + "/" + containerId + "/";
+        return this.properties.getDockerUri() + API_VERSION + CONTAINERS_ENDPOINT + "/" + containerId;
     }
 
     public String getContainerLogByIdEndpoint(final String containerId) {

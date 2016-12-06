@@ -35,7 +35,7 @@ public class ContainerManagementClientTest {
 
         String actual = this.client.setContainerStatus(name, status);
 
-        verify(this.template).postForObject(DOCKER_ENDPOINT + "{status}", null, String.class, status);
+        verify(this.template).postForObject(DOCKER_ENDPOINT + "/{status}", null, String.class, status);
         assertThat(actual, is(name));
     }
 

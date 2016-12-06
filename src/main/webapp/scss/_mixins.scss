@@ -15,3 +15,14 @@
 @function shade($color, $percentage) {
     @return mix(black, $color, $percentage);
 }
+
+@mixin cw-clearfix {
+    &:before,
+    &:after {
+        content: " ";
+        display: table;
+    }
+    &:after {
+        clear: both;
+    }
+}

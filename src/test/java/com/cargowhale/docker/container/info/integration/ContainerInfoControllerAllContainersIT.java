@@ -3,7 +3,7 @@ package com.cargowhale.docker.container.info.integration;
 import com.cargowhale.docker.config.CargoWhaleProperties;
 import com.cargowhale.docker.container.ContainerState;
 import com.cargowhale.docker.container.info.model.ContainerSummary;
-import com.cargowhale.docker.container.info.model.ContainerSummaryIndex;
+import com.cargowhale.docker.container.info.model.ContainerIndex;
 import org.assertj.core.util.Arrays;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,7 +31,7 @@ import static org.mockito.Mockito.when;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ContainerInfoControllerAllContainersIT {
 
-    private static class ContainerSummaryIndexResourceType extends ParameterizedTypeReference<Resource<ContainerSummaryIndex>> {
+    private static class ContainerSummaryIndexResourceType extends ParameterizedTypeReference<Resource<ContainerIndex>> {
     }
 
     @MockBean
@@ -51,12 +51,12 @@ public class ContainerInfoControllerAllContainersIT {
 
         when(this.restTemplate.getForObject(dockerUri + "/v1.24/containers/json?all=1", ContainerSummary[].class)).thenReturn(containerSummaryArray);
 
-        ResponseEntity<Resource<ContainerSummaryIndex>> response = getForType(this.client, "/api/containers", new ContainerSummaryIndexResourceType());
+        ResponseEntity<Resource<ContainerIndex>> response = getForType(this.client, "/api/containers", new ContainerSummaryIndexResourceType());
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
 
-        ContainerSummaryIndex containerSummaryIndex = response.getBody().getContent();
-        List<ContainerSummary> containerSummaryList = containerSummaryIndex.getContainers();
+        ContainerIndex containerIndex = response.getBody().getContent();
+        List<ContainerSummary> containerSummaryList = containerIndex.getContainers();
         assertThat(containerSummaryList.size(), is(0));
     }
 
@@ -69,12 +69,12 @@ public class ContainerInfoControllerAllContainersIT {
 
         when(this.restTemplate.getForObject(dockerUri + "/v1.24/containers/json?all=1", ContainerSummary[].class)).thenReturn(containerSummaryArray);
 
-        ResponseEntity<Resource<ContainerSummaryIndex>> response = getForType(this.client, "/api/containers", new ContainerSummaryIndexResourceType());
+        ResponseEntity<Resource<ContainerIndex>> response = getForType(this.client, "/api/containers", new ContainerSummaryIndexResourceType());
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
 
-        ContainerSummaryIndex containerSummaryIndex = response.getBody().getContent();
-        List<ContainerSummary> containerSummaryList = containerSummaryIndex.getContainers();
+        ContainerIndex containerIndex = response.getBody().getContent();
+        List<ContainerSummary> containerSummaryList = containerIndex.getContainers();
         assertThat(containerSummaryList.size(), is(1));
 
         assertThat(containerSummaryList.get(0), is(containerSummary1));
@@ -90,12 +90,12 @@ public class ContainerInfoControllerAllContainersIT {
 
         when(this.restTemplate.getForObject(dockerUri + "/v1.24/containers/json?all=1", ContainerSummary[].class)).thenReturn(containerSummaryArray);
 
-        ResponseEntity<Resource<ContainerSummaryIndex>> response = getForType(this.client, "/api/containers", new ContainerSummaryIndexResourceType());
+        ResponseEntity<Resource<ContainerIndex>> response = getForType(this.client, "/api/containers", new ContainerSummaryIndexResourceType());
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
 
-        ContainerSummaryIndex containerSummaryIndex = response.getBody().getContent();
-        List<ContainerSummary> containerSummaryList = containerSummaryIndex.getContainers();
+        ContainerIndex containerIndex = response.getBody().getContent();
+        List<ContainerSummary> containerSummaryList = containerIndex.getContainers();
         assertThat(containerSummaryList.size(), is(2));
 
         assertThat(containerSummaryList.get(0), equalTo(containerSummary1));

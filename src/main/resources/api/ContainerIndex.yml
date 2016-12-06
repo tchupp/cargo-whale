@@ -44,6 +44,14 @@ response:
         }
       }
     ],
+    "stateMetadata": {
+      "created": 0,
+      "restarting": 0,
+      "running": 2,
+      "paused": 0,
+      "exited": 1,
+      "dead": 0
+    },
     "_links": {
       "self": {
         "href": "http://localhost:8081/api/containers"

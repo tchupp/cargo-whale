@@ -1,7 +1,5 @@
 package com.cargowhale.docker.client;
 
-import com.cargowhale.docker.config.CargoWhaleProperties;
-import com.cargowhale.docker.container.LogFilters;
 import com.cargowhale.docker.container.info.model.ContainerDetails;
 import com.cargowhale.docker.container.info.model.ContainerLogs;
 import com.cargowhale.docker.container.info.model.ContainerSummary;
@@ -83,17 +81,18 @@ public class ContainerInfoClientTest {
     public void getContainerLogsByIdReturnsCorrectContainerLogs() throws Exception {
         String containerId = "thisId";
 
-        String follow = "0";
-        String stdOut = "1";
-        String stdErr = "1";
+        boolean details = true;
+        boolean follow = false;
+        boolean stdOut = true;
+        boolean stdErr = true;
+        boolean timestamps = true;
         String since = "0";
-        String timestamps = "1";
         String tail = "265";
-        LogFilters filters = new LogFilters(follow, stdOut, stdErr, since, timestamps, tail);
+        LogFilters filters = new LogFilters(details, follow, stdOut, stdErr, timestamps, since, tail);
 
         String logs = "These are some fancy logs!";
 
-        String formattedParams = String.format("?follow=%s&stdout=%s&stderr=%s&since=%s&timestamps=%s&tail=%s", follow, stdOut, stdErr, since, timestamps, tail);
+        String formattedParams = String.format("?details=%s&follow=%s&stdout=%s&stderr=%s&timestamps=%s&since=%s&tail=%s", details, follow, stdOut, stdErr, timestamps, since, tail);
 
         when(this.endpointBuilder.getContainerLogByIdEndpoint(containerId)).thenReturn(DOCKER_ENDPOINT + containerId);
         when(this.template.getForObject(DOCKER_ENDPOINT + containerId + formattedParams, String.class)).thenReturn(logs);
