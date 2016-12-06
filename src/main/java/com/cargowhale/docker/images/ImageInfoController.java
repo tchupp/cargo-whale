@@ -1,4 +1,4 @@
-package com.cargowhale.docker.controller;
+package com.cargowhale.docker.images;
 
 import com.cargowhale.docker.config.CargoWhaleProperties;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 @RestController
-public class DockerController {
+public class ImageInfoController {
 
     private final CargoWhaleProperties properties;
     private final RestTemplate restTemplate;
 
     @Autowired
-    public DockerController(final RestTemplate restTemplate, final CargoWhaleProperties properties) {
+    public ImageInfoController(final RestTemplate restTemplate, final CargoWhaleProperties properties) {
         this.restTemplate = restTemplate;
         this.properties = properties;
     }

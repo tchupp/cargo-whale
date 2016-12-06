@@ -2,13 +2,13 @@ package com.cargowhale.docker.container.info;
 
 import com.cargowhale.docker.client.ContainerInfoClient;
 import com.cargowhale.docker.client.DockerContainerFilters;
+import com.cargowhale.docker.client.LogFilters;
 import com.cargowhale.docker.container.ContainerState;
-import com.cargowhale.docker.container.LogFilters;
 import com.cargowhale.docker.container.StateFilters;
 import com.cargowhale.docker.container.info.model.ContainerDetails;
+import com.cargowhale.docker.container.info.model.ContainerIndex;
 import com.cargowhale.docker.container.info.model.ContainerLogs;
 import com.cargowhale.docker.container.info.model.ContainerSummary;
-import com.cargowhale.docker.container.info.model.ContainerSummaryIndex;
 import org.assertj.core.util.Arrays;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,30 +33,33 @@ public class ContainerInfoServiceTest {
     @Mock
     private ContainerInfoClient client;
 
+    @Mock
+    private ContainerIndexBuilder builder;
+
     @Test
     public void getAllContainersReturnsAllContainersFromClient() {
-        List<ContainerSummary> expectedContainerList = Collections.singletonList(mock(ContainerSummary.class));
+        List<ContainerSummary> containerSummaryList = Collections.singletonList(mock(ContainerSummary.class));
+        ContainerIndex containerIndex = mock(ContainerIndex.class);
 
-        when(this.client.getAllContainers()).thenReturn(expectedContainerList);
+        when(this.client.getAllContainers()).thenReturn(containerSummaryList);
+        when(this.builder.buildContainerIndex(containerSummaryList)).thenReturn(containerIndex);
 
-        ContainerSummaryIndex actual = this.service.getAllContainers();
-
-        assertThat(actual.getContainers(), is(expectedContainerList));
+        assertThat(this.service.getAllContainers(), is(containerIndex));
     }
 
     @Test
     public void getFilteredContainersReturnsFilteredContainers() {
         ContainerState[] containerStatuses = Arrays.array(ContainerState.DEAD, ContainerState.PAUSED);
-
         StateFilters stateFilters = new StateFilters(containerStatuses);
         DockerContainerFilters filters = new DockerContainerFilters(containerStatuses);
-        List<ContainerSummary> expectedContainerList = Collections.singletonList(mock(ContainerSummary.class));
 
-        when(this.client.getFilteredContainers(filters)).thenReturn(expectedContainerList);
+        List<ContainerSummary> containerSummaryList = Collections.singletonList(mock(ContainerSummary.class));
+        ContainerIndex containerIndex = mock(ContainerIndex.class);
 
-        ContainerSummaryIndex actual = this.service.getContainersFilterByStatus(stateFilters);
+        when(this.client.getFilteredContainers(filters)).thenReturn(containerSummaryList);
+        when(this.builder.buildContainerIndex(containerSummaryList)).thenReturn(containerIndex);
 
-        assertThat(actual.getContainers(), is(expectedContainerList));
+        assertThat(this.service.getContainersFilterByStatus(stateFilters), is(containerIndex));
     }
 
     @Test
@@ -72,14 +75,7 @@ public class ContainerInfoServiceTest {
     @Test
     public void getContainerLogsById() throws Exception {
         String containerId = "container id string";
-
-        String follow = "0";
-        String stdOut = "1";
-        String stdErr = "1";
-        String since = "0";
-        String timestamps = "0";
-        String tail = "650";
-        LogFilters filters = new LogFilters(follow, stdOut, stdErr, since, timestamps, tail);
+        LogFilters filters = new LogFilters();
 
         ContainerLogs containerLogs = mock(ContainerLogs.class);
 

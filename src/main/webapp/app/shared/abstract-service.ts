@@ -15,4 +15,8 @@ export abstract class AbstractService {
         console.error(errMsg);
         return Observable.throw(errMsg);
     }
+
+    protected static extractResponseBody(res: Response) {
+        return res.json() || {};
+    }
 }

@@ -36,7 +36,7 @@ body {
 
     background: #fafafa;
     font-family: $font-family;
-    color: #333;
+    color: #333333;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -45,12 +45,23 @@ h1, h2, h3, h4, h5, h6 {
     margin-top: 0;
 }
 
-.content {
-    padding: 32px 8px;
+.page-top {
+    padding: 13px 15px 27px;
+    display: table;
 }
 
-@media screen and (max-width: $resXS) {
-    .content {
-        padding: 8px 20px;
-    }
+.page-title {
+    min-height: 1px;
+    width: auto;
+    margin: 0;
+    padding: 0 0 18px;
+    float: left;
+    position: relative;
+
+    border: 0;
+    color: $default-text;
+    font-size: 24px;
+    font-weight: $font-bold;
+    text-transform: uppercase;
+    opacity: 0.9;
 }
