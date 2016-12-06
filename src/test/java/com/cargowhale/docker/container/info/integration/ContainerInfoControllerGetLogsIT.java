@@ -18,6 +18,7 @@ import org.springframework.web.client.RestTemplate;
 import static com.cargowhale.docker.test.ControllerTestUtils.getForType;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
@@ -41,11 +42,12 @@ public class ContainerInfoControllerGetLogsIT {
         String dockerUri = this.properties.getDockerUri();
         String container = "TestContainer";
         String logs = "These are definitely logs";
-        String queries = "/logs?follow=0&stdout=1&stderr=1&since=0&timestamps=1&tail=100";
+        String queries = "/logs?details=false&follow=false&stdout=true&stderr=true&timestamps=true&since=0&tail=100";
 
         when(this.restTemplate.getForObject(dockerUri + "/v1.24/containers/" + container + queries, String.class)).thenReturn(logs);
 
         ResponseEntity<Resource<ContainerLogs>> response = getForType(this.client, "/api/containers/" + container + queries, new ContainerLogsResourceType());
+        verify(this.restTemplate).getForObject(dockerUri + "/v1.24/containers/" + container + queries, String.class);
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
 

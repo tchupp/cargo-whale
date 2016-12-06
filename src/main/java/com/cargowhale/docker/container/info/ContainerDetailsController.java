@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 public class ContainerDetailsController {
 
     @InitBinder
-    public void initBinder(WebDataBinder binder) {
+    public void initBinder(final WebDataBinder binder) {
         binder.registerCustomEditor(ContainerState.class, new ContainerEnumConverter());
     }
 
@@ -37,7 +37,7 @@ public class ContainerDetailsController {
     @RequestMapping(value = "/{id}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ContainerDetailsResource getContainerById(@PathVariable String id) {
+    public ContainerDetailsResource getContainerById(@PathVariable final String id) {
         ContainerDetails containerDetails = this.service.getContainerDetailsById(id);
         return this.detailsResourceAssembler.toResource(containerDetails);
     }
@@ -45,7 +45,7 @@ public class ContainerDetailsController {
     @RequestMapping(value = "/{id}/logs",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ContainerLogsResource getContainerLogsById(@PathVariable String id, LogFilters logFilters) {
+    public ContainerLogsResource getContainerLogsById(@PathVariable final String id, final LogFilters logFilters) {
         ContainerLogs containerLogs = this.service.getContainerLogsById(id, logFilters);
         return this.logsResourceAssembler.toResource(containerLogs);
     }

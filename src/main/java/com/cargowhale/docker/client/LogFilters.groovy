@@ -5,25 +5,28 @@ import groovy.transform.Canonical
 @Canonical
 class LogFilters {
 
-    String follow
-    String stdout
-    String stderr
+    boolean details
+    boolean follow
+    boolean stdout
+    boolean stderr
+    boolean timestamps
     String since
-    String timestamps
     String tail
 
     LogFilters(
-            String follow = '0',
-            String stdout = '1',
-            String stderr = '1',
+            boolean details = false,
+            boolean follow = false,
+            boolean stdout = true,
+            boolean stderr = true,
+            boolean timestamps = true,
             String since = '0',
-            String timestamps = '1',
             String tail = '100') {
+        this.details = details
         this.follow = follow
         this.stdout = stdout
         this.stderr = stderr
-        this.since = since
         this.timestamps = timestamps
+        this.since = since
         this.tail = tail
     }
 }

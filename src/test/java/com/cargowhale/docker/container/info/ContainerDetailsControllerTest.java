@@ -48,21 +48,14 @@ public class ContainerDetailsControllerTest {
     @Test
     public void getContainerLogsById() {
         String containerId = "container id!";
-
-        String follow = "0";
-        String stdOut = "1";
-        String stdErr = "0";
-        String since = "0";
-        String timestamps = "1";
-        String tail = "1000";
-        LogFilters logFilters = new LogFilters(follow, stdOut, stdErr, since, timestamps, tail);
+        LogFilters filters = new LogFilters();
 
         ContainerLogs containerLogs = mock(ContainerLogs.class);
         ContainerLogsResource containerLogsResource = mock(ContainerLogsResource.class);
 
-        when(this.service.getContainerLogsById(containerId, logFilters)).thenReturn(containerLogs);
+        when(this.service.getContainerLogsById(containerId, filters)).thenReturn(containerLogs);
         when(this.logsResourceAssembler.toResource(containerLogs)).thenReturn(containerLogsResource);
 
-        assertThat(this.controller.getContainerLogsById(containerId, logFilters), is(containerLogsResource));
+        assertThat(this.controller.getContainerLogsById(containerId, filters), is(containerLogsResource));
     }
 }

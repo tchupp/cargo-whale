@@ -75,14 +75,7 @@ public class ContainerInfoServiceTest {
     @Test
     public void getContainerLogsById() throws Exception {
         String containerId = "container id string";
-
-        String follow = "0";
-        String stdOut = "1";
-        String stdErr = "1";
-        String since = "0";
-        String timestamps = "0";
-        String tail = "650";
-        LogFilters filters = new LogFilters(follow, stdOut, stdErr, since, timestamps, tail);
+        LogFilters filters = new LogFilters();
 
         ContainerLogs containerLogs = mock(ContainerLogs.class);
 
