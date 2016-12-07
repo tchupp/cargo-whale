@@ -1,0 +1,11 @@
+{
+  "logs": "2016-12-06T02:12:13.029722403Z < 2016/12/06 02:12:13.029162",
+  "_links": {
+    "self": {
+      "href": "{host}/api/containers/f911b0f4e0b19e3da3/logs"
+    },
+    "up": {
+      "href": "{host}/api/containers/f911b0f4e0b19e3da3"
+    }
+  }
+}

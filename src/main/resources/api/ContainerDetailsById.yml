@@ -18,13 +18,13 @@ response:
     },
     "_links": {
       "self": {
-        "href": "http://localhost:8081/api/containers/f911b0f4e0b19e3da3"
+        "href": "{host}/api/containers/f911b0f4e0b19e3da3"
       },
       "up": {
-        "href": "http://localhost:8081/api/containers"
+        "href": "{host}/api/containers"
       },
       "logs": {
-        "href": "http://localhost:8081/api/containers/f911b0f4e0b19e3da3/logs"
+        "href": "{host}/api/containers/f911b0f4e0b19e3da3/logs"
       }
     }
   }

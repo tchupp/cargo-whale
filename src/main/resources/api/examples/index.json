@@ -1,0 +1,7 @@
+{
+  "_links": {
+    "containers": {
+      "href": "{host}/api/containers"
+    }
+  }
+}

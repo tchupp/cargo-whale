@@ -1,0 +1,49 @@
+#%RAML 1.0 Library
+
+types:
+  State:
+    enum:
+      - created
+      - restarting
+      - running
+      - paused
+      - exited
+      - dead
+
+  Summary:
+    properties:
+      names: string[]
+      image: string
+      status: string
+      state: State
+      _links: object
+
+  Index:
+    properties:
+      containers: Summary[]
+      stateMetadata:
+        type: object
+        properties:
+          created: integer
+          restarting: integer
+          running: integer
+          paused: integer
+          exited: integer
+          dead: integer
+      _links: object
+
+  DetailsState:
+    properties:
+      pid: integer
+      status: State
+      error: string
+      exitCode: integer
+      finishedAt: string
+
+  Details:
+    properties:
+      name: string
+      image: string
+      path: string
+      state: DetailsState
+      _links: object

@@ -1,0 +1,23 @@
+{
+  "name": "/socat-docker",
+  "image": "sha256:57a61d9072453ce5300530c5e50",
+  "path": "/bin/sh",
+  "state": {
+    "pid": 8182,
+    "status": "running",
+    "error": "",
+    "exitCode": 0,
+    "finishedAt": "2016-12-01T06:24:09.198448075Z"
+  },
+  "_links": {
+    "self": {
+      "href": "{host}/api/containers/f911b0f4e0b19e3da3"
+    },
+    "up": {
+      "href": "{host}/api/containers"
+    },
+    "logs": {
+      "href": "{host}/api/containers/f911b0f4e0b19e3da3/logs"
+    }
+  }
+}
