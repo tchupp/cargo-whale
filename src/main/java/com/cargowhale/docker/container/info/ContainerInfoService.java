@@ -1,14 +1,14 @@
 package com.cargowhale.docker.container.info;
 
-import com.cargowhale.docker.client.DockerContainerFilters;
-import com.cargowhale.docker.client.LogFilters;
 import com.cargowhale.docker.client.containers.info.ContainerInfoClient;
-import com.cargowhale.docker.client.containers.info.top.ContainerTopResponse;
+import com.cargowhale.docker.client.containers.info.list.ContainerListItem;
+import com.cargowhale.docker.client.containers.info.list.ListContainerFilters;
+import com.cargowhale.docker.client.containers.info.logs.LogFilters;
+import com.cargowhale.docker.client.containers.info.top.ContainerTop;
 import com.cargowhale.docker.container.StateFilters;
 import com.cargowhale.docker.container.info.model.ContainerDetails;
 import com.cargowhale.docker.container.info.model.ContainerIndex;
 import com.cargowhale.docker.container.info.model.ContainerLogs;
-import com.cargowhale.docker.container.info.model.ContainerSummary;
 import com.cargowhale.docker.container.info.top.ContainerProcessIndex;
 import com.cargowhale.docker.container.info.top.ContainerProcessIndexBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,27 +31,27 @@ public class ContainerInfoService {
     }
 
     ContainerIndex getAllContainers() {
-        List<ContainerSummary> containerSummaryList = this.client.getAllContainers();
-        return this.containerIndexBuilder.buildContainerIndex(containerSummaryList);
+        List<ContainerListItem> containerList = this.client.listContainers();
+        return this.containerIndexBuilder.buildContainerIndex(containerList);
     }
 
     ContainerIndex getContainersFilterByStatus(final StateFilters stateFilters) {
-        DockerContainerFilters dockerContainerFilters = new DockerContainerFilters(stateFilters.getState());
+        ListContainerFilters listContainerFilters = new ListContainerFilters(stateFilters.getState());
 
-        List<ContainerSummary> containerSummaryList = this.client.getFilteredContainers(dockerContainerFilters);
-        return this.containerIndexBuilder.buildContainerIndex(containerSummaryList);
+        List<ContainerListItem> containerList = this.client.listContainers(listContainerFilters);
+        return this.containerIndexBuilder.buildContainerIndex(containerList);
     }
 
     ContainerDetails getContainerDetailsById(final String containerId) {
-        return this.client.getContainerDetailsById(containerId);
+        return this.client.inspectContainer(containerId);
     }
 
     ContainerLogs getContainerLogsById(final String containerId, final LogFilters logFilters) {
-        return this.client.getContainerLogsById(containerId, logFilters);
+        return this.client.getContainerLogs(containerId, logFilters);
     }
 
     ContainerProcessIndex getContainerProcessesById(final String containerId) {
-        ContainerTopResponse dockerIndex = this.client.getContainerProcessesById(containerId);
+        ContainerTop dockerIndex = this.client.getContainerProcesses(containerId);
         return this.processIndexBuilder.buildProcessIndex(containerId, dockerIndex);
     }
 }

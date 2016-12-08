@@ -1,12 +1,12 @@
 package com.cargowhale.docker.container.info.top
 
-import com.cargowhale.docker.client.containers.info.top.ContainerTopResponse
+import com.cargowhale.docker.client.containers.info.top.ContainerTop
 import org.springframework.stereotype.Component
 
 @Component
 class ContainerProcessIndexBuilder {
 
-    ContainerProcessIndex buildProcessIndex(String containerId, ContainerTopResponse topResponse) {
+    ContainerProcessIndex buildProcessIndex(String containerId, ContainerTop topResponse) {
         List<Map<String, String>> processes = topResponse.processes.collect { process ->
             buildProcess(topResponse.titles, process)
         }

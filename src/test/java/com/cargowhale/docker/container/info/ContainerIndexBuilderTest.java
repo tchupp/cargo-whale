@@ -1,8 +1,8 @@
 package com.cargowhale.docker.container.info;
 
-import com.cargowhale.docker.container.ContainerState;
+import com.cargowhale.docker.client.containers.ContainerState;
+import com.cargowhale.docker.client.containers.info.list.ContainerListItem;
 import com.cargowhale.docker.container.info.model.ContainerIndex;
-import com.cargowhale.docker.container.info.model.ContainerSummary;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -22,11 +22,11 @@ public class ContainerIndexBuilderTest {
     private ContainerIndexBuilder builder;
 
     @Test
-    public void returnsContainerIndexWithContainerSummaryList() throws Exception {
-        List<ContainerSummary> containerSummaryList = new ArrayList<>();
-        ContainerIndex containerIndex = this.builder.buildContainerIndex(containerSummaryList);
+    public void returnsContainerIndexWithContainerListResponseItemList() throws Exception {
+        List<ContainerListItem> containerList = new ArrayList<>();
+        ContainerIndex containerIndex = this.builder.buildContainerIndex(containerList);
 
-        assertThat(containerIndex.getContainers(), sameInstance(containerSummaryList));
+        assertThat(containerIndex.getContainers(), sameInstance(containerList));
     }
 
     @Test
@@ -59,20 +59,20 @@ public class ContainerIndexBuilderTest {
 
     @Test
     public void returnsContainerIndexWithMap_CorrectCountOfContainerStates_NotEmpty() throws Exception {
-        List<ContainerSummary> containerSummaryList = new ArrayList<>();
-        containerSummaryList.add(new ContainerSummary("", new ArrayList<>(), "", "", ContainerState.CREATED));
-        containerSummaryList.add(new ContainerSummary("", new ArrayList<>(), "", "", ContainerState.CREATED));
-        containerSummaryList.add(new ContainerSummary("", new ArrayList<>(), "", "", ContainerState.RESTARTING));
-        containerSummaryList.add(new ContainerSummary("", new ArrayList<>(), "", "", ContainerState.RUNNING));
-        containerSummaryList.add(new ContainerSummary("", new ArrayList<>(), "", "", ContainerState.RUNNING));
-        containerSummaryList.add(new ContainerSummary("", new ArrayList<>(), "", "", ContainerState.RUNNING));
-        containerSummaryList.add(new ContainerSummary("", new ArrayList<>(), "", "", ContainerState.PAUSED));
-        containerSummaryList.add(new ContainerSummary("", new ArrayList<>(), "", "", ContainerState.EXITED));
-        containerSummaryList.add(new ContainerSummary("", new ArrayList<>(), "", "", ContainerState.DEAD));
-        containerSummaryList.add(new ContainerSummary("", new ArrayList<>(), "", "", ContainerState.DEAD));
-        containerSummaryList.add(new ContainerSummary("", new ArrayList<>(), "", "", ContainerState.DEAD));
+        List<ContainerListItem> containerList = new ArrayList<>();
+        containerList.add(new ContainerListItem(ContainerState.CREATED));
+        containerList.add(new ContainerListItem(ContainerState.CREATED));
+        containerList.add(new ContainerListItem(ContainerState.RESTARTING));
+        containerList.add(new ContainerListItem(ContainerState.RUNNING));
+        containerList.add(new ContainerListItem(ContainerState.RUNNING));
+        containerList.add(new ContainerListItem(ContainerState.RUNNING));
+        containerList.add(new ContainerListItem(ContainerState.PAUSED));
+        containerList.add(new ContainerListItem(ContainerState.EXITED));
+        containerList.add(new ContainerListItem(ContainerState.DEAD));
+        containerList.add(new ContainerListItem(ContainerState.DEAD));
+        containerList.add(new ContainerListItem(ContainerState.DEAD));
 
-        ContainerIndex containerIndex = this.builder.buildContainerIndex(containerSummaryList);
+        ContainerIndex containerIndex = this.builder.buildContainerIndex(containerList);
         Map<ContainerState, Integer> stateMetadata = containerIndex.getStateMetadata();
 
         assertThat(stateMetadata.size(), is(6));

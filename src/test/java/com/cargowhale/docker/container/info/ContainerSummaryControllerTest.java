@@ -30,23 +30,23 @@ public class ContainerSummaryControllerTest {
     @Test
     public void getAllContainersReturnsEveryContainerFromService() {
         ContainerIndex containerIndex = mock(ContainerIndex.class);
-        ContainerIndexResource containerIndexResource = mock(ContainerIndexResource.class);
+        ContainerIndexResource containerListResponseItemResource = mock(ContainerIndexResource.class);
 
         when(this.service.getAllContainers()).thenReturn(containerIndex);
-        when(this.resourceAssembler.toResource(containerIndex)).thenReturn(containerIndexResource);
+        when(this.resourceAssembler.toResource(containerIndex)).thenReturn(containerListResponseItemResource);
 
-        assertThat(this.controller.getAllContainers(), is(containerIndexResource));
+        assertThat(this.controller.getAllContainers(), is(containerListResponseItemResource));
     }
 
     @Test
     public void getContainersFilterByStatusReturnsFilteredContainersFromService() {
         ContainerIndex containerIndex = mock(ContainerIndex.class);
-        ContainerIndexResource containerIndexResource = mock(ContainerIndexResource.class);
+        ContainerIndexResource containerListResponseItemResource = mock(ContainerIndexResource.class);
         StateFilters stateFilters = mock(StateFilters.class);
 
         when(this.service.getContainersFilterByStatus(stateFilters)).thenReturn(containerIndex);
-        when(this.resourceAssembler.toResource(containerIndex)).thenReturn(containerIndexResource);
+        when(this.resourceAssembler.toResource(containerIndex)).thenReturn(containerListResponseItemResource);
 
-        assertThat(this.controller.getContainersFilterByStatus(stateFilters), is(containerIndexResource));
+        assertThat(this.controller.getContainersFilterByStatus(stateFilters), is(containerListResponseItemResource));
     }
 }

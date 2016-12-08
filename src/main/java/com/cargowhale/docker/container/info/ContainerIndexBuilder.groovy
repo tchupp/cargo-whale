@@ -1,20 +1,21 @@
 package com.cargowhale.docker.container.info
 
-import com.cargowhale.docker.container.ContainerState
+import com.cargowhale.docker.client.containers.ContainerState
+import com.cargowhale.docker.client.containers.info.list.ContainerListItem
 import com.cargowhale.docker.container.info.model.ContainerIndex
-import com.cargowhale.docker.container.info.model.ContainerSummary
 import org.springframework.stereotype.Component
 
 @Component
 class ContainerIndexBuilder {
 
-    ContainerIndex buildContainerIndex(final List<ContainerSummary> containerSummaryList) {
-        Map<ContainerState, Integer> stateMetadata = buildStateMetadata(containerSummaryList)
+    ContainerIndex buildContainerIndex(final List<ContainerListItem> containerList) {
+        Map<ContainerState, Integer> stateMetadata = buildStateMetadata(containerList)
 
-        return new ContainerIndex(containerSummaryList, stateMetadata)
+        return new ContainerIndex(containerList, stateMetadata)
     }
 
-    private Map<ContainerState, Integer> buildStateMetadata(final List<ContainerSummary> containerSummaryList) {
+    private Map<ContainerState, Integer> buildStateMetadata(
+            final List<ContainerListItem> containerSummaryList) {
         Map<ContainerState, Integer> containerStateSummary = [
                 (ContainerState.CREATED)   : 0,
                 (ContainerState.RESTARTING): 0,

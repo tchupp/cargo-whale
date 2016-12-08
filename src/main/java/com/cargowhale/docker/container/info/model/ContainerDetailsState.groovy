@@ -1,6 +1,6 @@
 package com.cargowhale.docker.container.info.model
 
-import com.cargowhale.docker.container.ContainerState
+import com.cargowhale.docker.client.containers.ContainerState
 import com.fasterxml.jackson.annotation.JsonProperty
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString

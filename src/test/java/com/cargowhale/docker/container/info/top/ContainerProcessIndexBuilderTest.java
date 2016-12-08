@@ -1,6 +1,6 @@
 package com.cargowhale.docker.container.info.top;
 
-import com.cargowhale.docker.client.containers.info.top.ContainerTopResponse;
+import com.cargowhale.docker.client.containers.info.top.ContainerTop;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -27,7 +27,7 @@ public class ContainerProcessIndexBuilderTest {
 
         List<String> titles = newArrayList("PID", "USER", "TIME", "COMMAND");
 
-        ContainerTopResponse containerTopResponse = new ContainerTopResponse(processList, titles);
+        ContainerTop containerTopResponse = new ContainerTop(processList, titles);
 
         ContainerProcessIndex index = builder.buildProcessIndex(containerId, containerTopResponse);
 
@@ -41,7 +41,7 @@ public class ContainerProcessIndexBuilderTest {
 
         List<String> titles = newArrayList("PID", "USER", "TIME", "COMMAND");
 
-        ContainerTopResponse containerTopResponse = new ContainerTopResponse(processList, titles);
+        ContainerTop containerTopResponse = new ContainerTop(processList, titles);
 
         ContainerProcessIndex index = builder.buildProcessIndex(containerId, containerTopResponse);
 
@@ -57,7 +57,7 @@ public class ContainerProcessIndexBuilderTest {
 
         List<String> titles = newArrayList("PID", "USER", "TIME", "COMMAND");
 
-        ContainerTopResponse containerTopResponse = new ContainerTopResponse(processList, titles);
+        ContainerTop containerTopResponse = new ContainerTop(processList, titles);
 
         ContainerProcessIndex index = builder.buildProcessIndex(containerId, containerTopResponse);
 
@@ -79,7 +79,7 @@ public class ContainerProcessIndexBuilderTest {
 
         List<String> titles = newArrayList("PID", "USER", "TIME", "COMMAND");
 
-        ContainerTopResponse containerTopResponse = new ContainerTopResponse(processList, titles);
+        ContainerTop containerTopResponse = new ContainerTop(processList, titles);
 
         ContainerProcessIndex index = builder.buildProcessIndex(containerId, containerTopResponse);
 

@@ -1,6 +1,7 @@
-package com.cargowhale.docker.client;
+package com.cargowhale.docker.client.containers.management;
 
-import com.cargowhale.docker.client.containers.management.ContainerManagementClient;
+import com.cargowhale.docker.client.DockerEndpointBuilder;
+import com.cargowhale.docker.client.containers.management.state.ContainerChangeState;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -30,14 +31,13 @@ public class ContainerManagementClientTest {
     @Test
     public void setContainerStatusSetsContainerToRunning() {
         String name = "testContainer";
-        String status = "start";
+        ContainerChangeState state = ContainerChangeState.RESTART;
 
-        when(this.endpointBuilder.getContainerByIdEndpoint(name)).thenReturn(DOCKER_ENDPOINT);
+        when(this.endpointBuilder.getContainerChangeStateEndpoint(name, state)).thenReturn(DOCKER_ENDPOINT);
 
-        String actual = this.client.setContainerStatus(name, status);
+        String actual = this.client.changeContainerState(name, state);
 
-        verify(this.template).postForObject(DOCKER_ENDPOINT + "/{status}", null, String.class, status);
+        verify(this.template).postForObject(DOCKER_ENDPOINT, null, String.class, state);
         assertThat(actual, is(name));
     }
-
 }

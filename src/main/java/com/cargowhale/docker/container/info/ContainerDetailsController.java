@@ -1,8 +1,8 @@
 package com.cargowhale.docker.container.info;
 
-import com.cargowhale.docker.client.LogFilters;
+import com.cargowhale.docker.client.containers.ContainerState;
+import com.cargowhale.docker.client.containers.info.logs.LogFilters;
 import com.cargowhale.docker.container.ContainerEnumConverter;
-import com.cargowhale.docker.container.ContainerState;
 import com.cargowhale.docker.container.info.model.ContainerDetails;
 import com.cargowhale.docker.container.info.model.ContainerLogs;
 import com.cargowhale.docker.container.info.resource.*;

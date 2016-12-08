@@ -1,4 +1,4 @@
-package com.cargowhale.docker.client
+package com.cargowhale.docker.client.containers.info.logs
 
 import groovy.transform.Canonical
 

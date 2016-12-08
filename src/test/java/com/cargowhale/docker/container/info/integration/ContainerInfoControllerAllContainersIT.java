@@ -1,9 +1,9 @@
 package com.cargowhale.docker.container.info.integration;
 
+import com.cargowhale.docker.client.containers.ContainerState;
+import com.cargowhale.docker.client.containers.info.list.ContainerListItem;
 import com.cargowhale.docker.client.core.DockerRestTemplate;
-import com.cargowhale.docker.container.ContainerState;
 import com.cargowhale.docker.container.info.model.ContainerIndex;
-import com.cargowhale.docker.container.info.model.ContainerSummary;
 import org.assertj.core.util.Arrays;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,7 +17,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Collections;
 import java.util.List;
 
 import static com.cargowhale.docker.test.ControllerTestUtils.getForType;
@@ -30,7 +29,7 @@ import static org.mockito.Mockito.when;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ContainerInfoControllerAllContainersIT {
 
-    private static class ContainerSummaryIndexResourceType extends ParameterizedTypeReference<Resource<ContainerIndex>> {
+    private static class ContainerListResponseItemIndexResourceType extends ParameterizedTypeReference<Resource<ContainerIndex>> {
     }
 
     @MockBean
@@ -41,54 +40,54 @@ public class ContainerInfoControllerAllContainersIT {
 
     @Test
     public void getAllContainers_NoContainers() {
-        ContainerSummary[] containerSummaryArray = Arrays.array();
+        ContainerListItem[] containerArray = Arrays.array();
 
-        when(this.restTemplate.getForObject("/v1.24/containers/json?all=1", ContainerSummary[].class)).thenReturn(containerSummaryArray);
+        when(this.restTemplate.getForObject("/v1.24/containers/json?all=1", ContainerListItem[].class)).thenReturn(containerArray);
 
-        ResponseEntity<Resource<ContainerIndex>> response = getForType(this.client, "/api/containers", new ContainerSummaryIndexResourceType());
+        ResponseEntity<Resource<ContainerIndex>> response = getForType(this.client, "/api/containers", new ContainerListResponseItemIndexResourceType());
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
 
         ContainerIndex containerIndex = response.getBody().getContent();
-        List<ContainerSummary> containerSummaryList = containerIndex.getContainers();
-        assertThat(containerSummaryList.size(), is(0));
+        List<ContainerListItem> containerList = containerIndex.getContainers();
+        assertThat(containerList.size(), is(0));
     }
 
     @Test
     public void getAllContainers_OneContainers() {
-        ContainerSummary containerSummary1 = new ContainerSummary("hjf7y2nj1", Collections.singletonList("test-container1"), "test-image", "Created 4 hours ago", ContainerState.CREATED);
-        ContainerSummary[] containerSummaryArray = Arrays.array(containerSummary1);
+        ContainerListItem containerListItem1 = new ContainerListItem(ContainerState.CREATED, "78nm12hb3", "test-image", "47jk189nbk1", Arrays.array("test-container1"), "Created 3 days ago");
+        ContainerListItem[] containerArray = Arrays.array(containerListItem1);
 
-        when(this.restTemplate.getForObject("/v1.24/containers/json?all=1", ContainerSummary[].class)).thenReturn(containerSummaryArray);
+        when(this.restTemplate.getForObject("/v1.24/containers/json?all=1", ContainerListItem[].class)).thenReturn(containerArray);
 
-        ResponseEntity<Resource<ContainerIndex>> response = getForType(this.client, "/api/containers", new ContainerSummaryIndexResourceType());
+        ResponseEntity<Resource<ContainerIndex>> response = getForType(this.client, "/api/containers", new ContainerListResponseItemIndexResourceType());
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
 
         ContainerIndex containerIndex = response.getBody().getContent();
-        List<ContainerSummary> containerSummaryList = containerIndex.getContainers();
-        assertThat(containerSummaryList.size(), is(1));
+        List<ContainerListItem> containerList = containerIndex.getContainers();
+        assertThat(containerList.size(), is(1));
 
-        assertThat(containerSummaryList.get(0), is(containerSummary1));
+        assertThat(containerList.get(0), is(containerListItem1));
     }
 
     @Test
     public void getAllContainers_MultipleContainers() {
-        ContainerSummary containerSummary1 = new ContainerSummary("78nm12hb3", Collections.singletonList("test-container1"), "test-image", "Created 3 days ago", ContainerState.CREATED);
-        ContainerSummary containerSummary2 = new ContainerSummary("nu91o2n3b", Collections.singletonList("test-container2"), "test-image", "Up 6 days", ContainerState.RUNNING);
-        ContainerSummary[] containerSummaryArray = Arrays.array(containerSummary1, containerSummary2);
+        ContainerListItem containerListItem1 = new ContainerListItem(ContainerState.CREATED, "78nm12hb3", "test-image", "47jk189nbk1", Arrays.array("test-container1"), "Created 3 days ago");
+        ContainerListItem containerListItem2 = new ContainerListItem(ContainerState.RUNNING, "nu91o2n3b", "test-image", "nm2198nk321", Arrays.array("test-container2"), "Up 6 days");
+        ContainerListItem[] containerArray = Arrays.array(containerListItem1, containerListItem2);
 
-        when(this.restTemplate.getForObject("/v1.24/containers/json?all=1", ContainerSummary[].class)).thenReturn(containerSummaryArray);
+        when(this.restTemplate.getForObject("/v1.24/containers/json?all=1", ContainerListItem[].class)).thenReturn(containerArray);
 
-        ResponseEntity<Resource<ContainerIndex>> response = getForType(this.client, "/api/containers", new ContainerSummaryIndexResourceType());
+        ResponseEntity<Resource<ContainerIndex>> response = getForType(this.client, "/api/containers", new ContainerListResponseItemIndexResourceType());
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
 
         ContainerIndex containerIndex = response.getBody().getContent();
-        List<ContainerSummary> containerSummaryList = containerIndex.getContainers();
-        assertThat(containerSummaryList.size(), is(2));
+        List<ContainerListItem> containerList = containerIndex.getContainers();
+        assertThat(containerList.size(), is(2));
 
-        assertThat(containerSummaryList.get(0), equalTo(containerSummary1));
-        assertThat(containerSummaryList.get(1), equalTo(containerSummary2));
+        assertThat(containerList.get(0), equalTo(containerListItem1));
+        assertThat(containerList.get(1), equalTo(containerListItem2));
     }
 }

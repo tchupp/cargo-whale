@@ -1,7 +1,7 @@
 package com.cargowhale.docker.container.info;
 
+import com.cargowhale.docker.client.containers.ContainerState;
 import com.cargowhale.docker.container.ContainerEnumConverter;
-import com.cargowhale.docker.container.ContainerState;
 import com.cargowhale.docker.container.StateFilters;
 import com.cargowhale.docker.container.info.model.ContainerIndex;
 import com.cargowhale.docker.container.info.resource.ContainerIndexResource;
