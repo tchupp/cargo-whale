@@ -6,9 +6,9 @@ import groovy.transform.Canonical
 @Canonical
 class ContainerTopResponse {
 
-    @JsonProperty("Titles")
-    List<String> titles
-
     @JsonProperty("Processes")
     List<List<String>> processes
+
+    @JsonProperty("Titles")
+    List<String> titles
 }

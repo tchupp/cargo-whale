@@ -10,7 +10,7 @@ class DockerContainerFilters {
 
     final Set<ContainerState> status
 
-    public DockerContainerFilters(final ContainerState[] status) {
+    DockerContainerFilters(final ContainerState[] status) {
         this.status = new LinkedHashSet<>(Arrays.asList(status))
     }
 }

@@ -1,4 +1,4 @@
-package com.cargowhale.docker.container.info.model
+package com.cargowhale.docker.container.info.top
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import groovy.transform.EqualsAndHashCode
@@ -11,11 +11,11 @@ import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY
 class ContainerProcessIndex {
 
     @JsonProperty(access = WRITE_ONLY)
-    final String id;
-    List<ContainerProcess> processes;
+    final String id
+    List<Map<String, String>> processes
 
-    ContainerProcessIndex(final String id, List<ContainerProcess> processes) {
-        this.id = id;
-        this.processes = processes;
+    ContainerProcessIndex(final String id, List<Map<String, String>> processes) {
+        this.id = id
+        this.processes = processes
     }
 }

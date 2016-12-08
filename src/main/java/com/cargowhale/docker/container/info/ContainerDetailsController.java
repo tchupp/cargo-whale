@@ -5,8 +5,8 @@ import com.cargowhale.docker.container.ContainerEnumConverter;
 import com.cargowhale.docker.container.ContainerState;
 import com.cargowhale.docker.container.info.model.ContainerDetails;
 import com.cargowhale.docker.container.info.model.ContainerLogs;
-import com.cargowhale.docker.container.info.model.ContainerProcessIndex;
 import com.cargowhale.docker.container.info.resource.*;
+import com.cargowhale.docker.container.info.top.ContainerProcessIndex;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.WebDataBinder;
@@ -51,9 +51,9 @@ public class ContainerDetailsController {
     }
 
     @RequestMapping(value = "/{id}/top",
-        method = RequestMethod.GET,
-        produces = MediaType.APPLICATION_JSON_VALUE)
-    public ContainerProcessesResource getContainerProcessesById(@PathVariable String id) {
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ContainerProcessesResource getContainerProcessesById(@PathVariable final String id) {
         ContainerProcessIndex containerProcessIndex = this.service.getContainerProcessesById(id);
         return this.processesResourceAssembler.toResource(containerProcessIndex);
     }

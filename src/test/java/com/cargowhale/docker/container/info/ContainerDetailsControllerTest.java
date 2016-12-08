@@ -3,8 +3,8 @@ package com.cargowhale.docker.container.info;
 import com.cargowhale.docker.client.LogFilters;
 import com.cargowhale.docker.container.info.model.ContainerDetails;
 import com.cargowhale.docker.container.info.model.ContainerLogs;
-import com.cargowhale.docker.container.info.model.ContainerProcessIndex;
 import com.cargowhale.docker.container.info.resource.*;
+import com.cargowhale.docker.container.info.top.ContainerProcessIndex;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -61,7 +61,7 @@ public class ContainerDetailsControllerTest {
     }
 
     @Test
-    public void getContainerProcessesById(){
+    public void getContainerProcessesById() {
         String containerId = "container id!";
         ContainerProcessIndex processes = mock(ContainerProcessIndex.class);
         ContainerProcessesResource processesResource = mock(ContainerProcessesResource.class);
