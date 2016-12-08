@@ -1,4 +1,4 @@
-package com.cargowhale.docker.client.management;
+package com.cargowhale.docker.client.containers.management;
 
 import com.cargowhale.docker.client.DockerEndpointBuilder;
 import org.springframework.beans.factory.annotation.Autowired;

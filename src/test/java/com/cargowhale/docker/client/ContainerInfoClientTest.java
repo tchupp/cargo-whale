@@ -1,11 +1,11 @@
 package com.cargowhale.docker.client;
 
+import com.cargowhale.docker.client.containers.info.ContainerInfoClient;
+import com.cargowhale.docker.client.containers.info.top.ContainerTopResponse;
 import com.cargowhale.docker.client.core.DockerRestTemplate;
-import com.cargowhale.docker.client.info.ContainerInfoClient;
 import com.cargowhale.docker.container.info.model.ContainerDetails;
 import com.cargowhale.docker.container.info.model.ContainerLogs;
 import com.cargowhale.docker.container.info.model.ContainerSummary;
-import com.cargowhale.docker.container.info.model.DockerContainerProcessIndex;
 import com.cargowhale.docker.util.JsonConverter;
 import org.assertj.core.util.Arrays;
 import org.assertj.core.util.Lists;
@@ -105,16 +105,16 @@ public class ContainerInfoClientTest {
     @Test
     public void getContainerProcessesByIdReturnsCorrectContainerProcesses() {
         String containerId = "thisId";
-        DockerContainerProcessIndex dockerIndex = Mockito.mock(DockerContainerProcessIndex.class);
+        ContainerTopResponse dockerIndex = Mockito.mock(ContainerTopResponse.class);
         List<String> process = Lists.newArrayList("PROCESS");
         List<List<String>> processes = Lists.newArrayList();
         processes.add(process);
 
         when(this.endpointBuilder.getContainerProcessesByIdEndpoint(containerId)).thenReturn(DOCKER_ENDPOINT + containerId);
-        when(this.template.getForObject(DOCKER_ENDPOINT + containerId, DockerContainerProcessIndex.class)).thenReturn(dockerIndex);
+        when(this.template.getForObject(DOCKER_ENDPOINT + containerId, ContainerTopResponse.class)).thenReturn(dockerIndex);
         when(dockerIndex.getProcesses()).thenReturn(processes);
 
-        DockerContainerProcessIndex actual = this.client.getContainerProcessesById(containerId);
+        ContainerTopResponse actual = this.client.getContainerProcessesById(containerId);
         assertThat(actual.getProcesses(), is(processes));
     }
 }

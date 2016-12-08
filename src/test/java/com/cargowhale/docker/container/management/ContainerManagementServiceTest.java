@@ -1,6 +1,6 @@
 package com.cargowhale.docker.container.management;
 
-import com.cargowhale.docker.client.management.ContainerManagementClient;
+import com.cargowhale.docker.client.containers.management.ContainerManagementClient;
 import com.cargowhale.docker.domain.ChangeStateRequest;
 import com.cargowhale.docker.domain.ChangeStateResponse;
 import org.junit.Test;

@@ -1,6 +1,6 @@
 package com.cargowhale.docker.client;
 
-import com.cargowhale.docker.client.management.ContainerManagementClient;
+import com.cargowhale.docker.client.containers.management.ContainerManagementClient;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

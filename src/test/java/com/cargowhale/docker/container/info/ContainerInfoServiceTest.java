@@ -1,22 +1,18 @@
 package com.cargowhale.docker.container.info;
 
-import com.cargowhale.docker.client.info.ContainerInfoClient;
 import com.cargowhale.docker.client.DockerContainerFilters;
 import com.cargowhale.docker.client.LogFilters;
+import com.cargowhale.docker.client.containers.info.ContainerInfoClient;
+import com.cargowhale.docker.client.containers.info.top.ContainerTopResponse;
 import com.cargowhale.docker.container.ContainerState;
 import com.cargowhale.docker.container.StateFilters;
 import com.cargowhale.docker.container.info.model.*;
-import com.cargowhale.docker.container.info.model.ContainerDetails;
-import com.cargowhale.docker.container.info.model.ContainerIndex;
-import com.cargowhale.docker.container.info.model.ContainerLogs;
-import com.cargowhale.docker.container.info.model.ContainerSummary;
 import org.assertj.core.util.Arrays;
 import org.assertj.core.util.Lists;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.Collections;
@@ -88,9 +84,9 @@ public class ContainerInfoServiceTest {
     }
 
     @Test
-    public void getContainerProcessesByIdReturnsContainerProcessIndexWithEmptyListOfProcesses(){
+    public void getContainerProcessesByIdReturnsContainerProcessIndexWithEmptyListOfProcesses() {
         String containerId = "container id string";
-        DockerContainerProcessIndex dockerIndex = Mockito.mock(DockerContainerProcessIndex.class);
+        ContainerTopResponse dockerIndex = mock(ContainerTopResponse.class);
 
         when(this.client.getContainerProcessesById(containerId)).thenReturn(dockerIndex);
         when(dockerIndex.getProcesses()).thenReturn(Lists.newArrayList());
@@ -100,10 +96,10 @@ public class ContainerInfoServiceTest {
     }
 
     @Test
-    public void getContainerProcessesByIdReturnsContainerProcessIndexWithOneProcess(){
+    public void getContainerProcessesByIdReturnsContainerProcessIndexWithOneProcess() {
         String containerId = "container id string";
-        DockerContainerProcessIndex dockerIndex = Mockito.mock(DockerContainerProcessIndex.class);
-        List<String> dockerProcess = Lists.newArrayList("root","12944","12927","0","20:42","?","00:00:00","/bin/sh -c java -jar /app.war");
+        ContainerTopResponse dockerIndex = mock(ContainerTopResponse.class);
+        List<String> dockerProcess = Lists.newArrayList("root", "12944", "12927", "0", "20:42", "?", "00:00:00", "/bin/sh -c java -jar /app.war");
         List<List<String>> dockerProcesses = Lists.newArrayList();
         dockerProcesses.add(dockerProcess);
 
@@ -116,11 +112,11 @@ public class ContainerInfoServiceTest {
     }
 
     @Test
-    public void getContainerProcessesByIdReturnsContainerProcessIndexWithTwoProcesses(){
+    public void getContainerProcessesByIdReturnsContainerProcessIndexWithTwoProcesses() {
         String containerId = "container id string";
-        DockerContainerProcessIndex dockerIndex = Mockito.mock(DockerContainerProcessIndex.class);
-        List<String> dockerShellProcess = Lists.newArrayList("root","12944","12927","0","20:42","?","00:00:00","/bin/sh -c java -jar /app.war");
-        List<String> dockerJavaProcess = Lists.newArrayList("root","12987","12944","13","20:42","?","00:00:28","java -jar /app.war");
+        ContainerTopResponse dockerIndex = mock(ContainerTopResponse.class);
+        List<String> dockerShellProcess = Lists.newArrayList("root", "12944", "12927", "0", "20:42", "?", "00:00:00", "/bin/sh -c java -jar /app.war");
+        List<String> dockerJavaProcess = Lists.newArrayList("root", "12987", "12944", "13", "20:42", "?", "00:00:28", "java -jar /app.war");
         List<List<String>> dockerProcesses = Lists.newArrayList();
         dockerProcesses.add(dockerShellProcess);
         dockerProcesses.add(dockerJavaProcess);
@@ -135,10 +131,10 @@ public class ContainerInfoServiceTest {
     }
 
     @Test
-    public void getContainerProcessesByIdReturnsContainerProcessWithCorrectValues(){
+    public void getContainerProcessesByIdReturnsContainerProcessWithCorrectValues() {
         String containerId = "container id string";
-        DockerContainerProcessIndex dockerIndex = Mockito.mock(DockerContainerProcessIndex.class);
-        List<String> dockerProcess = Lists.newArrayList("root","12944","12927","0","20:42","?","00:00:00","/bin/sh -c java -jar /app.war");
+        ContainerTopResponse dockerIndex = mock(ContainerTopResponse.class);
+        List<String> dockerProcess = Lists.newArrayList("root", "12944", "12927", "0", "20:42", "?", "00:00:00", "/bin/sh -c java -jar /app.war");
         List<List<String>> dockerProcesses = Lists.newArrayList();
         dockerProcesses.add(dockerProcess);
 

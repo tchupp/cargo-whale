@@ -1,13 +1,13 @@
-package com.cargowhale.docker.client.info;
+package com.cargowhale.docker.client.containers.info;
 
 import com.cargowhale.docker.client.DockerContainerFilters;
 import com.cargowhale.docker.client.DockerEndpointBuilder;
 import com.cargowhale.docker.client.LogFilters;
+import com.cargowhale.docker.client.containers.info.top.ContainerTopResponse;
 import com.cargowhale.docker.client.core.DockerRestTemplate;
 import com.cargowhale.docker.container.info.model.ContainerDetails;
 import com.cargowhale.docker.container.info.model.ContainerLogs;
 import com.cargowhale.docker.container.info.model.ContainerSummary;
-import com.cargowhale.docker.container.info.model.DockerContainerProcessIndex;
 import com.cargowhale.docker.util.JsonConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -65,8 +65,8 @@ public class ContainerInfoClient {
         return new ContainerLogs(containerId, this.restTemplate.getForObject(builder.toUriString(), String.class));
     }
 
-    public DockerContainerProcessIndex getContainerProcessesById(final String containerId) {
+    public ContainerTopResponse getContainerProcessesById(final String containerId) {
         String containerByIdEndpoint = this.endpointBuilder.getContainerProcessesByIdEndpoint(containerId);
-        return this.restTemplate.getForObject(containerByIdEndpoint, DockerContainerProcessIndex.class);
+        return this.restTemplate.getForObject(containerByIdEndpoint, ContainerTopResponse.class);
     }
 }
