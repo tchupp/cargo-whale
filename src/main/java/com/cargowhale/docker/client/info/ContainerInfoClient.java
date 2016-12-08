@@ -1,13 +1,16 @@
-package com.cargowhale.docker.client;
+package com.cargowhale.docker.client.info;
 
-import com.cargowhale.docker.container.info.model.*;
+import com.cargowhale.docker.client.DockerContainerFilters;
+import com.cargowhale.docker.client.DockerEndpointBuilder;
+import com.cargowhale.docker.client.LogFilters;
+import com.cargowhale.docker.client.core.DockerRestTemplate;
 import com.cargowhale.docker.container.info.model.ContainerDetails;
 import com.cargowhale.docker.container.info.model.ContainerLogs;
 import com.cargowhale.docker.container.info.model.ContainerSummary;
+import com.cargowhale.docker.container.info.model.DockerContainerProcessIndex;
 import com.cargowhale.docker.util.JsonConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.Arrays;
@@ -16,12 +19,12 @@ import java.util.List;
 @Component
 public class ContainerInfoClient {
 
-    private final RestTemplate restTemplate;
+    private final DockerRestTemplate restTemplate;
     private final DockerEndpointBuilder endpointBuilder;
     private final JsonConverter converter;
 
     @Autowired
-    public ContainerInfoClient(final RestTemplate restTemplate, final DockerEndpointBuilder endpointBuilder, final JsonConverter converter) {
+    public ContainerInfoClient(final DockerRestTemplate restTemplate, final DockerEndpointBuilder endpointBuilder, final JsonConverter converter) {
         this.restTemplate = restTemplate;
         this.endpointBuilder = endpointBuilder;
         this.converter = converter;
@@ -50,7 +53,7 @@ public class ContainerInfoClient {
 
     public ContainerLogs getContainerLogsById(final String containerId, final LogFilters filters) {
         String containerLogEndpoint = this.endpointBuilder.getContainerLogByIdEndpoint(containerId);
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(containerLogEndpoint)
+        UriComponentsBuilder builder = UriComponentsBuilder.fromPath(containerLogEndpoint)
                 .queryParam("details", filters.getDetails())
                 .queryParam("follow", filters.getFollow())
                 .queryParam("stdout", filters.getStdout())
@@ -62,7 +65,7 @@ public class ContainerInfoClient {
         return new ContainerLogs(containerId, this.restTemplate.getForObject(builder.toUriString(), String.class));
     }
 
-    public DockerContainerProcessIndex getContainerProcessesById(final String containerId){
+    public DockerContainerProcessIndex getContainerProcessesById(final String containerId) {
         String containerByIdEndpoint = this.endpointBuilder.getContainerProcessesByIdEndpoint(containerId);
         return this.restTemplate.getForObject(containerByIdEndpoint, DockerContainerProcessIndex.class);
     }

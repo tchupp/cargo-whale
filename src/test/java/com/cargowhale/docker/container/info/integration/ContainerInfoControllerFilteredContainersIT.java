@@ -1,9 +1,10 @@
 package com.cargowhale.docker.container.info.integration;
 
+import com.cargowhale.docker.client.core.DockerRestTemplate;
 import com.cargowhale.docker.config.CargoWhaleProperties;
 import com.cargowhale.docker.container.ContainerState;
-import com.cargowhale.docker.container.info.model.ContainerSummary;
 import com.cargowhale.docker.container.info.model.ContainerIndex;
+import com.cargowhale.docker.container.info.model.ContainerSummary;
 import org.assertj.core.util.Arrays;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,7 +17,6 @@ import org.springframework.hateoas.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.web.client.RestTemplate;
 
 import java.net.URISyntaxException;
 import java.util.Collections;
@@ -36,7 +36,7 @@ public class ContainerInfoControllerFilteredContainersIT {
     }
 
     @MockBean
-    private RestTemplate restTemplate;
+    private DockerRestTemplate restTemplate;
 
     @Autowired
     private TestRestTemplate client;
@@ -75,12 +75,10 @@ public class ContainerInfoControllerFilteredContainersIT {
     }
 
     private void verifySingleStateFilter(final ContainerState containerState) throws URISyntaxException {
-        String dockerUri = this.properties.getDockerUri();
-
         ContainerSummary containerSummary = new ContainerSummary("test-id", Collections.singletonList("test-container1"), "test-image", "Exited (0) 9 days ago", containerState);
         ContainerSummary[] containerSummaryArray = Arrays.array(containerSummary);
 
-        when(this.restTemplate.getForObject(dockerUri + "/v1.24/containers/json?filters={filters}", ContainerSummary[].class, "{\"status\":[\"" + containerState.state + "\"]}"))
+        when(this.restTemplate.getForObject("/v1.24/containers/json?filters={filters}", ContainerSummary[].class, "{\"status\":[\"" + containerState.state + "\"]}"))
                 .thenReturn(containerSummaryArray);
 
         ResponseEntity<Resource<ContainerIndex>> response = getForType(this.client, "/api/containers?state=" + containerState.state, new ContainerSummaryIndexResourceType());

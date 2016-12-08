@@ -24,7 +24,7 @@ public class DockerEndpointBuilderTest {
 
     @Test
     public void getContainerEndpointReturnsCorrectUri() throws Exception {
-        String expectedUri = DOCKER_URI + "/v1.24/containers/json";
+        String expectedUri = /*DOCKER_URI + */"/v1.24/containers/json";
         when(this.properties.getDockerUri()).thenReturn(DOCKER_URI);
 
         assertThat(this.endpointBuilder.getContainersInfoEndpoint(), is(expectedUri));
@@ -35,8 +35,8 @@ public class DockerEndpointBuilderTest {
         String containerId1 = "1fds78i1h";
         String containerId2 = "4y712yui4";
 
-        String expectedUri1 = DOCKER_URI + "/v1.24/containers/" + containerId1 + "/json";
-        String expectedUri2 = DOCKER_URI + "/v1.24/containers/" + containerId2 + "/json";
+        String expectedUri1 = /*DOCKER_URI + */"/v1.24/containers/" + containerId1 + "/json";
+        String expectedUri2 = /*DOCKER_URI + */"/v1.24/containers/" + containerId2 + "/json";
 
         when(this.properties.getDockerUri()).thenReturn(DOCKER_URI);
 
@@ -49,13 +49,13 @@ public class DockerEndpointBuilderTest {
         String containerId1 = "1fds78i1h";
         String containerId2 = "4y712yui4";
 
-        String expectedUri1 = DOCKER_URI + "/v1.24/containers/" + containerId1;
-        String expectedUri2 = DOCKER_URI + "/v1.24/containers/" + containerId2;
+        String expectedUri1 = /*DOCKER_URI + */"/v1.24/containers/" + containerId1;
+        String expectedUri2 = /*DOCKER_URI + */"/v1.24/containers/" + containerId2;
 
         when(this.properties.getDockerUri()).thenReturn(DOCKER_URI);
 
-        assertThat(this.endpointBuilder.setContainerByIdEndpoint(containerId1), is(expectedUri1));
-        assertThat(this.endpointBuilder.setContainerByIdEndpoint(containerId2), is(expectedUri2));
+        assertThat(this.endpointBuilder.getContainerByIdEndpoint(containerId1), is(expectedUri1));
+        assertThat(this.endpointBuilder.getContainerByIdEndpoint(containerId2), is(expectedUri2));
     }
 
     @Test
@@ -63,8 +63,8 @@ public class DockerEndpointBuilderTest {
         String containerId1 = "1fds78i1h";
         String containerId2 = "4y712yui4";
 
-        String expectedUri1 = DOCKER_URI + "/v1.24/containers/" + containerId1 + "/logs";
-        String expectedUri2 = DOCKER_URI + "/v1.24/containers/" + containerId2 + "/logs";
+        String expectedUri1 = /*DOCKER_URI + */"/v1.24/containers/" + containerId1 + "/logs";
+        String expectedUri2 = /*DOCKER_URI + */"/v1.24/containers/" + containerId2 + "/logs";
 
         when(this.properties.getDockerUri()).thenReturn(DOCKER_URI);
 
@@ -77,8 +77,8 @@ public class DockerEndpointBuilderTest {
         String containerId1 = "1fds78i1h";
         String containerId2 = "4y712yui4";
 
-        String expectedUri1 = DOCKER_URI + "/v1.24/containers/" + containerId1 + "/top";
-        String expectedUri2 = DOCKER_URI + "/v1.24/containers/" + containerId2 + "/top";
+        String expectedUri1 = /*DOCKER_URI + */"/v1.24/containers/" + containerId1 + "/top";
+        String expectedUri2 = /*DOCKER_URI + */"/v1.24/containers/" + containerId2 + "/top";
 
         when(this.properties.getDockerUri()).thenReturn(DOCKER_URI);
 

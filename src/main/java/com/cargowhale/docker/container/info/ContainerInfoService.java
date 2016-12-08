@@ -1,14 +1,10 @@
 package com.cargowhale.docker.container.info;
 
-import com.cargowhale.docker.client.ContainerInfoClient;
 import com.cargowhale.docker.client.DockerContainerFilters;
 import com.cargowhale.docker.client.LogFilters;
+import com.cargowhale.docker.client.info.ContainerInfoClient;
 import com.cargowhale.docker.container.StateFilters;
 import com.cargowhale.docker.container.info.model.*;
-import com.cargowhale.docker.container.info.model.ContainerDetails;
-import com.cargowhale.docker.container.info.model.ContainerIndex;
-import com.cargowhale.docker.container.info.model.ContainerLogs;
-import com.cargowhale.docker.container.info.model.ContainerSummary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -47,11 +43,11 @@ public class ContainerInfoService {
         return this.client.getContainerLogsById(containerId, logFilters);
     }
 
-    public ContainerProcessIndex getContainerProcessesById(String id) {
+    ContainerProcessIndex getContainerProcessesById(final String id) {
         DockerContainerProcessIndex dockerIndex = this.client.getContainerProcessesById(id);
 
         List<ContainerProcess> processes = new ArrayList<>();
-        for (List<String> dockerProcess : dockerIndex.getProcesses()) {
+        for (final List<String> dockerProcess : dockerIndex.getProcesses()) {
             ContainerProcess process = new ContainerProcess(
                     dockerProcess.get(0),
                     dockerProcess.get(1),

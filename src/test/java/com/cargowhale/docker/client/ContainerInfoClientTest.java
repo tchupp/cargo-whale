@@ -1,5 +1,7 @@
 package com.cargowhale.docker.client;
 
+import com.cargowhale.docker.client.core.DockerRestTemplate;
+import com.cargowhale.docker.client.info.ContainerInfoClient;
 import com.cargowhale.docker.container.info.model.ContainerDetails;
 import com.cargowhale.docker.container.info.model.ContainerLogs;
 import com.cargowhale.docker.container.info.model.ContainerSummary;
@@ -13,9 +15,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -33,7 +33,7 @@ public class ContainerInfoClientTest {
     private ContainerInfoClient client;
 
     @Mock
-    private RestTemplate template;
+    private DockerRestTemplate template;
 
     @Mock
     private DockerEndpointBuilder endpointBuilder;
@@ -80,6 +80,7 @@ public class ContainerInfoClientTest {
     @Test
     public void getContainerLogsByIdReturnsCorrectContainerLogs() throws Exception {
         String containerId = "thisId";
+        String logsPath = "logs_path";
 
         boolean details = true;
         boolean follow = false;
@@ -94,15 +95,15 @@ public class ContainerInfoClientTest {
 
         String formattedParams = String.format("?details=%s&follow=%s&stdout=%s&stderr=%s&timestamps=%s&since=%s&tail=%s", details, follow, stdOut, stdErr, timestamps, since, tail);
 
-        when(this.endpointBuilder.getContainerLogByIdEndpoint(containerId)).thenReturn(DOCKER_ENDPOINT + containerId);
-        when(this.template.getForObject(DOCKER_ENDPOINT + containerId + formattedParams, String.class)).thenReturn(logs);
+        when(this.endpointBuilder.getContainerLogByIdEndpoint(containerId)).thenReturn(/*DOCKER_ENDPOINT + */logsPath);
+        when(this.template.getForObject(/*DOCKER_ENDPOINT + */logsPath + formattedParams, String.class)).thenReturn(logs);
 
         ContainerLogs containerLogs = this.client.getContainerLogsById(containerId, filters);
         assertThat(containerLogs.getLogs(), is(logs));
     }
 
     @Test
-    public void getContainerProcessesByIdReturnsCorrectContainerProcesses(){
+    public void getContainerProcessesByIdReturnsCorrectContainerProcesses() {
         String containerId = "thisId";
         DockerContainerProcessIndex dockerIndex = Mockito.mock(DockerContainerProcessIndex.class);
         List<String> process = Lists.newArrayList("PROCESS");

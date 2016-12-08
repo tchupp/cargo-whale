@@ -1,5 +1,6 @@
 package com.cargowhale.docker.client;
 
+import com.cargowhale.docker.client.management.ContainerManagementClient;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -31,7 +32,7 @@ public class ContainerManagementClientTest {
         String name = "testContainer";
         String status = "start";
 
-        when(this.endpointBuilder.setContainerByIdEndpoint(name)).thenReturn(DOCKER_ENDPOINT);
+        when(this.endpointBuilder.getContainerByIdEndpoint(name)).thenReturn(DOCKER_ENDPOINT);
 
         String actual = this.client.setContainerStatus(name, status);
 
