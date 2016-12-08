@@ -7,4 +7,7 @@ class ChangeStateResponse {
 
     String name
 
+    ChangeStateResponse(String name) {
+        this.name = name
+    }
 }
