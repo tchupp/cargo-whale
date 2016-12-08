@@ -1,6 +1,7 @@
 package com.cargowhale.docker.client.containers.management;
 
 import com.cargowhale.docker.client.DockerEndpointBuilder;
+import com.cargowhale.docker.client.containers.management.state.ContainerChangeState;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -18,10 +19,10 @@ public class ContainerManagementClient {
     }
 
     //Status options are: [start, stop, restart, kill]
-    public String setContainerStatus(final String name, final String status) {
-        String containersEndpoint = this.endpointBuilder.getContainerByIdEndpoint(name);
+    public String changeContainerState(final String name, final ContainerChangeState state) {
+        String containersEndpoint = this.endpointBuilder.getContainerChangeStateEndpoint(name, state);
 
-        this.restTemplate.postForObject(containersEndpoint + "/{status}", null, String.class, status);
+        this.restTemplate.postForObject(containersEndpoint, null, String.class, state);
         return name;
     }
 }
