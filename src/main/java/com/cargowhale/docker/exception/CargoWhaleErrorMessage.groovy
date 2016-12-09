@@ -11,7 +11,7 @@ class CargoWhaleErrorMessage {
     final String message
     final String error
 
-    public CargoWhaleErrorMessage(final String path, final String message, final String error) {
+    CargoWhaleErrorMessage(final String path, final String message, final String error) {
         this.path = path
         this.message = message
         this.error = error

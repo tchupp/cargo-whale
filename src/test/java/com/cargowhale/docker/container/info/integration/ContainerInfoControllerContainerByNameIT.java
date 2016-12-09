@@ -1,7 +1,7 @@
 package com.cargowhale.docker.container.info.integration;
 
-import com.cargowhale.docker.config.CargoWhaleProperties;
-import com.cargowhale.docker.container.ContainerState;
+import com.cargowhale.docker.client.containers.ContainerState;
+import com.cargowhale.docker.client.core.DockerRestTemplate;
 import com.cargowhale.docker.container.info.model.ContainerDetails;
 import com.cargowhale.docker.container.info.model.ContainerDetailsState;
 import org.junit.Test;
@@ -15,7 +15,6 @@ import org.springframework.hateoas.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.web.client.RestTemplate;
 
 import static com.cargowhale.docker.test.ControllerTestUtils.getForType;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -30,23 +29,19 @@ public class ContainerInfoControllerContainerByNameIT {
     }
 
     @MockBean
-    private RestTemplate restTemplate;
+    private DockerRestTemplate restTemplate;
 
     @Autowired
     private TestRestTemplate client;
 
-    @Autowired
-    private CargoWhaleProperties properties;
-
     @Test
     public void getContainerById() throws Exception {
         String containerId = "7vbk17823b";
-        String dockerUri = this.properties.getDockerUri();
 
-        ContainerDetailsState containerDetailsState = new ContainerDetailsState(123, ContainerState.RUNNING, "", 9, "2016-11-21T15:47:32Z");
-        ContainerDetails containerDetails = new ContainerDetails(containerId, "cool-container", "cool-image-id", "/bin/sh", containerDetailsState);
+        ContainerDetailsState containerDetailsState = new ContainerDetailsState(ContainerState.RUNNING, 123, "", 9, "2016-11-21T15:47:32Z");
+        ContainerDetails containerDetails = new ContainerDetails(containerDetailsState, containerId, "cool-container", "cool-image-id", "/bin/sh");
 
-        when(this.restTemplate.getForObject(dockerUri + "/v1.24/containers/" + containerId + "/json", ContainerDetails.class)).thenReturn(containerDetails);
+        when(this.restTemplate.getForObject("/v1.24/containers/" + containerId + "/json", ContainerDetails.class)).thenReturn(containerDetails);
 
         ResponseEntity<Resource<ContainerDetails>> response = getForType(this.client, "/api/containers/" + containerId, new ContainerDetailsResourceType());
 
