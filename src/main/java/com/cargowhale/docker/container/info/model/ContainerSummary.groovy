@@ -1,5 +1,6 @@
 package com.cargowhale.docker.container.info.model
 
+import com.cargowhale.docker.container.ContainerState
 import com.fasterxml.jackson.annotation.JsonProperty
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
@@ -8,24 +9,24 @@ import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY
 
 @EqualsAndHashCode(excludes = "id")
 @ToString
-class ContainerDetails {
+class ContainerSummary {
 
     @JsonProperty(access = WRITE_ONLY)
     final String id
-    final String name
+    final List<String> names
     final String image
-    final String path
-    final ContainerDetailsState state
+    final String status
+    final ContainerState state
 
-    ContainerDetails(@JsonProperty("Id") final String id,
-                     @JsonProperty("Name") final String name,
+    ContainerSummary(@JsonProperty("Id") final String id,
+                     @JsonProperty("Names") final List<String> names,
                      @JsonProperty("Image") final String image,
-                     @JsonProperty("Path") final String path,
-                     @JsonProperty("State") final ContainerDetailsState state) {
+                     @JsonProperty("Status") final String status,
+                     @JsonProperty("State") final ContainerState state) {
         this.id = id
-        this.name = name
+        this.names = names
         this.image = image
-        this.path = path
+        this.status = status
         this.state = state
     }
 }

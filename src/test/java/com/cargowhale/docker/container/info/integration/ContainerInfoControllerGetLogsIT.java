@@ -1,6 +1,5 @@
 package com.cargowhale.docker.container.info.integration;
 
-import com.cargowhale.docker.client.core.DockerRestTemplate;
 import com.cargowhale.docker.config.CargoWhaleProperties;
 import com.cargowhale.docker.container.info.model.ContainerLogs;
 import org.junit.Test;
@@ -14,10 +13,12 @@ import org.springframework.hateoas.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.client.RestTemplate;
 
 import static com.cargowhale.docker.test.ControllerTestUtils.getForType;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
@@ -28,7 +29,7 @@ public class ContainerInfoControllerGetLogsIT {
     }
 
     @MockBean
-    private DockerRestTemplate restTemplate;
+    private RestTemplate restTemplate;
 
     @Autowired
     private TestRestTemplate client;
@@ -38,13 +39,15 @@ public class ContainerInfoControllerGetLogsIT {
 
     @Test
     public void getLogsReturnsCorrectLogs() {
+        String dockerUri = this.properties.getDockerUri();
         String container = "TestContainer";
         String logs = "These are definitely logs";
         String queries = "/logs?details=false&follow=false&stdout=true&stderr=true&timestamps=true&since=0&tail=100";
 
-        when(this.restTemplate.getForObject("/v1.24/containers/" + container + queries, String.class)).thenReturn(logs);
+        when(this.restTemplate.getForObject(dockerUri + "/v1.24/containers/" + container + queries, String.class)).thenReturn(logs);
 
         ResponseEntity<Resource<ContainerLogs>> response = getForType(this.client, "/api/containers/" + container + queries, new ContainerLogsResourceType());
+        verify(this.restTemplate).getForObject(dockerUri + "/v1.24/containers/" + container + queries, String.class);
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
 

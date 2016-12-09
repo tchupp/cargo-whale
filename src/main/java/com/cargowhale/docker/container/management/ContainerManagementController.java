@@ -1,5 +1,7 @@
 package com.cargowhale.docker.container.management;
 
+import com.cargowhale.docker.domain.ChangeStateRequest;
+import com.cargowhale.docker.domain.ChangeStateResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;

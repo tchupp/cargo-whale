@@ -1,8 +1,8 @@
 package com.cargowhale.docker.container.info.resource;
 
-import com.cargowhale.docker.client.containers.info.logs.LogFilters;
+import com.cargowhale.docker.client.LogFilters;
 import com.cargowhale.docker.container.info.ContainerDetailsController;
-import com.cargowhale.docker.container.info.ContainerIndexController;
+import com.cargowhale.docker.container.info.ContainerSummaryController;
 import com.cargowhale.docker.container.info.model.ContainerDetails;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 import org.springframework.stereotype.Component;
@@ -21,9 +21,8 @@ public class ContainerDetailsResourceAssembler extends ResourceAssemblerSupport<
     public ContainerDetailsResource toResource(final ContainerDetails entity) {
         ContainerDetailsResource resource = createResourceWithId(entity.getId(), entity);
 
-        resource.add(linkTo(methodOn(ContainerIndexController.class).listContainers()).withRel("up"));
+        resource.add(linkTo(methodOn(ContainerSummaryController.class).getAllContainers()).withRel("up"));
         resource.add(linkTo(methodOn(ContainerDetailsController.class).getContainerLogsById(entity.getId(), new LogFilters())).withRel("logs"));
-        resource.add(linkTo(methodOn(ContainerDetailsController.class).getContainerProcessesById(entity.getId())).withRel("top"));
 
         return resource;
     }

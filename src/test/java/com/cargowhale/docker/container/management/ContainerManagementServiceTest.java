@@ -1,7 +1,8 @@
 package com.cargowhale.docker.container.management;
 
-import com.cargowhale.docker.client.containers.management.ContainerManagementClient;
-import com.cargowhale.docker.client.containers.management.state.ContainerChangeState;
+import com.cargowhale.docker.client.ContainerManagementClient;
+import com.cargowhale.docker.domain.ChangeStateRequest;
+import com.cargowhale.docker.domain.ChangeStateResponse;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -24,12 +25,12 @@ public class ContainerManagementServiceTest {
     @Test
     public void setContainerStateReturnsContainerNameFromClient() {
         String name = "stoppedContainer";
-        ContainerChangeState state = ContainerChangeState.START;
+        String status = "start";
         String expectedName = "runningContainer";
 
-        ChangeStateRequest request = new ChangeStateRequest(state);
+        ChangeStateRequest request = new ChangeStateRequest(status);
 
-        when(this.client.changeContainerState(name, state)).thenReturn(expectedName);
+        when(this.client.setContainerStatus(name, status)).thenReturn(expectedName);
 
         ChangeStateResponse actual = this.service.changeContainerState(name, request);
         assertThat(actual.getName(), is(expectedName));
