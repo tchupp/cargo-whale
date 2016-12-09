@@ -6,13 +6,12 @@ import com.cargowhale.docker.client.containers.info.list.ContainerListItem;
 import com.cargowhale.docker.client.containers.info.list.ListContainerFilters;
 import com.cargowhale.docker.client.containers.info.logs.LogFilters;
 import com.cargowhale.docker.client.containers.info.top.ContainerTop;
-import com.cargowhale.docker.container.StateFilters;
+import com.cargowhale.docker.container.info.list.ContainerIndexBuilder;
 import com.cargowhale.docker.container.info.model.ContainerDetails;
 import com.cargowhale.docker.container.info.model.ContainerIndex;
 import com.cargowhale.docker.container.info.model.ContainerLogs;
 import com.cargowhale.docker.container.info.top.ContainerProcessIndex;
 import com.cargowhale.docker.container.info.top.ContainerProcessIndexBuilder;
-import org.assertj.core.util.Arrays;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -21,7 +20,10 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
+import static org.assertj.core.util.Lists.newArrayList;
+import static org.assertj.core.util.Sets.newLinkedHashSet;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.mock;
@@ -55,9 +57,8 @@ public class ContainerInfoServiceTest {
 
     @Test
     public void getFilteredContainersReturnsFilteredContainers() {
-        ContainerState[] containerStatuses = Arrays.array(ContainerState.DEAD, ContainerState.PAUSED);
-        StateFilters stateFilters = new StateFilters(containerStatuses);
-        ListContainerFilters filters = new ListContainerFilters(containerStatuses);
+        Set<ContainerState> containerStates = newLinkedHashSet(ContainerState.DEAD, ContainerState.PAUSED);
+        ListContainerFilters filters = new ListContainerFilters(containerStates);
 
         List<ContainerListItem> containerList = Collections.singletonList(mock(ContainerListItem.class));
         ContainerIndex containerIndex = mock(ContainerIndex.class);
@@ -65,7 +66,7 @@ public class ContainerInfoServiceTest {
         when(this.client.listContainers(filters)).thenReturn(containerList);
         when(this.containerIndexBuilder.buildContainerIndex(containerList)).thenReturn(containerIndex);
 
-        assertThat(this.service.getContainersFilterByStatus(stateFilters), is(containerIndex));
+        assertThat(this.service.getContainersFilterByStatus(containerStates), is(containerIndex));
     }
 
     @Test
@@ -94,7 +95,7 @@ public class ContainerInfoServiceTest {
     public void getContainerProcessesByIdReturnsContainerProcessIndex() {
         String containerId = "container_id";
         ContainerTop response = mock(ContainerTop.class);
-        ContainerProcessIndex processIndex = mock(ContainerProcessIndex.class);
+        ContainerProcessIndex processIndex = new ContainerProcessIndex(containerId, newArrayList());
 
         when(this.client.getContainerProcesses(containerId)).thenReturn(response);
         when(this.processIndexBuilder.buildProcessIndex(containerId, response)).thenReturn(processIndex);

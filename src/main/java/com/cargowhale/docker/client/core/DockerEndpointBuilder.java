@@ -1,4 +1,4 @@
-package com.cargowhale.docker.client;
+package com.cargowhale.docker.client.core;
 
 import com.cargowhale.docker.client.containers.management.state.ContainerChangeState;
 import org.springframework.stereotype.Component;
@@ -20,15 +20,15 @@ public class DockerEndpointBuilder {
         return API_VERSION + CONTAINERS_ENDPOINT + "/" + containerId + JSON;
     }
 
-    public String getContainerLogByIdEndpoint(final String containerId) {
+    public String getContainerLogsEndpoint(final String containerId) {
         return API_VERSION + CONTAINERS_ENDPOINT + "/" + containerId + LOGS;
     }
 
-    public String getContainerProcessesByIdEndpoint(final String containerId) {
+    public String getContainerProcessesEndpoint(final String containerId) {
         return API_VERSION + CONTAINERS_ENDPOINT + "/" + containerId + PROCESSES;
     }
 
     public String getContainerChangeStateEndpoint(final String containerId, final ContainerChangeState state) {
-        return API_VERSION + CONTAINERS_ENDPOINT + "/" + containerId + "/" + state.state + "?t=5";
+        return API_VERSION + CONTAINERS_ENDPOINT + "/" + containerId + "/" + state.state;
     }
 }

@@ -1,11 +1,14 @@
 package com.cargowhale.docker.client.containers.info.list;
 
 import com.cargowhale.docker.client.containers.ContainerState;
-import org.assertj.core.util.Arrays;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.util.MultiValueMap;
 
+import java.util.LinkedHashSet;
+
+import static org.assertj.core.util.Sets.newLinkedHashSet;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
@@ -13,32 +16,35 @@ import static org.hamcrest.Matchers.is;
 public class ListContainerFiltersTest {
 
     @Test
-    public void serializeJson_OneOfEach() throws Exception {
+    public void queryParameters_OneOfEach() throws Exception {
         String containerFiltersJson = "{\"status\":[\"created\",\"running\"]}";
-        ContainerState[] statusSet = Arrays.array(ContainerState.CREATED, ContainerState.RUNNING);
+        LinkedHashSet<ContainerState> stateSet = newLinkedHashSet(ContainerState.CREATED, ContainerState.RUNNING);
 
-        ListContainerFilters listContainerFilters = new ListContainerFilters(statusSet);
+        ListContainerFilters listContainerFilters = new ListContainerFilters(stateSet);
+        MultiValueMap<String, String> queryParameters = listContainerFilters.asQueryParameters();
 
-        assertThat(listContainerFilters.toJson(), is(containerFiltersJson));
+        assertThat(queryParameters.getFirst("filters"), is(containerFiltersJson));
     }
 
     @Test
-    public void serializeJson_StatusIsNotRepeated() throws Exception {
+    public void queryParameters_StatusIsNotRepeated() throws Exception {
         String containerFiltersJson = "{\"status\":[\"created\"]}";
-        ContainerState[] statusSet = Arrays.array(ContainerState.CREATED, ContainerState.CREATED);
+        LinkedHashSet<ContainerState> stateSet = newLinkedHashSet(ContainerState.CREATED, ContainerState.CREATED);
 
-        ListContainerFilters listContainerFilters = new ListContainerFilters(statusSet);
+        ListContainerFilters listContainerFilters = new ListContainerFilters(stateSet);
+        MultiValueMap<String, String> queryParameters = listContainerFilters.asQueryParameters();
 
-        assertThat(listContainerFilters.toJson(), is(containerFiltersJson));
+        assertThat(queryParameters.getFirst("filters"), is(containerFiltersJson));
     }
 
     @Test
-    public void serializeJson_EmptyArray() throws Exception {
+    public void queryParameters_EmptyArray() throws Exception {
         String containerFiltersJson = "{\"status\":[]}";
-        ContainerState[] statusSet = Arrays.array();
+        LinkedHashSet<ContainerState> stateSet = newLinkedHashSet();
 
-        ListContainerFilters listContainerFilters = new ListContainerFilters(statusSet);
+        ListContainerFilters listContainerFilters = new ListContainerFilters(stateSet);
+        MultiValueMap<String, String> queryParameters = listContainerFilters.asQueryParameters();
 
-        assertThat(listContainerFilters.toJson(), is(containerFiltersJson));
+        assertThat(queryParameters.getFirst("filters"), is(containerFiltersJson));
     }
 }

@@ -1,6 +1,7 @@
-package com.cargowhale.docker.client;
+package com.cargowhale.docker.client.core;
 
 import com.cargowhale.docker.client.containers.management.state.ContainerChangeState;
+import com.cargowhale.docker.client.core.DockerEndpointBuilder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -42,8 +43,8 @@ public class DockerEndpointBuilderTest {
         String expectedUri1 = "/v1.24/containers/" + containerId1 + "/logs";
         String expectedUri2 = "/v1.24/containers/" + containerId2 + "/logs";
 
-        assertThat(this.endpointBuilder.getContainerLogByIdEndpoint(containerId1), is(expectedUri1));
-        assertThat(this.endpointBuilder.getContainerLogByIdEndpoint(containerId2), is(expectedUri2));
+        assertThat(this.endpointBuilder.getContainerLogsEndpoint(containerId1), is(expectedUri1));
+        assertThat(this.endpointBuilder.getContainerLogsEndpoint(containerId2), is(expectedUri2));
     }
 
     @Test
@@ -54,19 +55,21 @@ public class DockerEndpointBuilderTest {
         String expectedUri1 = "/v1.24/containers/" + containerId1 + "/top";
         String expectedUri2 = "/v1.24/containers/" + containerId2 + "/top";
 
-        assertThat(this.endpointBuilder.getContainerProcessesByIdEndpoint(containerId1), is(expectedUri1));
-        assertThat(this.endpointBuilder.getContainerProcessesByIdEndpoint(containerId2), is(expectedUri2));
+        assertThat(this.endpointBuilder.getContainerProcessesEndpoint(containerId1), is(expectedUri1));
+        assertThat(this.endpointBuilder.getContainerProcessesEndpoint(containerId2), is(expectedUri2));
     }
 
     @Test
     public void getContainerChangeStateEndpointReturnsCorrectUri() throws Exception {
+        ContainerChangeState state1 = ContainerChangeState.START;
+        ContainerChangeState state2 = ContainerChangeState.RESTART;
         String containerId1 = "1fds78i1h";
         String containerId2 = "4y712yui4";
 
-        String expectedUri1 = "/v1.24/containers/" + containerId1 + "/start?t=5";
-        String expectedUri2 = "/v1.24/containers/" + containerId2 + "/restart?t=5";
+        String expectedUri1 = "/v1.24/containers/" + containerId1 + "/start";
+        String expectedUri2 = "/v1.24/containers/" + containerId2 + "/restart";
 
-        assertThat(this.endpointBuilder.getContainerChangeStateEndpoint(containerId1, ContainerChangeState.START), is(expectedUri1));
-        assertThat(this.endpointBuilder.getContainerChangeStateEndpoint(containerId2, ContainerChangeState.RESTART), is(expectedUri2));
+        assertThat(this.endpointBuilder.getContainerChangeStateEndpoint(containerId1, state1), is(expectedUri1));
+        assertThat(this.endpointBuilder.getContainerChangeStateEndpoint(containerId2, state2), is(expectedUri2));
     }
 }

@@ -1,4 +1,4 @@
-package com.cargowhale.docker.container.info
+package com.cargowhale.docker.container.info.list
 
 import com.cargowhale.docker.client.containers.ContainerState
 import com.cargowhale.docker.client.containers.info.list.ContainerListItem

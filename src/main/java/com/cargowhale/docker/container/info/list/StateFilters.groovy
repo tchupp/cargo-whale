@@ -1,4 +1,4 @@
-package com.cargowhale.docker.container
+package com.cargowhale.docker.container.info.list
 
 import com.cargowhale.docker.client.containers.ContainerState
 import groovy.transform.Canonical
@@ -6,5 +6,5 @@ import groovy.transform.Canonical
 @Canonical
 class StateFilters {
 
-    ContainerState[] state
+    Set<ContainerState> state
 }

@@ -1,21 +1,26 @@
 package com.cargowhale.docker.client.containers.info.list
 
 import com.cargowhale.docker.client.containers.ContainerState
+import com.cargowhale.docker.client.core.QueryParameters
 import groovy.json.JsonOutput
-import groovy.transform.EqualsAndHashCode
-import groovy.transform.ToString
+import groovy.transform.Canonical
+import org.springframework.util.LinkedMultiValueMap
+import org.springframework.util.MultiValueMap
 
-@EqualsAndHashCode
-@ToString
-class ListContainerFilters {
+@Canonical
+class ListContainerFilters implements QueryParameters {
 
     final Set<ContainerState> status
 
-    ListContainerFilters(final ContainerState[] status) {
-        this.status = new LinkedHashSet<>(Arrays.asList(status))
+    ListContainerFilters(final Set<ContainerState> status) {
+        this.status = status
     }
 
-    String toJson() {
-        return JsonOutput.toJson(this).toLowerCase()
+    @Override
+    MultiValueMap<String, String> asQueryParameters() {
+        def queryParameters = new LinkedMultiValueMap<String, String>()
+        queryParameters.add("filters", JsonOutput.toJson(this).toLowerCase())
+
+        return queryParameters
     }
 }

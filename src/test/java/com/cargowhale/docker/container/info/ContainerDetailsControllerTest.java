@@ -11,6 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import static org.assertj.core.util.Lists.newArrayList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.mock;
@@ -63,7 +64,7 @@ public class ContainerDetailsControllerTest {
     @Test
     public void getContainerProcessesById() {
         String containerId = "container id!";
-        ContainerProcessIndex processes = mock(ContainerProcessIndex.class);
+        ContainerProcessIndex processes = new ContainerProcessIndex(containerId, newArrayList());
         ContainerProcessesResource processesResource = mock(ContainerProcessesResource.class);
 
         when(this.service.getContainerProcessesById(containerId)).thenReturn(processes);

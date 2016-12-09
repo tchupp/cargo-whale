@@ -2,20 +2,15 @@ package com.cargowhale.docker.container.info.top
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import groovy.transform.EqualsAndHashCode
-import groovy.transform.ToString
+import groovy.transform.Immutable
 
 import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY
 
 @EqualsAndHashCode(excludes = "id")
-@ToString
+@Immutable
 class ContainerProcessIndex {
 
     @JsonProperty(access = WRITE_ONLY)
     final String id
-    List<Map<String, String>> processes
-
-    ContainerProcessIndex(final String id, List<Map<String, String>> processes) {
-        this.id = id
-        this.processes = processes
-    }
+    final List<Map<String, String>> processes
 }

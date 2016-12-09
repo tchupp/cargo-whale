@@ -15,7 +15,7 @@ class ContainerProcessIndexBuilder {
     }
 
     private static Map<String, String> buildProcess(List<String> titles, List<String> attributes) {
-        List<List<String>> tuple = [titles, attributes].transpose()
-        return tuple.collectEntries { it }
+        List<List<String>> tuples = [titles, attributes].transpose()
+        return tuples.collectEntries { it }
     }
 }

@@ -1,32 +1,32 @@
 package com.cargowhale.docker.client.containers.info.logs
 
+import com.cargowhale.docker.client.core.QueryParameters
 import groovy.transform.Canonical
+import org.springframework.util.LinkedMultiValueMap
+import org.springframework.util.MultiValueMap
+
+import java.lang.reflect.Field
 
 @Canonical
-class LogFilters {
+class LogFilters implements QueryParameters {
 
-    boolean details
-    boolean follow
-    boolean stdout
-    boolean stderr
-    boolean timestamps
-    String since
-    String tail
+    Boolean details = false
+    Boolean follow = false
+    Boolean stdout = true
+    Boolean stderr = true
+    Boolean timestamps = true
+    Integer since = 0
+    String tail = '100'
 
-    LogFilters(
-            boolean details = false,
-            boolean follow = false,
-            boolean stdout = true,
-            boolean stderr = true,
-            boolean timestamps = true,
-            String since = '0',
-            String tail = '100') {
-        this.details = details
-        this.follow = follow
-        this.stdout = stdout
-        this.stderr = stderr
-        this.timestamps = timestamps
-        this.since = since
-        this.tail = tail
+    @Override
+    MultiValueMap<String, String> asQueryParameters() {
+        MultiValueMap<String, String> queryParameters = new LinkedMultiValueMap<>()
+        List<Field> nonSyntheticFields = this.class.declaredFields.findAll { !it.synthetic }
+
+        nonSyntheticFields.each { it ->
+            queryParameters.add(it.name, this."$it.name" as String)
+        }
+
+        return queryParameters
     }
 }

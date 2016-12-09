@@ -16,6 +16,7 @@ import org.springframework.hateoas.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URISyntaxException;
 import java.util.List;
@@ -74,12 +75,14 @@ public class ContainerInfoControllerFilteredContainersIT {
         ContainerListItem containerListItem = new ContainerListItem(ContainerState.CREATED, "78nm12hb3", "test-image", "47jk189nbk1", Arrays.array("test-container1"), "Created 3 days ago");
         ContainerListItem[] containerList = Arrays.array(containerListItem);
 
-        when(this.restTemplate.getForObject("/v1.24/containers/json?filters={filters}", ContainerListItem[].class, "{\"status\":[\"" + containerState.state + "\"]}"))
-                .thenReturn(containerList);
+        String path = "/v1.24/containers/json";
+        UriComponentsBuilder builder = UriComponentsBuilder.fromPath(path).queryParam("filters", "{\"status\":[\"" + containerState.state + "\"]}");
+
+        when(this.restTemplate.getForObject(builder.toUriString(), ContainerListItem[].class)).thenReturn(containerList);
 
         ResponseEntity<Resource<ContainerIndex>> response = getForType(this.client, "/api/containers?state=" + containerState.state, new ContainerListResponseItemIndexResourceType());
 
-        verify(this.restTemplate).getForObject("/v1.24/containers/json?filters={filters}", ContainerListItem[].class, "{\"status\":[\"" + containerState.state + "\"]}");
+        verify(this.restTemplate).getForObject(builder.toUriString(), ContainerListItem[].class);
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
 

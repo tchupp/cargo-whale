@@ -1,23 +1,27 @@
 package com.cargowhale.docker.client.containers.info;
 
-import com.cargowhale.docker.client.DockerEndpointBuilder;
+import com.cargowhale.docker.client.containers.ContainerState;
 import com.cargowhale.docker.client.containers.info.list.ContainerListItem;
 import com.cargowhale.docker.client.containers.info.list.ListContainerFilters;
 import com.cargowhale.docker.client.containers.info.logs.LogFilters;
 import com.cargowhale.docker.client.containers.info.top.ContainerTop;
+import com.cargowhale.docker.client.core.DockerEndpointBuilder;
 import com.cargowhale.docker.client.core.DockerRestTemplate;
 import com.cargowhale.docker.container.info.model.ContainerDetails;
 import com.cargowhale.docker.container.info.model.ContainerLogs;
-import org.assertj.core.util.Arrays;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.io.UnsupportedEncodingException;
 import java.util.UUID;
 
+import static org.assertj.core.util.Arrays.array;
+import static org.assertj.core.util.Sets.newLinkedHashSet;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
@@ -31,7 +35,7 @@ public class ContainerInfoClientTest {
     private ContainerInfoClient client;
 
     @Mock
-    private DockerRestTemplate template;
+    private DockerRestTemplate restTemplate;
 
     @Mock
     private DockerEndpointBuilder endpointBuilder;
@@ -39,25 +43,25 @@ public class ContainerInfoClientTest {
     @Test
     public void listContainersReturnsEveryContainerFromDockerApi() {
         String listContainerEndpoint = UUID.randomUUID().toString();
-        final ContainerListItem[] containerArray = Arrays.array(mock(ContainerListItem.class));
+        final ContainerListItem[] containerArray = array(mock(ContainerListItem.class));
 
         when(this.endpointBuilder.getListContainersEndpoint()).thenReturn(listContainerEndpoint);
-        when(this.template.getForObject(listContainerEndpoint + "?all=1", ContainerListItem[].class)).thenReturn(containerArray);
+        when(this.restTemplate.getForObject(listContainerEndpoint + "?all=1", ContainerListItem[].class)).thenReturn(containerArray);
 
         assertThat(this.client.listContainers(), contains(containerArray));
     }
 
     @Test
-    public void listContainersReturnsSelectedTypesOfContainers() {
+    public void listContainersReturnsSelectedTypesOfContainers() throws UnsupportedEncodingException {
         String listContainerEndpoint = UUID.randomUUID().toString();
-        String filterJson = "json filter string";
 
-        ListContainerFilters filters = mock(ListContainerFilters.class);
-        final ContainerListItem[] containerArray = Arrays.array(mock(ContainerListItem.class));
+        ListContainerFilters filters = new ListContainerFilters(newLinkedHashSet(ContainerState.PAUSED));
+        final ContainerListItem[] containerArray = array(mock(ContainerListItem.class));
+
+        UriComponentsBuilder builder = UriComponentsBuilder.fromPath(listContainerEndpoint).queryParams(filters.asQueryParameters());
 
         when(this.endpointBuilder.getListContainersEndpoint()).thenReturn(listContainerEndpoint);
-        when(filters.toJson()).thenReturn(filterJson);
-        when(this.template.getForObject(listContainerEndpoint + "?filters={filters}", ContainerListItem[].class, filterJson)).thenReturn(containerArray);
+        when(this.restTemplate.getForObject(builder.toUriString(), ContainerListItem[].class)).thenReturn(containerArray);
 
         assertThat(this.client.listContainers(filters), contains(containerArray));
     }
@@ -70,7 +74,7 @@ public class ContainerInfoClientTest {
         ContainerDetails containerDetails = mock(ContainerDetails.class);
 
         when(this.endpointBuilder.getInspectContainerEndpoint(containerId)).thenReturn(inspectContainerEndpoint);
-        when(this.template.getForObject(inspectContainerEndpoint, ContainerDetails.class)).thenReturn(containerDetails);
+        when(this.restTemplate.getForObject(inspectContainerEndpoint, ContainerDetails.class)).thenReturn(containerDetails);
 
         assertThat(this.client.inspectContainer(containerId), is(containerDetails));
     }
@@ -80,21 +84,13 @@ public class ContainerInfoClientTest {
         String containerLogsEndpoint = UUID.randomUUID().toString();
         String containerId = "thisId";
 
-        boolean details = true;
-        boolean follow = false;
-        boolean stdOut = true;
-        boolean stdErr = true;
-        boolean timestamps = true;
-        String since = "0";
-        String tail = "265";
-        LogFilters filters = new LogFilters(details, follow, stdOut, stdErr, timestamps, since, tail);
+        LogFilters filters = new LogFilters(true, false, true, true, true, 0, "265");
+        UriComponentsBuilder builder = UriComponentsBuilder.fromPath(containerLogsEndpoint).queryParams(filters.asQueryParameters());
 
         String logs = "These are some fancy logs!";
 
-        String formattedParams = String.format("?details=%s&follow=%s&stdout=%s&stderr=%s&timestamps=%s&since=%s&tail=%s", details, follow, stdOut, stdErr, timestamps, since, tail);
-
-        when(this.endpointBuilder.getContainerLogByIdEndpoint(containerId)).thenReturn(containerLogsEndpoint);
-        when(this.template.getForObject(containerLogsEndpoint + formattedParams, String.class)).thenReturn(logs);
+        when(this.endpointBuilder.getContainerLogsEndpoint(containerId)).thenReturn(containerLogsEndpoint);
+        when(this.restTemplate.getForObject(builder.toUriString(), String.class)).thenReturn(logs);
 
         ContainerLogs containerLogs = this.client.getContainerLogs(containerId, filters);
         assertThat(containerLogs.getLogs(), is(logs));
@@ -107,8 +103,8 @@ public class ContainerInfoClientTest {
 
         ContainerTop containerTop = Mockito.mock(ContainerTop.class);
 
-        when(this.endpointBuilder.getContainerProcessesByIdEndpoint(containerId)).thenReturn(containerTopEndpoint);
-        when(this.template.getForObject(containerTopEndpoint, ContainerTop.class)).thenReturn(containerTop);
+        when(this.endpointBuilder.getContainerProcessesEndpoint(containerId)).thenReturn(containerTopEndpoint);
+        when(this.restTemplate.getForObject(containerTopEndpoint, ContainerTop.class)).thenReturn(containerTop);
 
         assertThat(this.client.getContainerProcesses(containerId), is(containerTop));
     }
