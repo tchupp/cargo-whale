@@ -5,13 +5,10 @@ import com.cargowhale.docker.client.containers.info.ContainerInfoClient;
 import com.cargowhale.docker.client.containers.info.list.ContainerListItem;
 import com.cargowhale.docker.client.containers.info.list.ListContainerFilters;
 import com.cargowhale.docker.client.containers.info.logs.LogFilters;
-import com.cargowhale.docker.client.containers.info.top.ContainerTop;
 import com.cargowhale.docker.container.info.list.ContainerIndexBuilder;
 import com.cargowhale.docker.container.info.model.ContainerDetails;
 import com.cargowhale.docker.container.info.model.ContainerIndex;
 import com.cargowhale.docker.container.info.model.ContainerLogs;
-import com.cargowhale.docker.container.info.top.ContainerProcessIndex;
-import com.cargowhale.docker.container.info.top.ContainerProcessIndexBuilder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -22,7 +19,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import static org.assertj.core.util.Lists.newArrayList;
 import static org.assertj.core.util.Sets.newLinkedHashSet;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -40,9 +36,6 @@ public class ContainerInfoServiceTest {
 
     @Mock
     private ContainerIndexBuilder containerIndexBuilder;
-
-    @Mock
-    private ContainerProcessIndexBuilder processIndexBuilder;
 
     @Test
     public void getAllContainersReturnsAllContainersFromClient() {
@@ -89,17 +82,5 @@ public class ContainerInfoServiceTest {
         when(this.client.getContainerLogs(containerId, filters)).thenReturn(containerLogs);
 
         assertThat(this.service.getContainerLogsById(containerId, filters), is(containerLogs));
-    }
-
-    @Test
-    public void getContainerProcessesByIdReturnsContainerProcessIndex() {
-        String containerId = "container_id";
-        ContainerTop response = mock(ContainerTop.class);
-        ContainerProcessIndex processIndex = new ContainerProcessIndex(containerId, newArrayList());
-
-        when(this.client.getContainerProcesses(containerId)).thenReturn(response);
-        when(this.processIndexBuilder.buildProcessIndex(containerId, response)).thenReturn(processIndex);
-
-        assertThat(this.service.getContainerProcessesById(containerId), is(processIndex));
     }
 }

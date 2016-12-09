@@ -5,6 +5,7 @@ import com.cargowhale.docker.container.info.model.ContainerDetails;
 import com.cargowhale.docker.container.info.model.ContainerLogs;
 import com.cargowhale.docker.container.info.resource.*;
 import com.cargowhale.docker.container.info.top.ContainerProcessIndex;
+import com.cargowhale.docker.container.info.top.ContainerTopService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -24,7 +25,10 @@ public class ContainerDetailsControllerTest {
     private ContainerDetailsController controller;
 
     @Mock
-    private ContainerInfoService service;
+    private ContainerInfoService infoService;
+
+    @Mock
+    private ContainerTopService topService;
 
     @Mock
     private ContainerDetailsResourceAssembler detailsResourceAssembler;
@@ -41,7 +45,7 @@ public class ContainerDetailsControllerTest {
         ContainerDetails containerDetails = mock(ContainerDetails.class);
         ContainerDetailsResource containerDetailsResource = mock(ContainerDetailsResource.class);
 
-        when(this.service.getContainerDetailsById(containerId)).thenReturn(containerDetails);
+        when(this.infoService.getContainerDetailsById(containerId)).thenReturn(containerDetails);
         when(this.detailsResourceAssembler.toResource(containerDetails)).thenReturn(containerDetailsResource);
 
         assertThat(this.controller.getContainerById(containerId), is(containerDetailsResource));
@@ -55,7 +59,7 @@ public class ContainerDetailsControllerTest {
         ContainerLogs containerLogs = mock(ContainerLogs.class);
         ContainerLogsResource containerLogsResource = mock(ContainerLogsResource.class);
 
-        when(this.service.getContainerLogsById(containerId, filters)).thenReturn(containerLogs);
+        when(this.infoService.getContainerLogsById(containerId, filters)).thenReturn(containerLogs);
         when(this.logsResourceAssembler.toResource(containerLogs)).thenReturn(containerLogsResource);
 
         assertThat(this.controller.getContainerLogsById(containerId, filters), is(containerLogsResource));
@@ -67,7 +71,7 @@ public class ContainerDetailsControllerTest {
         ContainerProcessIndex processes = new ContainerProcessIndex(containerId, newArrayList());
         ContainerProcessesResource processesResource = mock(ContainerProcessesResource.class);
 
-        when(this.service.getContainerProcessesById(containerId)).thenReturn(processes);
+        when(this.topService.getContainerProcessesById(containerId)).thenReturn(processes);
         when(this.processesResourceAssembler.toResource(processes)).thenReturn(processesResource);
 
         assertThat(this.controller.getContainerProcessesById(containerId), is(processesResource));
