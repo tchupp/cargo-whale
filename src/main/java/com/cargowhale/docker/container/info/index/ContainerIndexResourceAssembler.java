@@ -1,7 +1,5 @@
-package com.cargowhale.docker.container.info.resource;
+package com.cargowhale.docker.container.info.index;
 
-import com.cargowhale.docker.container.info.ContainerIndexController;
-import com.cargowhale.docker.container.info.model.ContainerIndex;
 import com.cargowhale.docker.index.IndexController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
@@ -15,10 +13,10 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 @Component
 public class ContainerIndexResourceAssembler extends ResourceAssemblerSupport<ContainerIndex, ContainerIndexResource> {
 
-    private final ContainerListResponseItemResourceAssembler resourceAssembler;
+    private final ContainerListItemResourceAssembler resourceAssembler;
 
     @Autowired
-    public ContainerIndexResourceAssembler(final ContainerListResponseItemResourceAssembler resourceAssembler) {
+    public ContainerIndexResourceAssembler(final ContainerListItemResourceAssembler resourceAssembler) {
         super(ContainerIndexController.class, ContainerIndexResource.class);
         this.resourceAssembler = resourceAssembler;
     }
@@ -34,7 +32,7 @@ public class ContainerIndexResourceAssembler extends ResourceAssemblerSupport<Co
 
     @Override
     protected ContainerIndexResource instantiateResource(final ContainerIndex entity) {
-        List<ContainerListResponseItemResource> summaryResourceList = this.resourceAssembler.toResources(entity.getContainers());
+        List<ContainerListItemResource> summaryResourceList = this.resourceAssembler.toResources(entity.getContainers());
         return new ContainerIndexResource(summaryResourceList, entity.getStateMetadata());
     }
 }

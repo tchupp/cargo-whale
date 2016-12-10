@@ -3,7 +3,7 @@ package com.cargowhale.docker.container.info.integration;
 import com.cargowhale.docker.client.containers.ContainerState;
 import com.cargowhale.docker.client.containers.info.list.ContainerListItem;
 import com.cargowhale.docker.client.core.DockerRestTemplate;
-import com.cargowhale.docker.container.info.model.ContainerIndex;
+import com.cargowhale.docker.container.info.index.ContainerIndex;
 import org.assertj.core.util.Arrays;
 import org.junit.Test;
 import org.junit.runner.RunWith;
