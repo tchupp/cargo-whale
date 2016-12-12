@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ControllerAdvice
 public class GlobalControllerExceptionHandler {
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Bad Filter")
     @ExceptionHandler(value = BindException.class)
-    public ResponseEntity<CargoWhaleErrorMessage> handleBadFilter(HttpServletRequest request, Exception ex) {
+    public ResponseEntity<CargoWhaleErrorMessage> handleBadFilter(final HttpServletRequest request, final Exception ex) {
         return new ResponseEntity<>(new CargoWhaleErrorMessage(request.getRequestURI(), "Bad Filter", ex.getClass().toString()), HttpStatus.BAD_REQUEST);
     }
 }
