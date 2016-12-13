@@ -1,6 +1,7 @@
 #%RAML 1.0 Library
 
 types:
+  Link: !include ../types/link.raml
   State:
     enum:
       - created
@@ -16,7 +17,9 @@ types:
       image: string
       status: string
       state: State
-      _links: object
+      _links:
+        properties:
+          self: Link
 
   Index:
     properties:
@@ -30,7 +33,10 @@ types:
           paused: integer
           exited: integer
           dead: integer
-      _links: object
+      _links:
+        properties:
+          self: Link
+          up: Link
 
   DetailsState:
     properties:
@@ -46,4 +52,9 @@ types:
       image: string
       path: string
       state: DetailsState
-      _links: object
+      _links:
+        properties:
+          self: Link
+          up: Link
+          logs: Link
+          top?: Link

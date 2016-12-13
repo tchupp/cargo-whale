@@ -1,6 +1,9 @@
 #%RAML 1.0 Library
 
 types:
+  Link: !include ../types/link.raml
   Index:
     properties:
-      _links: object
+      _links:
+        properties:
+          containers: Link
