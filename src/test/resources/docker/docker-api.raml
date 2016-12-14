@@ -11,15 +11,57 @@ mediaType: application/json
           application/json:
             example: !include examples/container-list-all.json
 
+/v1.24/containers/json?filters={status=[created]}:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include examples/container-list-filtered-created.json
+
+
+/v1.24/containers/json?filters={status=[restarting]}:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include examples/container-list-filtered-restarting.json
+
+
 /v1.24/containers/json?filters={status=[running]}:
   get:
     responses:
       200:
         body:
           application/json:
-            example: !include examples/container-list-filtered.json
+            example: !include examples/container-list-filtered-running.json
 
-/v1.24/containers/ba033ac4401106a3b513bc9d639eee123ad78ca3616b921167cd74b20e25ed39:
+/v1.24/containers/json?filters={status=[paused]}:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include examples/container-list-filtered-paused.json
+
+/v1.24/containers/json?filters={status=[exited]}:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include examples/container-list-filtered-exited.json
+
+/v1.24/containers/json?filters={status=[dead]}:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include examples/container-list-filtered-running.json
+
+/v1.24/containers/running-container/json:
   get:
     responses:
       200:
@@ -27,7 +69,7 @@ mediaType: application/json
           application/json:
             example: !include examples/container-inspect.json
 
-/v1.24/containers/ba033ac4401106a3b513bc9d639eee123ad78ca3616b921167cd74b20e25ed39/top:
+/v1.24/containers/running-container/top:
   get:
     responses:
       200:

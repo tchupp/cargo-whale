@@ -30,7 +30,7 @@ import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class ContainerInfoControllerFilteredContainersIT {
+public class ContainerIndexFilteredIT {
 
     private static class ContainerListResponseItemIndexResourceType extends ParameterizedTypeReference<ContainerIndexResource> {
     }

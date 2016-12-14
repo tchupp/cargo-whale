@@ -116,7 +116,7 @@
   "Id": "ba033ac4401106a3b513bc9d639eee123ad78ca3616b921167cd74b20e25ed39",
   "Image": "04c5d3b7b0656168630d3ba35d8889bd0e9caafcaeb3004d2bfbc47e7c5d35d2",
   "MountLabel": "",
-  "Name": "/boring_euclid",
+  "Name": "/running-container",
   "NetworkSettings": {
     "Bridge": "",
     "SandboxID": "",
