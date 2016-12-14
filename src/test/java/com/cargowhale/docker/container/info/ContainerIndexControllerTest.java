@@ -1,10 +1,7 @@
 package com.cargowhale.docker.container.info;
 
 import com.cargowhale.docker.client.containers.ContainerState;
-import com.cargowhale.docker.container.info.list.StateFilters;
-import com.cargowhale.docker.container.info.model.ContainerIndex;
-import com.cargowhale.docker.container.info.resource.ContainerIndexResource;
-import com.cargowhale.docker.container.info.resource.ContainerIndexResourceAssembler;
+import com.cargowhale.docker.container.info.index.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

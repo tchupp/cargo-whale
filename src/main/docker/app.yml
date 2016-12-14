@@ -9,4 +9,4 @@ services:
   socat-docker:
     extends:
       file: socat.yml
-      infoService: socat-docker
+      service: socat-docker
