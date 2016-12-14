@@ -1,0 +1,36 @@
+#%RAML 1.0
+title: Docker API
+mediaType: application/json
+
+
+/v1.24/containers/json?all=1:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include examples/container-list-all.json
+
+/v1.24/containers/json?filters={status=[running]}:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include examples/container-list-filtered.json
+
+/v1.24/containers/ba033ac4401106a3b513bc9d639eee123ad78ca3616b921167cd74b20e25ed39:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include examples/container-inspect.json
+
+/v1.24/containers/ba033ac4401106a3b513bc9d639eee123ad78ca3616b921167cd74b20e25ed39/top:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include examples/container-top.json
