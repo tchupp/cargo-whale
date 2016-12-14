@@ -16,6 +16,9 @@
 # CargoWhale specific properties
 # ===================================================================
 
+server:
+  port: 56602
+
 cargowhale:
   docker:
     uri: http://fakehost:287331

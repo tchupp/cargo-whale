@@ -1,7 +1,6 @@
 package com.cargowhale.docker.container.info.integration;
 
 import com.cargowhale.docker.client.core.DockerRestTemplate;
-import com.cargowhale.docker.config.CargoWhaleProperties;
 import com.cargowhale.docker.container.info.model.ContainerLogs;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,9 +31,6 @@ public class ContainerInfoControllerGetLogsIT {
 
     @Autowired
     private TestRestTemplate client;
-
-    @Autowired
-    private CargoWhaleProperties properties;
 
     @Test
     public void getLogsReturnsCorrectLogs() {
