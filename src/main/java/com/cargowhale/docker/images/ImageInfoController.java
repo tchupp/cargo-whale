@@ -2,7 +2,7 @@ package com.cargowhale.docker.images;
 
 import com.cargowhale.docker.config.CargoWhaleProperties;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
+import org.springframework.hateoas.MediaTypes;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,7 +22,7 @@ public class ImageInfoController {
 
     @RequestMapping(value = "/images",
             method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+        produces = MediaTypes.HAL_JSON_VALUE)
     public String getImages() {
         String dockerUri = this.properties.getDockerUri();
 
