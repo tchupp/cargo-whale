@@ -3,16 +3,16 @@
   "path": "/bin/sh",
   "_links": {
     "top": {
-      "href": "http://localhost:56602/api/containers/ba033ac4401106a3b513bc9d639eee123ad78ca3616b921167cd74b20e25ed39/top"
+      "href": "http://localhost/api/containers/ba033ac4401106a3b513bc9d639eee123ad78ca3616b921167cd74b20e25ed39/top"
     },
     "self": {
-      "href": "http://localhost:56602/api/containers/ba033ac4401106a3b513bc9d639eee123ad78ca3616b921167cd74b20e25ed39"
+      "href": "http://localhost/api/containers/ba033ac4401106a3b513bc9d639eee123ad78ca3616b921167cd74b20e25ed39"
     },
     "up": {
-      "href": "http://localhost:56602/api/containers"
+      "href": "http://localhost/api/containers"
     },
     "logs": {
-      "href": "http://localhost:56602/api/containers/ba033ac4401106a3b513bc9d639eee123ad78ca3616b921167cd74b20e25ed39/logs"
+      "href": "http://localhost/api/containers/ba033ac4401106a3b513bc9d639eee123ad78ca3616b921167cd74b20e25ed39/logs"
     }
   },
   "name": "/running-container",

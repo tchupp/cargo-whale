@@ -29,7 +29,7 @@ public class ContainerIndexAllIT {
     private MockServiceBuilder dockerServiceBuilder;
 
     @Test
-    public void getAllContainers() throws Exception {
+    public void getContainerIndex() throws Exception {
         this.dockerServiceBuilder.expectRequest("/v1.24/containers/json?all=1", HttpMethod.GET, HttpStatus.OK, MediaType.APPLICATION_JSON);
 
         this.client.perform(get("/api/containers"))

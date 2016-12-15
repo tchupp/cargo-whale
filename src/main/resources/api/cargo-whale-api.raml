@@ -1,6 +1,5 @@
 #%RAML 1.0
 title: Cargo Whale API
-mediaType: application/hal+json
 
 uses:
   Containers: libraries/containers.raml
@@ -30,6 +29,10 @@ uses:
             application/hal+json:
               type: Containers.Index
               example: !include examples/container-index.json
+        400:
+          body:
+            application/hal+json:
+              example: !include examples/container-index-400.json
 
     /{id}:
       get:
