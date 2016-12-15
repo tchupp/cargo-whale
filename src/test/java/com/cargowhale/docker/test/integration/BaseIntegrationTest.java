@@ -10,7 +10,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
 import static com.cargowhale.division.matchers.JsonMatcher.equalToJsonString;
-import static com.cargowhale.division.matchers.MediaTypeMatcher.hasMediaType;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
@@ -23,7 +22,6 @@ public class BaseIntegrationTest {
         final String example = cargoWhaleRamlSpec.findExample(path, method, status, mediaType);
 
         assertThat(response.getStatusCode(), is(status));
-        assertThat(response, hasMediaType(mediaType));
         assertThat(response.getBody(), equalToJsonString(example));
     }
 }

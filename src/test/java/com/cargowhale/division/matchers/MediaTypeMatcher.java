@@ -3,15 +3,13 @@ package com.cargowhale.division.matchers;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 
-import java.util.List;
+import static org.springframework.http.MediaType.parseMediaType;
 
-public class MediaTypeMatcher extends TypeSafeMatcher<ResponseEntity<?>> {
+public class MediaTypeMatcher extends TypeSafeMatcher<String> {
 
-    public static Matcher<ResponseEntity<?>> hasMediaType(final MediaType expected) {
+    static Matcher<String> isCompatibleMediaType(final MediaType expected) {
         return new MediaTypeMatcher(expected);
     }
 
@@ -22,29 +20,22 @@ public class MediaTypeMatcher extends TypeSafeMatcher<ResponseEntity<?>> {
     }
 
     @Override
-    protected boolean matchesSafely(final ResponseEntity<?> response) {
-        List<String> mediaTypes = response.getHeaders().get(HttpHeaders.CONTENT_TYPE);
-
-        for (final String mediaTypeValue : mediaTypes) {
-            if (mediaTypeValue.startsWith(this.expected.toString())) {
-                return true;
-            }
-        }
-        return false;
+    protected boolean matchesSafely(final String actual) {
+        MediaType mediaType = parseMediaType(actual);
+        return mediaType.isCompatibleWith(this.expected);
     }
 
     @Override
     public void describeTo(final Description description) {
-        description.appendText("to contain media type compatible with ").appendValue(this.expected);
+        description.appendText("Media type compatible with ").appendValue(this.expected);
     }
 
     @Override
-    protected void describeMismatchSafely(final ResponseEntity<?> response, final Description mismatch) {
-        if (response == null) {
-            super.describeMismatch(null, mismatch);
+    protected void describeMismatchSafely(final String actual, final Description mismatch) {
+        if (actual == null) {
+            mismatch.appendText("Media type was null");
         } else {
-            List<String> mediaTypes = response.getHeaders().get(HttpHeaders.CONTENT_TYPE);
-            mismatch.appendText("had ").appendValue(mediaTypes);
+            mismatch.appendValue(actual);
         }
     }
 }

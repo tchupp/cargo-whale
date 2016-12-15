@@ -3,7 +3,7 @@
     {
       "_links": {
         "self": {
-          "href": "http://localhost:56602/api/containers/92c23fc9e379630e6f9a17"
+          "href": "http://localhost/api/containers/92c23fc9e379630e6f9a17"
         }
       },
       "state": "exited",
@@ -17,7 +17,7 @@
     {
       "_links": {
         "self": {
-          "href": "http://localhost:56602/api/containers/270f2e51eed51e3c5d5d6b13cdd18d5"
+          "href": "http://localhost/api/containers/270f2e51eed51e3c5d5d6b13cdd18d5"
         }
       },
       "state": "exited",
@@ -31,7 +31,7 @@
     {
       "_links": {
         "self": {
-          "href": "http://localhost:56602/api/containers/f911b0f4e0b19e3da3bae6dcff82195"
+          "href": "http://localhost/api/containers/f911b0f4e0b19e3da3bae6dcff82195"
         }
       },
       "state": "running",
@@ -53,10 +53,10 @@
   },
   "_links": {
     "self": {
-      "href": "http://localhost:56602/api/containers"
+      "href": "http://localhost/api/containers"
     },
     "up": {
-      "href": "http://localhost:56602/api"
+      "href": "http://localhost/api"
     }
   }
 }
