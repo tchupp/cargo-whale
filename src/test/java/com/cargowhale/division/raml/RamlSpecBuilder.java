@@ -1,5 +1,6 @@
-package com.cargowhale.docker.test.integration;
+package com.cargowhale.division.raml;
 
+import org.raml.v2.api.RamlModelResult;
 import org.raml.v2.api.model.v10.api.Api;
 import org.raml.v2.api.model.v10.bodies.Response;
 import org.raml.v2.api.model.v10.datamodel.TypeDeclaration;
@@ -14,22 +15,20 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
 
-final class RamlApiBuilder {
+import static com.cargowhale.division.raml.RamlApiVerifier.verifyRamlModelResult;
 
-    private RamlApiBuilder() {
-    }
+public abstract class RamlSpecBuilder {
 
-    static Map<String, Map<HttpMethod, Map<HttpStatus, Map<MediaType, String>>>> flattenRaml(final Api api) {
-        Map<String, Map<HttpMethod, Map<HttpStatus, Map<MediaType, String>>>> resourceMap = new HashMap<>();
+    public static RamlSpec fromRamlApi10(final RamlModelResult modelResult, final String ramlSpecFile) {
+        verifyRamlModelResult(modelResult, ramlSpecFile);
 
-        for (final Resource resource : flattenResources(api)) {
-            Map<HttpMethod, Map<HttpStatus, Map<MediaType, String>>> methodMap;
+        Map<String, Map<HttpMethod, Map<HttpStatus, Map<MediaType, String>>>> ramlResources = new HashMap<>();
 
-            methodMap = buildMethodMap(resource);
-            resourceMap.put(resource.resourcePath(), methodMap);
+        for (final Resource resource : flattenResources(modelResult.getApiV10())) {
+            ramlResources.put(resource.resourcePath(), buildMethodMap(resource));
         }
 
-        return resourceMap;
+        return new RamlSpec(ramlResources, ramlSpecFile);
     }
 
     private static Queue<Resource> flattenResources(final Api api) {

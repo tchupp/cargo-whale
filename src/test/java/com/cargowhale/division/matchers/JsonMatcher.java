@@ -1,4 +1,4 @@
-package com.cargowhale.docker.test.matchers;
+package com.cargowhale.division.matchers;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
