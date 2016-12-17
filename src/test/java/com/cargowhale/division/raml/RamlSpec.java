@@ -1,5 +1,6 @@
 package com.cargowhale.division.raml;
 
+import org.apache.commons.lang.Validate;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -8,58 +9,60 @@ import java.util.Map;
 
 public class RamlSpec {
 
-    private final Map<String, Map<HttpMethod, Map<HttpStatus, Map<MediaType, String>>>> ramlResources;
+    private static final String DEFAULT_EXAMPLE_NAME = "default";
+
+    private final Map<String, Map<HttpMethod, Map<HttpStatus, Map<MediaType, Map<String, String>>>>> ramlResources;
     private final String ramlSpecFile;
 
-    RamlSpec(final Map<String, Map<HttpMethod, Map<HttpStatus, Map<MediaType, String>>>> ramlResources, final String ramlSpecFile) {
+    RamlSpec(final Map<String, Map<HttpMethod, Map<HttpStatus, Map<MediaType, Map<String, String>>>>> ramlResources, final String ramlSpecFile) {
         this.ramlResources = ramlResources;
         this.ramlSpecFile = ramlSpecFile;
     }
 
     public String findExample(final String path, final HttpMethod method, final HttpStatus status, final MediaType mediaType) {
-        Map<HttpMethod, Map<HttpStatus, Map<MediaType, String>>> methods = findMethods(path);
-        Map<HttpStatus, Map<MediaType, String>> responses = findResponses(methods, path, method);
-        Map<MediaType, String> mediaTypes = findMediaTypes(responses, path, method, status);
+        findExample(path, method, status, mediaType, DEFAULT_EXAMPLE_NAME);
+        Map<HttpMethod, Map<HttpStatus, Map<MediaType, Map<String, String>>>> methods = findMethods(path);
+        Map<HttpStatus, Map<MediaType, Map<String, String>>> responses = findResponses(methods, path, method);
+        Map<MediaType, Map<String, String>> mediaTypes = findMediaTypes(responses, path, method, status);
 
-        return findExample(mediaTypes, path, method, status, mediaType);
+        return findExample(mediaTypes, path, method, status, mediaType, DEFAULT_EXAMPLE_NAME);
     }
 
-    private Map<HttpMethod, Map<HttpStatus, Map<MediaType, String>>> findMethods(final String path) {
-        Map<HttpMethod, Map<HttpStatus, Map<MediaType, String>>> methods = this.ramlResources.get(path);
+    public String findExample(final String path, final HttpMethod method, final HttpStatus status, final MediaType mediaType, final String exampleName) {
+        Map<HttpMethod, Map<HttpStatus, Map<MediaType, Map<String, String>>>> methods = findMethods(path);
+        Map<HttpStatus, Map<MediaType, Map<String, String>>> responses = findResponses(methods, path, method);
+        Map<MediaType, Map<String, String>> mediaTypes = findMediaTypes(responses, path, method, status);
 
-        if (methods == null) {
-            throw new IllegalArgumentException(String.format("%1s %2s", formatPath(path), formatNotSetupForFileMessage(this.ramlSpecFile)));
-        }
+        return findExample(mediaTypes, path, method, status, mediaType, exampleName);
+    }
+
+    private Map<HttpMethod, Map<HttpStatus, Map<MediaType, Map<String, String>>>> findMethods(final String path) {
+        Map<HttpMethod, Map<HttpStatus, Map<MediaType, Map<String, String>>>> methods = this.ramlResources.get(path);
+        Validate.notNull(methods, String.format("%1s %2s", formatPath(path), formatNotSetupForFileMessage(this.ramlSpecFile)));
 
         return methods;
     }
 
-    private Map<HttpStatus, Map<MediaType, String>> findResponses(final Map<HttpMethod, Map<HttpStatus, Map<MediaType, String>>> methods, final String path, final HttpMethod method) {
-        Map<HttpStatus, Map<MediaType, String>> responses = methods.get(method);
-
-        if (responses == null) {
-            throw new IllegalArgumentException(String.format("%1s for: %2s %3s", formatMethod(method), formatPath(path), formatNotSetupForFileMessage(this.ramlSpecFile)));
-        }
+    private Map<HttpStatus, Map<MediaType, Map<String, String>>> findResponses(final Map<HttpMethod, Map<HttpStatus, Map<MediaType, Map<String, String>>>> methods, final String path, final HttpMethod method) {
+        Map<HttpStatus, Map<MediaType, Map<String, String>>> responses = methods.get(method);
+        Validate.notNull(responses, String.format("%1s for: %2s %3s", formatMethod(method), formatPath(path), formatNotSetupForFileMessage(this.ramlSpecFile)));
 
         return responses;
     }
 
-    private Map<MediaType, String> findMediaTypes(final Map<HttpStatus, Map<MediaType, String>> responses, final String path, final HttpMethod method, final HttpStatus status) {
-        Map<MediaType, String> mediaTypes = responses.get(status);
-
-        if (mediaTypes == null) {
-            throw new IllegalArgumentException(String.format("%1s for: %2s and %3s %4s", formatStatus(status), formatMethod(method), formatPath(path), formatNotSetupForFileMessage(this.ramlSpecFile)));
-        }
+    private Map<MediaType, Map<String, String>> findMediaTypes(final Map<HttpStatus, Map<MediaType, Map<String, String>>> responses, final String path, final HttpMethod method, final HttpStatus status) {
+        Map<MediaType, Map<String, String>> mediaTypes = responses.get(status);
+        Validate.notNull(mediaTypes, String.format("%1s for: %2s and %3s %4s", formatStatus(status), formatMethod(method), formatPath(path), formatNotSetupForFileMessage(this.ramlSpecFile)));
 
         return mediaTypes;
     }
 
-    private String findExample(final Map<MediaType, String> mediaTypes, final String path, final HttpMethod method, final HttpStatus status, final MediaType mediaType) {
-        String example = mediaTypes.get(mediaType);
+    private String findExample(final Map<MediaType, Map<String, String>> mediaTypes, final String path, final HttpMethod method, final HttpStatus status, final MediaType mediaType, final String exampleName) {
+        Map<String, String> exampleMap = mediaTypes.get(mediaType);
+        Validate.notNull(exampleMap, String.format("%1s for: %2s, %3s and %4s %5s", formatMediaType(mediaType), formatStatus(status), formatMethod(method), formatPath(path), formatNotSetupForFileMessage(this.ramlSpecFile)));
 
-        if (example == null) {
-            throw new IllegalArgumentException(String.format("%1s for: %2s, %3s and %4s %5s", formatMediaType(mediaType), formatStatus(status), formatMethod(method), formatPath(path), formatNotSetupForFileMessage(this.ramlSpecFile)));
-        }
+        String example = exampleMap.get(exampleName);
+        Validate.notNull(example, String.format("%1s for: %2s, %3s, %4s and %5s %6s", formatExampleName(exampleName), formatMediaType(mediaType), formatStatus(status), formatMethod(method), formatPath(path), formatNotSetupForFileMessage(this.ramlSpecFile)));
 
         return example;
     }
@@ -78,6 +81,10 @@ public class RamlSpec {
 
     private static String formatMediaType(final MediaType mediaType) {
         return String.format("MediaType '%s'", mediaType);
+    }
+
+    private static String formatExampleName(final String exampleName) {
+        return String.format("Example '%s'", exampleName);
     }
 
     private static String formatNotSetupForFileMessage(final String ramlSpecFile) {
