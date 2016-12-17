@@ -36,6 +36,12 @@ public class RequestSpecMatcher {
         return buildResultMatcher(status, mediaType, example);
     }
 
+    public ResultMatcher with(final String path, final HttpMethod method, final HttpStatus status, final MediaType mediaType, final String exampleName) {
+        final String example = this.ramlSpec.findExample(path, method, status, mediaType, exampleName);
+
+        return buildResultMatcher(status, mediaType, example);
+    }
+
     private ResultMatcher buildResultMatcher(final HttpStatus status, final MediaType mediaType, final String example) {
         return result -> {
             MockHttpServletResponse response = result.getResponse();

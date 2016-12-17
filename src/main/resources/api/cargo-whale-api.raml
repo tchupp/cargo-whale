@@ -28,7 +28,14 @@ uses:
           body:
             application/hal+json:
               type: Containers.Index
-              example: !include examples/container-index.json
+              examples:
+                all: !include examples/container-index.json
+                created: !include examples/container-index-created.json
+                dead: !include examples/container-index-dead.json
+                exited: !include examples/container-index-exited.json
+                paused: !include examples/container-index-paused.json
+                restarting: !include examples/container-index-restarting.json
+                running: !include examples/container-index-running.json
         400:
           body:
             application/hal+json:

@@ -64,7 +64,7 @@ public class ContainerIndexFilteredIT {
 
         this.client.perform(get("/api/containers?state=" + containerState.state))
             .andExpect(responseIsInSpec(RamlSpecFiles.CARGO_WHALE_RAML_SPEC_FILE)
-                .with("/api/containers", HttpMethod.GET, HttpStatus.OK, MediaTypes.HAL_JSON));
+                .with("/api/containers", HttpMethod.GET, HttpStatus.OK, MediaTypes.HAL_JSON, containerState.state));
     }
 
     @Test

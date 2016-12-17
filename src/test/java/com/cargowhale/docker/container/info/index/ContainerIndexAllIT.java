@@ -34,6 +34,6 @@ public class ContainerIndexAllIT {
 
         this.client.perform(get("/api/containers"))
             .andExpect(responseIsInSpec(RamlSpecFiles.CARGO_WHALE_RAML_SPEC_FILE)
-                .with("/api/containers", HttpMethod.GET, HttpStatus.OK, MediaTypes.HAL_JSON));
+                .with("/api/containers", HttpMethod.GET, HttpStatus.OK, MediaTypes.HAL_JSON, "all"));
     }
 }
