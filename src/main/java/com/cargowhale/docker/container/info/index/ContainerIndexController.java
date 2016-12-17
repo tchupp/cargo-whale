@@ -3,13 +3,16 @@ package com.cargowhale.docker.container.info.index;
 import com.cargowhale.docker.client.containers.ContainerState;
 import com.cargowhale.docker.container.ContainerEnumConverter;
 import com.cargowhale.docker.container.info.ContainerInfoService;
+import com.cargowhale.docker.exception.CargoWhaleErrorMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.MediaTypes;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindException;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/api/containers")
@@ -42,5 +45,11 @@ public class ContainerIndexController {
     public ContainerIndexResource listContainers(final StateFilters stateFilters) {
         ContainerIndex summaryIndex = this.service.getContainersFilterByStatus(stateFilters.getState());
         return this.indexResourceAssembler.toResource(summaryIndex);
+    }
+
+    @ExceptionHandler(value = BindException.class)
+    public ResponseEntity<CargoWhaleErrorMessage> handleBadFilter(final HttpServletRequest request, final BindException ex) {
+        CargoWhaleErrorMessage errorMessage = new CargoWhaleErrorMessage(request.getRequestURI(), "Bad Filter", ex.getClass().toString());
+        return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
     }
 }

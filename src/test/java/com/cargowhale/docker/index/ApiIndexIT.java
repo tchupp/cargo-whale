@@ -1,6 +1,5 @@
 package com.cargowhale.docker.index;
 
-import com.cargowhale.docker.test.integration.BaseIntegrationTest;
 import com.cargowhale.docker.test.integration.RamlSpecFiles;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,9 +16,9 @@ import static com.cargowhale.division.matchers.RequestSpecMatcher.responseIsInSp
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@SpringBootTest
 @AutoConfigureMockMvc
-public class ApiIndexIT extends BaseIntegrationTest {
+public class ApiIndexIT {
 
     @Autowired
     private MockMvc client;

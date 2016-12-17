@@ -18,7 +18,7 @@ import static com.cargowhale.division.matchers.RequestSpecMatcher.responseIsInSp
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@SpringBootTest
 @AutoConfigureMockMvc
 public class ContainerIndexAllIT {
 

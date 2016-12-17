@@ -16,12 +16,12 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
 
 public class MockServiceBuilder {
 
-    private final MockRestServiceServer server;
+    private final RestTemplate restTemplate;
     private final RamlSpec ramlSpec;
     private final String baseUrl;
 
-    private MockServiceBuilder(final MockRestServiceServer server, final RamlSpec ramlSpec, final String baseUrl) {
-        this.server = server;
+    private MockServiceBuilder(final RestTemplate restTemplate, final RamlSpec ramlSpec, final String baseUrl) {
+        this.restTemplate = restTemplate;
         this.ramlSpec = ramlSpec;
         this.baseUrl = baseUrl;
     }
@@ -30,13 +30,14 @@ public class MockServiceBuilder {
         RamlModelResult ramlModelResult = new RamlModelBuilder().buildApi(ramlSpecFilePath);
         RamlSpec ramlSpec = RamlSpecBuilder.fromRamlApi10(ramlModelResult, ramlSpecFilePath);
 
-        return new MockServiceBuilder(MockRestServiceServer.createServer(restTemplate), ramlSpec, baseUrl);
+        return new MockServiceBuilder(restTemplate, ramlSpec, baseUrl);
     }
 
     public void expectRequest(final String path, final HttpMethod method, final HttpStatus status, final MediaType mediaType) {
+        MockRestServiceServer server = MockRestServiceServer.createServer(this.restTemplate);
         RequestMatcher requestTo = requestTo(this.baseUrl + path);
         String example = this.ramlSpec.findExample(path, method, status, mediaType);
 
-        this.server.expect(requestTo).andRespond(withStatus(status).contentType(mediaType).body(example));
+        server.expect(requestTo).andRespond(withStatus(status).contentType(mediaType).body(example));
     }
 }
