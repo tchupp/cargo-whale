@@ -23,4 +23,12 @@ class ListContainerFilters implements QueryParameters {
 
         return queryParameters
     }
+
+    @Override
+    Map<String, String> asMap() {
+        def queryParameters = new HashMap<String, String>()
+        queryParameters.put("filters", JsonOutput.toJson(this).toLowerCase())
+
+        return queryParameters
+    }
 }

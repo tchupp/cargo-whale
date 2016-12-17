@@ -12,8 +12,12 @@ public class DockerEndpointBuilder {
     private static final String PROCESSES = "/top";
     private static final String LOGS = "/logs";
 
-    public String getListContainersEndpoint() {
-        return API_VERSION + CONTAINERS_ENDPOINT + JSON;
+    public String getListAllContainersEndpoint() {
+        return API_VERSION + CONTAINERS_ENDPOINT + JSON + "?all=1";
+    }
+
+    public String getListContainersWithFiltersEndpoint() {
+        return API_VERSION + CONTAINERS_ENDPOINT + JSON + "?filters={filters}";
     }
 
     public String getInspectContainerEndpoint(final String containerId) {

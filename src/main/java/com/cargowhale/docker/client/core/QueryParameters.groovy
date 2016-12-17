@@ -5,4 +5,6 @@ import org.springframework.util.MultiValueMap
 interface QueryParameters {
 
     MultiValueMap<String, String> asQueryParameters()
+
+    Map<String, String> asMap()
 }

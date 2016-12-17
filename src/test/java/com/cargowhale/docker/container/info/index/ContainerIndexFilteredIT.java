@@ -1,4 +1,4 @@
-package com.cargowhale.docker.container.info.integration;
+package com.cargowhale.docker.container.info.index;
 
 import com.cargowhale.division.MockServiceBuilder;
 import com.cargowhale.docker.client.containers.ContainerState;

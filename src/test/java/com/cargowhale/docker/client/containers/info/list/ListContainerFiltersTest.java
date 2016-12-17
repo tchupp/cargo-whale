@@ -7,6 +7,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.util.MultiValueMap;
 
 import java.util.LinkedHashSet;
+import java.util.Map;
 
 import static org.assertj.core.util.Sets.newLinkedHashSet;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -46,5 +47,38 @@ public class ListContainerFiltersTest {
         MultiValueMap<String, String> queryParameters = listContainerFilters.asQueryParameters();
 
         assertThat(queryParameters.getFirst("filters"), is(containerFiltersJson));
+    }
+
+    @Test
+    public void asMap_OneOfEach() throws Exception {
+        String containerFiltersJson = "{\"status\":[\"created\",\"running\"]}";
+        LinkedHashSet<ContainerState> stateSet = newLinkedHashSet(ContainerState.CREATED, ContainerState.RUNNING);
+
+        ListContainerFilters listContainerFilters = new ListContainerFilters(stateSet);
+        Map<String, String> queryParameters = listContainerFilters.asMap();
+
+        assertThat(queryParameters.get("filters"), is(containerFiltersJson));
+    }
+
+    @Test
+    public void asMap_StatusIsNotRepeated() throws Exception {
+        String containerFiltersJson = "{\"status\":[\"created\"]}";
+        LinkedHashSet<ContainerState> stateSet = newLinkedHashSet(ContainerState.CREATED, ContainerState.CREATED);
+
+        ListContainerFilters listContainerFilters = new ListContainerFilters(stateSet);
+        Map<String, String> queryParameters = listContainerFilters.asMap();
+
+        assertThat(queryParameters.get("filters"), is(containerFiltersJson));
+    }
+
+    @Test
+    public void asMap_EmptyArray() throws Exception {
+        String containerFiltersJson = "{\"status\":[]}";
+        LinkedHashSet<ContainerState> stateSet = newLinkedHashSet();
+
+        ListContainerFilters listContainerFilters = new ListContainerFilters(stateSet);
+        Map<String, String> queryParameters = listContainerFilters.asMap();
+
+        assertThat(queryParameters.get("filters"), is(containerFiltersJson));
     }
 }

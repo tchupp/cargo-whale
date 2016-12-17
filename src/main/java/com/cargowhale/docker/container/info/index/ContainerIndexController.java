@@ -18,11 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/api/containers")
 public class ContainerIndexController {
 
-    @InitBinder
-    public void initBinder(final WebDataBinder binder) {
-        binder.registerCustomEditor(ContainerState.class, new ContainerEnumConverter());
-    }
-
     private final ContainerInfoService service;
     private final ContainerIndexResourceAssembler indexResourceAssembler;
 
@@ -30,6 +25,17 @@ public class ContainerIndexController {
     public ContainerIndexController(final ContainerInfoService service, final ContainerIndexResourceAssembler indexResourceAssembler) {
         this.service = service;
         this.indexResourceAssembler = indexResourceAssembler;
+    }
+
+    @InitBinder
+    public void initBinder(final WebDataBinder binder) {
+        binder.registerCustomEditor(ContainerState.class, new ContainerEnumConverter());
+    }
+
+    @ExceptionHandler(value = BindException.class)
+    public ResponseEntity<CargoWhaleErrorMessage> handleBadFilter(final HttpServletRequest request, final BindException ex) {
+        CargoWhaleErrorMessage errorMessage = new CargoWhaleErrorMessage(request.getRequestURI(), "Bad Filter", ex.getClass().toString());
+        return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
     }
 
     @RequestMapping(method = RequestMethod.GET,
@@ -45,11 +51,5 @@ public class ContainerIndexController {
     public ContainerIndexResource listContainers(final StateFilters stateFilters) {
         ContainerIndex summaryIndex = this.service.getContainersFilterByStatus(stateFilters.getState());
         return this.indexResourceAssembler.toResource(summaryIndex);
-    }
-
-    @ExceptionHandler(value = BindException.class)
-    public ResponseEntity<CargoWhaleErrorMessage> handleBadFilter(final HttpServletRequest request, final BindException ex) {
-        CargoWhaleErrorMessage errorMessage = new CargoWhaleErrorMessage(request.getRequestURI(), "Bad Filter", ex.getClass().toString());
-        return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
     }
 }
