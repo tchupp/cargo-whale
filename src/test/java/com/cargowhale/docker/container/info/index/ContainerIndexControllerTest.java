@@ -1,6 +1,7 @@
-package com.cargowhale.docker.container.info;
+package com.cargowhale.docker.container.info.index;
 
 import com.cargowhale.docker.client.containers.ContainerState;
+import com.cargowhale.docker.container.info.ContainerInfoService;
 import com.cargowhale.docker.container.info.index.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;

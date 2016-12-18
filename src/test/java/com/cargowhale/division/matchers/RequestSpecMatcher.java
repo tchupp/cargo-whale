@@ -1,6 +1,6 @@
 package com.cargowhale.division.matchers;
 
-import com.cargowhale.division.raml.RamlSpec;
+import com.cargowhale.division.raml.model.RamlSpec;
 import com.cargowhale.division.raml.RamlSpecBuilder;
 import org.raml.v2.api.RamlModelBuilder;
 import org.raml.v2.api.RamlModelResult;

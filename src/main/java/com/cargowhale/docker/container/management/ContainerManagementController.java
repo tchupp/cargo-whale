@@ -6,7 +6,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api")
+//@RequestMapping("/api")
 public class ContainerManagementController {
 
     private final ContainerManagementService service;

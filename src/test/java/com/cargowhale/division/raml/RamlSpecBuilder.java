@@ -1,5 +1,6 @@
 package com.cargowhale.division.raml;
 
+import com.cargowhale.division.raml.model.*;
 import org.raml.v2.api.RamlModelResult;
 import org.raml.v2.api.model.v10.api.Api;
 import org.raml.v2.api.model.v10.bodies.Response;
@@ -22,7 +23,7 @@ public abstract class RamlSpecBuilder {
     public static RamlSpec fromRamlApi10(final RamlModelResult modelResult, final String ramlSpecFile) {
         verifyRamlModelResult(modelResult, ramlSpecFile);
 
-        Map<String, Map<HttpMethod, Map<HttpStatus, Map<MediaType, Map<String, String>>>>> ramlResources = new HashMap<>();
+        Map<String, RamlHttpMethods> ramlResources = new HashMap<>();
 
         for (final Resource resource : flattenResources(modelResult.getApiV10())) {
             ramlResources.put(resource.resourcePath(), buildMethodMap(resource));
@@ -46,8 +47,8 @@ public abstract class RamlSpecBuilder {
         parent.resources().forEach((Resource child) -> addResources(queue, child));
     }
 
-    private static Map<HttpMethod, Map<HttpStatus, Map<MediaType, Map<String, String>>>> buildMethodMap(final Resource resource) {
-        final Map<HttpMethod, Map<HttpStatus, Map<MediaType, Map<String, String>>>> methodMap = new HashMap<>();
+    private static RamlHttpMethods buildMethodMap(final Resource resource) {
+        final RamlHttpMethods methodMap = new RamlHttpMethods();
 
         for (final Method method : resource.methods()) {
             String methodName = method.method().toUpperCase();
@@ -57,8 +58,8 @@ public abstract class RamlSpecBuilder {
         return methodMap;
     }
 
-    private static Map<HttpStatus, Map<MediaType, Map<String, String>>> buildStatusMap(final Method method) {
-        final Map<HttpStatus, Map<MediaType, Map<String, String>>> responseMap = new HashMap<>();
+    private static RamlResponses buildStatusMap(final Method method) {
+        final RamlResponses responseMap = new RamlResponses();
 
         for (final Response response : method.responses()) {
             Integer statusCode = Integer.valueOf(response.code().value());
@@ -68,8 +69,8 @@ public abstract class RamlSpecBuilder {
         return responseMap;
     }
 
-    private static Map<MediaType, Map<String, String>> buildMediaTypeMap(final Response response) {
-        final Map<MediaType, Map<String, String>> mediaTypeMap = new HashMap<>();
+    private static RamlMediaTypes buildMediaTypeMap(final Response response) {
+        final RamlMediaTypes mediaTypeMap = new RamlMediaTypes();
 
         for (final TypeDeclaration mediaType : response.body()) {
             mediaTypeMap.put(MediaType.valueOf(mediaType.name()), buildExampleMap(mediaType));
@@ -78,8 +79,8 @@ public abstract class RamlSpecBuilder {
         return mediaTypeMap;
     }
 
-    private static Map<String, String> buildExampleMap(final TypeDeclaration mediaType) {
-        HashMap<String, String> examplesMap = new HashMap<>();
+    private static RamlExamples buildExampleMap(final TypeDeclaration mediaType) {
+        RamlExamples examplesMap = new RamlExamples();
 
         if (mediaType.examples().isEmpty()) {
             examplesMap.put("default", mediaType.example().value());
