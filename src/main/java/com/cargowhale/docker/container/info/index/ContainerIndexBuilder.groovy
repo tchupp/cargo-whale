@@ -13,8 +13,7 @@ class ContainerIndexBuilder {
         return new ContainerIndex(containerList, stateMetadata)
     }
 
-    private Map<ContainerState, Integer> buildStateMetadata(
-        final List<ContainerListItem> containerSummaryList) {
+    private Map<ContainerState, Integer> buildStateMetadata(final List<ContainerListItem> containerSummaryList) {
         Map<ContainerState, Integer> containerStateSummary = [
                 (ContainerState.CREATED)   : 0,
                 (ContainerState.RESTARTING): 0,

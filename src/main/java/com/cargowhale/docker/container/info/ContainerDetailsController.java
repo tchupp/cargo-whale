@@ -17,11 +17,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/containers")
 public class ContainerDetailsController {
 
-    @InitBinder
-    public void initBinder(final WebDataBinder binder) {
-        binder.registerCustomEditor(ContainerState.class, new ContainerEnumConverter());
-    }
-
     private final ContainerInfoService infoService;
     private final ContainerTopService topService;
     private final ContainerDetailsResourceAssembler detailsResourceAssembler;
@@ -35,6 +30,11 @@ public class ContainerDetailsController {
         this.detailsResourceAssembler = detailsResourceAssembler;
         this.logsResourceAssembler = logsResourceAssembler;
         this.processesResourceAssembler = processesResourceAssembler;
+    }
+
+    @InitBinder
+    public void initBinder(final WebDataBinder binder) {
+        binder.registerCustomEditor(ContainerState.class, new ContainerEnumConverter());
     }
 
     @RequestMapping(value = "/{id}",
