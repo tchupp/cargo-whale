@@ -186,6 +186,7 @@
                             <goal>test</goal>
                         </goals>
                         <configuration>
+                            <runOrder>alphabetical</runOrder>
                             <excludes>
                                 <exclude>none</exclude>
                             </excludes>

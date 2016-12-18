@@ -1,4 +1,4 @@
-package com.cargowhale.docker.container.info.integration;
+package com.cargowhale.docker.container.info.top;
 
 import com.cargowhale.division.MockServiceBuilder;
 import com.cargowhale.docker.test.integration.RamlSpecFiles;
@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @SpringBootTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @AutoConfigureMockMvc
-public class ContainerDetailsIT {
+public class ContainerDetailsTopIT {
 
     @Autowired
     private MockMvc client;
@@ -33,9 +33,10 @@ public class ContainerDetailsIT {
     @Test
     public void getContainerDetails() throws Exception {
         this.dockerServiceBuilder.expectRequest("/v1.24/containers/running-container/json", HttpMethod.GET, HttpStatus.OK, MediaType.APPLICATION_JSON);
+        this.dockerServiceBuilder.expectRequest("/v1.24/containers/running-container/top", HttpMethod.GET, HttpStatus.OK, MediaType.APPLICATION_JSON);
 
-        this.client.perform(get("/api/containers/running-container"))
+        this.client.perform(get("/api/containers/running-container/top"))
             .andExpect(responseIsInSpec(RamlSpecFiles.CARGO_WHALE_RAML_SPEC_FILE)
-                .with("/api/containers/{id}", HttpMethod.GET, HttpStatus.OK, MediaTypes.HAL_JSON));
+                .with("/api/containers/{id}/top", HttpMethod.GET, HttpStatus.OK, MediaTypes.HAL_JSON));
     }
 }

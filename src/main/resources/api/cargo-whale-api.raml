@@ -51,6 +51,15 @@ uses:
                 type: Containers.Details
                 example: !include examples/container-details.json
 
+      /top:
+        get:
+          description: Processes from a specific container
+          responses:
+            200:
+              body:
+                application/hal+json:
+                  example: !include examples/container-top.json
+
       /logs:
         get:
           description: Logs from a specific container
