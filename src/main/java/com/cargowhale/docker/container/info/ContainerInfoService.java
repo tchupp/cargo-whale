@@ -5,6 +5,7 @@ import com.cargowhale.docker.client.containers.info.ContainerInfoClient;
 import com.cargowhale.docker.client.containers.info.list.ContainerListItem;
 import com.cargowhale.docker.client.containers.info.list.ListContainerFilters;
 import com.cargowhale.docker.client.containers.info.logs.LogFilters;
+import com.cargowhale.docker.client.containers.info.stats.ContainerStats;
 import com.cargowhale.docker.container.info.index.ContainerIndex;
 import com.cargowhale.docker.container.info.index.ContainerIndexBuilder;
 import com.cargowhale.docker.container.info.model.ContainerDetails;
@@ -45,5 +46,9 @@ public class ContainerInfoService {
 
     ContainerLogs getContainerLogsById(final String containerId, final LogFilters logFilters) {
         return this.client.getContainerLogs(containerId, logFilters);
+    }
+
+    ContainerStats getContainerStatsById(final String containerId){
+        return this.client.getContainerStats(containerId);
     }
 }

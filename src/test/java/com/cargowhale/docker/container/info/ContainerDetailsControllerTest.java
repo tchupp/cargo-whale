@@ -1,6 +1,7 @@
 package com.cargowhale.docker.container.info;
 
 import com.cargowhale.docker.client.containers.info.logs.LogFilters;
+import com.cargowhale.docker.client.containers.info.stats.ContainerStats;
 import com.cargowhale.docker.container.info.model.ContainerDetails;
 import com.cargowhale.docker.container.info.model.ContainerLogs;
 import com.cargowhale.docker.container.info.resource.*;
@@ -75,5 +76,15 @@ public class ContainerDetailsControllerTest {
         when(this.processesResourceAssembler.toResource(processes)).thenReturn(processesResource);
 
         assertThat(this.controller.getContainerProcessesById(containerId), is(processesResource));
+    }
+
+    @Test
+    public void getContainerStatsById(){
+        String containerId = "container id!";
+        ContainerStats stats = new ContainerStats();
+
+        when(this.infoService.getContainerStatsById(containerId)).thenReturn(stats);
+
+        assertThat(this.controller.getContainerStatsById(containerId), is(stats));
     }
 }

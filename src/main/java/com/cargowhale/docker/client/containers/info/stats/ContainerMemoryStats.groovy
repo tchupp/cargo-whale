@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import groovy.transform.Canonical
 
 @Canonical
-class DockerContainerMemoryStats {
+class ContainerMemoryStats {
 
     @JsonProperty("max_usage")
     Long maxUsage

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import groovy.transform.Canonical
 
 @Canonical
-class DockerContainerStats {
+class ContainerStats {
 
     @JsonProperty("read")
     String datetimeRead
@@ -13,14 +13,14 @@ class DockerContainerStats {
     Map<String, Long> pidStats
 
     @JsonProperty("networks")
-    Map<String, DockerContainerNetworkStats> networkStats
+    Map<String, ContainerNetworkStats> networkStats
 
     @JsonProperty("memory_stats")
-    DockerContainerMemoryStats memoryStats
+    ContainerMemoryStats memoryStats
 
     @JsonProperty("cpu_stats")
-    DockerContainerCpuStats cpuStats
+    ContainerCpuStats cpuStats
 
     @JsonProperty("precpu_stats")
-    DockerContainerCpuStats preCpuStats
+    ContainerCpuStats preCpuStats
 }

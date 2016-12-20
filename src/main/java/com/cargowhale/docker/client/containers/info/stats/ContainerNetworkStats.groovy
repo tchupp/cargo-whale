@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import groovy.transform.Canonical
 
 @Canonical
-class DockerContainerNetworkStats {
+class ContainerNetworkStats {
 
     @JsonProperty("rx_bytes")
     Long rxBytes

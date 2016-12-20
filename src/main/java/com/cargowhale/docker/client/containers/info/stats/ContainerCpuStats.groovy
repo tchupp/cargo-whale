@@ -4,10 +4,10 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import groovy.transform.Canonical
 
 @Canonical
-class DockerContainerCpuStats {
+class ContainerCpuStats {
 
     @JsonProperty("cpu_usage")
-    DockerContainerCpuUsage cpuUsage
+    ContainerCpuUsage cpuUsage
 
     @JsonProperty("system_cpu_usage")
     Long systemCpuUsage

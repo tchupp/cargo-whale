@@ -2,6 +2,7 @@ package com.cargowhale.docker.container.info;
 
 import com.cargowhale.docker.client.containers.ContainerState;
 import com.cargowhale.docker.client.containers.info.logs.LogFilters;
+import com.cargowhale.docker.client.containers.info.stats.ContainerStats;
 import com.cargowhale.docker.container.ContainerEnumConverter;
 import com.cargowhale.docker.container.info.model.ContainerDetails;
 import com.cargowhale.docker.container.info.model.ContainerLogs;
@@ -60,4 +61,12 @@ public class ContainerDetailsController {
         ContainerProcessIndex containerProcessIndex = this.topService.getContainerProcessesById(id);
         return this.processesResourceAssembler.toResource(containerProcessIndex);
     }
+
+    @RequestMapping(value = "/{id}/stats",
+            method = RequestMethod.GET,
+            produces = MediaTypes.HAL_JSON_VALUE)
+    public ContainerStats getContainerStatsById(@PathVariable final String id) {
+        return this.infoService.getContainerStatsById(id);
+    }
+
 }
