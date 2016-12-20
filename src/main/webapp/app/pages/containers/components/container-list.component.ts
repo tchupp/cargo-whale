@@ -7,7 +7,7 @@ import {StateMetadata} from "./state-metadata.model";
 
 @Component({
     selector: 'cw-container-list',
-    templateUrl: 'app/containers/components/container-list.html',
+    templateUrl: 'app/pages/containers/components/container-list.html',
     providers: [
         ContainerService
     ]

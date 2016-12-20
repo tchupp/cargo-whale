@@ -4,8 +4,8 @@ import {CommonModule} from "@angular/common";
 import {ContainersComponent} from "./components/container-detail.component";
 import {ContainerListComponent} from "./components/container-list.component";
 import {containersRoutes} from "./containers.routes";
-import {LayoutsModule} from "../layouts/layouts.module";
-import {SharedModule} from "../shared/shared.module";
+import {LayoutsModule} from "../../layouts/layouts.module";
+import {SharedModule} from "../../shared/shared.module";
 
 @NgModule({
     imports: [

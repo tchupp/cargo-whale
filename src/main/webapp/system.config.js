@@ -15,7 +15,7 @@
         'jquery' : 'vendor/jquery/dist',
         'ng2-webstorage': 'vendor/ng2-webstorage',
         // app barrels
-        'containers': 'app/containers',
+        'containers': 'app/pages/containers',
         'layouts': 'app/layouts',
         'shared': 'app/shared'
     };
