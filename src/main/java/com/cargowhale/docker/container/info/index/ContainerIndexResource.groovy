@@ -12,8 +12,8 @@ class ContainerIndexResource extends ResourceSupport {
     Map<ContainerState, Integer> stateMetadata
 
     ContainerIndexResource(
-            @JsonProperty("containers") final List<ContainerListItemResource> containers,
-            @JsonProperty("stateMetadata") final Map<ContainerState, Integer> stateMetadata) {
+        @JsonProperty("containers") final List<ContainerListItemResource> containers,
+        @JsonProperty("stateMetadata") final Map<ContainerState, Integer> stateMetadata) {
         this.containers = containers
         this.stateMetadata = stateMetadata
     }

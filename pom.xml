@@ -36,10 +36,20 @@
             <artifactId>groovy-all</artifactId>
             <version>${groovy.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.raml</groupId>
+            <artifactId>raml-parser-2</artifactId>
+            <version>1.0.4</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -176,12 +186,13 @@
                             <goal>test</goal>
                         </goals>
                         <configuration>
+                            <runOrder>alphabetical</runOrder>
                             <excludes>
                                 <exclude>none</exclude>
                             </excludes>
-                            <!--<includes>-->
-                            <!--<include>**/*IT.java</include>-->
-                            <!--</includes>-->
+                            <includes>
+                                <include>**/*IT.java</include>
+                            </includes>
                         </configuration>
                     </execution>
                 </executions>

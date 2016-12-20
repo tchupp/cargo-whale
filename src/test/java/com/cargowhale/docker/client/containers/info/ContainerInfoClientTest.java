@@ -45,8 +45,8 @@ public class ContainerInfoClientTest {
         String listContainerEndpoint = UUID.randomUUID().toString();
         final ContainerListItem[] containerArray = array(mock(ContainerListItem.class));
 
-        when(this.endpointBuilder.getListContainersEndpoint()).thenReturn(listContainerEndpoint);
-        when(this.restTemplate.getForObject(listContainerEndpoint + "?all=1", ContainerListItem[].class)).thenReturn(containerArray);
+        when(this.endpointBuilder.getListAllContainersEndpoint()).thenReturn(listContainerEndpoint);
+        when(this.restTemplate.getForObject(listContainerEndpoint, ContainerListItem[].class)).thenReturn(containerArray);
 
         assertThat(this.client.listContainers(), contains(containerArray));
     }
@@ -58,10 +58,10 @@ public class ContainerInfoClientTest {
         ListContainerFilters filters = new ListContainerFilters(newLinkedHashSet(ContainerState.PAUSED));
         final ContainerListItem[] containerArray = array(mock(ContainerListItem.class));
 
-        UriComponentsBuilder builder = UriComponentsBuilder.fromPath(listContainerEndpoint).queryParams(filters.asQueryParameters());
+        UriComponentsBuilder builder = UriComponentsBuilder.fromPath(listContainerEndpoint);
 
-        when(this.endpointBuilder.getListContainersEndpoint()).thenReturn(listContainerEndpoint);
-        when(this.restTemplate.getForObject(builder.toUriString(), ContainerListItem[].class)).thenReturn(containerArray);
+        when(this.endpointBuilder.getListContainersWithFiltersEndpoint()).thenReturn(listContainerEndpoint);
+        when(this.restTemplate.getForObject(builder.toUriString(), ContainerListItem[].class, filters.asMap())).thenReturn(containerArray);
 
         assertThat(this.client.listContainers(filters), contains(containerArray));
     }

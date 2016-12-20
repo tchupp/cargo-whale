@@ -14,8 +14,8 @@ class ContainerIndex {
     final Map<ContainerState, Integer> stateMetadata
 
     ContainerIndex(
-            @JsonProperty("containers") final List<ContainerListItem> containers,
-            @JsonProperty("stateMetadata") final Map<ContainerState, Integer> stateMetadata) {
+        @JsonProperty("containers") final List<ContainerListItem> containers,
+        @JsonProperty("stateMetadata") final Map<ContainerState, Integer> stateMetadata) {
         this.containers = containers
         this.stateMetadata = stateMetadata
     }

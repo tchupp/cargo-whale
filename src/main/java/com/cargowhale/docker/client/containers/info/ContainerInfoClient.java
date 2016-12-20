@@ -1,6 +1,7 @@
 package com.cargowhale.docker.client.containers.info;
 
 import com.cargowhale.docker.client.containers.info.list.ContainerListItem;
+import com.cargowhale.docker.client.containers.info.list.ListContainerFilters;
 import com.cargowhale.docker.client.containers.info.top.ContainerTop;
 import com.cargowhale.docker.client.core.DockerEndpointBuilder;
 import com.cargowhale.docker.client.core.DockerRestTemplate;
@@ -27,17 +28,16 @@ public class ContainerInfoClient {
     }
 
     public List<ContainerListItem> listContainers() {
-        String containersEndpoint = this.endpointBuilder.getListContainersEndpoint();
+        String containersEndpoint = this.endpointBuilder.getListAllContainersEndpoint();
 
-        ContainerListItem[] containerArray = this.restTemplate.getForObject(containersEndpoint + "?all=1", ContainerListItem[].class);
+        ContainerListItem[] containerArray = this.restTemplate.getForObject(containersEndpoint, ContainerListItem[].class);
         return Arrays.asList(containerArray);
     }
 
-    public List<ContainerListItem> listContainers(final QueryParameters filters) {
-        String listContainersEndpoint = this.endpointBuilder.getListContainersEndpoint();
-        UriComponentsBuilder builder = UriComponentsBuilder.fromPath(listContainersEndpoint).queryParams(filters.asQueryParameters());
+    public List<ContainerListItem> listContainers(final ListContainerFilters filters) {
+        String listContainersEndpoint = this.endpointBuilder.getListContainersWithFiltersEndpoint();
 
-        ContainerListItem[] containerArray = this.restTemplate.getForObject(builder.toUriString(), ContainerListItem[].class);
+        ContainerListItem[] containerArray = this.restTemplate.getForObject(listContainersEndpoint, ContainerListItem[].class, filters.asMap());
         return Arrays.asList(containerArray);
     }
 

@@ -29,4 +29,16 @@ class LogFilters implements QueryParameters {
 
         return queryParameters
     }
+
+    @Override
+    Map<String, String> asMap() {
+        Map<String, String> queryParameters = new HashMap<>()
+        List<Field> nonSyntheticFields = this.class.declaredFields.findAll { !it.synthetic }
+
+        nonSyntheticFields.each { it ->
+            queryParameters.put(it.name, this."$it.name" as String)
+        }
+
+        return queryParameters
+    }
 }

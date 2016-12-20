@@ -1,7 +1,6 @@
 package com.cargowhale.docker.client.core;
 
 import com.cargowhale.docker.client.containers.management.state.ContainerChangeState;
-import com.cargowhale.docker.client.core.DockerEndpointBuilder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -18,9 +17,16 @@ public class DockerEndpointBuilderTest {
 
     @Test
     public void getListContainersEndpointReturnsCorrectUri() throws Exception {
-        String expectedUri = "/v1.24/containers/json";
+        String expectedUri = "/v1.24/containers/json?all=1";
 
-        assertThat(this.endpointBuilder.getListContainersEndpoint(), is(expectedUri));
+        assertThat(this.endpointBuilder.getListAllContainersEndpoint(), is(expectedUri));
+    }
+
+    @Test
+    public void getListContainersWithFiltersEndpointReturnsCorrectUri() throws Exception {
+        String expectedUri = "/v1.24/containers/json?filters={filters}";
+
+        assertThat(this.endpointBuilder.getListContainersWithFiltersEndpoint(), is(expectedUri));
     }
 
     @Test

@@ -29,7 +29,7 @@ public class ContainerProcessIndexBuilderTest {
 
         ContainerTop containerTopResponse = new ContainerTop(processList, titles);
 
-        ContainerProcessIndex index = builder.buildProcessIndex(containerId, containerTopResponse);
+        ContainerProcessIndex index = this.builder.buildProcessIndex(containerId, containerTopResponse);
 
         assertThat(index.getId(), is(containerId));
     }
@@ -43,7 +43,7 @@ public class ContainerProcessIndexBuilderTest {
 
         ContainerTop containerTopResponse = new ContainerTop(processList, titles);
 
-        ContainerProcessIndex index = builder.buildProcessIndex(containerId, containerTopResponse);
+        ContainerProcessIndex index = this.builder.buildProcessIndex(containerId, containerTopResponse);
 
         List<Map<String, String>> processes = index.getProcesses();
         assertThat(processes, hasSize(0));
@@ -59,7 +59,7 @@ public class ContainerProcessIndexBuilderTest {
 
         ContainerTop containerTopResponse = new ContainerTop(processList, titles);
 
-        ContainerProcessIndex index = builder.buildProcessIndex(containerId, containerTopResponse);
+        ContainerProcessIndex index = this.builder.buildProcessIndex(containerId, containerTopResponse);
 
         List<Map<String, String>> processes = index.getProcesses();
         assertThat(processes, hasSize(1));
@@ -81,7 +81,7 @@ public class ContainerProcessIndexBuilderTest {
 
         ContainerTop containerTopResponse = new ContainerTop(processList, titles);
 
-        ContainerProcessIndex index = builder.buildProcessIndex(containerId, containerTopResponse);
+        ContainerProcessIndex index = this.builder.buildProcessIndex(containerId, containerTopResponse);
 
         List<Map<String, String>> processes = index.getProcesses();
         assertThat(processes, hasSize(3));

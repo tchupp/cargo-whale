@@ -1,56 +1,41 @@
 package com.cargowhale.docker.container.info.integration;
 
-import com.cargowhale.docker.client.core.DockerRestTemplate;
-import com.cargowhale.docker.config.CargoWhaleProperties;
-import com.cargowhale.docker.container.info.model.ContainerLogs;
+import com.cargowhale.division.MockServiceBuilder;
+import com.cargowhale.docker.test.integration.RamlSpecFiles;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.MediaTypes;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.MediaType;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
 
-import static com.cargowhale.docker.test.ControllerTestUtils.getForType;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.when;
+import static com.cargowhale.division.matchers.RequestSpecMatcher.responseIsInSpec;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@AutoConfigureMockMvc
 public class ContainerInfoControllerGetLogsIT {
 
-    private static class ContainerLogsResourceType extends ParameterizedTypeReference<Resource<ContainerLogs>> {
-    }
-
-    @MockBean
-    private DockerRestTemplate restTemplate;
+    @Autowired
+    private MockMvc client;
 
     @Autowired
-    private TestRestTemplate client;
-
-    @Autowired
-    private CargoWhaleProperties properties;
+    private MockServiceBuilder dockerServiceBuilder;
 
     @Test
-    public void getLogsReturnsCorrectLogs() {
-        String container = "TestContainer";
-        String logs = "These are definitely logs";
-        String queries = "/logs?details=false&follow=false&stdout=true&stderr=true&timestamps=true&since=0&tail=100";
+    public void getContainerLogs() throws Exception {
+        this.dockerServiceBuilder.expectRequest("/v1.24/containers/running-container/logs?details=false&follow=false&stdout=true&stderr=true&timestamps=true&since=0&tail=100", HttpMethod.GET, HttpStatus.OK, MediaType.TEXT_PLAIN);
 
-        when(this.restTemplate.getForObject("/v1.24/containers/" + container + queries, String.class)).thenReturn(logs);
-
-        ResponseEntity<Resource<ContainerLogs>> response = getForType(this.client, "/api/containers/" + container + queries, new ContainerLogsResourceType());
-
-        assertThat(response.getStatusCode(), is(HttpStatus.OK));
-
-        Resource<ContainerLogs> body = response.getBody();
-        ContainerLogs logsResource = body.getContent();
-
-        assertThat(logsResource.getLogs(), is(logs));
+        this.client.perform(get("/api/containers/running-container/logs"))
+            .andExpect(responseIsInSpec(RamlSpecFiles.CARGO_WHALE_RAML_SPEC_FILE)
+                .with("/api/containers/{id}/logs", HttpMethod.GET, HttpStatus.OK, MediaTypes.HAL_JSON));
     }
 }

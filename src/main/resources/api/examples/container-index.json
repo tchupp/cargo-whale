@@ -1,0 +1,62 @@
+{
+  "containers": [
+    {
+      "_links": {
+        "self": {
+          "href": "http://localhost/api/containers/92c23fc9e379630e6f9a17"
+        }
+      },
+      "state": "exited",
+      "image": "ubuntu-c",
+      "imageId": "sha256:0d511c05f6ebefa4dee",
+      "names": [
+        "/rpn"
+      ],
+      "status": "Exited (0) 7 weeks ago"
+    },
+    {
+      "_links": {
+        "self": {
+          "href": "http://localhost/api/containers/270f2e51eed51e3c5d5d6b13cdd18d5"
+        }
+      },
+      "state": "exited",
+      "image": "resin/armv7hf-debian",
+      "imageId": "sha256:5aa56079fb2a4575907f0f77f6",
+      "names": [
+        "/arm"
+      ],
+      "status": "Exited (0) 2 weeks ago"
+    },
+    {
+      "_links": {
+        "self": {
+          "href": "http://localhost/api/containers/f911b0f4e0b19e3da3bae6dcff82195"
+        }
+      },
+      "state": "running",
+      "image": "rxnctrllabs/socat",
+      "imageId": "sha256:57a61d9072453ce5300530c5e50dae39",
+      "names": [
+        "/socat"
+      ],
+      "status": "Up 5 days"
+    }
+  ],
+  "stateMetadata": {
+    "created": 0,
+    "restarting": 0,
+    "running": 1,
+    "paused": 0,
+    "exited": 2,
+    "dead": 0
+  },
+  "_links": {
+    "self": {
+      "href": "http://localhost/api/containers"
+    },
+    "up": {
+      "href": "http://localhost/api"
+    }
+  }
+}
