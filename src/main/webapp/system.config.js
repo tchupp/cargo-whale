@@ -16,6 +16,7 @@
         'ng2-webstorage': 'vendor/ng2-webstorage',
         // app barrels
         'containers': 'app/pages/containers',
+        'pages': 'app/pages',
         'layouts': 'app/layouts',
         'shared': 'app/shared'
     };
