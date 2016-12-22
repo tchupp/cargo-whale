@@ -61,6 +61,7 @@ public class ContainerInfoClient {
     }
 
     public ContainerStats getContainerStats(final String containerId) {
-        return null;
+        String containerByIdEndpoint = this.endpointBuilder.getContainerStatsEndpoint(containerId);
+        return this.restTemplate.getForObject(containerByIdEndpoint, ContainerStats.class);
     }
 }

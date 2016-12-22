@@ -78,4 +78,16 @@ public class DockerEndpointBuilderTest {
         assertThat(this.endpointBuilder.getContainerChangeStateEndpoint(containerId1, state1), is(expectedUri1));
         assertThat(this.endpointBuilder.getContainerChangeStateEndpoint(containerId2, state2), is(expectedUri2));
     }
+
+    @Test
+    public void getContainerStatsEndpointReturnsCorrectUri() throws Exception{
+        String containerId1 = "1fds78i1h";
+        String containerId2 = "4y712yui4";
+
+        String expectedUri1 = "/v1.24/containers/" + containerId1 + "/stats?stream=0";
+        String expectedUri2 = "/v1.24/containers/" + containerId2 + "/stats?stream=0";
+
+        assertThat(this.endpointBuilder.getContainerStatsEndpoint(containerId1), is(expectedUri1));
+        assertThat(this.endpointBuilder.getContainerStatsEndpoint(containerId2), is(expectedUri2));
+    }
 }

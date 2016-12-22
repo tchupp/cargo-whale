@@ -11,6 +11,7 @@ public class DockerEndpointBuilder {
     private static final String JSON = "/json";
     private static final String PROCESSES = "/top";
     private static final String LOGS = "/logs";
+    private static final String STATS = "/stats?stream=0";
 
     public String getListAllContainersEndpoint() {
         return API_VERSION + CONTAINERS_ENDPOINT + JSON + "?all=1";
@@ -34,5 +35,9 @@ public class DockerEndpointBuilder {
 
     public String getContainerChangeStateEndpoint(final String containerId, final ContainerChangeState state) {
         return API_VERSION + CONTAINERS_ENDPOINT + "/" + containerId + "/" + state.state;
+    }
+
+    public String getContainerStatsEndpoint(final String containerId) {
+        return API_VERSION + CONTAINERS_ENDPOINT + "/" + containerId  + STATS;
     }
 }

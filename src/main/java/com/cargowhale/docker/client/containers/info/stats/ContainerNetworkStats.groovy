@@ -6,27 +6,60 @@ import groovy.transform.Canonical
 @Canonical
 class ContainerNetworkStats {
 
-    @JsonProperty("rx_bytes")
     Long rxBytes
+    Long rxDropped
+    Long rxErrors
+    Long rxPackets
+    Long txBytes
+    Long txDropped
+    Long txErrors
+    Long txPackets
+
+    @JsonProperty("rx_bytes")
+    public void setRxBytes(Long rxBytes){this.rxBytes = rxBytes;}
+
+    @JsonProperty("rxBytes")
+    public Long getRxBytes(){return this.rxBytes;}
 
     @JsonProperty("rx_dropped")
-    Long rxDropped
+    public void setRxDropped(Long rxDropped){this.rxDropped = rxDropped;}
+
+    @JsonProperty("rxDropped")
+    public Long getRxDropped(){return this.rxDropped;}
 
     @JsonProperty("rx_errors")
-    Long rxErrors
+    public void setRxErrors(Long rxErrors){this.rxErrors = rxErrors;}
+
+    @JsonProperty("rxErrors")
+    public Long getRxErrors(){return this.rxErrors;}
 
     @JsonProperty("rx_packets")
-    Long rxPackets
+    public void setRxPackets(Long rxPackets){this.rxPackets = rxPackets;}
+
+    @JsonProperty("rxPackets")
+    public Long getRxPackets(){return this.rxPackets;}
 
     @JsonProperty("tx_bytes")
-    Long txBytes
+    public void setTxBytes(Long txBytes){this.txBytes = txBytes;}
+
+    @JsonProperty("txBytes")
+    public Long getTxBytes(){return this.txBytes;}
 
     @JsonProperty("tx_dropped")
-    Long txDropped
+    public void setTxDropped(Long txDropped){this.txDropped = txDropped;}
+
+    @JsonProperty("txDropped")
+    public Long getTxDropped(){return this.txDropped;}
 
     @JsonProperty("tx_errors")
-    Long txErrors
+    public void setTxErrors(Long txErrors){this.txErrors = txErrors;}
+
+    @JsonProperty("txErrors")
+    public Long getTxErrors(){return this.txErrors;}
 
     @JsonProperty("tx_packets")
-    Long txPackets
+    public void setTxPackets(Long rxPackets){this.txPackets = txPackets;}
+
+    @JsonProperty("txPackets")
+    public Long getTxPackets(){return this.txPackets;}
 }

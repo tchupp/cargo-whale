@@ -6,16 +6,32 @@ import groovy.transform.Canonical
 @Canonical
 class ContainerCpuUsage {
 
-    @JsonProperty("percpu_usage")
     List<Long> cpuCoreUsage
-
-    @JsonProperty("usage_in_usermode")
     Long userModeUsage
-
-    @JsonProperty("usage_in_kernelmode")
     Long kernalModeUsage
-
-    @JsonProperty("total_usage")
     Long totalUsage
 
+    @JsonProperty("percpu_usage")
+    public void setCpuCoreUsage(List<Long> cpuCoreUsage){this.cpuCoreUsage = cpuCoreUsage;}
+
+    @JsonProperty("cpuCoreUsage")
+    public List<Long> getCpuCoreUsage(){return this.cpuCoreUsage;}
+
+    @JsonProperty("usage_in_usermode")
+    public void setUserModeUsage(Long userModeUsage){this.userModeUsage = userModeUsage;}
+
+    @JsonProperty("userModeUsage")
+    public Long getUserModeUsage(){return this.userModeUsage;}
+
+    @JsonProperty("usage_in_kernelmode")
+    public void setKernalModeUsage(Long kernalModeUsage){this.kernalModeUsage = kernalModeUsage;}
+
+    @JsonProperty("kernalModeUsage")
+    public Long getKernalModeUsage(){return this.kernalModeUsage;}
+
+    @JsonProperty("total_usage")
+    public void setTotalUsage(Long totalUsage){this.totalUsage = totalUsage;}
+
+    @JsonProperty("totalUsage")
+    public Long getTotalUsage(){return this.totalUsage;}
 }

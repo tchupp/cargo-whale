@@ -6,16 +6,32 @@ import groovy.transform.Canonical
 @Canonical
 class ContainerMemoryStats {
 
-    @JsonProperty("max_usage")
     Long maxUsage
-
-    @JsonProperty("usage")
     Long usage
-
-    @JsonProperty("failcnt")
     Long failCount
-
-    @JsonProperty("limit")
     Long limit
 
+    @JsonProperty("max_usage")
+    public void setMaxUsage(Long maxUsage){this.maxUsage = maxUsage;}
+
+    @JsonProperty("maxUsage")
+    public Long getMaxUsage(){return this.maxUsage;}
+
+    @JsonProperty("usage")
+    public void setUsage(Long usage){this.usage = usage;}
+
+    @JsonProperty("usage")
+    public Long getUsage(){return this.usage;}
+
+    @JsonProperty("failcnt")
+    public void setFailCount(Long failCount){this.failCount = failCount;}
+
+    @JsonProperty("failCount")
+    public Long getFailCount(){return this.failCount;}
+
+    @JsonProperty("limit")
+    public void setLimit(Long limit){this.limit = limit;}
+
+    @JsonProperty("limit")
+    public Long getLimit(){return this.limit;}
 }
