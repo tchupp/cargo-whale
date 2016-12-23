@@ -1,13 +1,13 @@
 import {Component, OnInit} from "@angular/core";
 
-import {ContainerService} from "./container.service";
+import {ContainerService} from "../../container.service";
 import {ContainerIndexItem} from "./container-index-item.model";
 import {ContainerIndex} from "./container-index.model";
 import {StateMetadata} from "./state-metadata.model";
 
 @Component({
     selector: 'cw-container-list',
-    templateUrl: 'app/pages/containers/components/container-index.html',
+    templateUrl: 'app/pages/containers/components/index/container-index.html',
     providers: [
         ContainerService
     ]

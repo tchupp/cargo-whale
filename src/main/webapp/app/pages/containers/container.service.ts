@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {Http} from "@angular/http";
 import {Observable} from "rxjs/Rx";
 
-import {AbstractService} from "../../../shared";
+import {AbstractService} from "../../shared";
 
 @Injectable()
 export class ContainerService extends AbstractService {
