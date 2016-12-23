@@ -1,8 +1,8 @@
 import {Component} from "@angular/core";
 
 @Component({
-    selector: 'cw-containers',
+    selector: 'cw-container-details',
     templateUrl: 'app/pages/containers/components/container-detail.html'
 })
-export class ContainersComponent {
+export class ContainerDetailsComponent {
 }

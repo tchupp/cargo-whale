@@ -1,7 +1,7 @@
-import {ContainerSummary} from "./container-summary.model";
+import {ContainerIndexItem} from "./container-index-item.model";
 import {StateMetadata} from "./state-metadata.model";
 
 export class ContainerIndex {
-    containers: ContainerSummary[];
+    containers: ContainerIndexItem[];
     stateMetadata: StateMetadata;
 }

@@ -1,4 +1,4 @@
-export class ContainerSummary {
+export class ContainerIndexItem {
     image: string;
     names: string[];
     state: string;
