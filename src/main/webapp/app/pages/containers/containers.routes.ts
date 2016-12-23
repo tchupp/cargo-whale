@@ -1,17 +1,24 @@
 import {Routes, RouterModule} from "@angular/router";
 
-import {ContainerIndexComponent} from "./components/container-index.component";
+import {ContainersComponent} from "./containers.component";
 import {ContainerDetailsComponent} from "./components/container-detail.component";
+import {ContainerIndexComponent} from "./components/container-index.component";
 
 const routes: Routes = [
     {
         path: 'containers',
-        component: ContainerIndexComponent
-    },
-    {
-        path: 'container/:id',
-        component: ContainerDetailsComponent
+        component: ContainersComponent,
+        children: [
+            {
+                path: '',
+                component: ContainerIndexComponent
+            },
+            {
+                path: ':id',
+                component: ContainerDetailsComponent
+            }
+        ]
     }
 ];
 
-export const containersRoutes = RouterModule.forRoot(routes);
+export const containersRoutes = RouterModule.forChild(routes);

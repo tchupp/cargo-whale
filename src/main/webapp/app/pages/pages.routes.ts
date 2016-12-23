@@ -7,7 +7,7 @@ const routes: Routes = [
         path: '',
         component: PagesComponent,
         children: [
-            {path: 'containers', loadChildren: './containers/containers.module#ContainersModule'}
+            {path: 'containers', loadChildren: 'app/pages/containers/containers.module#ContainersModule'}
         ]
     }
 ];
