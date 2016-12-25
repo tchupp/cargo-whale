@@ -7,8 +7,6 @@ import groovy.transform.EqualsAndHashCode
 import groovy.transform.TupleConstructor
 import org.springframework.hateoas.ResourceSupport
 
-import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY
-
 @EqualsAndHashCode(excludes = "containerId")
 @TupleConstructor(force = true)
 @Canonical
@@ -17,7 +15,7 @@ class ContainerDetailsResource extends ResourceSupport {
     @JsonProperty("state")
     ContainerDetailsStateResource state
 
-    @JsonProperty(value = "id", access = WRITE_ONLY)
+    @JsonProperty(value = "id")
     String containerId
 
     @JsonProperty("name")

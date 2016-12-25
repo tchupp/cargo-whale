@@ -13,10 +13,10 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 @Component
 public class ContainerIndexResourceAssembler extends ResourceAssemblerSupport<ContainerIndex, ContainerIndexResource> {
 
-    private final ContainerListItemResourceAssembler resourceAssembler;
+    private final ContainerIndexItemResourceAssembler resourceAssembler;
 
     @Autowired
-    public ContainerIndexResourceAssembler(final ContainerListItemResourceAssembler resourceAssembler) {
+    public ContainerIndexResourceAssembler(final ContainerIndexItemResourceAssembler resourceAssembler) {
         super(ContainerIndexController.class, ContainerIndexResource.class);
         this.resourceAssembler = resourceAssembler;
     }
@@ -32,7 +32,7 @@ public class ContainerIndexResourceAssembler extends ResourceAssemblerSupport<Co
 
     @Override
     protected ContainerIndexResource instantiateResource(final ContainerIndex entity) {
-        List<ContainerListItemResource> summaryResourceList = this.resourceAssembler.toResources(entity.getContainers());
+        List<ContainerIndexItemResource> summaryResourceList = this.resourceAssembler.toResources(entity.getContainers());
         return new ContainerIndexResource(summaryResourceList, entity.getStateMetadata());
     }
 }

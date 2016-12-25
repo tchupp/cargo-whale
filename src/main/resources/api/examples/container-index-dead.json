@@ -9,9 +9,8 @@
       "state": "dead",
       "image": "rxnctrllabs/socat",
       "imageId": "sha256:57a61d9072453ce5300530c5e50dae39",
-      "names": [
-        "/socat"
-      ],
+      "name": "/socat",
+      "id": "f911b0f4e0b19e3da3bae6dcff82195",
       "status": "Dead (4) 3 days ago"
     }
   ],

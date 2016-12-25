@@ -1,6 +1,6 @@
 export class ContainerIndexItem {
     image: string;
-    names: string[];
+    name: string;
     state: string;
     status: string;
 }

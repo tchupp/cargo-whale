@@ -5,8 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import groovy.transform.Canonical
 import groovy.transform.EqualsAndHashCode
 
-import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY
-
 @EqualsAndHashCode(excludes = "id")
 @Canonical
 class ContainerDetails {
@@ -14,7 +12,7 @@ class ContainerDetails {
     @JsonProperty("State")
     ContainerDetailsState state
 
-    @JsonProperty(value = "Id", access = WRITE_ONLY)
+    @JsonProperty(value = "Id")
     String id
 
     @JsonProperty("Name")

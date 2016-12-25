@@ -8,17 +8,15 @@ import groovy.transform.EqualsAndHashCode
 import groovy.transform.TupleConstructor
 import org.springframework.hateoas.ResourceSupport
 
-import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY
-
 @EqualsAndHashCode(excludes = "id")
 @TupleConstructor(force = true)
 @Canonical
-class ContainerListItemResource extends ResourceSupport {
+class ContainerIndexItemResource extends ResourceSupport {
 
     @JsonProperty("state")
     final ContainerState state
 
-    @JsonProperty(value = "id", access = WRITE_ONLY)
+    @JsonProperty(value = "id")
     final String containerId
 
     @JsonProperty("image")
@@ -27,18 +25,18 @@ class ContainerListItemResource extends ResourceSupport {
     @JsonProperty("imageId")
     final String imageId
 
-    @JsonProperty("names")
-    final String[] names
+    @JsonProperty("name")
+    final String name
 
     @JsonProperty("status")
     final String status
 
-    ContainerListItemResource(ContainerListItem entity) {
+    ContainerIndexItemResource(ContainerListItem entity) {
         this.state = entity.state
         this.containerId = entity.id
         this.image = entity.image
         this.imageId = entity.imageId
-        this.names = entity.names
+        this.name = entity.names?.join(' ')
         this.status = entity.status
     }
 }

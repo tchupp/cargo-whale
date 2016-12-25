@@ -8,11 +8,11 @@ import org.springframework.hateoas.ResourceSupport
 @Canonical
 class ContainerIndexResource extends ResourceSupport {
 
-    List<ContainerListItemResource> containers
+    List<ContainerIndexItemResource> containers
     Map<ContainerState, Integer> stateMetadata
 
     ContainerIndexResource(
-        @JsonProperty("containers") final List<ContainerListItemResource> containers,
+        @JsonProperty("containers") final List<ContainerIndexItemResource> containers,
         @JsonProperty("stateMetadata") final Map<ContainerState, Integer> stateMetadata) {
         this.containers = containers
         this.stateMetadata = stateMetadata
