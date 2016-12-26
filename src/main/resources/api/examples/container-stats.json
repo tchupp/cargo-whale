@@ -1,0 +1,70 @@
+{
+  "datetimeRead": "2016-12-26T19:24:32.392453964Z",
+  "pidStats": {
+    "current": 27
+  },
+  "networkStats": {
+    "eth0": {
+      "rxBytes": 64073,
+      "rxDropped": 0,
+      "rxErrors": 0,
+      "rxPackets": 210,
+      "txBytes": 16993,
+      "txDropped": 0,
+      "txErrors": 0,
+      "txPackets": null
+    }
+  },
+  "memoryStats": {
+    "maxUsage": 499884032,
+    "usage": 487714816,
+    "failCount": 0,
+    "limit": 6202036224
+  },
+  "cpuStats": {
+    "cpuUsage": {
+      "cpuCoreUsage": [
+        14035973754,
+        12272616472,
+        10799468949,
+        13903704381
+      ],
+      "userModeUsage": 47250000000,
+      "kernalModeUsage": 2570000000,
+      "totalUsage": 51011763556
+    },
+    "systemCpuUsage": 14875260000000,
+    "throttlingData": {
+      "periods": 0,
+      "throttled_periods": 0,
+      "throttled_time": 0
+    }
+  },
+  "preCpuStats": {
+    "cpuUsage": {
+      "cpuCoreUsage": [
+        14035687913,
+        12272616472,
+        10798019066,
+        13903704381
+      ],
+      "userModeUsage": 47250000000,
+      "kernalModeUsage": 2570000000,
+      "totalUsage": 51010027832
+    },
+    "systemCpuUsage": 14871330000000,
+    "throttlingData": {
+      "periods": 0,
+      "throttled_periods": 0,
+      "throttled_time": 0
+    }
+  },
+  "_links": {
+    "self": {
+      "href": "http://localhost/api/containers/running-container/stats"
+    },
+    "up": {
+      "href": "http://localhost/api/containers/running-container"
+    }
+  }
+}

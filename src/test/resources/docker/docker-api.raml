@@ -83,3 +83,11 @@ title: Docker API
         body:
           text/plain:
             example: !include examples/container-logs.txt
+
+/v1.24/containers/running-container/stats:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include examples/container-stats.json
