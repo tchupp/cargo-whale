@@ -11,7 +11,7 @@ import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY
 class ContainerStats {
 
     @JsonProperty(access = WRITE_ONLY)
-    final String id
+    String id
 
     String datetimeRead
     Map<String, Long> pidStats
@@ -19,6 +19,8 @@ class ContainerStats {
     ContainerMemoryStats memoryStats
     ContainerCpuStats cpuStats
     ContainerCpuStats preCpuStats
+
+    void setId(String id){this.id = id}
 
     @JsonProperty("read")
     void setDatetimeRead(String datetime){this.datetimeRead = datetime}

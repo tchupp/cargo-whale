@@ -40,6 +40,9 @@ public class ContainerDetailsControllerTest {
     @Mock
     private ContainerProcessesResourceAssembler processesResourceAssembler;
 
+    @Mock
+    private ContainerStatsResourceAssembler statsResourceAssembler;
+
     @Test
     public void getContainerDetailsById() throws Exception {
         String containerId = "container id!";
@@ -81,10 +84,12 @@ public class ContainerDetailsControllerTest {
     @Test
     public void getContainerStatsById(){
         String containerId = "container id!";
-        ContainerStats stats = new ContainerStats();
+        ContainerStats stats = new ContainerStats(containerId);
+        ContainerStatsResource statsResource = mock(ContainerStatsResource.class);
 
         when(this.infoService.getContainerStatsById(containerId)).thenReturn(stats);
+        when(this.statsResourceAssembler.toResource(stats)).thenReturn(statsResource);
 
-        assertThat(this.controller.getContainerStatsById(containerId), is(stats));
+        assertThat(this.controller.getContainerStatsById(containerId), is(statsResource));
     }
 }

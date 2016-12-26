@@ -22,14 +22,16 @@ public class ContainerDetailsController {
     private final ContainerTopService topService;
     private final ContainerDetailsResourceAssembler detailsResourceAssembler;
     private final ContainerLogsResourceAssembler logsResourceAssembler;
+    private final ContainerStatsResourceAssembler statsResourceAssembler;
     private final ContainerProcessesResourceAssembler processesResourceAssembler;
 
     @Autowired
-    public ContainerDetailsController(final ContainerInfoService infoService, final ContainerTopService topService, final ContainerDetailsResourceAssembler detailsResourceAssembler, final ContainerLogsResourceAssembler logsResourceAssembler, final ContainerProcessesResourceAssembler processesResourceAssembler) {
+    public ContainerDetailsController(final ContainerInfoService infoService, final ContainerTopService topService, final ContainerDetailsResourceAssembler detailsResourceAssembler, final ContainerLogsResourceAssembler logsResourceAssembler, final ContainerStatsResourceAssembler statsResourceAssembler, final ContainerProcessesResourceAssembler processesResourceAssembler) {
         this.infoService = infoService;
         this.topService = topService;
         this.detailsResourceAssembler = detailsResourceAssembler;
         this.logsResourceAssembler = logsResourceAssembler;
+        this.statsResourceAssembler = statsResourceAssembler;
         this.processesResourceAssembler = processesResourceAssembler;
     }
 
@@ -65,8 +67,10 @@ public class ContainerDetailsController {
     @RequestMapping(value = "/{id}/stats",
             method = RequestMethod.GET,
             produces = MediaTypes.HAL_JSON_VALUE)
-    public ContainerStats getContainerStatsById(@PathVariable final String id) {
-        return this.infoService.getContainerStatsById(id);
+    public ContainerStatsResource getContainerStatsById(@PathVariable final String id) {
+        ContainerStats containerStats = this.infoService.getContainerStatsById(id);
+        containerStats.setId(id);
+        return this.statsResourceAssembler.toResource(containerStats);
     }
 
 }
