@@ -1,6 +1,27 @@
 {
-  "image": "04c5d3b7b0656168630d3ba35d8889bd0e9caafcaeb3004d2bfbc47e7c5d35d2",
-  "path": "/bin/sh",
+  "id": "ba033ac4401106a3b513bc9d639eee123ad78ca3616b921167cd74b20e25ed39",
+  "imageId": "04c5d3b7b0656168630d3ba35d8889bd0e9caafcaeb3004d2bfbc47e7c5d35d2",
+  "name": "/running-container",
+  "state": {
+    "exitCode": 9,
+    "pid": 0,
+    "error": "",
+    "status": "running",
+    "startedTime": "2015-01-06T15:47:32.072697474Z",
+    "finishedTime": "2015-01-06T15:47:32.080254511Z"
+  },
+  "networkSettings": {
+  },
+  "config": {
+    "cmd": [
+      "/bin/sh",
+      "-c",
+      "exit 9"
+    ],
+    "env": [
+      "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+    ]
+  },
   "_links": {
     "top": {
       "href": "http://localhost/api/containers/ba033ac4401106a3b513bc9d639eee123ad78ca3616b921167cd74b20e25ed39/top"
@@ -14,14 +35,5 @@
     "logs": {
       "href": "http://localhost/api/containers/ba033ac4401106a3b513bc9d639eee123ad78ca3616b921167cd74b20e25ed39/logs"
     }
-  },
-  "name": "/running-container",
-  "state": {
-    "exitCode": 9,
-    "pid": 0,
-    "error": "",
-    "status": "running",
-    "finishedAt": "2015-01-06T15:47:32.080254511Z"
-  },
-  "id": "ba033ac4401106a3b513bc9d639eee123ad78ca3616b921167cd74b20e25ed39"
+  }
 }

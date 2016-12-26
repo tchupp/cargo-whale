@@ -26,16 +26,16 @@ public class CargoWhaleDockerApplication {
         DefaultProfileUtil.addDefaultProfile(app);
         Environment env = app.run(args).getEnvironment();
         log.info("\n----------------------------------------------------------\n\t" +
-                        "Application '{}' is running! Access URLs:\n\t" +
-                        "Local: \t\thttp://localhost:{}\n\t" +
-                        "External: \thttp://{}:{}\n----------------------------------------------------------",
-                env.getProperty("spring.application.name"),
-                env.getProperty("server.port"),
-                InetAddress.getLocalHost().getHostAddress(),
-                env.getProperty("server.port"));
+                "Application '{}' is running! Access URLs:\n\t" +
+                "Local: \t\thttp://localhost:{}\n\t" +
+                "External: \thttp://{}:{}\n----------------------------------------------------------",
+            env.getProperty("spring.application.name"),
+            env.getProperty("server.port"),
+            InetAddress.getLocalHost().getHostAddress(),
+            env.getProperty("server.port"));
         log.info("\n----------------------------------------------------------\n\t" +
-                        "Docker running at '{}'\n----------------------------------------------------------",
-                env.getProperty("cargowhale.docker.uri"));
+                "Docker running at '{}'\n----------------------------------------------------------",
+            env.getProperty("cargowhale.docker.uri"));
 
         checkProfiles(env);
     }
@@ -46,7 +46,7 @@ public class CargoWhaleDockerApplication {
 
         if (activeProfiles.contains(Constants.SPRING_PROFILE_DEVELOPMENT) && activeProfiles.contains(Constants.SPRING_PROFILE_PRODUCTION)) {
             log.error("You have misconfigured your application! It should not run " +
-                    "with both the 'dev' and 'prod' profiles at the same time.");
+                "with both the 'dev' and 'prod' profiles at the same time.");
         }
     }
 }

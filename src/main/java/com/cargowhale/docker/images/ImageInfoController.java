@@ -21,7 +21,7 @@ public class ImageInfoController {
     }
 
     @RequestMapping(value = "/images",
-            method = RequestMethod.GET,
+        method = RequestMethod.GET,
         produces = MediaTypes.HAL_JSON_VALUE)
     public String getImages() {
         String dockerUri = this.properties.getDockerUri();

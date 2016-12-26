@@ -1,22 +1,27 @@
 #%RAML 1.0 Library
 
+uses:
+  Containers: container-common.raml
+
 types:
   Link: !include ../types/link.raml
-  State:
-    enum:
-      - created
-      - restarting
-      - running
-      - paused
-      - exited
-      - dead
+
+  Port:
+    properties:
+      ip: string
+      privatePort: number
+      publicPort: number
+      type: string
 
   Summary:
     properties:
+      id: string
       name: string
       image: string
+      imageId: string
       status: string
-      state: State
+      state: Containers.State
+      ports: Port[]
       _links:
         properties:
           self: Link
@@ -27,6 +32,7 @@ types:
       stateMetadata:
         type: object
         properties:
+          all: integer
           created: integer
           restarting: integer
           running: integer
@@ -37,24 +43,3 @@ types:
         properties:
           self: Link
           up: Link
-
-  DetailsState:
-    properties:
-      pid: integer
-      status: State
-      error: string
-      exitCode: integer
-      finishedAt: string
-
-  Details:
-    properties:
-      name: string
-      image: string
-      path: string
-      state: DetailsState
-      _links:
-        properties:
-          self: Link
-          up: Link
-          logs: Link
-          top?: Link

@@ -2,12 +2,12 @@ package com.cargowhale.docker.container.info;
 
 import com.cargowhale.docker.client.containers.ContainerState;
 import com.cargowhale.docker.client.containers.info.ContainerInfoClient;
+import com.cargowhale.docker.client.containers.info.inspect.ContainerDetails;
 import com.cargowhale.docker.client.containers.info.list.ContainerListItem;
 import com.cargowhale.docker.client.containers.info.list.ListContainerFilters;
 import com.cargowhale.docker.client.containers.info.logs.LogFilters;
-import com.cargowhale.docker.container.info.index.ContainerIndexBuilder;
-import com.cargowhale.docker.container.info.model.ContainerDetails;
 import com.cargowhale.docker.container.info.index.ContainerIndex;
+import com.cargowhale.docker.container.info.index.ContainerIndexBuilder;
 import com.cargowhale.docker.container.info.model.ContainerLogs;
 import org.junit.Test;
 import org.junit.runner.RunWith;

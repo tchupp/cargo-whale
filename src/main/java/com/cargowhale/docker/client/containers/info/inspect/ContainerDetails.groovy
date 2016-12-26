@@ -1,18 +1,22 @@
-package com.cargowhale.docker.container.info.model
+package com.cargowhale.docker.client.containers.info.inspect
 
 import com.cargowhale.docker.client.containers.ContainerState
 import com.fasterxml.jackson.annotation.JsonProperty
 import groovy.transform.Canonical
-import groovy.transform.EqualsAndHashCode
 
-@EqualsAndHashCode(excludes = "id")
 @Canonical
 class ContainerDetails {
 
     @JsonProperty("State")
     ContainerDetailsState state
 
-    @JsonProperty(value = "Id")
+    @JsonProperty("Config")
+    ContainerDetailsConfig config
+
+    @JsonProperty("NetworkSettings")
+    ContainerNetworkSettings networkSettings
+
+    @JsonProperty("Id")
     String id
 
     @JsonProperty("Name")
@@ -23,6 +27,18 @@ class ContainerDetails {
 
     @JsonProperty("Path")
     String path
+
+    @JsonProperty("Created")
+    String created
+
+    @JsonProperty("Args")
+    String[] args
+
+    @JsonProperty("RestartCount")
+    Integer restartCount
+
+    @JsonProperty("Driver")
+    String driver
 
     ContainerState getContainerState() {
         return this.state.state

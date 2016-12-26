@@ -4,32 +4,19 @@ import com.cargowhale.docker.client.containers.ContainerState
 import com.cargowhale.docker.client.containers.info.list.ContainerListItem
 import com.fasterxml.jackson.annotation.JsonProperty
 import groovy.transform.Canonical
-import groovy.transform.EqualsAndHashCode
-import groovy.transform.TupleConstructor
 import org.springframework.hateoas.ResourceSupport
 
-@EqualsAndHashCode(excludes = "id")
-@TupleConstructor(force = true)
 @Canonical
 class ContainerIndexItemResource extends ResourceSupport {
 
-    @JsonProperty("state")
-    final ContainerState state
-
-    @JsonProperty(value = "id")
-    final String containerId
-
-    @JsonProperty("image")
-    final String image
-
-    @JsonProperty("imageId")
-    final String imageId
-
-    @JsonProperty("name")
-    final String name
-
-    @JsonProperty("status")
-    final String status
+    ContainerState state
+    @JsonProperty("id")
+    String containerId
+    String image
+    String imageId
+    String name
+    String status
+    ContainerPortResource[] ports
 
     ContainerIndexItemResource(ContainerListItem entity) {
         this.state = entity.state
@@ -38,5 +25,6 @@ class ContainerIndexItemResource extends ResourceSupport {
         this.imageId = entity.imageId
         this.name = entity.names?.join(' ')
         this.status = entity.status
+        this.ports = entity.ports.collect { new ContainerPortResource(it) }
     }
 }

@@ -1,0 +1,40 @@
+#%RAML 1.0 Library
+
+uses:
+  Containers: container-common.raml
+
+types:
+  Link: !include ../types/link.raml
+
+  Config:
+    properties:
+      cmd: string[]
+      env: string[]
+
+  NetworkSettings:
+    properties:
+      ports?:
+
+  State:
+    properties:
+      pid: integer
+      status: Containers.State
+      error: string
+      exitCode: integer
+      startedTime: string
+      finishedTime: string
+
+  Details:
+    properties:
+      id: string
+      name: string
+      imageId: string
+      state: State
+      networkSettings: NetworkSettings
+      config: Config
+      _links:
+        properties:
+          self: Link
+          up: Link
+          logs: Link
+          top?: Link

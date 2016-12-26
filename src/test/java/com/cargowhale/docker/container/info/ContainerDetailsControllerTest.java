@@ -1,10 +1,15 @@
 package com.cargowhale.docker.container.info;
 
+import com.cargowhale.docker.client.containers.info.inspect.ContainerDetails;
 import com.cargowhale.docker.client.containers.info.logs.LogFilters;
-import com.cargowhale.docker.container.info.model.ContainerDetails;
+import com.cargowhale.docker.container.info.details.ContainerDetailsResource;
+import com.cargowhale.docker.container.info.details.ContainerDetailsResourceAssembler;
 import com.cargowhale.docker.container.info.model.ContainerLogs;
-import com.cargowhale.docker.container.info.resource.*;
+import com.cargowhale.docker.container.info.resource.ContainerLogsResource;
+import com.cargowhale.docker.container.info.resource.ContainerLogsResourceAssembler;
 import com.cargowhale.docker.container.info.top.ContainerProcessIndex;
+import com.cargowhale.docker.container.info.top.ContainerProcessesResource;
+import com.cargowhale.docker.container.info.top.ContainerProcessesResourceAssembler;
 import com.cargowhale.docker.container.info.top.ContainerTopService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
