@@ -12,26 +12,26 @@ class ContainerMemoryStats {
     Long limit
 
     @JsonProperty("max_usage")
-    public void setMaxUsage(Long maxUsage){this.maxUsage = maxUsage;}
+    void setMaxUsage(Long maxUsage){this.maxUsage = maxUsage}
 
     @JsonProperty("maxUsage")
-    public Long getMaxUsage(){return this.maxUsage;}
+    Long getMaxUsage(){return this.maxUsage}
 
     @JsonProperty("usage")
-    public void setUsage(Long usage){this.usage = usage;}
+    void setUsage(Long usage){this.usage = usage}
 
     @JsonProperty("usage")
-    public Long getUsage(){return this.usage;}
+    Long getUsage(){return this.usage}
 
     @JsonProperty("failcnt")
-    public void setFailCount(Long failCount){this.failCount = failCount;}
+    void setFailCount(Long failCount){this.failCount = failCount}
 
     @JsonProperty("failCount")
-    public Long getFailCount(){return this.failCount;}
+    Long getFailCount(){return this.failCount}
 
     @JsonProperty("limit")
-    public void setLimit(Long limit){this.limit = limit;}
+    void setLimit(Long limit){this.limit = limit}
 
     @JsonProperty("limit")
-    public Long getLimit(){return this.limit;}
+    Long getLimit(){return this.limit}
 }

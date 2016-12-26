@@ -11,32 +11,20 @@ class ContainerCpuStats {
     Map<String, Long> throttlingData
 
     @JsonProperty("throttlingData")
-    public Map<String, Long> getThrottlingData() {
-        return this.throttlingData;
-    }
+    Map<String, Long> getThrottlingData() { return this.throttlingData }
 
     @JsonProperty("throttling_data")
-    public void setSystemCpuUsage(Map<String, Long> throttlingData) {
-        this.throttlingData = throttlingData;
-    }
+    void setSystemCpuUsage(Map<String, Long> throttlingData) { this.throttlingData = throttlingData }
 
     @JsonProperty("systemCpuUsage")
-    public Long getSystemCpuUsage() {
-        return this.systemCpuUsage;
-    }
+    Long getSystemCpuUsage() { return this.systemCpuUsage }
 
     @JsonProperty("system_cpu_usage")
-    public void setSystemCpuUsage(Long systemCpuUsage) {
-        this.systemCpuUsage = systemCpuUsage;
-    }
+    void setSystemCpuUsage(Long systemCpuUsage) { this.systemCpuUsage = systemCpuUsage }
 
     @JsonProperty("cpuUsage")
-    public ContainerCpuUsage getCpuUsage() {
-        return cpuUsage;
-    }
+    ContainerCpuUsage getCpuUsage() { return cpuUsage }
 
     @JsonProperty("cpu_usage")
-    public void setCpuUsage(ContainerCpuUsage cpuUsage) {
-        this.cpuUsage = cpuUsage;
-    }
+    void setCpuUsage(ContainerCpuUsage cpuUsage) { this.cpuUsage = cpuUsage }
 }
