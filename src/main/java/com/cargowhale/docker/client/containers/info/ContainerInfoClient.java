@@ -1,5 +1,6 @@
 package com.cargowhale.docker.client.containers.info;
 
+import com.cargowhale.docker.client.containers.info.inspect.ContainerDetails;
 import com.cargowhale.docker.client.containers.info.list.ContainerListItem;
 import com.cargowhale.docker.client.containers.info.list.ListContainerFilters;
 import com.cargowhale.docker.client.containers.info.stats.ContainerStats;
@@ -7,7 +8,6 @@ import com.cargowhale.docker.client.containers.info.top.ContainerTop;
 import com.cargowhale.docker.client.core.DockerEndpointBuilder;
 import com.cargowhale.docker.client.core.DockerRestTemplate;
 import com.cargowhale.docker.client.core.QueryParameters;
-import com.cargowhale.docker.container.info.model.ContainerDetails;
 import com.cargowhale.docker.container.info.model.ContainerLogs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

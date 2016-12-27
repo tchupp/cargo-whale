@@ -1,9 +1,9 @@
-package com.cargowhale.docker.container.info.resource;
+package com.cargowhale.docker.container.info.details;
 
+import com.cargowhale.docker.client.containers.info.inspect.ContainerDetails;
 import com.cargowhale.docker.client.containers.info.logs.LogFilters;
 import com.cargowhale.docker.container.info.ContainerDetailsController;
 import com.cargowhale.docker.container.info.index.ContainerIndexController;
-import com.cargowhale.docker.container.info.model.ContainerDetails;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 import org.springframework.stereotype.Component;
 

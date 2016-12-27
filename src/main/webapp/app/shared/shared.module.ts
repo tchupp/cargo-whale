@@ -3,7 +3,11 @@ import {CommonModule} from "@angular/common";
 import {RouterModule} from "@angular/router";
 
 import {DividerComponent} from "./divider/divider.component";
+import {TruncateCharactersPipe} from "./pipe/truncate.pipe";
 
+const PIPES = [
+    TruncateCharactersPipe
+];
 
 const COMPONENTS = [
     DividerComponent
@@ -15,10 +19,12 @@ const COMPONENTS = [
         RouterModule
     ],
     declarations: [
-        ...COMPONENTS
+        ...COMPONENTS,
+        ...PIPES
     ],
     exports: [
-        ...COMPONENTS
+        ...COMPONENTS,
+        ...PIPES
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

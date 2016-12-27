@@ -7,6 +7,7 @@ import {HeaderComponent} from "./header/header.component";
 import {MainComponent} from "./main/main.component";
 import {SidebarComponent} from "./sidebar/sidebar.component";
 import {SidebarItemComponent} from "./sidebar/sidebar-item/sidebar-item.component";
+import {SharedModule} from "../shared/shared.module";
 
 const DECLARED_COMPONENTS = [
     CardComponent,
@@ -24,7 +25,8 @@ const EXPORTED_COMPONENTS = [
 @NgModule({
     imports: [
         CommonModule,
-        RouterModule
+        RouterModule,
+        SharedModule
     ],
     declarations: [
         ...DECLARED_COMPONENTS

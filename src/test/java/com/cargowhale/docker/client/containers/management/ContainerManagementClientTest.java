@@ -1,7 +1,7 @@
 package com.cargowhale.docker.client.containers.management;
 
-import com.cargowhale.docker.client.core.DockerEndpointBuilder;
 import com.cargowhale.docker.client.containers.management.state.ContainerChangeState;
+import com.cargowhale.docker.client.core.DockerEndpointBuilder;
 import com.cargowhale.docker.client.core.DockerRestTemplate;
 import org.junit.Test;
 import org.junit.runner.RunWith;

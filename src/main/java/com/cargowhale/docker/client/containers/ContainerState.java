@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public enum ContainerState {
 
+    @JsonProperty("all")
+    ALL("all"),
+
     @JsonProperty("created")
     CREATED("created"),
 

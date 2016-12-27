@@ -3,19 +3,18 @@ package com.cargowhale.docker.client.containers.info.list
 import com.cargowhale.docker.client.containers.ContainerState
 import com.fasterxml.jackson.annotation.JsonProperty
 import groovy.transform.Canonical
-import groovy.transform.EqualsAndHashCode
 
-import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY
-
-@EqualsAndHashCode(excludes = "id")
 @Canonical
 class ContainerListItem {
 
     @JsonProperty("State")
     ContainerState state
 
-    @JsonProperty(value = "Id", access = WRITE_ONLY)
+    @JsonProperty("Id")
     String id
+
+    @JsonProperty("Command")
+    String command
 
     @JsonProperty("Image")
     String image
@@ -28,4 +27,7 @@ class ContainerListItem {
 
     @JsonProperty("Status")
     String status
+
+    @JsonProperty("Ports")
+    ContainerPort[] ports
 }

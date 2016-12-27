@@ -1,5 +1,5 @@
-@import "../../scss/theme";
-@import "../../scss/variables";
+@import "../../../scss/theme";
+@import "../../../scss/variables";
 
 @mixin state-color($color) {
     border-color: $color;

@@ -33,7 +33,8 @@ public class ContainerIndexBuilderTest {
         ContainerIndex containerIndex = this.builder.buildContainerIndex(new ArrayList<>());
         Map<ContainerState, Integer> stateMetadata = containerIndex.getStateMetadata();
 
-        assertThat(stateMetadata.size(), is(6));
+        assertThat(stateMetadata.size(), is(7));
+        assertThat(stateMetadata, hasKey(ContainerState.ALL));
         assertThat(stateMetadata, hasKey(ContainerState.CREATED));
         assertThat(stateMetadata, hasKey(ContainerState.RESTARTING));
         assertThat(stateMetadata, hasKey(ContainerState.RUNNING));
@@ -47,7 +48,8 @@ public class ContainerIndexBuilderTest {
         ContainerIndex containerIndex = this.builder.buildContainerIndex(new ArrayList<>());
         Map<ContainerState, Integer> stateMetadata = containerIndex.getStateMetadata();
 
-        assertThat(stateMetadata.size(), is(6));
+        assertThat(stateMetadata.size(), is(7));
+        assertThat(stateMetadata.get(ContainerState.ALL), is(0));
         assertThat(stateMetadata.get(ContainerState.CREATED), is(0));
         assertThat(stateMetadata.get(ContainerState.RESTARTING), is(0));
         assertThat(stateMetadata.get(ContainerState.RUNNING), is(0));
@@ -74,7 +76,8 @@ public class ContainerIndexBuilderTest {
         ContainerIndex containerIndex = this.builder.buildContainerIndex(containerList);
         Map<ContainerState, Integer> stateMetadata = containerIndex.getStateMetadata();
 
-        assertThat(stateMetadata.size(), is(6));
+        assertThat(stateMetadata.size(), is(7));
+        assertThat(stateMetadata.get(ContainerState.ALL), is(11));
         assertThat(stateMetadata.get(ContainerState.CREATED), is(2));
         assertThat(stateMetadata.get(ContainerState.RESTARTING), is(1));
         assertThat(stateMetadata.get(ContainerState.RUNNING), is(3));

@@ -15,15 +15,20 @@ class ContainerIndexBuilder {
 
     private Map<ContainerState, Integer> buildStateMetadata(final List<ContainerListItem> containerSummaryList) {
         Map<ContainerState, Integer> containerStateSummary = [
-                (ContainerState.CREATED)   : 0,
-                (ContainerState.RESTARTING): 0,
-                (ContainerState.RUNNING)   : 0,
-                (ContainerState.PAUSED)    : 0,
-                (ContainerState.EXITED)    : 0,
-                (ContainerState.DEAD)      : 0
+            (ContainerState.ALL)       : 0,
+            (ContainerState.CREATED)   : 0,
+            (ContainerState.RESTARTING): 0,
+            (ContainerState.RUNNING)   : 0,
+            (ContainerState.PAUSED)    : 0,
+            (ContainerState.EXITED)    : 0,
+            (ContainerState.DEAD)      : 0
         ]
 
-        containerSummaryList.each { containerSummary -> containerStateSummary[containerSummary.state]++ }
+        containerSummaryList.each { containerSummary ->
+            containerStateSummary[containerSummary.state]++
+            containerStateSummary[ContainerState.ALL]++
+        }
+
 
         return containerStateSummary
     }

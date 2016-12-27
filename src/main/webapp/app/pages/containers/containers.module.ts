@@ -1,11 +1,12 @@
 import {NgModule, CUSTOM_ELEMENTS_SCHEMA} from "@angular/core";
 import {CommonModule} from "@angular/common";
 
-import {ContainersComponent} from "./components/container-detail.component";
-import {ContainerListComponent} from "./components/container-list.component";
+import {ContainersComponent} from "./containers.component";
+import {ContainerDetailsComponent} from "./components/detail/container-detail.component";
+import {ContainerIndexComponent} from "./components/index/container-index.component";
 import {containersRoutes} from "./containers.routes";
-import {LayoutsModule} from "../layouts/layouts.module";
-import {SharedModule} from "../shared/shared.module";
+import {LayoutsModule} from "../../layouts/layouts.module";
+import {SharedModule} from "../../shared/shared.module";
 
 @NgModule({
     imports: [
@@ -16,7 +17,8 @@ import {SharedModule} from "../shared/shared.module";
     ],
     declarations: [
         ContainersComponent,
-        ContainerListComponent
+        ContainerDetailsComponent,
+        ContainerIndexComponent
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
