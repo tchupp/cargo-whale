@@ -22,7 +22,7 @@ class ContainerNetworkSettings {
     Integer linkLocalIPv6PrefixLen
 
     @JsonProperty("Ports")
-    Map<String, Object> ports
+    Map<String, List<ContainerNetworkPort>> ports
 
     @JsonProperty("SandboxKey")
     String sandboxKey

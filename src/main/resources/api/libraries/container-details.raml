@@ -6,14 +6,39 @@ uses:
 types:
   Link: !include ../types/link.raml
 
-  Config:
+  Port:
     properties:
-      cmd: string[]
-      env: string[]
+      hostIp: string
+      hostPort: string
+
+  Network:
+    properties:
+      globalIPv6Address: string
+      macAddress: string
+      aliases?: string
+      ipV6Gateway: string
+      endpointId: string
+      ipPrefixLen: string
+      globalIPv6PrefixLen: string
+      ipAddress: string
+      networkId: string
+      gateway: string
 
   NetworkSettings:
     properties:
       ports?:
+        properties:
+          .*?: Port
+      networks?:
+        properties:
+          .*?: Network
+
+  Config:
+    properties:
+      image: string
+      hostname: string
+      command: string[]
+      environment: string[]
 
   State:
     properties:

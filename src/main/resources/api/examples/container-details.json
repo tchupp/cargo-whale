@@ -11,14 +11,30 @@
     "finishedTime": "2015-01-06T15:47:32.080254511Z"
   },
   "networkSettings": {
+    "ports": {},
+    "networks": {
+      "bridge": {
+        "globalIPv6Address": "",
+        "macAddress": "02:42:ac:12:00:02",
+        "ipV6Gateway": "",
+        "endpointId": "7587b82f0dada3656fda26588aee72630c6fab1536d36e394b2bfbcf898c971d",
+        "ipPrefixLen": 16,
+        "globalIPv6PrefixLen": 0,
+        "ipAddress": "172.17.0.2",
+        "networkId": "7ea29fc1412292a2d7bba362f9253545fecdfa8ce9a6e37dd10ba8bee7129812",
+        "gateway": "172.17.0.1"
+      }
+    }
   },
   "config": {
-    "cmd": [
+    "image": "ubuntu",
+    "hostname": "ba033ac44011",
+    "command": [
       "/bin/sh",
       "-c",
       "exit 9"
     ],
-    "env": [
+    "environment": [
       "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
     ]
   },

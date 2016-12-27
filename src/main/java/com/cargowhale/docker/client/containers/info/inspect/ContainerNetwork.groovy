@@ -10,7 +10,7 @@ class ContainerNetwork {
     List<String> aliases
 
     @JsonProperty("NetworkID")
-    String networkID
+    String networkId
 
     @JsonProperty("EndpointID")
     String endpointId
