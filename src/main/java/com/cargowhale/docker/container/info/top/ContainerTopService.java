@@ -1,6 +1,5 @@
 package com.cargowhale.docker.container.info.top;
 
-import com.cargowhale.docker.client.containers.ContainerState;
 import com.cargowhale.docker.client.containers.info.ContainerInfoClient;
 import com.cargowhale.docker.client.containers.info.inspect.ContainerDetails;
 import com.cargowhale.docker.client.containers.info.top.ContainerTop;
@@ -22,8 +21,8 @@ public class ContainerTopService {
 
     public ContainerProcessIndex getContainerProcessesById(final String containerId) {
         ContainerDetails containerDetails = this.client.inspectContainer(containerId);
-        if (!containerDetails.getContainerState().equals(ContainerState.RUNNING)) {
-            throw new BadContainerStateException(containerDetails.getState().getState());
+        if (!containerDetails.getState().getRunning()) {
+            throw new BadContainerStateException(containerDetails.getState().getStatus());
         }
 
         ContainerTop dockerIndex = this.client.getContainerProcesses(containerId);
