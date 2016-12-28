@@ -17,59 +17,42 @@
                 </div>
 
                 <div class="col-sm-12 col-md-7">
-                    <div class="container-info-item">
-                        <span class="name">Name</span>
+                    <cw-info-item [name]="'Name'">
                         <span class="value">{{details.name | replace : '/'}}</span>
-                    </div>
-                    <cw-divider></cw-divider>
-                    <div class="container-info-item">
-                        <span class="name">Hostname</span>
+                    </cw-info-item>
+                    <cw-info-item [name]="'Hostname'">
                         <span class="value">{{details.config.hostname}}</span>
-                    </div>
-                    <cw-divider></cw-divider>
-                    <div class="container-info-item">
-                        <span class="name">Image</span>
+                    </cw-info-item>
+                    <cw-info-item [name]="'Image'">
                         <span class="value">{{details.config.image}}</span>
-                    </div>
-                    <cw-divider></cw-divider>
-                    <div class="container-info-item">
-                        <span class="name">Image ID</span>
+                    </cw-info-item>
+                    <cw-info-item [name]="'Image ID'">
                         <span class="value">{{details.imageId}}</span>
-                    </div>
-                    <cw-divider></cw-divider>
-                    <div class="container-info-item">
-                        <span class="name">Pid</span>
+                    </cw-info-item>
+                    <cw-info-item [name]="'Pid'">
                         <span class="value">{{details.state.pid}}</span>
-                    </div>
-                    <cw-divider></cw-divider>
-                    <div class="container-info-item">
-                        <span class="name">Error</span>
+                    </cw-info-item>
+                    <cw-info-item [name]="'Error'">
                         <span class="value">{{details.state.error}}</span>
-                    </div>
-                    <cw-divider></cw-divider>
-                    <div class="container-info-item">
-                        <span class="name">Exit Code</span>
+                    </cw-info-item>
+                    <cw-info-item [name]="'Exit Code'">
                         <span class="value">{{details.state.exitCode}}</span>
-                    </div>
-                    <cw-divider></cw-divider>
-                    <div *ngIf="details.state.running" class="container-info-item">
-                        <span class="name">Started Time</span>
+                    </cw-info-item>
+                    <cw-info-item *ngIf="details.state.running"
+                                  [name]="'Started Time'"
+                                  [divider]="details.config.command">
                         <span class="value">{{details.state.startedTime | date: 'yyyy/MM/dd hh:mm:ss'}}</span>
-                    </div>
-                    <div *ngIf="!details.state.running" class="container-info-item">
-                        <span class="name">Finished Time</span>
+                    </cw-info-item>
+                    <cw-info-item *ngIf="!details.state.running"
+                                  [name]="'Finished Time'"
+                                  [divider]="details.config.command">
                         <span class="value">{{details.state.finishedTime | date: 'yyyy/MM/dd hh:mm:ss'}}</span>
-                    </div>
-                    <cw-divider *ngIf="details.config.command"></cw-divider>
-                    <div *ngIf="details.config.command" class="container-info-item">
-                        <span class="name">Cmd</span>
+                    </cw-info-item>
+                    <cw-info-item *ngIf="details.config.command"
+                                  [name]="'Command'"
+                                  [divider]="false">
                         <code class="value">{{details.config.command | command}}</code>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-xs-12">
+                    </cw-info-item>
                 </div>
             </div>
         </cw-card>
@@ -78,7 +61,7 @@
     <div class="col-xs-12">
         <cw-card title="Environment variables">
             <div *ngFor="let envVar of details.config.environment; let i = index">
-                <div class="container-info-item">
+                <div class="info-item">
                     <span class="name">{{envVar | split : '=' : 0}}</span>
                     <span class="value">{{envVar | split : '=' : 1}}</span>
                 </div>

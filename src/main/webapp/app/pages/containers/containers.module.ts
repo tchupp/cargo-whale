@@ -8,6 +8,7 @@ import {containersRoutes} from "./containers.routes";
 import {ContainersService} from "./containers.service";
 import {LayoutsModule} from "../../shared/layouts";
 import {PipesModule} from "../../shared/pipes";
+import {InfoItemComponent} from "./components/info-item/info-item.component";
 
 @NgModule({
     imports: [
@@ -19,7 +20,8 @@ import {PipesModule} from "../../shared/pipes";
     declarations: [
         ContainersComponent,
         ContainerDetailsComponent,
-        ContainerIndexComponent
+        ContainerIndexComponent,
+        InfoItemComponent
     ],
     providers: [ContainersService],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]

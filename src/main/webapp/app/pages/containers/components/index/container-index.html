@@ -18,9 +18,9 @@
             </p>
         </div>
         <cw-divider></cw-divider>
-        <div class="container-info-item">
-            <span class="name">Image</span>
+        <cw-info-item [name]="'Image'"
+                      [divider]="false">
             <span class="value">{{container.image}}</span>
-        </div>
+        </cw-info-item>
     </cw-card>
 </div>
