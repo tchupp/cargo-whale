@@ -1,0 +1,105 @@
+<div *ngIf="details">
+    <div class="page-top">
+        <h1 class="page-title">Container {{details.name | replace : '/'}}</h1>
+    </div>
+
+    <div class="col-xs-12">
+        <cw-card title="Details">
+            <div class="row vertical-align">
+                <div class="col-sm-12 col-md-5">
+                    <div class="container-phase bg {{details.state.status}}">
+                        <p>
+                            <span class="container-state">{{details.state.status}}</span>
+                            <br/>
+                            <span class="container-name">{{details.name | replace : '/'}}</span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-7">
+                    <div class="container-info-item">
+                        <span class="name">Name</span>
+                        <span class="value">{{details.name | replace : '/'}}</span>
+                    </div>
+                    <cw-divider></cw-divider>
+                    <div class="container-info-item">
+                        <span class="name">Hostname</span>
+                        <span class="value">{{details.config.hostname}}</span>
+                    </div>
+                    <cw-divider></cw-divider>
+                    <div class="container-info-item">
+                        <span class="name">Image</span>
+                        <span class="value">{{details.config.image}}</span>
+                    </div>
+                    <cw-divider></cw-divider>
+                    <div class="container-info-item">
+                        <span class="name">Image ID</span>
+                        <span class="value">{{details.imageId}}</span>
+                    </div>
+                    <cw-divider></cw-divider>
+                    <div class="container-info-item">
+                        <span class="name">Pid</span>
+                        <span class="value">{{details.state.pid}}</span>
+                    </div>
+                    <cw-divider></cw-divider>
+                    <div class="container-info-item">
+                        <span class="name">Error</span>
+                        <span class="value">{{details.state.error}}</span>
+                    </div>
+                    <cw-divider></cw-divider>
+                    <div class="container-info-item">
+                        <span class="name">Exit Code</span>
+                        <span class="value">{{details.state.exitCode}}</span>
+                    </div>
+                    <cw-divider></cw-divider>
+                    <div *ngIf="details.state.running" class="container-info-item">
+                        <span class="name">Started Time</span>
+                        <span class="value">{{details.state.startedTime | date: 'yyyy/MM/dd hh:mm:ss'}}</span>
+                    </div>
+                    <div *ngIf="!details.state.running" class="container-info-item">
+                        <span class="name">Finished Time</span>
+                        <span class="value">{{details.state.finishedTime | date: 'yyyy/MM/dd hh:mm:ss'}}</span>
+                    </div>
+                    <cw-divider *ngIf="details.config.command"></cw-divider>
+                    <div *ngIf="details.config.command" class="container-info-item">
+                        <span class="name">Cmd</span>
+                        <code class="value">{{details.config.command | command}}</code>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12">
+                </div>
+            </div>
+        </cw-card>
+    </div>
+
+    <div class="col-xs-12">
+        <cw-card title="Environment variables">
+            <div *ngFor="let envVar of details.config.environment; let i = index">
+                <div class="container-info-item">
+                    <span class="name">{{envVar | split : '=' : 0}}</span>
+                    <span class="value">{{envVar | split : '=' : 1}}</span>
+                </div>
+                <cw-divider *ngIf="!(i === details.config.environment.length - 1)"></cw-divider>
+            </div>
+        </cw-card>
+    </div>
+
+    <div class="col-xs-6">
+        <cw-card title="Container network">
+        <pre>
+            {{details.networkSettings | json}}
+        </pre>
+        </cw-card>
+    </div>
+
+    <div class="col-xs-12">
+        <cw-card title="Container details">
+        <pre>
+            {{details | json}}
+        </pre>
+        </cw-card>
+    </div>
+</div>

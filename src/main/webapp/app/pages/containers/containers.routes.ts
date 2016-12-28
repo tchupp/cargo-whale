@@ -1,7 +1,7 @@
 import {Routes, RouterModule} from "@angular/router";
 
 import {ContainersComponent} from "./containers.component";
-import {ContainerDetailsComponent} from "./components/detail/container-detail.component";
+import {ContainerDetailsComponent} from "./components/details/container-details.component";
 import {ContainerIndexComponent} from "./components/index/container-index.component";
 
 const routes: Routes = [

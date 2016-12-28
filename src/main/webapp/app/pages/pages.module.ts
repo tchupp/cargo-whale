@@ -3,8 +3,8 @@ import {CommonModule} from "@angular/common";
 
 import {PagesComponent} from "./pages.component";
 import {pagesRoutes} from "./pages.routes";
-import {ContainersModule} from "./containers/containers.module";
-import {LayoutsModule} from "../layouts/layouts.module";
+import {ContainersModule} from "./containers";
+import {LayoutsModule} from "../shared/layouts";
 
 @NgModule({
     imports: [
@@ -14,6 +14,7 @@ import {LayoutsModule} from "../layouts/layouts.module";
         pagesRoutes
     ],
     declarations: [PagesComponent],
+    exports: [PagesComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class PagesModule {
