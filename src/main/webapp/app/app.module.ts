@@ -4,8 +4,9 @@ import {HttpModule} from "@angular/http";
 import {RouterModule} from "@angular/router";
 
 import {PagesModule} from "./pages/pages.module";
-import {LayoutsModule, MainComponent} from "./layouts";
+import {LayoutsModule} from "./shared/layouts";
 import {appRoutes} from "./app.routes";
+import {PagesComponent} from "./pages/pages.component";
 
 @NgModule({
     imports: [
@@ -13,10 +14,9 @@ import {appRoutes} from "./app.routes";
         HttpModule,
         RouterModule,
         PagesModule,
-        LayoutsModule,
         appRoutes
     ],
-    bootstrap: [MainComponent],
+    bootstrap: [PagesComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class CargoWhaleDockerAppModule {

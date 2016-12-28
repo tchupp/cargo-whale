@@ -4,7 +4,7 @@ import {SidebarItem} from "./sidebar-item/sidebar-item.model";
 
 @Component({
     selector: 'cw-sidebar',
-    templateUrl: 'app/layouts/sidebar/sidebar.html'
+    templateUrl: 'app/shared/layouts/sidebar/sidebar.html'
 })
 export class SidebarComponent implements OnInit {
 

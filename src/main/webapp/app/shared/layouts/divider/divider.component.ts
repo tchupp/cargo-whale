@@ -2,7 +2,7 @@ import {Component} from "@angular/core";
 
 @Component({
     selector: 'cw-divider',
-    templateUrl: 'app/shared/divider/divider.html'
+    templateUrl: 'app/shared/layouts/divider/divider.html'
 })
 export class DividerComponent {
 }

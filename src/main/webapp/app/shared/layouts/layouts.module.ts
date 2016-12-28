@@ -7,26 +7,29 @@ import {HeaderComponent} from "./header/header.component";
 import {MainComponent} from "./main/main.component";
 import {SidebarComponent} from "./sidebar/sidebar.component";
 import {SidebarItemComponent} from "./sidebar/sidebar-item/sidebar-item.component";
-import {SharedModule} from "../shared/shared.module";
+import {DividerComponent} from "./divider/divider.component";
+import {PipesModule} from "../pipes";
 
 const DECLARED_COMPONENTS = [
     CardComponent,
     HeaderComponent,
     MainComponent,
+    DividerComponent,
     SidebarComponent,
     SidebarItemComponent
 ];
 
 const EXPORTED_COMPONENTS = [
     CardComponent,
-    MainComponent
+    MainComponent,
+    DividerComponent
 ];
 
 @NgModule({
     imports: [
         CommonModule,
         RouterModule,
-        SharedModule
+        PipesModule
     ],
     declarations: [
         ...DECLARED_COMPONENTS

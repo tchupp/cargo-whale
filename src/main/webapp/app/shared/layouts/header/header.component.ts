@@ -3,7 +3,7 @@ import {Router} from "@angular/router";
 
 @Component({
     selector: 'cw-header',
-    templateUrl: 'app/layouts/header/header.html'
+    templateUrl: 'app/shared/layouts/header/header.html'
 })
 export class HeaderComponent implements OnInit {
 
