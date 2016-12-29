@@ -2,7 +2,8 @@ import {NgModule, CUSTOM_ELEMENTS_SCHEMA} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {RouterModule} from "@angular/router";
 
-import {CardComponent} from "./card/card.component";
+import {CardComponent} from "./cards/card/card.component";
+import {TabbedCardComponent} from "./cards/tabbed-card/tabbed-card.component";
 import {HeaderComponent} from "./header/header.component";
 import {MainComponent} from "./main/main.component";
 import {SidebarComponent} from "./sidebar/sidebar.component";
@@ -12,6 +13,7 @@ import {PipesModule} from "../pipes";
 
 const DECLARED_COMPONENTS = [
     CardComponent,
+    TabbedCardComponent,
     HeaderComponent,
     MainComponent,
     DividerComponent,
@@ -21,6 +23,7 @@ const DECLARED_COMPONENTS = [
 
 const EXPORTED_COMPONENTS = [
     CardComponent,
+    TabbedCardComponent,
     MainComponent,
     DividerComponent
 ];

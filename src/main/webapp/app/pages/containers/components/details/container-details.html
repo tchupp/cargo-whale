@@ -51,7 +51,7 @@
                     <cw-info-item *ngIf="details.config.command"
                                   [name]="'Command'"
                                   [divider]="false">
-                        <code class="value">{{details.config.command | command}}</code>
+                        <code class="value">{{details.config.command | join}}</code>
                     </cw-info-item>
                 </div>
             </div>
@@ -59,23 +59,22 @@
     </div>
 
     <div class="col-xs-12">
-        <cw-card title="Environment variables">
-            <div *ngFor="let envVar of details.config.environment; let i = index">
-                <div class="info-item">
-                    <span class="name">{{envVar | split : '=' : 0}}</span>
-                    <span class="value">{{envVar | split : '=' : 1}}</span>
-                </div>
-                <cw-divider *ngIf="!(i === details.config.environment.length - 1)"></cw-divider>
-            </div>
-        </cw-card>
-    </div>
-
-    <div class="col-xs-6">
-        <cw-card title="Container network">
-        <pre>
-            {{details.networkSettings | json}}
-        </pre>
-        </cw-card>
+        <cw-tabbed-card>
+            <ngb-tabset>
+                <ngb-tab title="Environments">
+                    <template ngbTabContent>
+                        <cw-container-environment [environment]="details.config.environment"></cw-container-environment>
+                    </template>
+                </ngb-tab>
+                <ngb-tab title="Network">
+                    <template ngbTabContent>
+                        <pre>
+                            {{details.networkSettings | json}}
+                        </pre>
+                    </template>
+                </ngb-tab>
+            </ngb-tabset>
+        </cw-tabbed-card>
     </div>
 
     <div class="col-xs-12">

@@ -1,14 +1,14 @@
 import {Pipe, PipeTransform} from "@angular/core";
 
 @Pipe({
-    name: 'command'
+    name: 'join'
 })
-export class CommandPipe implements PipeTransform {
+export class JoinPipe implements PipeTransform {
 
     transform(input: string[]): string {
         if (input === null) {
             return '';
         }
-        return input.join(' ').replace('&&', '&&\n');
+        return input.join(' ');
     }
 }

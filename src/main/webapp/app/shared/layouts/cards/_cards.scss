@@ -111,3 +111,15 @@ $card-header-font-size: 16px;
         border-color: $danger-bg;
     }
 }
+
+.card {
+    > ngb-tabset {
+        > .nav {
+            @extend .card-header;
+        }
+        > .tab-content {
+            padding: 15px 22px;
+            height: 100%;
+        }
+    }
+}
