@@ -65,6 +65,7 @@ public class MetricsConfiguration extends MetricsConfigurerAdapter {
                 .outputTo(LoggerFactory.getLogger("metrics"))
                 .convertRatesTo(TimeUnit.SECONDS)
                 .convertDurationsTo(TimeUnit.MILLISECONDS)
+                .prefixedWith(this.metricsLogsProperties.getPrefix())
                 .build();
             reporter.start(this.metricsLogsProperties.getPeriod(), TimeUnit.SECONDS);
         }

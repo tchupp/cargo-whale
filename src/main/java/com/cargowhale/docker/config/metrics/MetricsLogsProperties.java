@@ -9,6 +9,8 @@ public class MetricsLogsProperties {
 
     private Long period;
 
+    private String prefix;
+
     public Boolean getEnabled() {
         return this.enabled;
     }
@@ -23,5 +25,13 @@ public class MetricsLogsProperties {
 
     public void setPeriod(final Long period) {
         this.period = period;
+    }
+
+    public String getPrefix() {
+        return this.prefix;
+    }
+
+    public void setPrefix(final String prefix) {
+        this.prefix = prefix;
     }
 }
