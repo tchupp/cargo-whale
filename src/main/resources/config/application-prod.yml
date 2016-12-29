@@ -19,3 +19,7 @@
 cargowhale:
   docker:
     uri: http://socat:2375
+
+  metrics:
+    logs:
+      enabled: false

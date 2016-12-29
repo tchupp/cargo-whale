@@ -1,6 +1,6 @@
 package com.cargowhale.docker.images;
 
-import com.cargowhale.docker.config.CargoWhaleProperties;
+import com.cargowhale.docker.config.DockerProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,11 +11,11 @@ import org.springframework.web.client.RestTemplate;
 @RestController
 public class ImageInfoController {
 
-    private final CargoWhaleProperties properties;
+    private final DockerProperties properties;
     private final RestTemplate restTemplate;
 
     @Autowired
-    public ImageInfoController(final RestTemplate restTemplate, final CargoWhaleProperties properties) {
+    public ImageInfoController(final RestTemplate restTemplate, final DockerProperties properties) {
         this.restTemplate = restTemplate;
         this.properties = properties;
     }
@@ -24,7 +24,7 @@ public class ImageInfoController {
         method = RequestMethod.GET,
         produces = MediaTypes.HAL_JSON_VALUE)
     public String getImages() {
-        String dockerUri = this.properties.getDockerUri();
+        String dockerUri = this.properties.getUri();
 
         return this.restTemplate.getForObject(dockerUri + "/images/json", String.class);
     }

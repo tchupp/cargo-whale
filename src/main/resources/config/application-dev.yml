@@ -19,3 +19,8 @@
 cargowhale:
   docker:
     uri: http://localhost:2375
+
+  metrics:
+    logs:
+      enabled: true
+      period: 60
