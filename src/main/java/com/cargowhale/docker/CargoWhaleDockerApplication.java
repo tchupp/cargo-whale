@@ -1,8 +1,9 @@
 package com.cargowhale.docker;
 
-import com.cargowhale.docker.config.DockerProperties;
 import com.cargowhale.docker.config.Constants;
 import com.cargowhale.docker.config.DefaultProfileUtil;
+import com.cargowhale.docker.config.DockerProperties;
+import com.cargowhale.docker.config.metrics.MetricsGraphiteProperties;
 import com.cargowhale.docker.config.metrics.MetricsLogsProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +17,7 @@ import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.Collection;
 
-@EnableConfigurationProperties({DockerProperties.class, MetricsLogsProperties.class})
+@EnableConfigurationProperties({DockerProperties.class, MetricsLogsProperties.class, MetricsGraphiteProperties.class})
 @SpringBootApplication
 public class CargoWhaleDockerApplication {
 

@@ -23,3 +23,9 @@ cargowhale:
   metrics:
     logs:
       enabled: false
+    graphite:
+      enabled: true
+      host: graphite
+      port: 2003
+      period: 60
+      prefix: cargowhale
