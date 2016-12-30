@@ -18,7 +18,7 @@ public class DefaultProfileUtil {
         /*
         * See https://github.com/spring-projects/spring-boot/issues/1219
         */
-        properties.put(SPRING_PROFILE_DEFAULT, Constants.SPRING_PROFILE_DEVELOPMENT);
+        properties.put(SPRING_PROFILE_DEFAULT, ProfileConstants.SPRING_PROFILE_DEVELOPMENT);
         app.setDefaultProperties(properties);
     }
 
