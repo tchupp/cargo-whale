@@ -1,10 +1,8 @@
 package com.cargowhale.docker.container.info;
 
-import com.cargowhale.docker.client.containers.ContainerState;
 import com.cargowhale.docker.client.containers.info.inspect.ContainerDetails;
 import com.cargowhale.docker.client.containers.info.logs.LogFilters;
 import com.cargowhale.docker.client.containers.info.stats.ContainerStats;
-import com.cargowhale.docker.container.ContainerEnumConverter;
 import com.cargowhale.docker.container.info.details.ContainerDetailsResource;
 import com.cargowhale.docker.container.info.details.ContainerDetailsResourceAssembler;
 import com.cargowhale.docker.container.info.model.ContainerLogs;
@@ -18,8 +16,10 @@ import com.cargowhale.docker.container.info.top.ContainerProcessesResourceAssemb
 import com.cargowhale.docker.container.info.top.ContainerTopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.MediaTypes;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/containers")
@@ -40,11 +40,6 @@ public class ContainerDetailsController {
         this.logsResourceAssembler = logsResourceAssembler;
         this.statsResourceAssembler = statsResourceAssembler;
         this.processesResourceAssembler = processesResourceAssembler;
-    }
-
-    @InitBinder
-    public void initBinder(final WebDataBinder binder) {
-        binder.registerCustomEditor(ContainerState.class, new ContainerEnumConverter());
     }
 
     @RequestMapping(value = "/{id}",

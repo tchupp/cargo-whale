@@ -84,7 +84,7 @@ title: Docker API
           text/plain:
             example: !include examples/container-logs.txt
 
-/v1.24/containers/running-container/stats:
+/v1.24/containers/running-container/stats?stream=0:
   get:
     responses:
       200:

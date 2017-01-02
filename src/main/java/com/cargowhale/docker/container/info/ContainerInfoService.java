@@ -48,7 +48,7 @@ public class ContainerInfoService {
         return this.client.getContainerLogs(containerId, logFilters);
     }
 
-    ContainerStats getContainerStatsById(final String containerId){
+    ContainerStats getContainerStatsById(final String containerId) {
         return this.client.getContainerStats(containerId);
     }
 }

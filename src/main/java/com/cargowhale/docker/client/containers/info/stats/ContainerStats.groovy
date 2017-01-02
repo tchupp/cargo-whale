@@ -1,61 +1,85 @@
 package com.cargowhale.docker.client.containers.info.stats
 
-import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonGetter
+import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.jackson.annotation.JsonSetter
 import groovy.transform.Canonical
 import groovy.transform.EqualsAndHashCode
 
-import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY
-
+/**
+ * {@see https://github.com/docker/engine-api/blob/release/1.12/types/stats.go}
+ */
 @EqualsAndHashCode(excludes = "id")
 @Canonical
 class ContainerStats {
 
-    @JsonProperty(access = WRITE_ONLY)
+    @JsonIgnore
     String id
 
-    String datetimeRead
+    String time
     Map<String, Long> pidStats
     Map<String, ContainerNetworkStats> networkStats
     ContainerMemoryStats memoryStats
     ContainerCpuStats cpuStats
     ContainerCpuStats preCpuStats
 
-    void setId(String id){this.id = id}
+    @JsonGetter("time")
+    String getTime() {
+        return time
+    }
 
-    @JsonProperty("read")
-    void setDatetimeRead(String datetime){this.datetimeRead = datetime}
+    @JsonSetter("read")
+    void setTime(String datetime) {
+        this.time = datetime
+    }
 
-    @JsonProperty("datetimeRead")
-    String getDatetimeRead(){return this.datetimeRead}
+    @JsonGetter("pidStats")
+    Map<String, Long> getPidStats() {
+        return pidStats
+    }
 
-    @JsonProperty("pids_stats")
-    void setPidStats(Map<String, Long> pidStats){this.pidStats = pidStats}
+    @JsonSetter("pids_stats")
+    void setPidStats(Map<String, Long> pidStats) {
+        this.pidStats = pidStats
+    }
 
-    @JsonProperty("pidStats")
-    Map<String, Long> getPidStats(){return this.pidStats}
+    @JsonGetter("networkStats")
+    Map<String, ContainerNetworkStats> getNetworkStats() {
+        return networkStats
+    }
 
-    @JsonProperty("networks")
-    void setNetworkStats(Map<String, ContainerNetworkStats> networkStats){this.networkStats = networkStats}
+    @JsonSetter("networks")
+    void setNetworkStats(Map<String, ContainerNetworkStats> networkStats) {
+        this.networkStats = networkStats
+    }
 
-    @JsonProperty("networkStats")
-    Map<String, ContainerNetworkStats> getNetworkStats(){return this.networkStats}
+    @JsonGetter("memoryStats")
+    ContainerMemoryStats getMemoryStats() {
+        return memoryStats
+    }
 
-    @JsonProperty("memory_stats")
-    void setMemoryStats(ContainerMemoryStats memoryStats){this.memoryStats = memoryStats}
+    @JsonSetter("memory_stats")
+    void setMemoryStats(ContainerMemoryStats memoryStats) {
+        this.memoryStats = memoryStats
+    }
 
-    @JsonProperty("memoryStats")
-    ContainerMemoryStats getMemoryStats(){return this.memoryStats}
+    @JsonGetter("cpuStats")
+    ContainerCpuStats getCpuStats() {
+        return cpuStats
+    }
 
-    @JsonProperty("cpu_stats")
-    void setCpuStats(ContainerCpuStats cpuStats){this.cpuStats = cpuStats}
+    @JsonSetter("cpu_stats")
+    void setCpuStats(ContainerCpuStats cpuStats) {
+        this.cpuStats = cpuStats
+    }
 
-    @JsonProperty("cpuStats")
-    ContainerCpuStats getCpuStats(){return this.cpuStats}
+    @JsonGetter("preCpuStats")
+    ContainerCpuStats getPreCpuStats() {
+        return preCpuStats
+    }
 
-    @JsonProperty("precpu_stats")
-    void setPreCpuStats(ContainerCpuStats preCpuStats){this.preCpuStats = preCpuStats}
-
-    @JsonProperty("preCpuStats")
-    ContainerCpuStats getPreCpuStats(){return this.preCpuStats}
-
+    @JsonSetter("precpu_stats")
+    void setPreCpuStats(ContainerCpuStats preCpuStats) {
+        this.preCpuStats = preCpuStats
+    }
 }

@@ -16,7 +16,7 @@ public class ContainerStatsResourceAssembler extends ResourceAssemblerSupport<Co
     }
 
     @Override
-    public ContainerStatsResource toResource(final ContainerStats entity){
+    public ContainerStatsResource toResource(final ContainerStats entity) {
         ContainerStatsResource resource = createResourceWithId(entity.getId(), entity);
 
         resource.add(linkTo(methodOn(ContainerDetailsController.class).getContainerById(entity.getId())).withRel("up"));
@@ -25,7 +25,7 @@ public class ContainerStatsResourceAssembler extends ResourceAssemblerSupport<Co
     }
 
     @Override
-    protected ContainerStatsResource createResourceWithId(final Object id, ContainerStats entity) {
+    protected ContainerStatsResource createResourceWithId(final Object id, final ContainerStats entity) {
         ContainerStatsResource resource = new ContainerStatsResource(entity);
 
         resource.add(linkTo(methodOn(ContainerDetailsController.class).getContainerStatsById(entity.getId())).withSelfRel());

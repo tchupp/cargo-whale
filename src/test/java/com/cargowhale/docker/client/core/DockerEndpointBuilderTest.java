@@ -80,7 +80,7 @@ public class DockerEndpointBuilderTest {
     }
 
     @Test
-    public void getContainerStatsEndpointReturnsCorrectUri() throws Exception{
+    public void getContainerStatsEndpointReturnsCorrectUri() throws Exception {
         String containerId1 = "1fds78i1h";
         String containerId2 = "4y712yui4";
 

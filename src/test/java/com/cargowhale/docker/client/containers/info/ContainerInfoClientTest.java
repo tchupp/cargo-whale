@@ -18,7 +18,6 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.awt.*;
 import java.io.UnsupportedEncodingException;
 import java.util.UUID;
 
@@ -112,7 +111,7 @@ public class ContainerInfoClientTest {
     }
 
     @Test
-    public void getContainerStatsReturnsCorrectContainerStats(){
+    public void getContainerStatsReturnsCorrectContainerStats() {
         String containerStatsEndpoint = UUID.randomUUID().toString();
         String containerId = "thisId";
 

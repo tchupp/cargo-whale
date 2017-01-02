@@ -1,39 +1,39 @@
 {
-  "datetimeRead": "2016-12-26T19:24:32.392453964Z",
+  "time": "2016-12-26T18:49:04.392441645Z",
   "pidStats": {
-    "current": 27
+    "current": 24
   },
   "networkStats": {
     "eth0": {
-      "rxBytes": 64073,
+      "rxBytes": 40826,
       "rxDropped": 0,
       "rxErrors": 0,
-      "rxPackets": 210,
-      "txBytes": 16993,
+      "rxPackets": 110,
+      "txBytes": 14333,
       "txDropped": 0,
       "txErrors": 0,
-      "txPackets": null
+      "txPackets": 26
     }
   },
   "memoryStats": {
     "maxUsage": 499884032,
-    "usage": 487714816,
+    "usage": 490655744,
     "failCount": 0,
     "limit": 6202036224
   },
   "cpuStats": {
     "cpuUsage": {
       "cpuCoreUsage": [
-        14035973754,
-        12272616472,
-        10799468949,
-        13903704381
+        12102485667,
+        10720048873,
+        8701023483,
+        11679578220
       ],
-      "userModeUsage": 47250000000,
-      "kernalModeUsage": 2570000000,
-      "totalUsage": 51011763556
+      "userModeUsage": 41740000000,
+      "kernelModeUsage": 1380000000,
+      "totalUsage": 43203136243
     },
-    "systemCpuUsage": 14875260000000,
+    "systemCpuUsage": 6469770000000,
     "throttlingData": {
       "periods": 0,
       "throttled_periods": 0,
@@ -43,16 +43,16 @@
   "preCpuStats": {
     "cpuUsage": {
       "cpuCoreUsage": [
-        14035687913,
-        12272616472,
-        10798019066,
-        13903704381
+        12102336105,
+        10719377004,
+        8700337946,
+        11679276464
       ],
-      "userModeUsage": 47250000000,
-      "kernalModeUsage": 2570000000,
-      "totalUsage": 51010027832
+      "userModeUsage": 41740000000,
+      "kernelModeUsage": 1380000000,
+      "totalUsage": 43201327519
     },
-    "systemCpuUsage": 14871330000000,
+    "systemCpuUsage": 6465890000000,
     "throttlingData": {
       "periods": 0,
       "throttled_periods": 0,

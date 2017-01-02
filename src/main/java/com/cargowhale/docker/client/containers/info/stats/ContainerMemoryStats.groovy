@@ -1,6 +1,7 @@
 package com.cargowhale.docker.client.containers.info.stats
 
-import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonGetter
+import com.fasterxml.jackson.annotation.JsonSetter
 import groovy.transform.Canonical
 
 @Canonical
@@ -11,27 +12,43 @@ class ContainerMemoryStats {
     Long failCount
     Long limit
 
-    @JsonProperty("max_usage")
-    void setMaxUsage(Long maxUsage){this.maxUsage = maxUsage}
+    @JsonGetter("maxUsage")
+    Long getMaxUsage() {
+        return maxUsage
+    }
 
-    @JsonProperty("maxUsage")
-    Long getMaxUsage(){return this.maxUsage}
+    @JsonSetter("max_usage")
+    void setMaxUsage(final Long maxUsage) {
+        this.maxUsage = maxUsage
+    }
 
-    @JsonProperty("usage")
-    void setUsage(Long usage){this.usage = usage}
+    @JsonGetter("usage")
+    Long getUsage() {
+        return usage
+    }
 
-    @JsonProperty("usage")
-    Long getUsage(){return this.usage}
+    @JsonSetter("usage")
+    void setUsage(final Long usage) {
+        this.usage = usage
+    }
 
-    @JsonProperty("failcnt")
-    void setFailCount(Long failCount){this.failCount = failCount}
+    @JsonGetter("failCount")
+    Long getFailCount() {
+        return failCount
+    }
 
-    @JsonProperty("failCount")
-    Long getFailCount(){return this.failCount}
+    @JsonSetter("failcnt")
+    void setFailCount(final Long failCount) {
+        this.failCount = failCount
+    }
 
-    @JsonProperty("limit")
-    void setLimit(Long limit){this.limit = limit}
+    @JsonGetter("limit")
+    Long getLimit() {
+        return limit
+    }
 
-    @JsonProperty("limit")
-    Long getLimit(){return this.limit}
+    @JsonSetter("limit")
+    void setLimit(final Long limit) {
+        this.limit = limit
+    }
 }

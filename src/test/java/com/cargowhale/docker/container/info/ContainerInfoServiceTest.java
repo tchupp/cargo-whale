@@ -86,7 +86,7 @@ public class ContainerInfoServiceTest {
     }
 
     @Test
-    public void getContainerStatsById(){
+    public void getContainerStatsById() {
         String containerId = "container_id";
         ContainerStats stats = new ContainerStats();
 

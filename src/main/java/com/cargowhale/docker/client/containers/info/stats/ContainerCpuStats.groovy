@@ -1,6 +1,7 @@
 package com.cargowhale.docker.client.containers.info.stats
 
-import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonGetter
+import com.fasterxml.jackson.annotation.JsonSetter
 import groovy.transform.Canonical
 
 @Canonical
@@ -10,21 +11,33 @@ class ContainerCpuStats {
     Long systemCpuUsage
     Map<String, Long> throttlingData
 
-    @JsonProperty("throttlingData")
-    Map<String, Long> getThrottlingData() { return this.throttlingData }
+    @JsonGetter("throttlingData")
+    Map<String, Long> getThrottlingData() {
+        return this.throttlingData
+    }
 
-    @JsonProperty("throttling_data")
-    void setSystemCpuUsage(Map<String, Long> throttlingData) { this.throttlingData = throttlingData }
+    @JsonSetter("throttling_data")
+    void setSystemCpuUsage(Map<String, Long> throttlingData) {
+        this.throttlingData = throttlingData
+    }
 
-    @JsonProperty("systemCpuUsage")
-    Long getSystemCpuUsage() { return this.systemCpuUsage }
+    @JsonGetter("systemCpuUsage")
+    Long getSystemCpuUsage() {
+        return this.systemCpuUsage
+    }
 
-    @JsonProperty("system_cpu_usage")
-    void setSystemCpuUsage(Long systemCpuUsage) { this.systemCpuUsage = systemCpuUsage }
+    @JsonSetter("system_cpu_usage")
+    void setSystemCpuUsage(Long systemCpuUsage) {
+        this.systemCpuUsage = systemCpuUsage
+    }
 
-    @JsonProperty("cpuUsage")
-    ContainerCpuUsage getCpuUsage() { return cpuUsage }
+    @JsonGetter("cpuUsage")
+    ContainerCpuUsage getCpuUsage() {
+        return cpuUsage
+    }
 
-    @JsonProperty("cpu_usage")
-    void setCpuUsage(ContainerCpuUsage cpuUsage) { this.cpuUsage = cpuUsage }
+    @JsonSetter("cpu_usage")
+    void setCpuUsage(ContainerCpuUsage cpuUsage) {
+        this.cpuUsage = cpuUsage
+    }
 }

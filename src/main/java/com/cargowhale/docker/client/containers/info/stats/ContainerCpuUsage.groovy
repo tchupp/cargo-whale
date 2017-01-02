@@ -1,6 +1,7 @@
 package com.cargowhale.docker.client.containers.info.stats
 
-import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonGetter
+import com.fasterxml.jackson.annotation.JsonSetter
 import groovy.transform.Canonical
 
 @Canonical
@@ -8,30 +9,46 @@ class ContainerCpuUsage {
 
     List<Long> cpuCoreUsage
     Long userModeUsage
-    Long kernalModeUsage
+    Long kernelModeUsage
     Long totalUsage
 
-    @JsonProperty("percpu_usage")
-    void setCpuCoreUsage(List<Long> cpuCoreUsage){this.cpuCoreUsage = cpuCoreUsage}
+    @JsonGetter("cpuCoreUsage")
+    List<Long> getCpuCoreUsage() {
+        return this.cpuCoreUsage
+    }
 
-    @JsonProperty("cpuCoreUsage")
-    List<Long> getCpuCoreUsage(){return this.cpuCoreUsage}
+    @JsonSetter("percpu_usage")
+    void setCpuCoreUsage(final List<Long> cpuCoreUsage) {
+        this.cpuCoreUsage = cpuCoreUsage
+    }
 
-    @JsonProperty("usage_in_usermode")
-    void setUserModeUsage(Long userModeUsage){this.userModeUsage = userModeUsage}
+    @JsonGetter("userModeUsage")
+    Long getUserModeUsage() {
+        return this.userModeUsage
+    }
 
-    @JsonProperty("userModeUsage")
-    Long getUserModeUsage(){return this.userModeUsage}
+    @JsonSetter("usage_in_usermode")
+    void setUserModeUsage(final Long userModeUsage) {
+        this.userModeUsage = userModeUsage
+    }
 
-    @JsonProperty("usage_in_kernelmode")
-    void setKernalModeUsage(Long kernalModeUsage){this.kernalModeUsage = kernalModeUsage}
+    @JsonGetter("kernelModeUsage")
+    Long getKernelModeUsage() {
+        return this.kernelModeUsage
+    }
 
-    @JsonProperty("kernalModeUsage")
-    Long getKernalModeUsage(){return this.kernalModeUsage}
+    @JsonSetter("usage_in_kernelmode")
+    void setKernelModeUsage(final Long kernelModeUsage) {
+        this.kernelModeUsage = kernelModeUsage
+    }
 
-    @JsonProperty("total_usage")
-    void setTotalUsage(Long totalUsage){this.totalUsage = totalUsage}
+    @JsonGetter("totalUsage")
+    Long getTotalUsage() {
+        return this.totalUsage
+    }
 
-    @JsonProperty("totalUsage")
-    Long getTotalUsage(){return this.totalUsage}
+    @JsonSetter("total_usage")
+    void setTotalUsage(final Long totalUsage) {
+        this.totalUsage = totalUsage
+    }
 }

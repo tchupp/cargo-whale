@@ -38,6 +38,6 @@ public class DockerEndpointBuilder {
     }
 
     public String getContainerStatsEndpoint(final String containerId) {
-        return API_VERSION + CONTAINERS_ENDPOINT + "/" + containerId  + STATS;
+        return API_VERSION + CONTAINERS_ENDPOINT + "/" + containerId + STATS;
     }
 }

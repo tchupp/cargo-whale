@@ -1,6 +1,7 @@
 package com.cargowhale.docker.client.containers.info.stats
 
-import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonGetter
+import com.fasterxml.jackson.annotation.JsonSetter
 import groovy.transform.Canonical
 
 @Canonical
@@ -15,51 +16,83 @@ class ContainerNetworkStats {
     Long txErrors
     Long txPackets
 
-    @JsonProperty("rx_bytes")
-    void setRxBytes(Long rxBytes){this.rxBytes = rxBytes}
+    @JsonGetter("rxBytes")
+    Long getRxBytes() {
+        return rxBytes
+    }
 
-    @JsonProperty("rxBytes")
-    Long getRxBytes(){return this.rxBytes}
+    @JsonSetter("rx_bytes")
+    void setRxBytes(final Long rxBytes) {
+        this.rxBytes = rxBytes
+    }
 
-    @JsonProperty("rx_dropped")
-    void setRxDropped(Long rxDropped){this.rxDropped = rxDropped}
+    @JsonGetter("rxDropped")
+    Long getRxDropped() {
+        return rxDropped
+    }
 
-    @JsonProperty("rxDropped")
-    Long getRxDropped(){return this.rxDropped}
+    @JsonSetter("rx_dropped")
+    void setRxDropped(final Long rxDropped) {
+        this.rxDropped = rxDropped
+    }
 
-    @JsonProperty("rx_errors")
-    void setRxErrors(Long rxErrors){this.rxErrors = rxErrors}
+    @JsonGetter("rxErrors")
+    Long getRxErrors() {
+        return rxErrors
+    }
 
-    @JsonProperty("rxErrors")
-    Long getRxErrors(){return this.rxErrors}
+    @JsonSetter("rx_errors")
+    void setRxErrors(final Long rxErrors) {
+        this.rxErrors = rxErrors
+    }
 
-    @JsonProperty("rx_packets")
-    void setRxPackets(Long rxPackets){this.rxPackets = rxPackets}
+    @JsonGetter("rxPackets")
+    Long getRxPackets() {
+        return rxPackets
+    }
 
-    @JsonProperty("rxPackets")
-    Long getRxPackets(){return this.rxPackets}
+    @JsonSetter("rx_packets")
+    void setRxPackets(final Long rxPackets) {
+        this.rxPackets = rxPackets
+    }
 
-    @JsonProperty("tx_bytes")
-    void setTxBytes(Long txBytes){this.txBytes = txBytes}
+    @JsonGetter("txBytes")
+    Long getTxBytes() {
+        return txBytes
+    }
 
-    @JsonProperty("txBytes")
-    Long getTxBytes(){return this.txBytes}
+    @JsonSetter("tx_bytes")
+    void setTxBytes(final Long txBytes) {
+        this.txBytes = txBytes
+    }
 
-    @JsonProperty("tx_dropped")
-    void setTxDropped(Long txDropped){this.txDropped = txDropped}
+    @JsonGetter("txDropped")
+    Long getTxDropped() {
+        return txDropped
+    }
 
-    @JsonProperty("txDropped")
-    Long getTxDropped(){return this.txDropped}
+    @JsonSetter("tx_dropped")
+    void setTxDropped(final Long txDropped) {
+        this.txDropped = txDropped
+    }
 
-    @JsonProperty("tx_errors")
-    void setTxErrors(Long txErrors){this.txErrors = txErrors}
+    @JsonGetter("txErrors")
+    Long getTxErrors() {
+        return txErrors
+    }
 
-    @JsonProperty("txErrors")
-    Long getTxErrors(){return this.txErrors}
+    @JsonSetter("tx_errors")
+    void setTxErrors(final Long txErrors) {
+        this.txErrors = txErrors
+    }
 
-    @JsonProperty("tx_packets")
-    void setTxPackets(Long rxPackets){this.txPackets = txPackets}
+    @JsonGetter("txPackets")
+    Long getTxPackets() {
+        return txPackets
+    }
 
-    @JsonProperty("txPackets")
-    Long getTxPackets(){return this.txPackets}
+    @JsonSetter("tx_packets")
+    void setTxPackets(final Long txPackets) {
+        this.txPackets = txPackets
+    }
 }

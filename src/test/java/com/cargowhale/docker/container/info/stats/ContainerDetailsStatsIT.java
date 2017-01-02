@@ -32,8 +32,7 @@ public class ContainerDetailsStatsIT {
 
     @Test
     public void getContainerDetails() throws Exception {
-        this.dockerServiceBuilder.expectRequest("/v1.24/containers/running-container/json", HttpMethod.GET, HttpStatus.OK, MediaType.APPLICATION_JSON);
-        this.dockerServiceBuilder.expectRequest("/v1.24/containers/running-container/stats", HttpMethod.GET, HttpStatus.OK, MediaType.APPLICATION_JSON);
+        this.dockerServiceBuilder.expectRequest("/v1.24/containers/running-container/stats?stream=0", HttpMethod.GET, HttpStatus.OK, MediaType.APPLICATION_JSON);
 
         this.client.perform(get("/api/containers/running-container/stats"))
             .andExpect(responseIsInSpec(RamlSpecFiles.CARGO_WHALE_RAML_SPEC_FILE)
