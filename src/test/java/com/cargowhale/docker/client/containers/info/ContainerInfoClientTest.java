@@ -5,6 +5,7 @@ import com.cargowhale.docker.client.containers.info.inspect.ContainerDetails;
 import com.cargowhale.docker.client.containers.info.list.ContainerListItem;
 import com.cargowhale.docker.client.containers.info.list.ListContainerFilters;
 import com.cargowhale.docker.client.containers.info.logs.LogFilters;
+import com.cargowhale.docker.client.containers.info.stats.ContainerStats;
 import com.cargowhale.docker.client.containers.info.top.ContainerTop;
 import com.cargowhale.docker.client.core.DockerEndpointBuilder;
 import com.cargowhale.docker.client.core.DockerRestTemplate;
@@ -107,6 +108,19 @@ public class ContainerInfoClientTest {
         when(this.restTemplate.getForObject(containerTopEndpoint, ContainerTop.class)).thenReturn(containerTop);
 
         assertThat(this.client.getContainerProcesses(containerId), is(containerTop));
+    }
+
+    @Test
+    public void getContainerStatsReturnsCorrectContainerStats() {
+        String containerStatsEndpoint = UUID.randomUUID().toString();
+        String containerId = "thisId";
+
+        ContainerStats containerStats = Mockito.mock(ContainerStats.class);
+
+        when(this.endpointBuilder.getContainerStatsEndpoint(containerId)).thenReturn(containerStatsEndpoint);
+        when(this.restTemplate.getForObject(containerStatsEndpoint, ContainerStats.class)).thenReturn(containerStats);
+
+        assertThat(this.client.getContainerStats(containerId), is(containerStats));
     }
 }
 

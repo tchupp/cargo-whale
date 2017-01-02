@@ -21,7 +21,7 @@ public class CargoWhaleDockerApplication {
 
     private static final Logger log = LoggerFactory.getLogger(CargoWhaleDockerApplication.class);
 
-    public static void main(String[] args) throws UnknownHostException {
+    public static void main(final String[] args) throws UnknownHostException {
         SpringApplication app = new SpringApplication(CargoWhaleDockerApplication.class);
         DefaultProfileUtil.addDefaultProfile(app);
         Environment env = app.run(args).getEnvironment();
