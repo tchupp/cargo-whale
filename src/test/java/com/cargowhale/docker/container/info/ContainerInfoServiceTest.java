@@ -2,12 +2,13 @@ package com.cargowhale.docker.container.info;
 
 import com.cargowhale.docker.client.containers.ContainerState;
 import com.cargowhale.docker.client.containers.info.ContainerInfoClient;
+import com.cargowhale.docker.client.containers.info.inspect.ContainerDetails;
 import com.cargowhale.docker.client.containers.info.list.ContainerListItem;
 import com.cargowhale.docker.client.containers.info.list.ListContainerFilters;
 import com.cargowhale.docker.client.containers.info.logs.LogFilters;
-import com.cargowhale.docker.container.info.index.ContainerIndexBuilder;
-import com.cargowhale.docker.container.info.model.ContainerDetails;
+import com.cargowhale.docker.client.containers.info.stats.ContainerStats;
 import com.cargowhale.docker.container.info.index.ContainerIndex;
+import com.cargowhale.docker.container.info.index.ContainerIndexBuilder;
 import com.cargowhale.docker.container.info.model.ContainerLogs;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -82,5 +83,15 @@ public class ContainerInfoServiceTest {
         when(this.client.getContainerLogs(containerId, filters)).thenReturn(containerLogs);
 
         assertThat(this.service.getContainerLogsById(containerId, filters), is(containerLogs));
+    }
+
+    @Test
+    public void getContainerStatsById() {
+        String containerId = "container_id";
+        ContainerStats stats = new ContainerStats();
+
+        when(this.client.getContainerStats(containerId)).thenReturn(stats);
+
+        assertThat(this.service.getContainerStatsById(containerId), is(stats));
     }
 }

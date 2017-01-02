@@ -3,7 +3,7 @@ import {BrowserModule} from "@angular/platform-browser";
 import {HttpModule} from "@angular/http";
 import {RouterModule} from "@angular/router";
 
-import {ContainersModule} from "./containers";
+import {PagesModule} from "./pages/pages.module";
 import {LayoutsModule, MainComponent} from "./layouts";
 import {appRoutes} from "./app.routes";
 
@@ -12,7 +12,7 @@ import {appRoutes} from "./app.routes";
         BrowserModule,
         HttpModule,
         RouterModule,
-        ContainersModule,
+        PagesModule,
         LayoutsModule,
         appRoutes
     ],

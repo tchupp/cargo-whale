@@ -1,7 +1,7 @@
 package com.cargowhale.division.matchers;
 
-import com.cargowhale.division.raml.model.RamlSpec;
 import com.cargowhale.division.raml.RamlSpecBuilder;
+import com.cargowhale.division.raml.model.RamlSpec;
 import org.raml.v2.api.RamlModelBuilder;
 import org.raml.v2.api.RamlModelResult;
 import org.springframework.http.HttpMethod;
