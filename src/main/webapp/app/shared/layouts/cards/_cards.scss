@@ -112,6 +112,10 @@ $card-header-font-size: 16px;
     }
 }
 
+.card-link {
+    cursor: pointer;
+}
+
 .card {
     > ngb-tabset {
         > .nav {

@@ -9,7 +9,7 @@
 </div>
 
 <div *ngFor="let container of containers" class="col-md-4 col-sm-6 col-xs-12">
-    <cw-card title="{{container.name | replace : '/'}}" (click)="onClickContainer(container)">
+    <cw-card title="{{container.name | replace : '/'}}" [link]="true" (click)="onClickContainer(container)">
         <div class="container-phase sm {{container.state}}">
             <p>
                 <span class="container-state">{{container.state}}</span>
