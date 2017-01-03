@@ -80,3 +80,20 @@ $hover-link: $primary-dark;
 @mixin additional-bg() {
     //display: block; // additional background layer, hidden by default
 }
+
+@mixin cw-clearfix {
+    &:before,
+    &:after {
+        content: " ";
+        display: table;
+    }
+    &:after {
+        clear: both;
+    }
+}
+
+@mixin cw-hover {
+    &:hover {
+        color: $primary;
+    }
+}

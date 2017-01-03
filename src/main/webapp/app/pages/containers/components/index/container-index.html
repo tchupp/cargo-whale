@@ -8,19 +8,26 @@
     </div>
 </div>
 
-<div *ngFor="let container of containers" class="col-md-4 col-sm-6 col-xs-12">
-    <cw-card title="{{container.name | replace : '/'}}" [link]="true" (click)="onClickContainer(container)">
-        <div class="container-phase sm {{container.state}}">
-            <p>
-                <span class="container-state">{{container.state}}</span>
-                <br/>
-                <span class="container-status">{{container.status}}</span>
-            </p>
+<div *ngFor="let container of containers" class="col-lg-4 col-md-6 col-xs-12">
+    <cw-card [link]="true" (click)="onClickContainer(container)">
+        <div card-header>
+            <h3 class="card-title">{{container.name | replace : '/'}}</h3>
         </div>
-        <cw-divider></cw-divider>
-        <cw-info-item [name]="'Image'"
-                      [divider]="false">
-            <span class="value">{{container.image}}</span>
-        </cw-info-item>
+
+        <div card-body>
+            <div class="container-phase sm {{container.state}}">
+                <p>
+                    <span class="container-state">{{container.state}}</span>
+                    <br/>
+                    <span class="container-status">{{container.status}}</span>
+                </p>
+            </div>
+
+            <cw-divider></cw-divider>
+            <cw-info-item [name]="'Image'"
+                          [divider]="false">
+                <span class="value">{{container.image | truncate: 40}}</span>
+            </cw-info-item>
+        </div>
     </cw-card>
 </div>

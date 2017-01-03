@@ -1,4 +1,5 @@
-import {Component, OnInit, Input} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
     selector: 'cw-container-environment',
@@ -11,8 +12,12 @@ import {Component, OnInit, Input} from "@angular/core";
 })
 export class ContainerEnvironmentComponent implements OnInit {
 
-    @Input() environment: string[];
+    private environment: string[];
+
+    constructor(private route: ActivatedRoute) {
+    }
 
     ngOnInit(): void {
+        this.environment = this.route.snapshot.parent.data['container'].config.environment;
     }
 }
