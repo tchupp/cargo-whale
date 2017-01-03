@@ -3,9 +3,8 @@ import {ActivatedRoute} from "@angular/router";
 
 @Component({
     selector: 'cw-container-environment',
-    template: `<div *ngFor="let envVar of environment; let i = index">
-                   <cw-info-item [name]="envVar | split : '=' : 0"
-                                 [divider]="!(i === environment.length - 1)">
+    template: `<div *ngFor="let envVar of environment; let last = last">
+                   <cw-info-item [name]="envVar | split : '=' : 0" [divider]="!last">
                        <span class="value">{{envVar | split : '=' : 1}}</span>
                    </cw-info-item>
                </div>`
