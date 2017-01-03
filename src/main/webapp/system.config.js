@@ -17,8 +17,8 @@
         // app barrels
         'containers': 'app/pages/containers',
         'pages': 'app/pages',
-        'layouts': 'app/layouts',
-        'shared': 'app/shared'
+        'layouts': 'app/shared/layouts',
+        'pipes': 'app/shared/pipes'
     };
     // packages tells the System loader how to load when no filename and/or no extension
     var packages = {
@@ -32,7 +32,7 @@
         'containers': {main: 'index', defaultExtension: 'js'},
         'pages': {main: 'index', defaultExtension: 'js'},
         'layouts': {main: 'index', defaultExtension: 'js'},
-        'shared': {main: 'index', defaultExtension: 'js'}
+        'pipes': {main: 'index', defaultExtension: 'js'}
     };
     var ngPackageNames = [
         'common',

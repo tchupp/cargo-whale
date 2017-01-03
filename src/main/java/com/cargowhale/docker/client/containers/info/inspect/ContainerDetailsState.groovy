@@ -1,27 +1,23 @@
 package com.cargowhale.docker.client.containers.info.inspect
 
 import com.cargowhale.docker.client.containers.ContainerState
-import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.databind.PropertyNamingStrategy
+import com.fasterxml.jackson.databind.annotation.JsonNaming
 import groovy.transform.Canonical
 
+@JsonNaming(PropertyNamingStrategy.UpperCamelCaseStrategy.class)
 @Canonical
 class ContainerDetailsState {
 
-    @JsonProperty("Status")
-    ContainerState state
-
-    @JsonProperty("Pid")
+    ContainerState status
     Integer pid
-
-    @JsonProperty("Error")
     String error
-
-    @JsonProperty("ExitCode")
     Integer exitCode
+    String startedAt
+    String finishedAt
+    Boolean dead
+    Boolean paused
+    Boolean restarting
+    Boolean running
 
-    @JsonProperty("StartedAt")
-    String startedTime
-
-    @JsonProperty("FinishedAt")
-    String finishedTime
 }

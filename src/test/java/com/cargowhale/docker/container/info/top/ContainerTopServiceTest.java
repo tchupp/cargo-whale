@@ -39,6 +39,8 @@ public class ContainerTopServiceTest {
     public void getContainerProcessesByIdReturnsContainerProcessIndex() {
         String containerId = "container_id";
         ContainerDetailsState containerDetailsState = new ContainerDetailsState(ContainerState.RUNNING);
+        containerDetailsState.setRunning(true);
+
         ContainerDetails containerDetails = new ContainerDetails(containerDetailsState);
 
         ContainerTop response = mock(ContainerTop.class);
@@ -59,6 +61,8 @@ public class ContainerTopServiceTest {
 
         String containerId = "container_id";
         ContainerDetailsState containerDetailsState = new ContainerDetailsState(ContainerState.EXITED);
+        containerDetailsState.setRunning(false);
+
         ContainerDetails containerDetails = new ContainerDetails(containerDetailsState);
 
         when(this.client.inspectContainer(containerId)).thenReturn(containerDetails);
