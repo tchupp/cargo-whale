@@ -36,15 +36,18 @@
                     <span class="value">{{details?.imageId}}</span>
                 </cw-info-item>
 
-                <cw-info-item [name]="'Pid'">
+                <cw-info-item *ngIf="details?.state.running"
+                              [name]="'Pid'">
                     <span class="value">{{details?.state.pid}}</span>
                 </cw-info-item>
 
-                <cw-info-item [name]="'Error'">
+                <cw-info-item *ngIf="details?.state.exitCode !== 0"
+                              [name]="'Error'">
                     <span class="value">{{details?.state.error}}</span>
                 </cw-info-item>
 
-                <cw-info-item [name]="'Exit Code'">
+                <cw-info-item *ngIf="!details?.state.running"
+                              [name]="'Exit Code'">
                     <span class="value">{{details?.state.exitCode}}</span>
                 </cw-info-item>
 
@@ -90,6 +93,16 @@
 
         <div card-body>
             <router-outlet></router-outlet>
+        </div>
+    </cw-card>
+</div>
+
+<div class="col-xs-12">
+    <cw-card>
+        <div card-body>
+            <pre>
+                {{details | json}}
+            </pre>
         </div>
     </cw-card>
 </div>
