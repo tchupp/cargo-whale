@@ -30,52 +30,69 @@ public class MetricsConfiguration extends MetricsConfigurerAdapter {
 
     private final MetricsLogsProperties metricsLogsProperties;
     private final MetricsGraphiteProperties metricsGraphiteProperties;
+    private final MetricsJvmProperties metricsJvmProperties;
 
     @Autowired
-    public MetricsConfiguration(final MetricsLogsProperties metricsLogsProperties, final MetricsGraphiteProperties metricsGraphiteProperties) {
+    public MetricsConfiguration(final MetricsLogsProperties metricsLogsProperties, final MetricsGraphiteProperties metricsGraphiteProperties, final MetricsJvmProperties metricsJvmProperties) {
         this.metricsLogsProperties = metricsLogsProperties;
         this.metricsGraphiteProperties = metricsGraphiteProperties;
+        this.metricsJvmProperties = metricsJvmProperties;
     }
 
     @Override
     public void configureReporters(final MetricRegistry metricRegistry) {
+        if (this.metricsJvmProperties.getEnabled()) {
+            registerJvmMetrics(metricRegistry);
+        }
+
+        if (this.metricsLogsProperties.getEnabled()) {
+            registerLogReporter(metricRegistry);
+        }
+
+        if (this.metricsGraphiteProperties.getEnabled()) {
+            registerGraphiteReporter(metricRegistry);
+        }
+    }
+
+    private void registerJvmMetrics(final MetricRegistry metricRegistry) {
         this.log.debug("Registering JVM gauges");
+
         metricRegistry.register(PROP_METRIC_REG_JVM_MEMORY, new MemoryUsageGaugeSet());
         metricRegistry.register(PROP_METRIC_REG_JVM_GARBAGE, new GarbageCollectorMetricSet());
         metricRegistry.register(PROP_METRIC_REG_JVM_THREADS, new ThreadStatesGaugeSet());
         metricRegistry.register(PROP_METRIC_REG_JVM_FILES, new FileDescriptorRatioGauge());
         metricRegistry.register(PROP_METRIC_REG_JVM_BUFFERS, new BufferPoolMetricSet(ManagementFactory.getPlatformMBeanServer()));
+    }
 
-        if (this.metricsLogsProperties.getEnabled()) {
-            this.log.info("Initializing Metrics Log reporting");
+    private void registerLogReporter(final MetricRegistry metricRegistry) {
+        this.log.info("Initializing Metrics Log reporting");
 
-            String prefix = this.metricsLogsProperties.getPrefix();
-            Long period = this.metricsLogsProperties.getPeriod();
+        String prefix = this.metricsLogsProperties.getPrefix();
+        Long period = this.metricsLogsProperties.getPeriod();
 
-            final Slf4jReporter reporter = Slf4jReporter.forRegistry(metricRegistry)
-                .outputTo(LoggerFactory.getLogger("metrics"))
-                .convertRatesTo(TimeUnit.SECONDS)
-                .convertDurationsTo(TimeUnit.MILLISECONDS)
-                .prefixedWith(prefix)
-                .build();
-            reporter.start(period, TimeUnit.SECONDS);
-        }
+        final Slf4jReporter reporter = Slf4jReporter.forRegistry(metricRegistry)
+            .outputTo(LoggerFactory.getLogger("metrics"))
+            .convertRatesTo(TimeUnit.SECONDS)
+            .convertDurationsTo(TimeUnit.MILLISECONDS)
+            .prefixedWith(prefix)
+            .build();
+        registerReporter(reporter).start(period, TimeUnit.SECONDS);
+    }
 
-        if (this.metricsGraphiteProperties.getEnabled()) {
-            this.log.info("Initializing Metrics Graphite reporting");
+    private void registerGraphiteReporter(final MetricRegistry metricRegistry) {
+        this.log.info("Initializing Metrics Graphite reporting");
 
-            String host = this.metricsGraphiteProperties.getHost();
-            Integer port = this.metricsGraphiteProperties.getPort();
-            String prefix = this.metricsGraphiteProperties.getPrefix();
-            Long period = this.metricsGraphiteProperties.getPeriod();
+        String host = this.metricsGraphiteProperties.getHost();
+        Integer port = this.metricsGraphiteProperties.getPort();
+        String prefix = this.metricsGraphiteProperties.getPrefix();
+        Long period = this.metricsGraphiteProperties.getPeriod();
+        Graphite graphite = new Graphite(new InetSocketAddress(host, port));
 
-            Graphite graphite = new Graphite(new InetSocketAddress(host, port));
-            final GraphiteReporter reporter = GraphiteReporter.forRegistry(metricRegistry)
-                .convertRatesTo(TimeUnit.SECONDS)
-                .convertDurationsTo(TimeUnit.MILLISECONDS)
-                .prefixedWith(prefix)
-                .build(graphite);
-            reporter.start(period, TimeUnit.SECONDS);
-        }
+        final GraphiteReporter reporter = GraphiteReporter.forRegistry(metricRegistry)
+            .convertRatesTo(TimeUnit.SECONDS)
+            .convertDurationsTo(TimeUnit.MILLISECONDS)
+            .prefixedWith(prefix)
+            .build(graphite);
+        registerReporter(reporter).start(period, TimeUnit.SECONDS);
     }
 }

@@ -21,6 +21,8 @@ cargowhale:
     uri: http://localhost:2375
 
   metrics:
+    jvm:
+      enabled: false
     logs:
       enabled: true
       period: 60
