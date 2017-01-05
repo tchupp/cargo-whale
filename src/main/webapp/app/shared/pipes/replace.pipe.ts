@@ -5,13 +5,13 @@ import {Pipe, PipeTransform} from "@angular/core";
 })
 export class ReplaceCharPipe implements PipeTransform {
 
-    transform(input: string, char: string): string {
+    transform(input: string, oldChar: string, newChar = ''): string {
         if (input === null) {
             return '';
         }
-        if (char === null) {
+        if (oldChar === null) {
             return input;
         }
-        return input.replace(char, '');
+        return input.replace(oldChar, newChar);
     }
 }

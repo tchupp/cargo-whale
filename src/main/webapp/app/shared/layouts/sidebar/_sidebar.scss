@@ -33,6 +33,7 @@
         color: $sidebar-text;
         font-family: $font-family;
         background-color: $sidebar;
+        cursor: pointer;
 
         &:hover {
             color: $primary;

@@ -1,6 +1,5 @@
 import {Component, OnInit} from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
-import {ContainersService} from "../../containers.service";
 import {ContainerDetails} from "./container-details.model";
 
 @Component({
@@ -11,13 +10,10 @@ export class ContainerDetailsComponent implements OnInit {
 
     private details: ContainerDetails;
 
-    constructor(private activatedRoute: ActivatedRoute, private containerService: ContainersService) {
+    constructor(private route: ActivatedRoute) {
     }
 
     ngOnInit(): void {
-        let id: string = this.activatedRoute.snapshot.params['id'];
-        this.containerService.getContainerDetails<ContainerDetails>(id).subscribe(details => {
-            this.details = details;
-        });
+        this.details = this.route.snapshot.data['container'];
     }
 }

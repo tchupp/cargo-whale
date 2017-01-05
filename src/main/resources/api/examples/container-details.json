@@ -54,6 +54,9 @@
     },
     "logs": {
       "href": "http://localhost/api/containers/ba033ac4401106a3b513bc9d639eee123ad78ca3616b921167cd74b20e25ed39/logs"
+    },
+    "stats": {
+      "href": "http://localhost/api/containers/ba033ac4401106a3b513bc9d639eee123ad78ca3616b921167cd74b20e25ed39/stats"
     }
   }
 }

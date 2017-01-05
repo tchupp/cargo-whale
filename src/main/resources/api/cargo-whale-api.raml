@@ -106,3 +106,12 @@ uses:
               body:
                 application/hal+json:
                   example: !include examples/container-logs.json
+
+      /stats:
+        get:
+          description: Processes from a specific container
+          responses:
+            200:
+              body:
+                application/hal+json:
+                  example: !include examples/container-stats.json

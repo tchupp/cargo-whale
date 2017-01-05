@@ -26,6 +26,7 @@ export class TruncateCharactersPipe implements PipeTransform {
                     input = input.substr(0, input.length - 1);
                 }
             }
+            return input + '...';
         }
         return input;
     }
