@@ -10,6 +10,7 @@ import com.ryantenney.metrics.spring.config.annotation.MetricsConfigurerAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.lang.management.ManagementFactory;
@@ -37,6 +38,12 @@ public class MetricsConfiguration extends MetricsConfigurerAdapter {
         this.metricsLogsProperties = metricsLogsProperties;
         this.metricsGraphiteProperties = metricsGraphiteProperties;
         this.metricsJvmProperties = metricsJvmProperties;
+    }
+
+    @Bean
+    @Override
+    public MetricRegistry getMetricRegistry() {
+        return new MetricRegistry();
     }
 
     @Override
