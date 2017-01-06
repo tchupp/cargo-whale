@@ -23,7 +23,7 @@ cargowhale:
   docker:
     uri: http://fakehost:287331
 
-metrics:
+  metrics:
     jvm:
       enabled: false
     logs:

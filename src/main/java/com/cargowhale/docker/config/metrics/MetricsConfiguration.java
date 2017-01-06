@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.annotation.PostConstruct;
 import java.lang.management.ManagementFactory;
 import java.net.InetSocketAddress;
 import java.util.concurrent.TimeUnit;
@@ -46,8 +47,10 @@ public class MetricsConfiguration extends MetricsConfigurerAdapter {
         return new MetricRegistry();
     }
 
-    @Override
-    public void configureReporters(final MetricRegistry metricRegistry) {
+    @PostConstruct
+    public void init() {
+        MetricRegistry metricRegistry = getMetricRegistry();
+
         if (this.metricsJvmProperties.getEnabled()) {
             registerJvmMetrics(metricRegistry);
         }
@@ -72,7 +75,7 @@ public class MetricsConfiguration extends MetricsConfigurerAdapter {
     }
 
     private void registerLogReporter(final MetricRegistry metricRegistry) {
-        this.log.info("Initializing Metrics Log reporting");
+        this.log.debug("Initializing Metrics Log reporting");
 
         String prefix = this.metricsLogsProperties.getPrefix();
         Long period = this.metricsLogsProperties.getPeriod();
@@ -87,7 +90,7 @@ public class MetricsConfiguration extends MetricsConfigurerAdapter {
     }
 
     private void registerGraphiteReporter(final MetricRegistry metricRegistry) {
-        this.log.info("Initializing Metrics Graphite reporting");
+        this.log.debug("Initializing Metrics Graphite reporting");
 
         String host = this.metricsGraphiteProperties.getHost();
         Integer port = this.metricsGraphiteProperties.getPort();
