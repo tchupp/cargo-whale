@@ -22,3 +22,11 @@ server:
 cargowhale:
   docker:
     uri: http://fakehost:287331
+
+  metrics:
+    jvm:
+      enabled: false
+    logs:
+      enabled: false
+    graphite:
+      enabled: false

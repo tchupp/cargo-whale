@@ -1,8 +1,11 @@
 package com.cargowhale.docker;
 
-import com.cargowhale.docker.config.CargoWhaleProperties;
-import com.cargowhale.docker.config.Constants;
 import com.cargowhale.docker.config.DefaultProfileUtil;
+import com.cargowhale.docker.config.DockerProperties;
+import com.cargowhale.docker.config.ProfileConstants;
+import com.cargowhale.docker.config.metrics.MetricsGraphiteProperties;
+import com.cargowhale.docker.config.metrics.MetricsJvmProperties;
+import com.cargowhale.docker.config.metrics.MetricsLogsProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -15,14 +18,14 @@ import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.Collection;
 
-@EnableConfigurationProperties(CargoWhaleProperties.class)
+@EnableConfigurationProperties({DockerProperties.class, MetricsLogsProperties.class, MetricsGraphiteProperties.class, MetricsJvmProperties.class})
 @SpringBootApplication
-public class CargoWhaleDockerApplication {
+public class CargoWhaleApplication {
 
-    private static final Logger log = LoggerFactory.getLogger(CargoWhaleDockerApplication.class);
+    private static final Logger log = LoggerFactory.getLogger(CargoWhaleApplication.class);
 
     public static void main(final String[] args) throws UnknownHostException {
-        SpringApplication app = new SpringApplication(CargoWhaleDockerApplication.class);
+        SpringApplication app = new SpringApplication(CargoWhaleApplication.class);
         DefaultProfileUtil.addDefaultProfile(app);
         Environment env = app.run(args).getEnvironment();
         log.info("\n----------------------------------------------------------\n\t" +
@@ -44,7 +47,7 @@ public class CargoWhaleDockerApplication {
         log.info("Running with Spring profile(s) : {}", Arrays.toString(DefaultProfileUtil.getActiveProfiles(env)));
         Collection<String> activeProfiles = Arrays.asList(env.getActiveProfiles());
 
-        if (activeProfiles.contains(Constants.SPRING_PROFILE_DEVELOPMENT) && activeProfiles.contains(Constants.SPRING_PROFILE_PRODUCTION)) {
+        if (activeProfiles.contains(ProfileConstants.SPRING_PROFILE_DEVELOPMENT) && activeProfiles.contains(ProfileConstants.SPRING_PROFILE_PRODUCTION)) {
             log.error("You have misconfigured your application! It should not run " +
                 "with both the 'dev' and 'prod' profiles at the same time.");
         }

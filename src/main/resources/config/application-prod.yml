@@ -19,3 +19,15 @@
 cargowhale:
   docker:
     uri: http://socat:2375
+
+  metrics:
+    jvm:
+      enabled: true
+    logs:
+      enabled: false
+    graphite:
+      enabled: true
+      host: graphite
+      port: 2003
+      period: 60
+      prefix: cargowhale

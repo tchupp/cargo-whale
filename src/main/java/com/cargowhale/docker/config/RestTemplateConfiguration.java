@@ -10,11 +10,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RestTemplateConfiguration {
 
-    private final CargoWhaleProperties properties;
+    private final DockerProperties properties;
     private final DockerErrorHandler errorHandler;
 
     @Autowired
-    public RestTemplateConfiguration(final CargoWhaleProperties properties, final DockerErrorHandler errorHandler) {
+    public RestTemplateConfiguration(final DockerProperties properties, final DockerErrorHandler errorHandler) {
         this.properties = properties;
         this.errorHandler = errorHandler;
     }
@@ -22,7 +22,7 @@ public class RestTemplateConfiguration {
     @Bean
     public DockerRestTemplate dockerRestTemplate() {
         DockerRestTemplate restTemplate = new DockerRestTemplate(this.errorHandler);
-        RootUriTemplateHandler.addTo(restTemplate, this.properties.getDockerUri());
+        RootUriTemplateHandler.addTo(restTemplate, this.properties.getUri());
 
         return restTemplate;
     }
