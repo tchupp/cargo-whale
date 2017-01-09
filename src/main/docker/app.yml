@@ -1,17 +1,11 @@
 version: '2'
 services:
   cargowhale:
-    image: cargo-whale-docker
+    image: rxnctrllabs/cargo-whale
     external_links:
-      - socat-docker:socat
       - graphite:graphite
     ports:
       - 8081:8081
-
-  socat-docker:
-    extends:
-      file: socat.yml
-      service: socat-docker
 
   grafana:
     image: grafana/grafana

@@ -10,11 +10,11 @@
     </parent>
 
     <groupId>com.cargowhale.docker</groupId>
-    <artifactId>cargo-whale-docker</artifactId>
+    <artifactId>cargo-whale</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
 
-    <name>cargo-whale-docker</name>
+    <name>cargo-whale</name>
     <description>Cargo Whale Docker</description>
 
     <properties>
@@ -151,7 +151,7 @@
                 <artifactId>docker-maven-plugin</artifactId>
                 <version>0.4.10</version>
                 <configuration>
-                    <imageName>cargo-whale-docker</imageName>
+                    <imageName>rxnctrllabs/cargo-whale</imageName>
                     <dockerDirectory>src/main/docker</dockerDirectory>
                     <resources>
                         <resource>
