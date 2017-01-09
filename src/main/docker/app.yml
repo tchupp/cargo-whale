@@ -2,6 +2,8 @@ version: '2'
 services:
   cargowhale:
     image: rxnctrllabs/cargo-whale
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
     external_links:
       - graphite:graphite
     ports:
