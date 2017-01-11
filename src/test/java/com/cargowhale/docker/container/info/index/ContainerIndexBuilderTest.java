@@ -1,18 +1,22 @@
 package com.cargowhale.docker.container.info.index;
 
 import com.cargowhale.docker.client.containers.ContainerState;
-import com.cargowhale.docker.client.containers.info.list.ContainerListItem;
+import com.spotify.docker.client.messages.Container;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.hasKey;
+import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ContainerIndexBuilderTest {
@@ -20,17 +24,24 @@ public class ContainerIndexBuilderTest {
     @InjectMocks
     private ContainerIndexBuilder builder;
 
-    @Test
-    public void returnsContainerIndexWithContainerListResponseItemList() throws Exception {
-        List<ContainerListItem> containerList = new ArrayList<>();
-        ContainerIndex containerIndex = this.builder.buildContainerIndex(containerList);
+    @Mock
+    private ContainerMapper mapper;
 
-        assertThat(containerIndex.getContainers(), sameInstance(containerList));
+    @Test
+    public void returnsContainerIndexWithContainerResourceList() throws Exception {
+        List<Container> containers = new ArrayList<>();
+        List<ContainerResource> containerResources = new ArrayList<>();
+
+        when(this.mapper.toResources(containers)).thenReturn(containerResources);
+
+        ContainerIndexResource containerIndex = this.builder.buildContainerIndex(containers);
+
+        assertThat(containerIndex.getContainers(), is(containerResources));
     }
 
     @Test
     public void returnsContainerIndexWithMapOfAllContainerStates() throws Exception {
-        ContainerIndex containerIndex = this.builder.buildContainerIndex(new ArrayList<>());
+        ContainerIndexResource containerIndex = this.builder.buildContainerIndex(new ArrayList<>());
         Map<ContainerState, Integer> stateMetadata = containerIndex.getStateMetadata();
 
         assertThat(stateMetadata.size(), is(7));
@@ -45,7 +56,7 @@ public class ContainerIndexBuilderTest {
 
     @Test
     public void returnsContainerIndexWithMap_CorrectCountOfContainerStates_Empty() throws Exception {
-        ContainerIndex containerIndex = this.builder.buildContainerIndex(new ArrayList<>());
+        ContainerIndexResource containerIndex = this.builder.buildContainerIndex(new ArrayList<>());
         Map<ContainerState, Integer> stateMetadata = containerIndex.getStateMetadata();
 
         assertThat(stateMetadata.size(), is(7));
@@ -60,20 +71,20 @@ public class ContainerIndexBuilderTest {
 
     @Test
     public void returnsContainerIndexWithMap_CorrectCountOfContainerStates_NotEmpty() throws Exception {
-        List<ContainerListItem> containerList = new ArrayList<>();
-        containerList.add(new ContainerListItem(ContainerState.CREATED));
-        containerList.add(new ContainerListItem(ContainerState.CREATED));
-        containerList.add(new ContainerListItem(ContainerState.RESTARTING));
-        containerList.add(new ContainerListItem(ContainerState.RUNNING));
-        containerList.add(new ContainerListItem(ContainerState.RUNNING));
-        containerList.add(new ContainerListItem(ContainerState.RUNNING));
-        containerList.add(new ContainerListItem(ContainerState.PAUSED));
-        containerList.add(new ContainerListItem(ContainerState.EXITED));
-        containerList.add(new ContainerListItem(ContainerState.DEAD));
-        containerList.add(new ContainerListItem(ContainerState.DEAD));
-        containerList.add(new ContainerListItem(ContainerState.DEAD));
+        List<Container> containerList = new ArrayList<>();
+        containerList.add(buildContainerWithState(ContainerState.CREATED));
+        containerList.add(buildContainerWithState(ContainerState.CREATED));
+        containerList.add(buildContainerWithState(ContainerState.RESTARTING));
+        containerList.add(buildContainerWithState(ContainerState.RUNNING));
+        containerList.add(buildContainerWithState(ContainerState.RUNNING));
+        containerList.add(buildContainerWithState(ContainerState.RUNNING));
+        containerList.add(buildContainerWithState(ContainerState.PAUSED));
+        containerList.add(buildContainerWithState(ContainerState.EXITED));
+        containerList.add(buildContainerWithState(ContainerState.DEAD));
+        containerList.add(buildContainerWithState(ContainerState.DEAD));
+        containerList.add(buildContainerWithState(ContainerState.DEAD));
 
-        ContainerIndex containerIndex = this.builder.buildContainerIndex(containerList);
+        ContainerIndexResource containerIndex = this.builder.buildContainerIndex(containerList);
         Map<ContainerState, Integer> stateMetadata = containerIndex.getStateMetadata();
 
         assertThat(stateMetadata.size(), is(7));
@@ -84,5 +95,11 @@ public class ContainerIndexBuilderTest {
         assertThat(stateMetadata.get(ContainerState.PAUSED), is(1));
         assertThat(stateMetadata.get(ContainerState.EXITED), is(1));
         assertThat(stateMetadata.get(ContainerState.DEAD), is(3));
+    }
+
+    private Container buildContainerWithState(final ContainerState state) {
+        Container container = new Container();
+        ReflectionTestUtils.setField(container, "state", state.getState());
+        return container;
     }
 }

@@ -1,9 +1,6 @@
 package com.cargowhale.docker.client.containers.info;
 
-import com.cargowhale.docker.client.containers.ContainerState;
 import com.cargowhale.docker.client.containers.info.inspect.ContainerDetails;
-import com.cargowhale.docker.client.containers.info.list.ContainerListItem;
-import com.cargowhale.docker.client.containers.info.list.ListContainerFilters;
 import com.cargowhale.docker.client.containers.info.logs.LogFilters;
 import com.cargowhale.docker.client.containers.info.stats.ContainerStats;
 import com.cargowhale.docker.client.containers.info.top.ContainerTop;
@@ -18,13 +15,9 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.io.UnsupportedEncodingException;
 import java.util.UUID;
 
-import static org.assertj.core.util.Arrays.array;
-import static org.assertj.core.util.Sets.newLinkedHashSet;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -40,32 +33,6 @@ public class ContainerInfoClientTest {
 
     @Mock
     private DockerEndpointBuilder endpointBuilder;
-
-    @Test
-    public void listContainersReturnsEveryContainerFromDockerApi() {
-        String listContainerEndpoint = UUID.randomUUID().toString();
-        final ContainerListItem[] containerArray = array(mock(ContainerListItem.class));
-
-        when(this.endpointBuilder.getListAllContainersEndpoint()).thenReturn(listContainerEndpoint);
-        when(this.restTemplate.getForObject(listContainerEndpoint, ContainerListItem[].class)).thenReturn(containerArray);
-
-        assertThat(this.client.listContainers(), contains(containerArray));
-    }
-
-    @Test
-    public void listContainersReturnsSelectedTypesOfContainers() throws UnsupportedEncodingException {
-        String listContainerEndpoint = UUID.randomUUID().toString();
-
-        ListContainerFilters filters = new ListContainerFilters(newLinkedHashSet(ContainerState.PAUSED));
-        final ContainerListItem[] containerArray = array(mock(ContainerListItem.class));
-
-        UriComponentsBuilder builder = UriComponentsBuilder.fromPath(listContainerEndpoint);
-
-        when(this.endpointBuilder.getListContainersWithFiltersEndpoint()).thenReturn(listContainerEndpoint);
-        when(this.restTemplate.getForObject(builder.toUriString(), ContainerListItem[].class, filters.asMap())).thenReturn(containerArray);
-
-        assertThat(this.client.listContainers(filters), contains(containerArray));
-    }
 
     @Test
     public void inspectContainerReturnsCorrectContainer() throws Exception {

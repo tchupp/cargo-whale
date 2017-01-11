@@ -17,16 +17,9 @@ public class DockerEndpointBuilderTest {
 
     @Test
     public void getListContainersEndpointReturnsCorrectUri() throws Exception {
-        String expectedUri = "/v1.24/containers/json?all=1";
+        String expectedUri = "/v1.24/containers/json";
 
-        assertThat(this.endpointBuilder.getListAllContainersEndpoint(), is(expectedUri));
-    }
-
-    @Test
-    public void getListContainersWithFiltersEndpointReturnsCorrectUri() throws Exception {
-        String expectedUri = "/v1.24/containers/json?filters={filters}";
-
-        assertThat(this.endpointBuilder.getListContainersWithFiltersEndpoint(), is(expectedUri));
+        assertThat(this.endpointBuilder.getListContainersEndpoint(), is(expectedUri));
     }
 
     @Test

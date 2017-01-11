@@ -1,19 +1,20 @@
 package com.cargowhale.docker.container.info.index;
 
 import com.cargowhale.docker.client.containers.ContainerState;
-import com.cargowhale.docker.container.info.ContainerInfoService;
+import com.cargowhale.docker.test.ControllerTestUtils;
+import org.hamcrest.Matchers;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.hateoas.Link;
 
-import java.util.Set;
-
-import static org.assertj.core.util.Sets.newLinkedHashSet;
+import static org.assertj.core.util.Arrays.array;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -23,32 +24,59 @@ public class ContainerIndexControllerTest {
     private ContainerIndexController controller;
 
     @Mock
-    private ContainerInfoService service;
+    private ContainerIndexService service;
 
-    @Mock
-    private ContainerIndexResourceAssembler resourceAssembler;
-
-    @Test
-    public void getAllContainersReturnsEveryContainerFromService() {
-        ContainerIndex containerIndex = mock(ContainerIndex.class);
-        ContainerIndexResource containerListResponseItemResource = mock(ContainerIndexResource.class);
-
-        when(this.service.getAllContainers()).thenReturn(containerIndex);
-        when(this.resourceAssembler.toResource(containerIndex)).thenReturn(containerListResponseItemResource);
-
-        assertThat(this.controller.listContainers(), is(containerListResponseItemResource));
+    @Before
+    public void setUp() throws Exception {
+        ControllerTestUtils.setupMockRequestContextHolder();
     }
 
     @Test
-    public void getContainersFilterByStatusReturnsFilteredContainersFromService() {
-        ContainerIndex containerIndex = mock(ContainerIndex.class);
-        ContainerIndexResource containerListResponseItemResource = mock(ContainerIndexResource.class);
-        Set<ContainerState> states = newLinkedHashSet();
-        StateFilters stateFilters = new StateFilters(states);
+    public void listContainersReturnsContainerIndexResource() {
+        ContainerIndexResource containerIndex = new ContainerIndexResource();
 
-        when(this.service.getContainersFilterByStatus(states)).thenReturn(containerIndex);
-        when(this.resourceAssembler.toResource(containerIndex)).thenReturn(containerListResponseItemResource);
+        when(this.service.getContainerIndex()).thenReturn(containerIndex);
 
-        assertThat(this.controller.listContainers(stateFilters), is(containerListResponseItemResource));
+        assertThat(this.controller.listContainers(), is(containerIndex));
+    }
+
+    @Test
+    public void listContainersAddsLinksToContainerIndexResource() {
+        when(this.service.getContainerIndex()).thenReturn(new ContainerIndexResource());
+
+        ContainerIndexResource containerIndex = this.controller.listContainers();
+
+        assertThat(containerIndex.getLinks(), hasSize(2));
+
+        verifyLink(containerIndex, "up", "/api");
+        verifyLink(containerIndex, Link.REL_SELF, "/api/containers");
+    }
+
+    @Test
+    public void listContainersReturnsContainerIndexResource_WithParams() {
+        ContainerState[] stateParams = array(ContainerState.RUNNING, ContainerState.DEAD);
+        ContainerIndexResource containerIndex = new ContainerIndexResource();
+
+        when(this.service.getContainerIndex(stateParams)).thenReturn(containerIndex);
+
+        assertThat(this.controller.listContainers(stateParams), is(containerIndex));
+    }
+
+    @Test
+    public void listContainersAddsLinksToContainerIndexResource_WithParams() {
+        when(this.service.getContainerIndex(array(ContainerState.EXITED))).thenReturn(new ContainerIndexResource());
+
+        ContainerIndexResource containerIndex = this.controller.listContainers(array(ContainerState.EXITED));
+
+        assertThat(containerIndex.getLinks(), hasSize(2));
+
+        verifyLink(containerIndex, "up", "/api");
+        verifyLink(containerIndex, Link.REL_SELF, "/api/containers");
+    }
+
+    private void verifyLink(final ContainerIndexResource containerIndex, final String rel, final String path) {
+        assertThat(containerIndex.hasLink(rel), is(true));
+        Link upLink = containerIndex.getLink(rel);
+        assertThat(upLink.getHref(), Matchers.endsWith(path));
     }
 }

@@ -1,20 +1,28 @@
 package com.cargowhale.docker.container.info.index
 
 import com.cargowhale.docker.client.containers.ContainerState
-import com.cargowhale.docker.client.containers.info.list.ContainerListItem
+import com.spotify.docker.client.messages.Container
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
 @Component
 class ContainerIndexBuilder {
 
-    ContainerIndex buildContainerIndex(final List<ContainerListItem> containerList) {
-        Map<ContainerState, Integer> stateMetadata = buildStateMetadata(containerList)
+    private final ContainerMapper mapper
 
-        return new ContainerIndex(containerList, stateMetadata)
+    @Autowired
+    ContainerIndexBuilder(final ContainerMapper mapper) {
+        this.mapper = mapper
     }
 
-    private Map<ContainerState, Integer> buildStateMetadata(final List<ContainerListItem> containerSummaryList) {
-        Map<ContainerState, Integer> containerStateSummary = [
+    ContainerIndexResource buildContainerIndex(final List<Container> containers) {
+        Map<ContainerState, Integer> stateMetadata = buildStateMetadata(containers)
+
+        return new ContainerIndexResource(this.mapper.toResources(containers), stateMetadata)
+    }
+
+    private Map<ContainerState, Integer> buildStateMetadata(final List<Container> containers) {
+        Map<ContainerState, Integer> states = [
             (ContainerState.ALL)       : 0,
             (ContainerState.CREATED)   : 0,
             (ContainerState.RESTARTING): 0,
@@ -24,12 +32,11 @@ class ContainerIndexBuilder {
             (ContainerState.DEAD)      : 0
         ]
 
-        containerSummaryList.each { containerSummary ->
-            containerStateSummary[containerSummary.state]++
-            containerStateSummary[ContainerState.ALL]++
+        containers.each { container ->
+            states[ContainerState.from(container.state())]++
+            states[ContainerState.ALL]++
         }
 
-
-        return containerStateSummary
+        return states
     }
 }
