@@ -1,6 +1,7 @@
 package com.cargowhale.docker.container.info.index;
 
 import com.cargowhale.docker.client.containers.ContainerState;
+import com.cargowhale.docker.client.containers.ListContainersParam;
 import com.cargowhale.docker.container.ContainerEnumConverter;
 import com.cargowhale.docker.exception.CargoWhaleErrorMessage;
 import com.cargowhale.docker.index.IndexController;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
+import static com.cargowhale.docker.client.containers.ListContainersParam.allContainers;
+import static java.util.Arrays.stream;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
@@ -42,7 +45,7 @@ public class ContainerIndexController {
     @RequestMapping(method = RequestMethod.GET,
         produces = MediaTypes.HAL_JSON_VALUE)
     public ContainerIndexResource listContainers() {
-        ContainerIndexResource containerIndex = this.service.getContainerIndex();
+        ContainerIndexResource containerIndex = this.service.getContainerIndex(allContainers());
 
         containerIndex.add(linkTo(methodOn(IndexController.class).index()).withRel("up"));
         containerIndex.add(linkTo(methodOn(ContainerIndexController.class).listContainers()).withSelfRel());
@@ -51,10 +54,14 @@ public class ContainerIndexController {
     }
 
     @RequestMapping(method = RequestMethod.GET,
-        params = "filters",
+        params = "state",
         produces = MediaTypes.HAL_JSON_VALUE)
-    public ContainerIndexResource listContainers(@RequestParam("filters") final ContainerState[] filters) {
-        ContainerIndexResource containerIndex = this.service.getContainerIndex(filters);
+    public ContainerIndexResource listContainers(final ContainerState... state) {
+        ListContainersParam[] params = stream(state)
+            .map(ListContainersParam::state)
+            .toArray(ListContainersParam[]::new);
+
+        ContainerIndexResource containerIndex = this.service.getContainerIndex(params);
 
         containerIndex.add(linkTo(methodOn(IndexController.class).index()).withRel("up"));
         containerIndex.add(linkTo(methodOn(ContainerIndexController.class).listContainers()).withSelfRel());

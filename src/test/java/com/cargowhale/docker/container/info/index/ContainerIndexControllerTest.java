@@ -11,7 +11,8 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.hateoas.Link;
 
-import static org.assertj.core.util.Arrays.array;
+import static com.cargowhale.docker.client.containers.ListContainersParam.allContainers;
+import static com.cargowhale.docker.client.containers.ListContainersParam.state;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -35,14 +36,14 @@ public class ContainerIndexControllerTest {
     public void listContainersReturnsContainerIndexResource() {
         ContainerIndexResource containerIndex = new ContainerIndexResource();
 
-        when(this.service.getContainerIndex()).thenReturn(containerIndex);
+        when(this.service.getContainerIndex(allContainers())).thenReturn(containerIndex);
 
         assertThat(this.controller.listContainers(), is(containerIndex));
     }
 
     @Test
     public void listContainersAddsLinksToContainerIndexResource() {
-        when(this.service.getContainerIndex()).thenReturn(new ContainerIndexResource());
+        when(this.service.getContainerIndex(allContainers())).thenReturn(new ContainerIndexResource());
 
         ContainerIndexResource containerIndex = this.controller.listContainers();
 
@@ -54,19 +55,18 @@ public class ContainerIndexControllerTest {
 
     @Test
     public void listContainersReturnsContainerIndexResource_WithParams() {
-        ContainerState[] stateParams = array(ContainerState.RUNNING, ContainerState.DEAD);
         ContainerIndexResource containerIndex = new ContainerIndexResource();
 
-        when(this.service.getContainerIndex(stateParams)).thenReturn(containerIndex);
+        when(this.service.getContainerIndex(state(ContainerState.RUNNING), state(ContainerState.DEAD))).thenReturn(containerIndex);
 
-        assertThat(this.controller.listContainers(stateParams), is(containerIndex));
+        assertThat(this.controller.listContainers(new ContainerState[]{ContainerState.RUNNING, ContainerState.DEAD}), is(containerIndex));
     }
 
     @Test
     public void listContainersAddsLinksToContainerIndexResource_WithParams() {
-        when(this.service.getContainerIndex(array(ContainerState.EXITED))).thenReturn(new ContainerIndexResource());
+        when(this.service.getContainerIndex(state(ContainerState.EXITED))).thenReturn(new ContainerIndexResource());
 
-        ContainerIndexResource containerIndex = this.controller.listContainers(array(ContainerState.EXITED));
+        ContainerIndexResource containerIndex = this.controller.listContainers(ContainerState.EXITED);
 
         assertThat(containerIndex.getLinks(), hasSize(2));
 

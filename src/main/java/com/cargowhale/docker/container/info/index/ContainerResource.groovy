@@ -1,6 +1,7 @@
 package com.cargowhale.docker.container.info.index
 
 import com.fasterxml.jackson.annotation.JsonInclude
+import com.fasterxml.jackson.annotation.JsonProperty
 import groovy.transform.Canonical
 import org.springframework.hateoas.ResourceSupport
 
@@ -8,6 +9,7 @@ import org.springframework.hateoas.ResourceSupport
 @JsonInclude(JsonInclude.Include.NON_NULL)
 class ContainerResource extends ResourceSupport {
 
+    @JsonProperty("id")
     String containerId
     List<String> names
     String image

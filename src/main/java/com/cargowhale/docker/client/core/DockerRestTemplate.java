@@ -13,7 +13,7 @@ public class DockerRestTemplate extends RestTemplate {
         setErrorHandler(errorHandler);
     }
 
-    public <T> T getForObject(final String url, final ParameterizedTypeReference<T> responseType) {
-        return exchange(url, HttpMethod.GET, HttpEntity.EMPTY, responseType).getBody();
+    public <T> T getForObject(final String url, final ParameterizedTypeReference<T> responseType, final Object... uriVariables) {
+        return exchange(url, HttpMethod.GET, HttpEntity.EMPTY, responseType, uriVariables).getBody();
     }
 }
