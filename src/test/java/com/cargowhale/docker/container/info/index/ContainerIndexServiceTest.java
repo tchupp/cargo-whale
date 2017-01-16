@@ -27,27 +27,27 @@ public class ContainerIndexServiceTest {
     private ListContainersClient client;
 
     @Mock
-    private ContainerIndexBuilder builder;
+    private ContainerMapper mapper;
 
     @Test
     public void getContainerIndex_NoParams_ReturnsContainerIndex() throws Exception {
         List<Container> containers = Collections.singletonList(mock(Container.class));
-        ContainerIndexResource containerIndex = mock(ContainerIndexResource.class);
+        List<ContainerResource> containerResources = Collections.singletonList(mock(ContainerResource.class));
 
         when(this.client.listContainers()).thenReturn(containers);
-        when(this.builder.buildContainerIndex(containers)).thenReturn(containerIndex);
+        when(this.mapper.toResources(containers)).thenReturn(containerResources);
 
-        assertThat(this.service.getContainerIndex(), is(containerIndex));
+        assertThat(this.service.getContainerIndex(), is(containerResources));
     }
 
     @Test
     public void getContainerIndex_WithParams_ReturnsContainerIndex() throws Exception {
         List<Container> containers = Collections.singletonList(mock(Container.class));
-        ContainerIndexResource containerIndex = mock(ContainerIndexResource.class);
+        List<ContainerResource> containerResources = Collections.singletonList(mock(ContainerResource.class));
 
         when(this.client.listContainers(state(ContainerState.EXITED))).thenReturn(containers);
-        when(this.builder.buildContainerIndex(containers)).thenReturn(containerIndex);
+        when(this.mapper.toResources(containers)).thenReturn(containerResources);
 
-        assertThat(this.service.getContainerIndex(state(ContainerState.EXITED)), is(containerIndex));
+        assertThat(this.service.getContainerIndex(state(ContainerState.EXITED)), is(containerResources));
     }
 }

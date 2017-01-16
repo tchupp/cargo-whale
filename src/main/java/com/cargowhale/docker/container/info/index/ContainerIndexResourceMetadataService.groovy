@@ -1,27 +1,22 @@
 package com.cargowhale.docker.container.info.index
 
 import com.cargowhale.docker.client.containers.ContainerState
-import com.spotify.docker.client.messages.Container
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.stereotype.Component
+import org.springframework.stereotype.Service
 
-@Component
-class ContainerIndexBuilder {
+import static com.cargowhale.docker.client.containers.ListContainersParam.allContainers
 
-    private final ContainerMapper mapper
+@Service
+class ContainerIndexResourceMetadataService {
+
+    private final ListContainersClient client
 
     @Autowired
-    ContainerIndexBuilder(final ContainerMapper mapper) {
-        this.mapper = mapper
+    ContainerIndexResourceMetadataService(final ListContainersClient client) {
+        this.client = client
     }
 
-    ContainerIndexResource buildContainerIndex(final List<Container> containers) {
-        Map<ContainerState, Integer> stateMetadata = buildStateMetadata(containers)
-
-        return new ContainerIndexResource(this.mapper.toResources(containers), stateMetadata)
-    }
-
-    private Map<ContainerState, Integer> buildStateMetadata(final List<Container> containers) {
+    Map<ContainerState, Integer> getStateMetadata() {
         Map<ContainerState, Integer> states = [
             (ContainerState.ALL)       : 0,
             (ContainerState.CREATED)   : 0,
@@ -31,6 +26,7 @@ class ContainerIndexBuilder {
             (ContainerState.EXITED)    : 0,
             (ContainerState.DEAD)      : 0
         ]
+        def containers = this.client.listContainers(allContainers())
 
         containers.each { container ->
             states[ContainerState.from(container.state())]++

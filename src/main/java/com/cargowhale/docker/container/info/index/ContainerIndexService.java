@@ -10,15 +10,15 @@ import java.util.List;
 public class ContainerIndexService {
 
     private final ListContainersClient client;
-    private final ContainerIndexBuilder builder;
+    private final ContainerMapper mapper;
 
-    public ContainerIndexService(final ListContainersClient client, final ContainerIndexBuilder builder) {
+    public ContainerIndexService(final ListContainersClient client, final ContainerMapper mapper) {
         this.client = client;
-        this.builder = builder;
+        this.mapper = mapper;
     }
 
-    ContainerIndexResource getContainerIndex(final ListContainersParam... filters) {
+    List<ContainerResource> getContainerIndex(final ListContainersParam... filters) {
         List<Container> containers = this.client.listContainers(filters);
-        return this.builder.buildContainerIndex(containers);
+        return this.mapper.toResources(containers);
     }
 }

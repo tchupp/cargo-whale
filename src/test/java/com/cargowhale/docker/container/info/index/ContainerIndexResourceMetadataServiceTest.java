@@ -9,39 +9,30 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
+import static com.cargowhale.docker.client.containers.ListContainersParam.allContainers;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
-import static org.mockito.Mockito.mock;
+import static org.hamcrest.Matchers.hasKey;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ContainerIndexBuilderTest {
+public class ContainerIndexResourceMetadataServiceTest {
 
     @InjectMocks
-    private ContainerIndexBuilder builder;
+    private ContainerIndexResourceMetadataService service;
 
     @Mock
-    private ContainerMapper mapper;
+    private ListContainersClient client;
 
     @Test
-    public void returnsContainerIndexWithContainerResourceList() throws Exception {
-        List<Container> containers = Collections.singletonList(buildContainerWithState(ContainerState.CREATED));
-        ContainerResource containerResource = mock(ContainerResource.class);
-        List<ContainerResource> containerResources = Collections.singletonList(containerResource);
-
-        when(this.mapper.toResources(containers)).thenReturn(containerResources);
-
-        ContainerIndexResource containerIndex = this.builder.buildContainerIndex(containers);
-
-        assertThat(containerIndex.getContent(), containsInAnyOrder(containerResource));
-    }
-
-    @Test
-    public void returnsContainerIndexWithMapOfAllContainerStates() throws Exception {
-        ContainerIndexResource containerIndex = this.builder.buildContainerIndex(new ArrayList<>());
-        Map<ContainerState, Integer> stateMetadata = containerIndex.getStateMetadata();
+    public void returnsMapOfAllContainerStates() throws Exception {
+        when(this.client.listContainers(allContainers())).thenReturn(Collections.emptyList());
+        Map<ContainerState, Integer> stateMetadata = this.service.getStateMetadata();
 
         assertThat(stateMetadata.size(), is(7));
         assertThat(stateMetadata, hasKey(ContainerState.ALL));
@@ -54,9 +45,9 @@ public class ContainerIndexBuilderTest {
     }
 
     @Test
-    public void returnsContainerIndexWithMap_CorrectCountOfContainerStates_Empty() throws Exception {
-        ContainerIndexResource containerIndex = this.builder.buildContainerIndex(new ArrayList<>());
-        Map<ContainerState, Integer> stateMetadata = containerIndex.getStateMetadata();
+    public void returnsMap_CorrectCountOfContainerStates_Empty() throws Exception {
+        when(this.client.listContainers(allContainers())).thenReturn(Collections.emptyList());
+        Map<ContainerState, Integer> stateMetadata = this.service.getStateMetadata();
 
         assertThat(stateMetadata.size(), is(7));
         assertThat(stateMetadata.get(ContainerState.ALL), is(0));
@@ -70,21 +61,22 @@ public class ContainerIndexBuilderTest {
 
     @Test
     public void returnsContainerIndexWithMap_CorrectCountOfContainerStates_NotEmpty() throws Exception {
-        List<Container> containerList = new ArrayList<>();
-        containerList.add(buildContainerWithState(ContainerState.CREATED));
-        containerList.add(buildContainerWithState(ContainerState.CREATED));
-        containerList.add(buildContainerWithState(ContainerState.RESTARTING));
-        containerList.add(buildContainerWithState(ContainerState.RUNNING));
-        containerList.add(buildContainerWithState(ContainerState.RUNNING));
-        containerList.add(buildContainerWithState(ContainerState.RUNNING));
-        containerList.add(buildContainerWithState(ContainerState.PAUSED));
-        containerList.add(buildContainerWithState(ContainerState.EXITED));
-        containerList.add(buildContainerWithState(ContainerState.DEAD));
-        containerList.add(buildContainerWithState(ContainerState.DEAD));
-        containerList.add(buildContainerWithState(ContainerState.DEAD));
+        List<Container> containerList = Arrays.asList(
+            buildContainerWithState(ContainerState.CREATED),
+            buildContainerWithState(ContainerState.CREATED),
+            buildContainerWithState(ContainerState.RESTARTING),
+            buildContainerWithState(ContainerState.RUNNING),
+            buildContainerWithState(ContainerState.RUNNING),
+            buildContainerWithState(ContainerState.RUNNING),
+            buildContainerWithState(ContainerState.PAUSED),
+            buildContainerWithState(ContainerState.EXITED),
+            buildContainerWithState(ContainerState.DEAD),
+            buildContainerWithState(ContainerState.DEAD),
+            buildContainerWithState(ContainerState.DEAD)
+        );
+        when(this.client.listContainers(allContainers())).thenReturn(containerList);
 
-        ContainerIndexResource containerIndex = this.builder.buildContainerIndex(containerList);
-        Map<ContainerState, Integer> stateMetadata = containerIndex.getStateMetadata();
+        Map<ContainerState, Integer> stateMetadata = this.service.getStateMetadata();
 
         assertThat(stateMetadata.size(), is(7));
         assertThat(stateMetadata.get(ContainerState.ALL), is(11));
