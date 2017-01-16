@@ -4,9 +4,11 @@ import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
 import groovy.transform.Canonical
 import org.springframework.hateoas.ResourceSupport
+import org.springframework.hateoas.core.Relation
 
 @Canonical
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Relation(value = "container", collectionRelation = "containers")
 class ContainerResource extends ResourceSupport {
 
     @JsonProperty("id")

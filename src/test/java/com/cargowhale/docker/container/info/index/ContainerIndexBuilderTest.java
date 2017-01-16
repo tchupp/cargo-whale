@@ -9,13 +9,11 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasKey;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -29,14 +27,15 @@ public class ContainerIndexBuilderTest {
 
     @Test
     public void returnsContainerIndexWithContainerResourceList() throws Exception {
-        List<Container> containers = new ArrayList<>();
-        List<ContainerResource> containerResources = new ArrayList<>();
+        List<Container> containers = Collections.singletonList(buildContainerWithState(ContainerState.CREATED));
+        ContainerResource containerResource = mock(ContainerResource.class);
+        List<ContainerResource> containerResources = Collections.singletonList(containerResource);
 
         when(this.mapper.toResources(containers)).thenReturn(containerResources);
 
         ContainerIndexResource containerIndex = this.builder.buildContainerIndex(containers);
 
-        assertThat(containerIndex.getContainers(), is(containerResources));
+        assertThat(containerIndex.getContent(), containsInAnyOrder(containerResource));
     }
 
     @Test
