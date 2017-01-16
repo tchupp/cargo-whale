@@ -34,7 +34,7 @@ public class ContainerIndexControllerTest {
         ContainerIndexResource containerIndex = new ContainerIndexResource();
         List<ContainerResource> containerResources = Collections.singletonList(mock(ContainerResource.class));
 
-        when(this.service.getContainerIndex(allContainers())).thenReturn(containerResources);
+        when(this.service.getContainers(allContainers())).thenReturn(containerResources);
         when(this.resourceAssembler.toResource(containerResources)).thenReturn(containerIndex);
 
         assertThat(this.controller.listContainers(), is(containerIndex));
@@ -45,7 +45,7 @@ public class ContainerIndexControllerTest {
         ContainerIndexResource containerIndex = new ContainerIndexResource();
         List<ContainerResource> containerResources = Collections.singletonList(mock(ContainerResource.class));
 
-        when(this.service.getContainerIndex(state(ContainerState.RUNNING), state(ContainerState.DEAD))).thenReturn(containerResources);
+        when(this.service.getContainers(state(ContainerState.RUNNING), state(ContainerState.DEAD))).thenReturn(containerResources);
         when(this.resourceAssembler.toResource(containerResources)).thenReturn(containerIndex);
 
         assertThat(this.controller.listContainers(new ContainerState[]{ContainerState.RUNNING, ContainerState.DEAD}), is(containerIndex));

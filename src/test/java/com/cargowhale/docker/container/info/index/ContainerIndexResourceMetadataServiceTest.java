@@ -7,7 +7,6 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -15,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.cargowhale.docker.client.containers.ListContainersParam.allContainers;
+import static com.cargowhale.docker.test.ContainerTestUtilities.buildContainerWithState;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasKey;
 import static org.hamcrest.Matchers.is;
@@ -86,11 +86,5 @@ public class ContainerIndexResourceMetadataServiceTest {
         assertThat(stateMetadata.get(ContainerState.PAUSED), is(1));
         assertThat(stateMetadata.get(ContainerState.EXITED), is(1));
         assertThat(stateMetadata.get(ContainerState.DEAD), is(3));
-    }
-
-    private Container buildContainerWithState(final ContainerState state) {
-        Container container = new Container();
-        ReflectionTestUtils.setField(container, "state", state.getState());
-        return container;
     }
 }

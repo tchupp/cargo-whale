@@ -13,7 +13,7 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Configuration
@@ -32,9 +32,10 @@ public class DockerRestTemplateConfiguration {
     public DockerRestTemplate dockerRestTemplate() {
         UnixComponentsClientHttpRequestFactory requestFactory = new UnixComponentsClientHttpRequestFactory(this.properties.getUri());
 
-        List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
-        messageConverters.add(new MappingJackson2HttpMessageConverter(getDockerObjectMapper()));
-        messageConverters.add(new StringHttpMessageConverter());
+        List<HttpMessageConverter<?>> messageConverters = Arrays.asList(
+            new MappingJackson2HttpMessageConverter(getDockerObjectMapper()),
+            new StringHttpMessageConverter()
+        );
 
         DockerRestTemplate restTemplate = new DockerRestTemplate(this.errorHandler, requestFactory);
         RootUriTemplateHandler.addTo(restTemplate, this.properties.getUri());

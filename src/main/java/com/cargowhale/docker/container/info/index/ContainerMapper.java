@@ -87,7 +87,7 @@ public interface ContainerMapper {
 
     @Mappings({
         @Mapping(target = "containerId", expression = "java(container.id())"),
-        @Mapping(target = "names", expression = "java(container.names())"),
+        @Mapping(target = "name", expression = "java(info.name())"),
         @Mapping(target = "image", expression = "java(container.image())"),
         @Mapping(target = "imageId", expression = "java(container.imageId())"),
         @Mapping(target = "command", expression = "java(container.command())"),
@@ -101,7 +101,5 @@ public interface ContainerMapper {
         @Mapping(target = "networkSettings", expression = "java(toNetworkSettings(container.networkSettings()))"),
         @Mapping(target = "mounts", expression = "java(toContainerMounts(container.mounts()))")
     })
-    ContainerResource toResource(final Container container);
-
-    List<ContainerResource> toResources(List<Container> list);
+    ContainerResource toResource(final Container container, final ContainerInfo info);
 }

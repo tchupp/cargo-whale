@@ -45,7 +45,7 @@ public class ContainerIndexController {
     @RequestMapping(method = RequestMethod.GET,
         produces = MediaTypes.HAL_JSON_VALUE)
     public ContainerIndexResource listContainers() {
-        List<ContainerResource> containerResources = this.service.getContainerIndex(allContainers());
+        List<ContainerResource> containerResources = this.service.getContainers(allContainers());
 
         return this.resourceAssembler.toResource(containerResources);
     }
@@ -58,7 +58,7 @@ public class ContainerIndexController {
             .map(ListContainersParam::state)
             .toArray(ListContainersParam[]::new);
 
-        List<ContainerResource> containerResources = this.service.getContainerIndex(params);
+        List<ContainerResource> containerResources = this.service.getContainers(params);
 
         return this.resourceAssembler.toResource(containerResources);
     }

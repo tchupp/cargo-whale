@@ -18,6 +18,7 @@ public class ContainerInfoService {
         this.client = client;
     }
 
+    @Deprecated
     ContainerDetails getContainerDetailsById(final String containerId) {
         return this.client.inspectContainer(containerId);
     }

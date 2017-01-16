@@ -23,6 +23,7 @@ public class ContainerInfoClient {
         this.endpointBuilder = endpointBuilder;
     }
 
+    @Deprecated
     public ContainerDetails inspectContainer(final String containerId) {
         String containerByIdEndpoint = this.endpointBuilder.getInspectContainerEndpoint(containerId);
 

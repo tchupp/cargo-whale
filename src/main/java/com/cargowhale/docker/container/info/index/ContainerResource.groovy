@@ -13,7 +13,7 @@ class ContainerResource extends ResourceSupport {
 
     @JsonProperty("id")
     String containerId
-    List<String> names
+    String name
     String image
     String imageId
     String command
