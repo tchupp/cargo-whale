@@ -1,11 +1,10 @@
-package com.cargowhale.docker.config;
+package com.cargowhale.docker.config.docker;
 
 import com.cargowhale.docker.client.core.DockerErrorHandler;
 import com.cargowhale.docker.client.core.DockerRestTemplate;
 import com.cargowhale.docker.client.core.UnixComponentsClientHttpRequestFactory;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.guava.GuavaModule;
+import com.spotify.docker.client.ObjectMapperProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RootUriTemplateHandler;
 import org.springframework.context.annotation.Bean;
@@ -18,13 +17,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
-public class RestTemplateConfiguration {
+public class DockerRestTemplateConfiguration {
 
     private final DockerProperties properties;
     private final DockerErrorHandler errorHandler;
 
     @Autowired
-    public RestTemplateConfiguration(final DockerProperties properties, final DockerErrorHandler errorHandler) {
+    public DockerRestTemplateConfiguration(final DockerProperties properties, final DockerErrorHandler errorHandler) {
         this.properties = properties;
         this.errorHandler = errorHandler;
     }
@@ -34,7 +33,7 @@ public class RestTemplateConfiguration {
         UnixComponentsClientHttpRequestFactory requestFactory = new UnixComponentsClientHttpRequestFactory(this.properties.getUri());
 
         List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
-        messageConverters.add(new MappingJackson2HttpMessageConverter(configureObjectMapper()));
+        messageConverters.add(new MappingJackson2HttpMessageConverter(getDockerObjectMapper()));
         messageConverters.add(new StringHttpMessageConverter());
 
         DockerRestTemplate restTemplate = new DockerRestTemplate(this.errorHandler, requestFactory);
@@ -44,10 +43,8 @@ public class RestTemplateConfiguration {
         return restTemplate;
     }
 
-    private ObjectMapper configureObjectMapper() {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.registerModule(new GuavaModule());
-        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        return objectMapper;
+    private static ObjectMapper getDockerObjectMapper() {
+        ObjectMapperProvider provider = new ObjectMapperProvider();
+        return provider.getContext(ObjectMapper.class);
     }
 }

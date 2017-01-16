@@ -1,4 +1,4 @@
-package com.cargowhale.docker.config;
+package com.cargowhale.docker.config.docker;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
