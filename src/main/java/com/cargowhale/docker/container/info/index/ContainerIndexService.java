@@ -16,11 +16,13 @@ public class ContainerIndexService {
     private final ListContainersClient listContainersClient;
     private final InspectContainerClient inspectContainerClient;
     private final ContainerMapper mapper;
+    private final ContainerResourceProcessor resourceProcessor;
 
-    public ContainerIndexService(final ListContainersClient listContainersClient, final InspectContainerClient inspectContainerClient, final ContainerMapper mapper) {
+    public ContainerIndexService(final ListContainersClient listContainersClient, final InspectContainerClient inspectContainerClient, final ContainerMapper mapper, final ContainerResourceProcessor resourceProcessor) {
         this.listContainersClient = listContainersClient;
         this.inspectContainerClient = inspectContainerClient;
         this.mapper = mapper;
+        this.resourceProcessor = resourceProcessor;
     }
 
     List<ContainerResource> getContainers(final ListContainersParam... filters) {
@@ -29,6 +31,7 @@ public class ContainerIndexService {
             ContainerInfo info = this.inspectContainerClient.inspectContainer(container.id());
             return this.mapper.toResource(container, info);
         };
-        return containers.parallelStream().map(containerResourceMappingFunction).collect(Collectors.toList());
+        List<ContainerResource> containerResources = containers.parallelStream().map(containerResourceMappingFunction).collect(Collectors.toList());
+        return containerResources.stream().map(this.resourceProcessor::process).collect(Collectors.toList());
     }
 }

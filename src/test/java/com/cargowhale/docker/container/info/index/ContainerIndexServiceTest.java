@@ -38,6 +38,9 @@ public class ContainerIndexServiceTest {
     @Mock
     private ContainerMapper mapper;
 
+    @Mock
+    private ContainerResourceProcessor resourceProcessor;
+
     @Test
     public void getContainersReturnsContainerResources_None() throws Exception {
         ListContainersParam param = state(ContainerState.EXITED);
@@ -56,15 +59,18 @@ public class ContainerIndexServiceTest {
         Container container1 = buildContainerWithId(containerId1);
         ContainerInfo containerInfo1 = mock(ContainerInfo.class);
         ContainerResource containerResource1 = mock(ContainerResource.class);
+        ContainerResource containerResourcePostProcessed1 = mock(ContainerResource.class);
 
         List<Container> containers = Collections.singletonList(container1);
-        List<ContainerResource> containerResources = Collections.singletonList(containerResource1);
+        List<ContainerResource> containerResources = Collections.singletonList(containerResourcePostProcessed1);
 
         when(this.listContainersClient.listContainers()).thenReturn(containers);
         when(this.inspectContainerClient.inspectContainer(containerId1)).thenReturn(containerInfo1);
         when(this.mapper.toResource(container1, containerInfo1)).thenReturn(containerResource1);
+        when(this.resourceProcessor.process(containerResource1)).thenReturn(containerResourcePostProcessed1);
 
         assertThat(this.service.getContainers(), is(containerResources));
+
     }
 
     @Test
@@ -79,16 +85,21 @@ public class ContainerIndexServiceTest {
         ContainerInfo containerInfo2 = mock(ContainerInfo.class);
         ContainerResource containerResource1 = mock(ContainerResource.class);
         ContainerResource containerResource2 = mock(ContainerResource.class);
+        ContainerResource containerResourcePostProcessed1 = mock(ContainerResource.class);
+        ContainerResource containerResourcePostProcessed2 = mock(ContainerResource.class);
 
         List<Container> containers = Arrays.asList(container1, container2);
-        List<ContainerResource> containerResources = Arrays.asList(containerResource1, containerResource2);
+        List<ContainerResource> containerResources = Arrays.asList(containerResourcePostProcessed1, containerResourcePostProcessed2);
 
         when(this.listContainersClient.listContainers(param)).thenReturn(containers);
         when(this.inspectContainerClient.inspectContainer(containerId1)).thenReturn(containerInfo1);
         when(this.inspectContainerClient.inspectContainer(containerId2)).thenReturn(containerInfo2);
         when(this.mapper.toResource(container1, containerInfo1)).thenReturn(containerResource1);
         when(this.mapper.toResource(container2, containerInfo2)).thenReturn(containerResource2);
+        when(this.resourceProcessor.process(containerResource1)).thenReturn(containerResourcePostProcessed1);
+        when(this.resourceProcessor.process(containerResource2)).thenReturn(containerResourcePostProcessed2);
 
         assertThat(this.service.getContainers(param), is(containerResources));
+
     }
 }

@@ -1,8 +1,8 @@
 package com.cargowhale.docker.test;
 
-import com.cargowhale.docker.container.info.index.ContainerIndexResource;
 import org.hamcrest.Matchers;
 import org.springframework.hateoas.Link;
+import org.springframework.hateoas.ResourceSupport;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -30,7 +30,7 @@ public class ControllerTestUtils {
         RequestContextHolder.setRequestAttributes(servletRequestAttributes);
     }
 
-    public static void verifyLink(final ContainerIndexResource containerIndex, final String rel, final String path) {
+    public static void verifyLink(final ResourceSupport containerIndex, final String rel, final String path) {
         assertThat(containerIndex.hasLink(rel), is(true));
         Link upLink = containerIndex.getLink(rel);
         assertThat(upLink.getHref(), Matchers.endsWith(path));
