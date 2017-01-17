@@ -1,7 +1,7 @@
 package com.cargowhale.docker.container.info.index;
 
-import com.cargowhale.docker.client.containers.ContainerState;
 import com.cargowhale.docker.client.containers.ListContainersParam;
+import com.cargowhale.docker.container.info.ContainerState;
 import com.cargowhale.docker.container.info.details.InspectContainerClient;
 import com.spotify.docker.client.messages.Container;
 import com.spotify.docker.client.messages.ContainerInfo;
@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import static com.cargowhale.docker.client.containers.ListContainersParam.allContainers;
 import static com.cargowhale.docker.client.containers.ListContainersParam.state;
 import static com.cargowhale.docker.test.ContainerTestUtilities.buildContainerWithId;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -100,6 +101,25 @@ public class ContainerIndexServiceTest {
         when(this.resourceProcessor.process(containerResource2)).thenReturn(containerResourcePostProcessed2);
 
         assertThat(this.service.getContainers(param), is(containerResources));
+    }
 
+    @Test
+    public void getContainerReturnsContainerResource() throws Exception {
+        String containerId_Right = RandomStringUtils.random(10);
+        String containerId_Wrong = RandomStringUtils.random(10);
+        Container container_Right = buildContainerWithId(containerId_Right);
+        Container container_Wrong = buildContainerWithId(containerId_Wrong);
+        ContainerInfo containerInfo = mock(ContainerInfo.class);
+        ContainerResource containerResource = mock(ContainerResource.class);
+        ContainerResource containerResourcePostProcessed = mock(ContainerResource.class);
+
+        List<Container> containers = Arrays.asList(container_Right, container_Wrong);
+
+        when(this.listContainersClient.listContainers(allContainers())).thenReturn(containers);
+        when(this.inspectContainerClient.inspectContainer(containerId_Right)).thenReturn(containerInfo);
+        when(this.mapper.toResource(container_Right, containerInfo)).thenReturn(containerResource);
+        when(this.resourceProcessor.process(containerResource)).thenReturn(containerResourcePostProcessed);
+
+        assertThat(this.service.getContainer(containerId_Right), is(containerResourcePostProcessed));
     }
 }

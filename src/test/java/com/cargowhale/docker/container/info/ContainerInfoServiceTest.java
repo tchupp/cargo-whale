@@ -1,7 +1,6 @@
 package com.cargowhale.docker.container.info;
 
 import com.cargowhale.docker.client.containers.info.ContainerInfoClient;
-import com.cargowhale.docker.client.containers.info.inspect.ContainerDetails;
 import com.cargowhale.docker.client.containers.info.logs.LogFilters;
 import com.cargowhale.docker.client.containers.info.stats.ContainerStats;
 import com.cargowhale.docker.container.info.model.ContainerLogs;
@@ -24,16 +23,6 @@ public class ContainerInfoServiceTest {
 
     @Mock
     private ContainerInfoClient client;
-
-    @Test
-    public void getContainerDetailsById() throws Exception {
-        String containerId = "container_id";
-        ContainerDetails containerDetails = mock(ContainerDetails.class);
-
-        when(this.client.inspectContainer(containerId)).thenReturn(containerDetails);
-
-        assertThat(this.service.getContainerDetailsById(containerId), is(containerDetails));
-    }
 
     @Test
     public void getContainerLogsById() throws Exception {

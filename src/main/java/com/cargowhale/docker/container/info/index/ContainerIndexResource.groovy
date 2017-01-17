@@ -1,6 +1,6 @@
 package com.cargowhale.docker.container.info.index
 
-import com.cargowhale.docker.client.containers.ContainerState
+import com.cargowhale.docker.container.info.ContainerState
 import groovy.transform.Canonical
 import org.springframework.hateoas.Link
 import org.springframework.hateoas.Resources
@@ -9,9 +9,6 @@ import org.springframework.hateoas.Resources
 class ContainerIndexResource extends Resources<ContainerResource> {
 
     Map<ContainerState, Integer> stateMetadata
-
-    ContainerIndexResource() {
-    }
 
     ContainerIndexResource(
         final Iterable<ContainerResource> content,

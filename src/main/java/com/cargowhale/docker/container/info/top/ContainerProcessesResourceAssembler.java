@@ -1,6 +1,7 @@
 package com.cargowhale.docker.container.info.top;
 
 import com.cargowhale.docker.container.info.ContainerDetailsController;
+import com.cargowhale.docker.container.info.index.ContainerIndexController;
 import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 import org.springframework.stereotype.Component;
@@ -19,7 +20,7 @@ public class ContainerProcessesResourceAssembler extends ResourceAssemblerSuppor
     public ContainerProcessesResource toResource(final ContainerProcessIndex entity) {
         ContainerProcessesResource resource = createResourceWithId(entity.getId(), entity);
 
-        resource.add(linkTo(methodOn(ContainerDetailsController.class).getContainerById(entity.getId())).withRel("up"));
+        resource.add(linkTo(methodOn(ContainerIndexController.class).inspectContainer(entity.getId())).withRel("up"));
 
         return resource;
     }

@@ -1,31 +1,34 @@
 package com.cargowhale.docker.container.info.top;
 
 import com.cargowhale.docker.client.containers.info.ContainerInfoClient;
-import com.cargowhale.docker.client.containers.info.inspect.ContainerDetails;
 import com.cargowhale.docker.client.containers.info.top.ContainerTop;
 import com.cargowhale.docker.client.core.exception.BadContainerStateException;
+import com.cargowhale.docker.container.info.details.InspectContainerClient;
+import com.spotify.docker.client.messages.ContainerInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ContainerTopService {
 
-    private final ContainerInfoClient client;
+    private final ContainerInfoClient infoClient;
+    private final InspectContainerClient inspectContainerClient;
     private final ContainerProcessIndexBuilder processIndexBuilder;
 
     @Autowired
-    public ContainerTopService(final ContainerInfoClient client, final ContainerProcessIndexBuilder processIndexBuilder) {
-        this.client = client;
+    public ContainerTopService(final ContainerInfoClient infoClient, final InspectContainerClient inspectContainerClient, final ContainerProcessIndexBuilder processIndexBuilder) {
+        this.infoClient = infoClient;
+        this.inspectContainerClient = inspectContainerClient;
         this.processIndexBuilder = processIndexBuilder;
     }
 
     public ContainerProcessIndex getContainerProcessesById(final String containerId) {
-        ContainerDetails containerDetails = this.client.inspectContainer(containerId);
-        if (!containerDetails.getState().getRunning()) {
-            throw new BadContainerStateException(containerDetails.getState().getStatus());
+        ContainerInfo containerInfo = this.inspectContainerClient.inspectContainer(containerId);
+        if (!containerInfo.state().running()) {
+            throw new BadContainerStateException(containerInfo.state().status());
         }
 
-        ContainerTop dockerIndex = this.client.getContainerProcesses(containerId);
+        ContainerTop dockerIndex = this.infoClient.getContainerProcesses(containerId);
         return this.processIndexBuilder.buildProcessIndex(containerId, dockerIndex);
     }
 }

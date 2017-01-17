@@ -1,10 +1,7 @@
 package com.cargowhale.docker.container.info;
 
-import com.cargowhale.docker.client.containers.info.inspect.ContainerDetails;
 import com.cargowhale.docker.client.containers.info.logs.LogFilters;
 import com.cargowhale.docker.client.containers.info.stats.ContainerStats;
-import com.cargowhale.docker.container.info.details.ContainerDetailsResource;
-import com.cargowhale.docker.container.info.details.ContainerDetailsResourceAssembler;
 import com.cargowhale.docker.container.info.model.ContainerLogs;
 import com.cargowhale.docker.container.info.resource.ContainerLogsResource;
 import com.cargowhale.docker.container.info.resource.ContainerLogsResourceAssembler;
@@ -39,9 +36,6 @@ public class ContainerDetailsControllerTest {
     private ContainerTopService topService;
 
     @Mock
-    private ContainerDetailsResourceAssembler detailsResourceAssembler;
-
-    @Mock
     private ContainerLogsResourceAssembler logsResourceAssembler;
 
     @Mock
@@ -49,18 +43,6 @@ public class ContainerDetailsControllerTest {
 
     @Mock
     private ContainerStatsResourceAssembler statsResourceAssembler;
-
-    @Test
-    public void getContainerDetailsById() throws Exception {
-        String containerId = "container id!";
-        ContainerDetails containerDetails = mock(ContainerDetails.class);
-        ContainerDetailsResource containerDetailsResource = mock(ContainerDetailsResource.class);
-
-        when(this.infoService.getContainerDetailsById(containerId)).thenReturn(containerDetails);
-        when(this.detailsResourceAssembler.toResource(containerDetails)).thenReturn(containerDetailsResource);
-
-        assertThat(this.controller.getContainerById(containerId), is(containerDetailsResource));
-    }
 
     @Test
     public void getContainerLogsById() {

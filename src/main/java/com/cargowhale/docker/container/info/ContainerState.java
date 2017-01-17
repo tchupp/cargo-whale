@@ -1,4 +1,4 @@
-package com.cargowhale.docker.client.containers;
+package com.cargowhale.docker.container.info;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 

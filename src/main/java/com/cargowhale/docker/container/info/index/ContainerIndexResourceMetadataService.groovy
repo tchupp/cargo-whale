@@ -1,6 +1,6 @@
 package com.cargowhale.docker.container.info.index
 
-import com.cargowhale.docker.client.containers.ContainerState
+import com.cargowhale.docker.container.info.ContainerState
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 

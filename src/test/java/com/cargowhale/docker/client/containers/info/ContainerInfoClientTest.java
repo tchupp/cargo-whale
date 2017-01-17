@@ -1,6 +1,5 @@
 package com.cargowhale.docker.client.containers.info;
 
-import com.cargowhale.docker.client.containers.info.inspect.ContainerDetails;
 import com.cargowhale.docker.client.containers.info.logs.LogFilters;
 import com.cargowhale.docker.client.containers.info.stats.ContainerStats;
 import com.cargowhale.docker.client.containers.info.top.ContainerTop;
@@ -19,7 +18,6 @@ import java.util.UUID;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -33,19 +31,6 @@ public class ContainerInfoClientTest {
 
     @Mock
     private DockerEndpointBuilder endpointBuilder;
-
-    @Test
-    public void inspectContainerReturnsCorrectContainer() throws Exception {
-        String inspectContainerEndpoint = UUID.randomUUID().toString();
-        String containerId = "container_id_yo";
-
-        ContainerDetails containerDetails = mock(ContainerDetails.class);
-
-        when(this.endpointBuilder.getInspectContainerEndpoint(containerId)).thenReturn(inspectContainerEndpoint);
-        when(this.restTemplate.getForObject(inspectContainerEndpoint, ContainerDetails.class)).thenReturn(containerDetails);
-
-        assertThat(this.client.inspectContainer(containerId), is(containerDetails));
-    }
 
     @Test
     public void getContainerLogsReturnsCorrectContainerLogs() throws Exception {

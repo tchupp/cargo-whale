@@ -1,8 +1,8 @@
 package com.cargowhale.docker.container.info.index;
 
-import com.cargowhale.docker.client.containers.ContainerState;
 import com.cargowhale.docker.client.containers.ListContainersParam;
 import com.cargowhale.docker.container.ContainerEnumConverter;
+import com.cargowhale.docker.container.info.ContainerState;
 import com.cargowhale.docker.exception.CargoWhaleErrorMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.MediaTypes;
@@ -61,5 +61,12 @@ public class ContainerIndexController {
         List<ContainerResource> containerResources = this.service.getContainers(params);
 
         return this.resourceAssembler.toResource(containerResources);
+    }
+
+    @RequestMapping(value = "/{id}",
+        method = RequestMethod.GET,
+        produces = MediaTypes.HAL_JSON_VALUE)
+    public ContainerResource inspectContainer(@PathVariable final String id) {
+        return this.service.getContainer(id);
     }
 }

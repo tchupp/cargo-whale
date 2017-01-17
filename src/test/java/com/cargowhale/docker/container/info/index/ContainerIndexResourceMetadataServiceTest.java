@@ -1,6 +1,6 @@
 package com.cargowhale.docker.container.info.index;
 
-import com.cargowhale.docker.client.containers.ContainerState;
+import com.cargowhale.docker.container.info.ContainerState;
 import com.spotify.docker.client.messages.Container;
 import org.junit.Test;
 import org.junit.runner.RunWith;

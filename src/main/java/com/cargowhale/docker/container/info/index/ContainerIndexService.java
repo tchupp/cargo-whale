@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import static com.cargowhale.docker.client.containers.ListContainersParam.allContainers;
+
 @Service
 public class ContainerIndexService {
 
@@ -33,5 +35,18 @@ public class ContainerIndexService {
         };
         List<ContainerResource> containerResources = containers.parallelStream().map(containerResourceMappingFunction).collect(Collectors.toList());
         return containerResources.stream().map(this.resourceProcessor::process).collect(Collectors.toList());
+    }
+
+    ContainerResource getContainer(final String containerId) {
+        ContainerInfo info = this.inspectContainerClient.inspectContainer(containerId);
+        List<Container> containers = this.listContainersClient.listContainers(allContainers());
+
+        for (final Container container : containers) {
+            if (container.id().equals(containerId)) {
+                return this.resourceProcessor.process(this.mapper.toResource(container, info));
+            }
+        }
+
+        return null;
     }
 }

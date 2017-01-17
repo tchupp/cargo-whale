@@ -1,6 +1,6 @@
 package com.cargowhale.docker.container;
 
-import com.cargowhale.docker.client.containers.ContainerState;
+import com.cargowhale.docker.container.info.ContainerState;
 import org.springframework.stereotype.Component;
 
 import java.beans.PropertyEditorSupport;

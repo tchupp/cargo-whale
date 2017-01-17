@@ -1,10 +1,7 @@
 package com.cargowhale.docker.container.info;
 
-import com.cargowhale.docker.client.containers.info.inspect.ContainerDetails;
 import com.cargowhale.docker.client.containers.info.logs.LogFilters;
 import com.cargowhale.docker.client.containers.info.stats.ContainerStats;
-import com.cargowhale.docker.container.info.details.ContainerDetailsResource;
-import com.cargowhale.docker.container.info.details.ContainerDetailsResourceAssembler;
 import com.cargowhale.docker.container.info.model.ContainerLogs;
 import com.cargowhale.docker.container.info.resource.ContainerLogsResource;
 import com.cargowhale.docker.container.info.resource.ContainerLogsResourceAssembler;
@@ -27,27 +24,21 @@ public class ContainerDetailsController {
 
     private final ContainerInfoService infoService;
     private final ContainerTopService topService;
-    private final ContainerDetailsResourceAssembler detailsResourceAssembler;
     private final ContainerLogsResourceAssembler logsResourceAssembler;
     private final ContainerStatsResourceAssembler statsResourceAssembler;
     private final ContainerProcessesResourceAssembler processesResourceAssembler;
 
     @Autowired
-    public ContainerDetailsController(final ContainerInfoService infoService, final ContainerTopService topService, final ContainerDetailsResourceAssembler detailsResourceAssembler, final ContainerLogsResourceAssembler logsResourceAssembler, final ContainerStatsResourceAssembler statsResourceAssembler, final ContainerProcessesResourceAssembler processesResourceAssembler) {
+    public ContainerDetailsController(final ContainerInfoService infoService,
+                                      final ContainerTopService topService,
+                                      final ContainerLogsResourceAssembler logsResourceAssembler,
+                                      final ContainerStatsResourceAssembler statsResourceAssembler,
+                                      final ContainerProcessesResourceAssembler processesResourceAssembler) {
         this.infoService = infoService;
         this.topService = topService;
-        this.detailsResourceAssembler = detailsResourceAssembler;
         this.logsResourceAssembler = logsResourceAssembler;
         this.statsResourceAssembler = statsResourceAssembler;
         this.processesResourceAssembler = processesResourceAssembler;
-    }
-
-    @RequestMapping(value = "/{id}",
-        method = RequestMethod.GET,
-        produces = MediaTypes.HAL_JSON_VALUE)
-    public ContainerDetailsResource getContainerById(@PathVariable final String id) {
-        ContainerDetails containerDetails = this.infoService.getContainerDetailsById(id);
-        return this.detailsResourceAssembler.toResource(containerDetails);
     }
 
     @RequestMapping(value = "/{id}/logs",

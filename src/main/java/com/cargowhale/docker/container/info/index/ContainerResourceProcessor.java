@@ -15,10 +15,13 @@ public class ContainerResourceProcessor implements ResourceProcessor<ContainerRe
     public ContainerResource process(final ContainerResource resource) {
 
         resource.add(linkTo(methodOn(ContainerIndexController.class).listContainers()).withRel("up"));
-        resource.add(linkTo(methodOn(ContainerDetailsController.class).getContainerById(resource.getContainerId())).withSelfRel());
+        resource.add(linkTo(methodOn(ContainerIndexController.class).inspectContainer(resource.getContainerId())).withSelfRel());
         resource.add(linkTo(methodOn(ContainerDetailsController.class).getContainerLogsById(resource.getContainerId(), new LogFilters())).withRel("logs"));
         resource.add(linkTo(methodOn(ContainerDetailsController.class).getContainerStatsById(resource.getContainerId())).withRel("stats"));
-        resource.add(linkTo(methodOn(ContainerDetailsController.class).getContainerProcessesById(resource.getContainerId())).withRel("top"));
+
+        if (resource.getState().getRunning()) {
+            resource.add(linkTo(methodOn(ContainerDetailsController.class).getContainerProcessesById(resource.getContainerId())).withRel("top"));
+        }
 
         return resource;
     }

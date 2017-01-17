@@ -1,6 +1,5 @@
 package com.cargowhale.docker.client.containers.info;
 
-import com.cargowhale.docker.client.containers.info.inspect.ContainerDetails;
 import com.cargowhale.docker.client.containers.info.stats.ContainerStats;
 import com.cargowhale.docker.client.containers.info.top.ContainerTop;
 import com.cargowhale.docker.client.core.DockerEndpointBuilder;
@@ -21,13 +20,6 @@ public class ContainerInfoClient {
     public ContainerInfoClient(final DockerRestTemplate restTemplate, final DockerEndpointBuilder endpointBuilder) {
         this.restTemplate = restTemplate;
         this.endpointBuilder = endpointBuilder;
-    }
-
-    @Deprecated
-    public ContainerDetails inspectContainer(final String containerId) {
-        String containerByIdEndpoint = this.endpointBuilder.getInspectContainerEndpoint(containerId);
-
-        return this.restTemplate.getForObject(containerByIdEndpoint, ContainerDetails.class);
     }
 
     public ContainerLogs getContainerLogs(final String containerId, final QueryParameters filters) {

@@ -1,6 +1,6 @@
 package com.cargowhale.docker.container.info.index;
 
-import com.cargowhale.docker.client.containers.ContainerState;
+import com.cargowhale.docker.container.info.ContainerState;
 import com.cargowhale.docker.index.IndexController;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 import org.springframework.stereotype.Service;

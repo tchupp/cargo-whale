@@ -1,6 +1,7 @@
 package com.cargowhale.docker.container.info.index;
 
-import com.cargowhale.docker.client.containers.ContainerState;
+import com.cargowhale.docker.container.info.ContainerState;
+import org.apache.commons.lang.RandomStringUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -31,7 +32,7 @@ public class ContainerIndexControllerTest {
 
     @Test
     public void listContainersReturnsContainerIndexResource() {
-        ContainerIndexResource containerIndex = new ContainerIndexResource();
+        ContainerIndexResource containerIndex = mock(ContainerIndexResource.class);
         List<ContainerResource> containerResources = Collections.singletonList(mock(ContainerResource.class));
 
         when(this.service.getContainers(allContainers())).thenReturn(containerResources);
@@ -42,12 +43,22 @@ public class ContainerIndexControllerTest {
 
     @Test
     public void listContainersReturnsContainerIndexResource_WithParams() {
-        ContainerIndexResource containerIndex = new ContainerIndexResource();
+        ContainerIndexResource containerIndex = mock(ContainerIndexResource.class);
         List<ContainerResource> containerResources = Collections.singletonList(mock(ContainerResource.class));
 
         when(this.service.getContainers(state(ContainerState.RUNNING), state(ContainerState.DEAD))).thenReturn(containerResources);
         when(this.resourceAssembler.toResource(containerResources)).thenReturn(containerIndex);
 
         assertThat(this.controller.listContainers(new ContainerState[]{ContainerState.RUNNING, ContainerState.DEAD}), is(containerIndex));
+    }
+
+    @Test
+    public void getContainerDetailsById() throws Exception {
+        String containerId = RandomStringUtils.random(10);
+        ContainerResource containerResource = mock(ContainerResource.class);
+
+        when(this.service.getContainer(containerId)).thenReturn(containerResource);
+
+        assertThat(this.controller.inspectContainer(containerId), is(containerResource));
     }
 }

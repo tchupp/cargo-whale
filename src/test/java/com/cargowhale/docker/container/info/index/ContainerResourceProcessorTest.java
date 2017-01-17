@@ -1,5 +1,6 @@
 package com.cargowhale.docker.container.info.index;
 
+import com.cargowhale.docker.container.info.index.ContainerResource.ContainerState;
 import com.cargowhale.docker.test.ControllerTestUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,6 +29,9 @@ public class ContainerResourceProcessorTest {
     public void returnsSameContainerResource() throws Exception {
         String containerId = "container_has_id!";
         ContainerResource containerResource = new ContainerResource(containerId);
+        ContainerState containerState = new ContainerState();
+        containerState.setRunning(true);
+        containerResource.setState(containerState);
 
         assertThat(this.resourceProcessor.process(containerResource), sameInstance(containerResource));
     }
@@ -35,7 +39,13 @@ public class ContainerResourceProcessorTest {
     @Test
     public void addsLinksToContainerResource() throws Exception {
         String containerId = "container_has_id!";
-        ContainerResource containerResource = this.resourceProcessor.process(new ContainerResource(containerId));
+
+        ContainerResource preProcessResource = new ContainerResource(containerId);
+        ContainerState containerState = new ContainerState();
+        containerState.setRunning(true);
+        preProcessResource.setState(containerState);
+
+        ContainerResource containerResource = this.resourceProcessor.process(preProcessResource);
 
         assertThat(containerResource.getLinks(), hasSize(5));
 
@@ -44,5 +54,24 @@ public class ContainerResourceProcessorTest {
         verifyLink(containerResource, "logs", "/api/containers/" + containerId + "/logs");
         verifyLink(containerResource, "stats", "/api/containers/" + containerId + "/stats");
         verifyLink(containerResource, "top", "/api/containers/" + containerId + "/top");
+    }
+
+    @Test
+    public void addsLinksToContainerResource_ContainerNotRunning() throws Exception {
+        String containerId = "container_has_id!";
+
+        ContainerResource preProcessResource = new ContainerResource(containerId);
+        ContainerState containerState = new ContainerState();
+        containerState.setRunning(false);
+        preProcessResource.setState(containerState);
+
+        ContainerResource containerResource = this.resourceProcessor.process(preProcessResource);
+
+        assertThat(containerResource.getLinks(), hasSize(4));
+
+        verifyLink(containerResource, "up", "/api/containers");
+        verifyLink(containerResource, Link.REL_SELF, "/api/containers/" + containerId);
+        verifyLink(containerResource, "logs", "/api/containers/" + containerId + "/logs");
+        verifyLink(containerResource, "stats", "/api/containers/" + containerId + "/stats");
     }
 }

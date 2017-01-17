@@ -1,7 +1,7 @@
 package com.cargowhale.docker.container.info.index;
 
 import com.cargowhale.division.MockServiceBuilder;
-import com.cargowhale.docker.client.containers.ContainerState;
+import com.cargowhale.docker.container.info.ContainerState;
 import com.cargowhale.docker.test.integration.RamlSpecFiles;
 import org.junit.Test;
 import org.junit.runner.RunWith;

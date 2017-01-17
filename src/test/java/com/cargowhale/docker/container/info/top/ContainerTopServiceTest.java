@@ -1,11 +1,11 @@
 package com.cargowhale.docker.container.info.top;
 
-import com.cargowhale.docker.client.containers.ContainerState;
 import com.cargowhale.docker.client.containers.info.ContainerInfoClient;
-import com.cargowhale.docker.client.containers.info.inspect.ContainerDetails;
-import com.cargowhale.docker.client.containers.info.inspect.ContainerDetailsState;
 import com.cargowhale.docker.client.containers.info.top.ContainerTop;
 import com.cargowhale.docker.client.core.exception.BadContainerStateException;
+import com.cargowhale.docker.container.info.details.InspectContainerClient;
+import com.spotify.docker.client.messages.ContainerInfo;
+import com.spotify.docker.client.messages.ContainerState;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -30,7 +30,10 @@ public class ContainerTopServiceTest {
     private ContainerTopService service;
 
     @Mock
-    private ContainerInfoClient client;
+    private ContainerInfoClient infoClient;
+
+    @Mock
+    private InspectContainerClient inspectContainerClient;
 
     @Mock
     private ContainerProcessIndexBuilder processIndexBuilder;
@@ -38,17 +41,18 @@ public class ContainerTopServiceTest {
     @Test
     public void getContainerProcessesByIdReturnsContainerProcessIndex() {
         String containerId = "container_id";
-        ContainerDetailsState containerDetailsState = new ContainerDetailsState(ContainerState.RUNNING);
-        containerDetailsState.setRunning(true);
+        ContainerInfo containerInfo = mock(ContainerInfo.class);
+        ContainerState containerState = mock(ContainerState.class);
 
-        ContainerDetails containerDetails = new ContainerDetails(containerDetailsState);
+        when(containerInfo.state()).thenReturn(containerState);
+        when(containerState.running()).thenReturn(true);
 
         ContainerTop response = mock(ContainerTop.class);
         ContainerProcessIndex processIndex = new ContainerProcessIndex(containerId, newArrayList());
 
-        when(this.client.inspectContainer(containerId)).thenReturn(containerDetails);
+        when(this.inspectContainerClient.inspectContainer(containerId)).thenReturn(containerInfo);
 
-        when(this.client.getContainerProcesses(containerId)).thenReturn(response);
+        when(this.infoClient.getContainerProcesses(containerId)).thenReturn(response);
         when(this.processIndexBuilder.buildProcessIndex(containerId, response)).thenReturn(processIndex);
 
         assertThat(this.service.getContainerProcessesById(containerId), is(processIndex));
@@ -60,12 +64,14 @@ public class ContainerTopServiceTest {
         this.thrown.expectMessage("Container in exited state");
 
         String containerId = "container_id";
-        ContainerDetailsState containerDetailsState = new ContainerDetailsState(ContainerState.EXITED);
-        containerDetailsState.setRunning(false);
+        ContainerInfo containerInfo = mock(ContainerInfo.class);
+        ContainerState containerState = mock(ContainerState.class);
 
-        ContainerDetails containerDetails = new ContainerDetails(containerDetailsState);
+        when(containerInfo.state()).thenReturn(containerState);
+        when(containerState.running()).thenReturn(false);
+        when(containerState.status()).thenReturn("exited");
 
-        when(this.client.inspectContainer(containerId)).thenReturn(containerDetails);
+        when(this.inspectContainerClient.inspectContainer(containerId)).thenReturn(containerInfo);
 
         this.service.getContainerProcessesById(containerId);
     }

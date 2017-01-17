@@ -1,7 +1,6 @@
 package com.cargowhale.docker.container.info;
 
 import com.cargowhale.docker.client.containers.info.ContainerInfoClient;
-import com.cargowhale.docker.client.containers.info.inspect.ContainerDetails;
 import com.cargowhale.docker.client.containers.info.logs.LogFilters;
 import com.cargowhale.docker.client.containers.info.stats.ContainerStats;
 import com.cargowhale.docker.container.info.model.ContainerLogs;
@@ -16,11 +15,6 @@ public class ContainerInfoService {
     @Autowired
     public ContainerInfoService(final ContainerInfoClient client) {
         this.client = client;
-    }
-
-    @Deprecated
-    ContainerDetails getContainerDetailsById(final String containerId) {
-        return this.client.inspectContainer(containerId);
     }
 
     ContainerLogs getContainerLogsById(final String containerId, final LogFilters logFilters) {
