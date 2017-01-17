@@ -30,6 +30,7 @@ public class UnixComponentsClientHttpRequestFactoryTest {
         this.requestFactory = new UnixComponentsClientHttpRequestFactory(DOCKER_URI);
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     public void createsHttpContextWithPlainSocketFactory() throws Exception {
         HttpContext context = this.requestFactory.createHttpContext(HttpMethod.GET, URI.create("http://google.com"));
@@ -43,6 +44,7 @@ public class UnixComponentsClientHttpRequestFactoryTest {
         assertThat(httpFactory, instanceOf(PlainConnectionSocketFactory.class));
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     public void createsHttpsContextWithSSLSocketFactory() throws Exception {
         HttpContext context = this.requestFactory.createHttpContext(HttpMethod.GET, URI.create("http://google.com"));
@@ -56,6 +58,7 @@ public class UnixComponentsClientHttpRequestFactoryTest {
         assertThat(httpsFactory, instanceOf(SSLConnectionSocketFactory.class));
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     public void createsUnixContextWithUnixSocketFactory_UriSchemeIsUnix() throws Exception {
         HttpContext context = this.requestFactory.createHttpContext(HttpMethod.GET, URI.create("unix://google.com"));
@@ -78,6 +81,7 @@ public class UnixComponentsClientHttpRequestFactoryTest {
         verify(spy).buildUnixSocketFactory(URI.create(DOCKER_URI));
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     public void createsUnixContextWithUnixSocketFactory_UriSchemeIsNotUnix() throws Exception {
         HttpContext context = this.requestFactory.createHttpContext(HttpMethod.GET, URI.create("http://google.com"));

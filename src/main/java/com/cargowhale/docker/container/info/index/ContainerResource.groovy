@@ -16,11 +16,9 @@ class ContainerResource extends ResourceSupport {
     String name
     String image
     String imageId
-    String command
+    ContainerState state
+    ContainerConfig config
     Long created
-    String state
-    String status
-    List<PortMapping> ports
     Map<String, String> labels
     Long sizeRw
     Long sizeRootFs
@@ -28,12 +26,39 @@ class ContainerResource extends ResourceSupport {
     List<ContainerMount> mounts
 
     @Canonical
-    static class PortMapping {
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    static class ContainerConfig {
 
-        int privatePort
-        int publicPort
-        String type
-        String ip
+        String hostname
+        Boolean attachStdin
+        Boolean attachStdout
+        Boolean attachStderr
+        List<String> portSpecs
+        Boolean tty
+        Boolean openStdin
+        Boolean stdinOnce
+        List<String> env
+        String command
+        String workingDir
+        List<String> entrypoint
+        Boolean networkDisabled
+        List<String> onBuild
+    }
+
+    @Canonical
+    static class ContainerState {
+
+        String state
+        String status
+        Boolean running
+        Boolean paused
+        Boolean restarting
+        Integer pid
+        Integer exitCode
+        Date startedAt
+        Date finishedAt
+        String error
+        Boolean oomKilled
     }
 
     @Canonical
@@ -53,16 +78,17 @@ class ContainerResource extends ResourceSupport {
         Integer ipPrefixLen
         String gateway
         String bridge
-        Map<String, Map<String, String>> portMapping
-        Map<String, List<PortBinding>> ports
+        List<PortMapping> ports
         String macAddress
         Map<String, AttachedNetwork> networks
 
         @Canonical
-        static class PortBinding {
+        static class PortMapping {
 
-            String hostIp
-            String hostPort
+            int privatePort
+            int publicPort
+            String type
+            String ip
         }
 
         @Canonical
