@@ -1,0 +1,127 @@
+#%RAML 1.0 Library
+
+types:
+  Link: !include ../types/link.raml
+
+  ContainerState:
+    enum:
+      - created
+      - restarting
+      - running
+      - paused
+      - exited
+      - dead
+
+  AttachedNetwork:
+    properties:
+      globalIPv6Address: string
+      macAddress: string
+      ipV6Gateway: string
+      endpointId: string
+      ipPrefixLen: string
+      globalIPv6PrefixLen: string
+      ipAddress: string
+      networkId: string
+      gateway: string
+
+  Port:
+    properties:
+      ip: string
+      privatePort: number
+      publicPort: number
+      type: string
+
+  NetworkSettings:
+    properties:
+      ipAddress: string
+      ipPrefixLen: integer
+      gateway: string
+      bridge: string
+      macAddress: string
+      ports: Port[]
+      networks:
+        properties:
+          .*: AttachedNetwork
+
+  Config:
+    properties:
+      hostname: string
+      attachStdin: boolean
+      attachStdout: boolean
+      attachStderr: boolean
+      tty: boolean
+      openStdin: boolean
+      stdinOnce: boolean
+      command: string
+      env: string[]
+      workingDir: string
+
+  State:
+    properties:
+      pid: integer
+      state: ContainerState
+      status: string
+      error: string
+      exitCode: integer
+      startedAt: integer
+      finishedAt: integer
+      dead: boolean
+      paused: boolean
+      restarting: boolean
+      running: boolean
+      oomKilled: boolean
+
+  Mount:
+    properties:
+      source: string
+      destination: string
+      mode: string
+      rw: boolean
+
+  Lables:
+    properties:
+      .*: string
+
+  Container:
+    properties:
+      id: string
+      name: string
+      image: string
+      imageId: string
+      created: integer
+      networkSettings: NetworkSettings
+      config: Config
+      state: State
+      mounts: Mount[]
+      labels: Lables
+      _links:
+        properties:
+          self: Link
+          up: Link
+          logs: Link
+          top?: Link
+          stats: Link
+
+  Index:
+    properties:
+      containers: Container[]
+      stateMetadata:
+        type: object
+        properties:
+          all: integer
+          created: integer
+          restarting: integer
+          running: integer
+          paused: integer
+          exited: integer
+          dead: integer
+      _links:
+        properties:
+          all: Link
+          created: Link
+          restarting: Link
+          running: Link
+          paused: Link
+          exited: Link
+          dead: Link
+          up: Link

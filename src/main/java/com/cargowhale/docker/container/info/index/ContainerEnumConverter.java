@@ -1,4 +1,4 @@
-package com.cargowhale.docker.container;
+package com.cargowhale.docker.container.info.index;
 
 import com.cargowhale.docker.container.info.ContainerState;
 import org.springframework.stereotype.Component;

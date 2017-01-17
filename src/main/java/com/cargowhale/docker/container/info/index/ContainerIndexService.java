@@ -31,10 +31,10 @@ public class ContainerIndexService {
         List<Container> containers = this.listContainersClient.listContainers(filters);
         Function<Container, ContainerResource> containerResourceMappingFunction = container -> {
             ContainerInfo info = this.inspectContainerClient.inspectContainer(container.id());
-            return this.mapper.toResource(container, info);
+            ContainerResource containerResource = this.mapper.toResource(container, info);
+            return this.resourceProcessor.process(containerResource);
         };
-        List<ContainerResource> containerResources = containers.parallelStream().map(containerResourceMappingFunction).collect(Collectors.toList());
-        return containerResources.stream().map(this.resourceProcessor::process).collect(Collectors.toList());
+        return containers.stream().map(containerResourceMappingFunction).collect(Collectors.toList());
     }
 
     ContainerResource getContainer(final String containerId) {

@@ -1,16 +1,15 @@
 package com.cargowhale.docker.container.info.index;
 
 import com.cargowhale.docker.client.containers.ListContainersParam;
-import com.cargowhale.docker.container.ContainerEnumConverter;
 import com.cargowhale.docker.container.info.ContainerState;
 import com.cargowhale.docker.exception.CargoWhaleErrorMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindException;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -36,8 +35,8 @@ public class ContainerIndexController {
         binder.registerCustomEditor(ContainerState.class, new ContainerEnumConverter());
     }
 
-    @ExceptionHandler(value = BindException.class)
-    public ResponseEntity<CargoWhaleErrorMessage> handleBadFilter(final HttpServletRequest request, final BindException ex) {
+    @ExceptionHandler(value = MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<CargoWhaleErrorMessage> handleBadFilter(final HttpServletRequest request, final MethodArgumentTypeMismatchException ex) {
         CargoWhaleErrorMessage errorMessage = new CargoWhaleErrorMessage(request.getRequestURI(), "Bad Filter", ex.getClass().toString());
         return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
     }

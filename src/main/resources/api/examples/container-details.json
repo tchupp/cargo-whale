@@ -1,62 +1,97 @@
 {
-  "id": "ba033ac4401106a3b513bc9d639eee123ad78ca3616b921167cd74b20e25ed39",
-  "imageId": "04c5d3b7b0656168630d3ba35d8889bd0e9caafcaeb3004d2bfbc47e7c5d35d2",
-  "name": "/running-container",
-  "state": {
-    "exitCode": 9,
-    "pid": 0,
-    "error": "",
-    "status": "running",
-    "startedTime": "2015-01-06T15:47:32.072697474Z",
-    "finishedTime": "2015-01-06T15:47:32.080254511Z",
-    "dead": false,
-    "paused": false,
-    "running": true,
-    "restarting": false
-  },
+  "id": "f911b0f4e0b19e3da3bae6dcff82195",
+  "name": "/running_container",
+  "image": "rxnctrllabs/docker-proxy",
+  "imageId": "sha256:b70a3626c0e0e855806ae0a71da60db43eed54a6558f4c6ca3668a14e545fa62",
+  "created": 1483936067,
   "networkSettings": {
-    "ports": {},
+    "macAddress": "",
+    "ipPrefixLen": 0,
+    "ipAddress": "",
+    "bridge": "",
+    "gateway": "",
+    "ports": [
+      {
+        "privatePort": 2375,
+        "ip": "0.0.0.0",
+        "publicPort": 2375,
+        "type": "tcp"
+      }
+    ],
     "networks": {
-      "bridge": {
+      "docker_default": {
+        "ipv6Gateway": "",
         "globalIPv6Address": "",
         "macAddress": "02:42:ac:12:00:02",
-        "ipV6Gateway": "",
-        "endpointId": "7587b82f0dada3656fda26588aee72630c6fab1536d36e394b2bfbcf898c971d",
+        "endpointId": "f60fb8fc8e3b2161e9f07fb56d7928c8ab932bc0823b9d67f57ca5f69fdfe826",
         "ipPrefixLen": 16,
         "globalIPv6PrefixLen": 0,
-        "ipAddress": "172.17.0.2",
-        "networkId": "7ea29fc1412292a2d7bba362f9253545fecdfa8ce9a6e37dd10ba8bee7129812",
-        "gateway": "172.17.0.1"
+        "ipAddress": "172.18.0.2",
+        "networkId": "d90d0e26c6c2c8693c190ed6d41be3a08931140a604458047087cbbcb3b07b38",
+        "gateway": "172.18.0.1"
       }
     }
   },
+  "mounts": [
+    {
+      "mode": "rw",
+      "rw": true,
+      "destination": "/var/run/docker.sock",
+      "source": "/var/run/docker.sock"
+    }
+  ],
+  "state": {
+    "running": true,
+    "oomKilled": false,
+    "paused": false,
+    "restarting": false,
+    "exitCode": 0,
+    "startedAt": 1484444960837,
+    "pid": 10494,
+    "state": "running",
+    "error": "",
+    "status": "Up 2 days",
+    "finishedAt": 1484099846490
+  },
   "config": {
-    "image": "ubuntu",
-    "hostname": "ba033ac44011",
-    "command": [
-      "/bin/sh",
-      "-c",
-      "exit 9"
+    "attachStderr": false,
+    "hostname": "bc14a49d2705",
+    "attachStdout": false,
+    "workingDir": "",
+    "tty": false,
+    "openStdin": false,
+    "stdinOnce": false,
+    "env": [
+      "no_proxy=*.local, 169.254/16",
+      "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "DOCKER_PORT=2375"
     ],
-    "environment": [
-      "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-    ]
+    "command": "/bin/sh -c 'echo \"Starting socat portforward on port ${DOCKER_PORT}\" &&     socat -v TCP-LISTEN:${DOCKER_PORT},reuseaddr,fork UNIX-CLIENT:/var/run/docker.sock'",
+    "attachStdin": false
+  },
+  "labels": {
+    "com.docker.compose.service": "docker-proxy",
+    "com.docker.compose.project": "docker",
+    "com.docker.compose.version": "1.9.0",
+    "com.docker.compose.config-hash": "7c80f7330e15c4b9f42f2cc8dff539a927d4ab4f98371a0b2a768cd043ceb632",
+    "com.docker.compose.container-number": "1",
+    "com.docker.compose.oneoff": "False"
   },
   "_links": {
     "top": {
-      "href": "http://localhost/api/containers/ba033ac4401106a3b513bc9d639eee123ad78ca3616b921167cd74b20e25ed39/top"
+      "href": "http://localhost/api/containers/f911b0f4e0b19e3da3bae6dcff82195/top"
+    },
+    "stats": {
+      "href": "http://localhost/api/containers/f911b0f4e0b19e3da3bae6dcff82195/stats"
     },
     "self": {
-      "href": "http://localhost/api/containers/ba033ac4401106a3b513bc9d639eee123ad78ca3616b921167cd74b20e25ed39"
+      "href": "http://localhost/api/containers/f911b0f4e0b19e3da3bae6dcff82195"
     },
     "up": {
       "href": "http://localhost/api/containers"
     },
     "logs": {
-      "href": "http://localhost/api/containers/ba033ac4401106a3b513bc9d639eee123ad78ca3616b921167cd74b20e25ed39/logs"
-    },
-    "stats": {
-      "href": "http://localhost/api/containers/ba033ac4401106a3b513bc9d639eee123ad78ca3616b921167cd74b20e25ed39/stats"
+      "href": "http://localhost/api/containers/f911b0f4e0b19e3da3bae6dcff82195/logs"
     }
   }
 }

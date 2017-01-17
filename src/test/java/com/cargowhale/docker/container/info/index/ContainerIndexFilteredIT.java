@@ -63,16 +63,18 @@ public class ContainerIndexFilteredIT {
 
     private void verifySingleStateFilter(final ContainerState containerState) throws Exception {
         this.dockerServiceBuilder.expectRequest("/v1.24/containers/json?filters={\"status\":[\"" + containerState.getState() + "\"]}", HttpMethod.GET, HttpStatus.OK, MediaType.APPLICATION_JSON);
+        this.dockerServiceBuilder.expectRequest("/v1.24/containers/f911b0f4e0b19e3da3bae6dcff82195/json", HttpMethod.GET, HttpStatus.OK, MediaType.APPLICATION_JSON);
+        this.dockerServiceBuilder.expectRequest("/v1.24/containers/json?all=1", HttpMethod.GET, HttpStatus.OK, MediaType.APPLICATION_JSON);
 
-        this.client.perform(get("/api/containers?filters=" + containerState.getState()))
+        this.client.perform(get("/api/containers?state=" + containerState.getState()))
             .andExpect(responseIsInSpec(RamlSpecFiles.CARGO_WHALE_RAML_SPEC_FILE)
                 .with("/api/containers", HttpMethod.GET, HttpStatus.OK, MediaTypes.HAL_JSON, containerState.getState()));
     }
 
     @Test
-    public void verifyBadFilterReturnsHttpBadRequest() throws Exception {
+    public void badFilterReturnsHttpBadRequest() throws Exception {
         String state = "I_AM_A_TEAPOT";
-        this.client.perform(get("/api/containers?filters=" + state))
+        this.client.perform(get("/api/containers?state=" + state))
             .andExpect(responseIsInSpec(RamlSpecFiles.CARGO_WHALE_RAML_SPEC_FILE)
                 .with("/api/containers", HttpMethod.GET, HttpStatus.BAD_REQUEST, MediaTypes.HAL_JSON));
     }

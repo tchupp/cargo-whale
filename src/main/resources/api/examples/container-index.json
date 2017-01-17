@@ -1,70 +1,309 @@
 {
-  "containers": [
-    {
-      "_links": {
-        "self": {
-          "href": "http://localhost/api/containers/92c23fc9e379630e6f9a17"
+  "_embedded": {
+    "containers": [
+      {
+        "image": "fedora",
+        "networkSettings": {
+          "macAddress": "",
+          "ipPrefixLen": 0,
+          "ipAddress": "",
+          "bridge": "",
+          "ports": [],
+          "networks": {
+            "bridge": {
+              "ipv6Gateway": "",
+              "globalIPv6Address": "",
+              "macAddress": "",
+              "endpointId": "",
+              "ipPrefixLen": 0,
+              "globalIPv6PrefixLen": 0,
+              "ipAddress": "",
+              "networkId": "",
+              "gateway": ""
+            }
+          },
+          "gateway": ""
+        },
+        "imageId": "sha256:5bafccc4d5dce3447074a70c7afe789f2661c0c3187938ca71e8c281ae7e1212",
+        "_links": {
+          "stats": {
+            "href": "http://localhost/api/containers/92c23fc9e379630e6f9a17b19e3da3b/stats"
+          },
+          "self": {
+            "href": "http://localhost/api/containers/92c23fc9e379630e6f9a17b19e3da3b"
+          },
+          "up": {
+            "href": "http://localhost/api/containers"
+          },
+          "logs": {
+            "href": "http://localhost/api/containers/92c23fc9e379630e6f9a17b19e3da3b/logs"
+          }
+        },
+        "created": 1481698357,
+        "name": "/created_container",
+        "mounts": [],
+        "state": {
+          "running": false,
+          "oomKilled": false,
+          "paused": false,
+          "restarting": false,
+          "exitCode": 0,
+          "startedAt": -62135769600000,
+          "pid": 0,
+          "state": "created",
+          "error": "",
+          "status": "Created",
+          "finishedAt": -62135769600000
+        },
+        "id": "92c23fc9e379630e6f9a17b19e3da3b",
+        "config": {
+          "attachStderr": true,
+          "hostname": "aa8cefb22c93",
+          "attachStdout": true,
+          "workingDir": "",
+          "tty": true,
+          "openStdin": true,
+          "stdinOnce": true,
+          "env": [
+            "no_proxy=*.local, 169.254/16",
+            "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+            "DISTTAG=f25docker",
+            "FGC=f25"
+          ],
+          "command": "bash",
+          "attachStdin": true
+        },
+        "labels": {}
+      },
+      {
+        "image": "rxnctrllabs/cargo-whale",
+        "networkSettings": {
+          "macAddress": "",
+          "ipPrefixLen": 0,
+          "ipAddress": "",
+          "bridge": "",
+          "ports": [],
+          "networks": {
+            "docker_default": {
+              "ipv6Gateway": "",
+              "globalIPv6Address": "",
+              "macAddress": "",
+              "endpointId": "",
+              "ipPrefixLen": 0,
+              "globalIPv6PrefixLen": 0,
+              "ipAddress": "",
+              "networkId": "d90d0e26c6c2c8693c190ed6d41be3a08931140a604458047087cbbcb3b07b38",
+              "gateway": ""
+            }
+          },
+          "gateway": ""
+        },
+        "imageId": "sha256:4c1f14549b305625d5749b1ffc2ba89a2ba18d8ca326410f07f4ca982c5836e3",
+        "_links": {
+          "stats": {
+            "href": "http://localhost/api/containers/270f2e51eed51e3c5d5d6b13cdd18d5/stats"
+          },
+          "self": {
+            "href": "http://localhost/api/containers/270f2e51eed51e3c5d5d6b13cdd18d5"
+          },
+          "up": {
+            "href": "http://localhost/api/containers"
+          },
+          "logs": {
+            "href": "http://localhost/api/containers/270f2e51eed51e3c5d5d6b13cdd18d5/logs"
+          }
+        },
+        "created": 1483935266,
+        "name": "/exited_container",
+        "mounts": [
+          {
+            "mode": "rw",
+            "rw": true,
+            "destination": "/var/run/docker.sock",
+            "source": "/var/run/docker.sock"
+          },
+          {
+            "mode": "rw",
+            "rw": true,
+            "destination": "/tmp",
+            "source": "/var/lib/docker/volumes/5d0610992cd9a210b68e11f030d4771326420775b7d1c34fc9820f2b818e8047/_data"
+          }
+        ],
+        "state": {
+          "running": false,
+          "oomKilled": false,
+          "paused": false,
+          "restarting": false,
+          "exitCode": 137,
+          "startedAt": 1483935267421,
+          "pid": 0,
+          "state": "exited",
+          "error": "",
+          "status": "Exited (137) 8 days ago",
+          "finishedAt": 1483935439963
+        },
+        "id": "270f2e51eed51e3c5d5d6b13cdd18d5",
+        "config": {
+          "attachStderr": false,
+          "hostname": "0e95264c0882",
+          "attachStdout": false,
+          "workingDir": "",
+          "tty": false,
+          "openStdin": false,
+          "stdinOnce": false,
+          "env": [
+            "affinity:container==a91e5d3e0487c326603db66b52538b53b7e8725d10bc03376b41918ebeeb9d05",
+            "no_proxy=*.local, 169.254/16",
+            "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/lib/jvm/java-1.8-openjdk/jre/bin:/usr/lib/jvm/java-1.8-openjdk/bin",
+            "LANG=C.UTF-8",
+            "JAVA_HOME=/usr/lib/jvm/java-1.8-openjdk/jre",
+            "JAVA_VERSION=8u92",
+            "JAVA_ALPINE_VERSION=8.92.14-r1"
+          ],
+          "command": "/bin/sh -c 'java -jar /app.war'",
+          "attachStdin": false
+        },
+        "labels": {
+          "com.docker.compose.service": "cargowhale",
+          "com.docker.compose.project": "docker",
+          "com.docker.compose.version": "1.9.0",
+          "com.docker.compose.config-hash": "060355474ff1632b8857f8d70183b6defb0675031cf078a748381471848495e3",
+          "com.docker.compose.container-number": "1",
+          "com.docker.compose.oneoff": "False"
         }
       },
-      "state": "exited",
-      "image": "ubuntu-c",
-      "imageId": "sha256:0d511c05f6ebefa4dee",
-      "name": "/rpn",
-      "id": "92c23fc9e379630e6f9a17",
-      "status": "Exited (0) 7 weeks ago",
-      "ports": []
-    },
-    {
-      "_links": {
-        "self": {
-          "href": "http://localhost/api/containers/270f2e51eed51e3c5d5d6b13cdd18d5"
+      {
+        "image": "rxnctrllabs/docker-proxy",
+        "networkSettings": {
+          "macAddress": "",
+          "ipPrefixLen": 0,
+          "ipAddress": "",
+          "bridge": "",
+          "ports": [
+            {
+              "privatePort": 2375,
+              "ip": "0.0.0.0",
+              "publicPort": 2375,
+              "type": "tcp"
+            }
+          ],
+          "networks": {
+            "docker_default": {
+              "ipv6Gateway": "",
+              "globalIPv6Address": "",
+              "macAddress": "02:42:ac:12:00:02",
+              "endpointId": "f60fb8fc8e3b2161e9f07fb56d7928c8ab932bc0823b9d67f57ca5f69fdfe826",
+              "ipPrefixLen": 16,
+              "globalIPv6PrefixLen": 0,
+              "ipAddress": "172.18.0.2",
+              "networkId": "d90d0e26c6c2c8693c190ed6d41be3a08931140a604458047087cbbcb3b07b38",
+              "gateway": "172.18.0.1"
+            }
+          },
+          "gateway": ""
+        },
+        "imageId": "sha256:b70a3626c0e0e855806ae0a71da60db43eed54a6558f4c6ca3668a14e545fa62",
+        "_links": {
+          "top": {
+            "href": "http://localhost/api/containers/f911b0f4e0b19e3da3bae6dcff82195/top"
+          },
+          "stats": {
+            "href": "http://localhost/api/containers/f911b0f4e0b19e3da3bae6dcff82195/stats"
+          },
+          "self": {
+            "href": "http://localhost/api/containers/f911b0f4e0b19e3da3bae6dcff82195"
+          },
+          "up": {
+            "href": "http://localhost/api/containers"
+          },
+          "logs": {
+            "href": "http://localhost/api/containers/f911b0f4e0b19e3da3bae6dcff82195/logs"
+          }
+        },
+        "created": 1483936067,
+        "name": "/running_container",
+        "mounts": [
+          {
+            "mode": "rw",
+            "rw": true,
+            "destination": "/var/run/docker.sock",
+            "source": "/var/run/docker.sock"
+          }
+        ],
+        "state": {
+          "running": true,
+          "oomKilled": false,
+          "paused": false,
+          "restarting": false,
+          "exitCode": 0,
+          "startedAt": 1484444960837,
+          "pid": 10494,
+          "state": "running",
+          "error": "",
+          "status": "Up 2 days",
+          "finishedAt": 1484099846490
+        },
+        "id": "f911b0f4e0b19e3da3bae6dcff82195",
+        "config": {
+          "attachStderr": false,
+          "hostname": "bc14a49d2705",
+          "attachStdout": false,
+          "workingDir": "",
+          "tty": false,
+          "openStdin": false,
+          "stdinOnce": false,
+          "env": [
+            "no_proxy=*.local, 169.254/16",
+            "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+            "DOCKER_PORT=2375"
+          ],
+          "command": "/bin/sh -c 'echo \"Starting socat portforward on port ${DOCKER_PORT}\" &&     socat -v TCP-LISTEN:${DOCKER_PORT},reuseaddr,fork UNIX-CLIENT:/var/run/docker.sock'",
+          "attachStdin": false
+        },
+        "labels": {
+          "com.docker.compose.service": "docker-proxy",
+          "com.docker.compose.project": "docker",
+          "com.docker.compose.version": "1.9.0",
+          "com.docker.compose.config-hash": "7c80f7330e15c4b9f42f2cc8dff539a927d4ab4f98371a0b2a768cd043ceb632",
+          "com.docker.compose.container-number": "1",
+          "com.docker.compose.oneoff": "False"
         }
-      },
-      "state": "exited",
-      "image": "resin/armv7hf-debian",
-      "imageId": "sha256:5aa56079fb2a4575907f0f77f6",
-      "name": "/arm",
-      "id": "270f2e51eed51e3c5d5d6b13cdd18d5",
-      "status": "Exited (0) 2 weeks ago",
-      "ports": []
-    },
-    {
-      "_links": {
-        "self": {
-          "href": "http://localhost/api/containers/f911b0f4e0b19e3da3bae6dcff82195"
-        }
-      },
-      "state": "running",
-      "image": "rxnctrllabs/socat",
-      "imageId": "sha256:57a61d9072453ce5300530c5e50dae39",
-      "name": "/socat",
-      "id": "f911b0f4e0b19e3da3bae6dcff82195",
-      "status": "Up 5 days",
-      "ports": [
-        {
-          "ip": "10.0.1.794",
-          "privatePort": 2375,
-          "publicPort": 2375,
-          "type": "tcp"
-        }
-      ]
-    }
-  ],
-  "stateMetadata": {
-    "all": 3,
-    "created": 0,
-    "restarting": 0,
-    "running": 1,
-    "paused": 0,
-    "exited": 2,
-    "dead": 0
+      }
+    ]
   },
   "_links": {
-    "self": {
+    "all": {
       "href": "http://localhost/api/containers"
+    },
+    "running": {
+      "href": "http://localhost/api/containers?state=RUNNING"
+    },
+    "restarting": {
+      "href": "http://localhost/api/containers?state=RESTARTING"
+    },
+    "paused": {
+      "href": "http://localhost/api/containers?state=PAUSED"
+    },
+    "created": {
+      "href": "http://localhost/api/containers?state=CREATED"
+    },
+    "exited": {
+      "href": "http://localhost/api/containers?state=EXITED"
+    },
+    "dead": {
+      "href": "http://localhost/api/containers?state=DEAD"
     },
     "up": {
       "href": "http://localhost/api"
     }
+  },
+  "stateMetadata": {
+    "all": 3,
+    "running": 1,
+    "restarting": 0,
+    "paused": 0,
+    "created": 1,
+    "exited": 1,
+    "dead": 0
   }
 }
