@@ -21,11 +21,11 @@ import static java.util.Arrays.stream;
 @RequestMapping("/api/containers")
 public class ContainerIndexController {
 
-    private final ContainerIndexService service;
+    private final ContainerResourceService service;
     private final ContainerIndexResourceAssembler resourceAssembler;
 
     @Autowired
-    public ContainerIndexController(final ContainerIndexService service, final ContainerIndexResourceAssembler resourceAssembler) {
+    public ContainerIndexController(final ContainerResourceService service, final ContainerIndexResourceAssembler resourceAssembler) {
         this.service = service;
         this.resourceAssembler = resourceAssembler;
     }

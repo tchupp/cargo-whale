@@ -1,11 +1,11 @@
 package com.cargowhale.docker.container.info.top;
 
 import com.cargowhale.docker.client.containers.info.ContainerInfoClient;
-import com.cargowhale.docker.client.containers.info.top.ContainerTop;
 import com.cargowhale.docker.client.core.exception.BadContainerStateException;
 import com.cargowhale.docker.container.info.details.InspectContainerClient;
 import com.spotify.docker.client.messages.ContainerInfo;
 import com.spotify.docker.client.messages.ContainerState;
+import com.spotify.docker.client.messages.TopResults;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -47,13 +47,13 @@ public class ContainerTopServiceTest {
         when(containerInfo.state()).thenReturn(containerState);
         when(containerState.running()).thenReturn(true);
 
-        ContainerTop response = mock(ContainerTop.class);
+        TopResults results = mock(TopResults.class);
         ContainerProcessIndex processIndex = new ContainerProcessIndex(containerId, newArrayList());
 
         when(this.inspectContainerClient.inspectContainer(containerId)).thenReturn(containerInfo);
 
-        when(this.infoClient.getContainerProcesses(containerId)).thenReturn(response);
-        when(this.processIndexBuilder.buildProcessIndex(containerId, response)).thenReturn(processIndex);
+        when(this.infoClient.getContainerProcesses(containerId)).thenReturn(results);
+        when(this.processIndexBuilder.buildProcessIndex(containerId, results)).thenReturn(processIndex);
 
         assertThat(this.service.getContainerProcessesById(containerId), is(processIndex));
     }

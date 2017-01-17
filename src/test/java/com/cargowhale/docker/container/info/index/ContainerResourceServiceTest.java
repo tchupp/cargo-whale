@@ -25,10 +25,10 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ContainerIndexServiceTest {
+public class ContainerResourceServiceTest {
 
     @InjectMocks
-    private ContainerIndexService service;
+    private ContainerResourceService service;
 
     @Mock
     private ListContainersClient listContainersClient;

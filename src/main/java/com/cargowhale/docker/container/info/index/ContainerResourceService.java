@@ -13,14 +13,14 @@ import java.util.stream.Collectors;
 import static com.cargowhale.docker.client.containers.ListContainersParam.allContainers;
 
 @Service
-public class ContainerIndexService {
+public class ContainerResourceService {
 
     private final ListContainersClient listContainersClient;
     private final InspectContainerClient inspectContainerClient;
     private final ContainerMapper mapper;
     private final ContainerResourceProcessor resourceProcessor;
 
-    public ContainerIndexService(final ListContainersClient listContainersClient, final InspectContainerClient inspectContainerClient, final ContainerMapper mapper, final ContainerResourceProcessor resourceProcessor) {
+    public ContainerResourceService(final ListContainersClient listContainersClient, final InspectContainerClient inspectContainerClient, final ContainerMapper mapper, final ContainerResourceProcessor resourceProcessor) {
         this.listContainersClient = listContainersClient;
         this.inspectContainerClient = inspectContainerClient;
         this.mapper = mapper;

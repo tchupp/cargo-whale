@@ -1,10 +1,10 @@
 package com.cargowhale.docker.container.info.top;
 
 import com.cargowhale.docker.client.containers.info.ContainerInfoClient;
-import com.cargowhale.docker.client.containers.info.top.ContainerTop;
 import com.cargowhale.docker.client.core.exception.BadContainerStateException;
 import com.cargowhale.docker.container.info.details.InspectContainerClient;
 import com.spotify.docker.client.messages.ContainerInfo;
+import com.spotify.docker.client.messages.TopResults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -28,7 +28,7 @@ public class ContainerTopService {
             throw new BadContainerStateException(containerInfo.state().status());
         }
 
-        ContainerTop dockerIndex = this.infoClient.getContainerProcesses(containerId);
-        return this.processIndexBuilder.buildProcessIndex(containerId, dockerIndex);
+        TopResults results = this.infoClient.getContainerProcesses(containerId);
+        return this.processIndexBuilder.buildProcessIndex(containerId, results);
     }
 }

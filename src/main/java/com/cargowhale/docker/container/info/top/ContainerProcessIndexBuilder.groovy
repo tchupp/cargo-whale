@@ -1,14 +1,14 @@
 package com.cargowhale.docker.container.info.top
 
-import com.cargowhale.docker.client.containers.info.top.ContainerTop
+import com.spotify.docker.client.messages.TopResults
 import org.springframework.stereotype.Component
 
 @Component
 class ContainerProcessIndexBuilder {
 
-    ContainerProcessIndex buildProcessIndex(String containerId, ContainerTop topResponse) {
-        List<Map<String, String>> processes = topResponse.processes.collect { process ->
-            buildProcess(topResponse.titles, process)
+    ContainerProcessIndex buildProcessIndex(String containerId, TopResults results) {
+        List<Map<String, String>> processes = results.processes().collect { process ->
+            buildProcess(results.titles(), process)
         }
 
         return new ContainerProcessIndex(containerId, processes)

@@ -25,7 +25,7 @@ public class ContainerIndexControllerTest {
     private ContainerIndexController controller;
 
     @Mock
-    private ContainerIndexService service;
+    private ContainerResourceService service;
 
     @Mock
     private ContainerIndexResourceAssembler resourceAssembler;

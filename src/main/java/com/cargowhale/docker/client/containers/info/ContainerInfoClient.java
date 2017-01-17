@@ -1,11 +1,11 @@
 package com.cargowhale.docker.client.containers.info;
 
 import com.cargowhale.docker.client.containers.info.stats.ContainerStats;
-import com.cargowhale.docker.client.containers.info.top.ContainerTop;
 import com.cargowhale.docker.client.core.DockerEndpointBuilder;
 import com.cargowhale.docker.client.core.DockerRestTemplate;
 import com.cargowhale.docker.client.core.QueryParameters;
 import com.cargowhale.docker.container.info.model.ContainerLogs;
+import com.spotify.docker.client.messages.TopResults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -29,9 +29,9 @@ public class ContainerInfoClient {
         return new ContainerLogs(containerId, this.restTemplate.getForObject(builder.toUriString(), String.class));
     }
 
-    public ContainerTop getContainerProcesses(final String containerId) {
+    public TopResults getContainerProcesses(final String containerId) {
         String containerByIdEndpoint = this.endpointBuilder.getContainerProcessesEndpoint(containerId);
-        return this.restTemplate.getForObject(containerByIdEndpoint, ContainerTop.class);
+        return this.restTemplate.getForObject(containerByIdEndpoint, TopResults.class);
     }
 
     public ContainerStats getContainerStats(final String containerId) {

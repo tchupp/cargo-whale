@@ -88,6 +88,7 @@ public interface ContainerMapper {
     })
     ContainerResource.ContainerState toContainerState(final ContainerState state, final String status);
 
+
     /**
      * CONTAINER CONFIG
      */
