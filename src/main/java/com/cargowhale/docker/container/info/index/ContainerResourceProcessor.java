@@ -1,7 +1,9 @@
 package com.cargowhale.docker.container.info.index;
 
-import com.cargowhale.docker.client.containers.info.logs.LogFilters;
-import com.cargowhale.docker.container.info.ContainerDetailsController;
+import com.cargowhale.docker.container.info.logs.ContainerLogsController;
+import com.cargowhale.docker.container.info.logs.LogFilters;
+import com.cargowhale.docker.container.info.stats.ContainerStatsController;
+import com.cargowhale.docker.container.info.top.ContainerProcessController;
 import org.springframework.hateoas.ResourceProcessor;
 import org.springframework.stereotype.Service;
 
@@ -16,11 +18,11 @@ public class ContainerResourceProcessor implements ResourceProcessor<ContainerRe
 
         resource.add(linkTo(methodOn(ContainerIndexController.class).listContainers()).withRel("up"));
         resource.add(linkTo(methodOn(ContainerIndexController.class).inspectContainer(resource.getContainerId())).withSelfRel());
-        resource.add(linkTo(methodOn(ContainerDetailsController.class).getContainerLogsById(resource.getContainerId(), new LogFilters())).withRel("logs"));
-        resource.add(linkTo(methodOn(ContainerDetailsController.class).getContainerStatsById(resource.getContainerId())).withRel("stats"));
+        resource.add(linkTo(methodOn(ContainerLogsController.class).getContainerLogsById(resource.getContainerId(), new LogFilters())).withRel("logs"));
+        resource.add(linkTo(methodOn(ContainerStatsController.class).getContainerStats(resource.getContainerId())).withRel("stats"));
 
         if (resource.getState().getRunning()) {
-            resource.add(linkTo(methodOn(ContainerDetailsController.class).getContainerProcessesById(resource.getContainerId())).withRel("top"));
+            resource.add(linkTo(methodOn(ContainerProcessController.class).getContainerProcesses(resource.getContainerId())).withRel("top"));
         }
 
         return resource;

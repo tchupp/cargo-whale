@@ -1,6 +1,6 @@
 package com.cargowhale.docker.client.core;
 
-import com.cargowhale.docker.client.containers.management.state.ContainerChangeState;
+import com.cargowhale.docker.container.management.ContainerChangeState;
 import org.springframework.stereotype.Component;
 
 @Component
