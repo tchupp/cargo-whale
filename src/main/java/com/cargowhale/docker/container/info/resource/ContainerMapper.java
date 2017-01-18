@@ -1,6 +1,7 @@
 package com.cargowhale.docker.container.info.resource;
 
 import com.spotify.docker.client.messages.*;
+import com.spotify.docker.client.messages.ContainerState;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
