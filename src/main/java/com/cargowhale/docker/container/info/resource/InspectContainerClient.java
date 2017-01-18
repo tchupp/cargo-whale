@@ -1,4 +1,4 @@
-package com.cargowhale.docker.container.info.details;
+package com.cargowhale.docker.container.info.resource;
 
 import com.cargowhale.docker.client.core.DockerEndpointBuilder;
 import com.cargowhale.docker.client.core.DockerRestTemplate;

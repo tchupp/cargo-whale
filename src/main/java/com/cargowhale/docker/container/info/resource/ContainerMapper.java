@@ -1,4 +1,4 @@
-package com.cargowhale.docker.container.info.index;
+package com.cargowhale.docker.container.info.resource;
 
 import com.spotify.docker.client.messages.*;
 import org.mapstruct.Mapper;

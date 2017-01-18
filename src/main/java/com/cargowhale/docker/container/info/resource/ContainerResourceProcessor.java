@@ -1,4 +1,4 @@
-package com.cargowhale.docker.container.info.index;
+package com.cargowhale.docker.container.info.resource;
 
 import com.cargowhale.docker.container.info.logs.ContainerLogsController;
 import com.cargowhale.docker.container.info.logs.LogFilters;
@@ -16,8 +16,8 @@ public class ContainerResourceProcessor implements ResourceProcessor<ContainerRe
     @Override
     public ContainerResource process(final ContainerResource resource) {
 
-        resource.add(linkTo(methodOn(ContainerIndexController.class).listContainers()).withRel("up"));
-        resource.add(linkTo(methodOn(ContainerIndexController.class).inspectContainer(resource.getContainerId())).withSelfRel());
+        resource.add(linkTo(methodOn(ContainerResourceController.class).listContainers()).withRel("up"));
+        resource.add(linkTo(methodOn(ContainerResourceController.class).inspectContainer(resource.getContainerId())).withSelfRel());
         resource.add(linkTo(methodOn(ContainerLogsController.class).getContainerLogsById(resource.getContainerId(), new LogFilters())).withRel("logs"));
         resource.add(linkTo(methodOn(ContainerStatsController.class).getContainerStats(resource.getContainerId())).withRel("stats"));
 

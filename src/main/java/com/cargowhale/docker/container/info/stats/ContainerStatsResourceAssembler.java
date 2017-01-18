@@ -1,8 +1,8 @@
 package com.cargowhale.docker.container.info.stats;
 
 import com.cargowhale.docker.client.containers.info.stats.ContainerStats;
-import com.cargowhale.docker.container.info.index.ContainerIndexController;
 import com.cargowhale.docker.container.info.logs.ContainerLogsController;
+import com.cargowhale.docker.container.info.resource.ContainerResourceController;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +20,7 @@ public class ContainerStatsResourceAssembler extends ResourceAssemblerSupport<Co
     public ContainerStatsResource toResource(final ContainerStats entity) {
         ContainerStatsResource resource = createResourceWithId(entity.getId(), entity);
 
-        resource.add(linkTo(methodOn(ContainerIndexController.class).inspectContainer(entity.getId())).withRel("up"));
+        resource.add(linkTo(methodOn(ContainerResourceController.class).inspectContainer(entity.getId())).withRel("up"));
 
         return resource;
     }

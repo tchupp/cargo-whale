@@ -1,7 +1,5 @@
-package com.cargowhale.docker.container.info.index;
+package com.cargowhale.docker.container.info.resource;
 
-import com.cargowhale.docker.client.containers.ListContainersParam;
-import com.cargowhale.docker.container.info.ContainerState;
 import com.cargowhale.docker.exception.CargoWhaleErrorMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.MediaTypes;
@@ -14,18 +12,18 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-import static com.cargowhale.docker.client.containers.ListContainersParam.allContainers;
+import static com.cargowhale.docker.container.info.resource.ListContainersParam.allContainers;
 import static java.util.Arrays.stream;
 
 @RestController
 @RequestMapping("/api/containers")
-public class ContainerIndexController {
+public class ContainerResourceController {
 
     private final ContainerResourceService service;
     private final ContainerIndexResourceAssembler resourceAssembler;
 
     @Autowired
-    public ContainerIndexController(final ContainerResourceService service, final ContainerIndexResourceAssembler resourceAssembler) {
+    public ContainerResourceController(final ContainerResourceService service, final ContainerIndexResourceAssembler resourceAssembler) {
         this.service = service;
         this.resourceAssembler = resourceAssembler;
     }

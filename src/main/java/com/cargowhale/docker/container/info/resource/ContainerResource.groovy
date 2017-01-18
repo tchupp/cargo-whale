@@ -1,4 +1,4 @@
-package com.cargowhale.docker.container.info.index
+package com.cargowhale.docker.container.info.resource
 
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty

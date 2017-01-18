@@ -1,8 +1,5 @@
-package com.cargowhale.docker.container.info.index;
+package com.cargowhale.docker.container.info.resource;
 
-import com.cargowhale.docker.client.containers.ListContainersParam;
-import com.cargowhale.docker.container.info.ContainerState;
-import com.cargowhale.docker.container.info.details.InspectContainerClient;
 import com.spotify.docker.client.messages.Container;
 import com.spotify.docker.client.messages.ContainerInfo;
 import org.apache.commons.lang.RandomStringUtils;
@@ -16,8 +13,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static com.cargowhale.docker.client.containers.ListContainersParam.allContainers;
-import static com.cargowhale.docker.client.containers.ListContainersParam.state;
+import static com.cargowhale.docker.container.info.resource.ListContainersParam.allContainers;
+import static com.cargowhale.docker.container.info.resource.ListContainersParam.state;
 import static com.cargowhale.docker.test.ContainerTestUtilities.buildContainerWithId;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;

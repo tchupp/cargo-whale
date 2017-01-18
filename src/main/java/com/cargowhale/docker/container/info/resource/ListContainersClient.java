@@ -1,6 +1,5 @@
-package com.cargowhale.docker.container.info.index;
+package com.cargowhale.docker.container.info.resource;
 
-import com.cargowhale.docker.client.containers.ListContainersParam;
 import com.cargowhale.docker.client.core.DockerEndpointBuilder;
 import com.cargowhale.docker.client.core.DockerRestTemplate;
 import com.spotify.docker.client.messages.Container;

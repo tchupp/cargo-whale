@@ -1,6 +1,5 @@
-package com.cargowhale.docker.container.info.index;
+package com.cargowhale.docker.container.info.resource;
 
-import com.cargowhale.docker.container.info.ContainerState;
 import com.cargowhale.docker.test.ControllerTestUtils;
 import org.junit.Before;
 import org.junit.Test;

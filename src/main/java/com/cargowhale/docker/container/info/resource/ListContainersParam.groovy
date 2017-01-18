@@ -1,6 +1,5 @@
-package com.cargowhale.docker.client.containers
+package com.cargowhale.docker.container.info.resource
 
-import com.cargowhale.docker.container.info.ContainerState
 import groovy.transform.Canonical
 
 @Canonical

@@ -1,7 +1,5 @@
-package com.cargowhale.docker.container.info.index;
+package com.cargowhale.docker.container.info.resource;
 
-import com.cargowhale.docker.client.containers.ListContainersParam;
-import com.cargowhale.docker.container.info.details.InspectContainerClient;
 import com.spotify.docker.client.messages.Container;
 import com.spotify.docker.client.messages.ContainerInfo;
 import org.springframework.stereotype.Service;
@@ -10,7 +8,7 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static com.cargowhale.docker.client.containers.ListContainersParam.allContainers;
+import static com.cargowhale.docker.container.info.resource.ListContainersParam.allContainers;
 
 @Service
 public class ContainerResourceService {

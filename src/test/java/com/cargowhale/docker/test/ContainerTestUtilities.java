@@ -1,6 +1,6 @@
 package com.cargowhale.docker.test;
 
-import com.cargowhale.docker.container.info.ContainerState;
+import com.cargowhale.docker.container.info.resource.ContainerState;
 import com.spotify.docker.client.messages.Container;
 import org.springframework.test.util.ReflectionTestUtils;
 

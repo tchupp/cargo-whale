@@ -1,10 +1,9 @@
-package com.cargowhale.docker.container.info.index
+package com.cargowhale.docker.container.info.resource
 
-import com.cargowhale.docker.container.info.ContainerState
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
-import static com.cargowhale.docker.client.containers.ListContainersParam.allContainers
+import static ListContainersParam.allContainers
 
 @Service
 class ContainerIndexResourceMetadataService {

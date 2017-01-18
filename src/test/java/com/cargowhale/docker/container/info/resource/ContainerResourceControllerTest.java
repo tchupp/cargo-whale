@@ -1,6 +1,5 @@
-package com.cargowhale.docker.container.info.index;
+package com.cargowhale.docker.container.info.resource;
 
-import com.cargowhale.docker.container.info.ContainerState;
 import org.apache.commons.lang.RandomStringUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,18 +10,18 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.util.Collections;
 import java.util.List;
 
-import static com.cargowhale.docker.client.containers.ListContainersParam.allContainers;
-import static com.cargowhale.docker.client.containers.ListContainersParam.state;
+import static com.cargowhale.docker.container.info.resource.ListContainersParam.allContainers;
+import static com.cargowhale.docker.container.info.resource.ListContainersParam.state;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ContainerIndexControllerTest {
+public class ContainerResourceControllerTest {
 
     @InjectMocks
-    private ContainerIndexController controller;
+    private ContainerResourceController controller;
 
     @Mock
     private ContainerResourceService service;

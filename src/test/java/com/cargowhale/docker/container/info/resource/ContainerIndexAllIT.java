@@ -1,4 +1,4 @@
-package com.cargowhale.docker.container.info.details;
+package com.cargowhale.docker.container.info.resource;
 
 import com.cargowhale.division.MockServiceBuilder;
 import com.cargowhale.docker.test.integration.RamlSpecFiles;
@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @SpringBootTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @AutoConfigureMockMvc
-public class ContainerDetailsIT {
+public class ContainerIndexAllIT {
 
     @Autowired
     private MockMvc client;
@@ -31,12 +31,14 @@ public class ContainerDetailsIT {
     private MockServiceBuilder dockerServiceBuilder;
 
     @Test
-    public void getContainerDetails() throws Exception {
-        this.dockerServiceBuilder.expectRequest("/v1.24/containers/f911b0f4e0b19e3da3bae6dcff82195/json", HttpMethod.GET, HttpStatus.OK, MediaType.APPLICATION_JSON);
+    public void getContainerIndex() throws Exception {
         this.dockerServiceBuilder.expectRequest("/v1.24/containers/json?all=1", HttpMethod.GET, HttpStatus.OK, MediaType.APPLICATION_JSON);
+        this.dockerServiceBuilder.expectRequest("/v1.24/containers/92c23fc9e379630e6f9a17b19e3da3b/json", HttpMethod.GET, HttpStatus.OK, MediaType.APPLICATION_JSON);
+        this.dockerServiceBuilder.expectRequest("/v1.24/containers/270f2e51eed51e3c5d5d6b13cdd18d5/json", HttpMethod.GET, HttpStatus.OK, MediaType.APPLICATION_JSON);
+        this.dockerServiceBuilder.expectRequest("/v1.24/containers/f911b0f4e0b19e3da3bae6dcff82195/json", HttpMethod.GET, HttpStatus.OK, MediaType.APPLICATION_JSON);
 
-        this.client.perform(get("/api/containers/f911b0f4e0b19e3da3bae6dcff82195"))
+        this.client.perform(get("/api/containers"))
             .andExpect(responseIsInSpec(RamlSpecFiles.CARGO_WHALE_RAML_SPEC_FILE)
-                .with("/api/containers/{id}", HttpMethod.GET, HttpStatus.OK, MediaTypes.HAL_JSON));
+                .with("/api/containers", HttpMethod.GET, HttpStatus.OK, MediaTypes.HAL_JSON, "all"));
     }
 }

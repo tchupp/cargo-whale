@@ -1,6 +1,5 @@
-package com.cargowhale.docker.container.info.index
+package com.cargowhale.docker.container.info.resource
 
-import com.cargowhale.docker.container.info.ContainerState
 import groovy.transform.Canonical
 import org.springframework.hateoas.Link
 import org.springframework.hateoas.Resources

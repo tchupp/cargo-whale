@@ -1,6 +1,5 @@
-package com.cargowhale.docker.container.info.index;
+package com.cargowhale.docker.container.info.resource;
 
-import com.cargowhale.docker.container.info.ContainerState;
 import com.spotify.docker.client.messages.Container;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,7 +12,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import static com.cargowhale.docker.client.containers.ListContainersParam.allContainers;
+import static com.cargowhale.docker.container.info.resource.ListContainersParam.allContainers;
 import static com.cargowhale.docker.test.ContainerTestUtilities.buildContainerWithState;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasKey;

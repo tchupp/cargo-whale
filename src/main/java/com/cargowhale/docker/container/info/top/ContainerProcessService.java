@@ -1,7 +1,7 @@
 package com.cargowhale.docker.container.info.top;
 
 import com.cargowhale.docker.client.core.exception.BadContainerStateException;
-import com.cargowhale.docker.container.info.details.InspectContainerClient;
+import com.cargowhale.docker.container.info.resource.InspectContainerClient;
 import com.spotify.docker.client.messages.ContainerInfo;
 import com.spotify.docker.client.messages.TopResults;
 import org.springframework.beans.factory.annotation.Autowired;
