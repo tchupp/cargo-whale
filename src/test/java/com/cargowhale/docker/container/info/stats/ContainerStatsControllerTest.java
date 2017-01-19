@@ -1,6 +1,5 @@
 package com.cargowhale.docker.container.info.stats;
 
-import com.cargowhale.docker.client.containers.info.stats.ContainerStats;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -21,17 +20,12 @@ public class ContainerStatsControllerTest {
     @Mock
     private ContainerStatsService statsService;
 
-    @Mock
-    private ContainerStatsResourceAssembler statsResourceAssembler;
-
     @Test
     public void getContainerStatsById() {
         String containerId = "container id!";
-        ContainerStats stats = new ContainerStats(containerId);
         ContainerStatsResource statsResource = mock(ContainerStatsResource.class);
 
-        when(this.statsService.getContainerStats(containerId)).thenReturn(stats);
-        when(this.statsResourceAssembler.toResource(stats)).thenReturn(statsResource);
+        when(this.statsService.getContainerStats(containerId)).thenReturn(statsResource);
 
         assertThat(this.controller.getContainerStats(containerId), is(statsResource));
     }

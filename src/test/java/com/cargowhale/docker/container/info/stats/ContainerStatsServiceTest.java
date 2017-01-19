@@ -1,6 +1,6 @@
 package com.cargowhale.docker.container.info.stats;
 
-import com.cargowhale.docker.client.containers.info.stats.ContainerStats;
+import com.spotify.docker.client.messages.ContainerStats;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -20,14 +20,19 @@ public class ContainerStatsServiceTest {
     @Mock
     private ContainerStatsClient client;
 
+    @Mock
+    private ContainerStatsMapper mapper;
+
     @Test
     public void getContainerStatsById() {
         String containerId = "container_id";
-        ContainerStats stats = new ContainerStats();
+        ContainerStats containerStats = new ContainerStats();
+        ContainerStatsResource containerStatsResource = new ContainerStatsResource();
 
-        when(this.client.getContainerStats(containerId)).thenReturn(stats);
+        when(this.client.getContainerStats(containerId)).thenReturn(containerStats);
+        when(this.mapper.toResource(containerStats)).thenReturn(containerStatsResource);
 
-        assertThat(this.service.getContainerStats(containerId), is(stats));
+        assertThat(this.service.getContainerStats(containerId), is(containerStatsResource));
     }
 
 }

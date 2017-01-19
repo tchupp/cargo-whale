@@ -11,7 +11,6 @@ import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -20,7 +19,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @AutoConfigureMockMvc
 public class ContainerDetailsIT {
 
@@ -38,5 +36,7 @@ public class ContainerDetailsIT {
         this.client.perform(get("/api/containers/f911b0f4e0b19e3da3bae6dcff82195"))
             .andExpect(responseIsInSpec(RamlSpecFiles.CARGO_WHALE_RAML_SPEC_FILE)
                 .with("/api/containers/{id}", HttpMethod.GET, HttpStatus.OK, MediaTypes.HAL_JSON));
+
+        this.dockerServiceBuilder.reset();
     }
 }

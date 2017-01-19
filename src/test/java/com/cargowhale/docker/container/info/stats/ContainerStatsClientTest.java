@@ -1,8 +1,8 @@
 package com.cargowhale.docker.container.info.stats;
 
-import com.cargowhale.docker.client.containers.info.stats.ContainerStats;
 import com.cargowhale.docker.client.core.DockerEndpointBuilder;
 import com.cargowhale.docker.client.core.DockerRestTemplate;
+import com.spotify.docker.client.messages.ContainerStats;
 import org.apache.commons.lang.RandomStringUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
