@@ -133,5 +133,5 @@ public interface ContainerStatsMapper {
         @Mapping(target = "cpuStats", expression = "java(toCpuStats(stats.cpuStats()))"),
         @Mapping(target = "precpuStats", expression = "java(toCpuStats(stats.precpuStats()))")
     })
-    ContainerStatsResource toResource(ContainerStats stats);
+    ContainerStatsResource toResource(ContainerStats stats, String containerId);
 }

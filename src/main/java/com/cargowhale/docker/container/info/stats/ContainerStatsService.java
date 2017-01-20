@@ -16,6 +16,6 @@ public class ContainerStatsService {
 
     ContainerStatsResource getContainerStats(final String containerId) {
         ContainerStats containerStats = this.client.getContainerStats(containerId);
-        return this.mapper.toResource(containerStats);
+        return this.mapper.toResource(containerStats, containerId);
     }
 }

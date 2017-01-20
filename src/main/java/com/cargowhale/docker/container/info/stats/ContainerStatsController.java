@@ -11,15 +11,18 @@ import org.springframework.web.bind.annotation.RestController;
 public class ContainerStatsController {
 
     private final ContainerStatsService statsService;
+    private final ContainerStatsProcessor statsProcessor;
 
-    public ContainerStatsController(final ContainerStatsService statsService) {
+    public ContainerStatsController(final ContainerStatsService statsService, final ContainerStatsProcessor statsProcessor) {
         this.statsService = statsService;
+        this.statsProcessor = statsProcessor;
     }
 
     @RequestMapping(value = "/{id}/stats",
         method = RequestMethod.GET,
         produces = MediaTypes.HAL_JSON_VALUE)
     public ContainerStatsResource getContainerStats(@PathVariable final String id) {
-        return this.statsService.getContainerStats(id);
+        ContainerStatsResource statsResource = this.statsService.getContainerStats(id);
+        return this.statsProcessor.process(statsResource);
     }
 }

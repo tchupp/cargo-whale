@@ -20,13 +20,18 @@ public class ContainerStatsControllerTest {
     @Mock
     private ContainerStatsService statsService;
 
+    @Mock
+    private ContainerStatsProcessor statsProcessor;
+
     @Test
     public void getContainerStatsById() {
         String containerId = "container id!";
         ContainerStatsResource statsResource = mock(ContainerStatsResource.class);
+        ContainerStatsResource statsResourcePostProcess = mock(ContainerStatsResource.class);
 
         when(this.statsService.getContainerStats(containerId)).thenReturn(statsResource);
+        when(this.statsProcessor.process(statsResource)).thenReturn(statsResourcePostProcess);
 
-        assertThat(this.controller.getContainerStats(containerId), is(statsResource));
+        assertThat(this.controller.getContainerStats(containerId), is(statsResourcePostProcess));
     }
 }

@@ -30,7 +30,7 @@ public class ContainerStatsServiceTest {
         ContainerStatsResource containerStatsResource = new ContainerStatsResource();
 
         when(this.client.getContainerStats(containerId)).thenReturn(containerStats);
-        when(this.mapper.toResource(containerStats)).thenReturn(containerStatsResource);
+        when(this.mapper.toResource(containerStats, containerId)).thenReturn(containerStatsResource);
 
         assertThat(this.service.getContainerStats(containerId), is(containerStatsResource));
     }

@@ -108,15 +108,13 @@ public class ContainerResourceServiceTest {
         Container container_Wrong = buildContainerWithId(containerId_Wrong);
         ContainerInfo containerInfo = mock(ContainerInfo.class);
         ContainerResource containerResource = mock(ContainerResource.class);
-        ContainerResource containerResourcePostProcessed = mock(ContainerResource.class);
 
         List<Container> containers = Arrays.asList(container_Right, container_Wrong);
 
         when(this.listContainersClient.listContainers(allContainers())).thenReturn(containers);
         when(this.inspectContainerClient.inspectContainer(containerId_Right)).thenReturn(containerInfo);
         when(this.mapper.toResource(container_Right, containerInfo)).thenReturn(containerResource);
-        when(this.resourceProcessor.process(containerResource)).thenReturn(containerResourcePostProcessed);
 
-        assertThat(this.service.getContainer(containerId_Right), is(containerResourcePostProcessed));
+        assertThat(this.service.getContainer(containerId_Right), is(containerResource));
     }
 }

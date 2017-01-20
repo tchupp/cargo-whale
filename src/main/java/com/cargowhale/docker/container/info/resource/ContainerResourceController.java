@@ -21,11 +21,13 @@ public class ContainerResourceController {
 
     private final ContainerResourceService service;
     private final ContainerIndexResourceAssembler resourceAssembler;
+    private final ContainerResourceProcessor resourceProcessor;
 
     @Autowired
-    public ContainerResourceController(final ContainerResourceService service, final ContainerIndexResourceAssembler resourceAssembler) {
+    public ContainerResourceController(final ContainerResourceService service, final ContainerIndexResourceAssembler resourceAssembler, final ContainerResourceProcessor resourceProcessor) {
         this.service = service;
         this.resourceAssembler = resourceAssembler;
+        this.resourceProcessor = resourceProcessor;
     }
 
     @InitBinder
@@ -64,6 +66,7 @@ public class ContainerResourceController {
         method = RequestMethod.GET,
         produces = MediaTypes.HAL_JSON_VALUE)
     public ContainerResource inspectContainer(@PathVariable final String id) {
-        return this.service.getContainer(id);
+        ContainerResource containerResource = this.service.getContainer(id);
+        return this.resourceProcessor.process(containerResource);
     }
 }

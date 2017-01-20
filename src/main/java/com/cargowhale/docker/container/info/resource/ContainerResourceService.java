@@ -41,7 +41,7 @@ public class ContainerResourceService {
 
         for (final Container container : containers) {
             if (container.id().equals(containerId)) {
-                return this.resourceProcessor.process(this.mapper.toResource(container, info));
+                return this.mapper.toResource(container, info);
             }
         }
 

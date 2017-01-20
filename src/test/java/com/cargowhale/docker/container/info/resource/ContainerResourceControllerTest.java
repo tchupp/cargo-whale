@@ -29,6 +29,9 @@ public class ContainerResourceControllerTest {
     @Mock
     private ContainerIndexResourceAssembler resourceAssembler;
 
+    @Mock
+    private ContainerResourceProcessor resourceProcessor;
+
     @Test
     public void listContainersReturnsContainerIndexResource() {
         ContainerIndexResource containerIndex = mock(ContainerIndexResource.class);
@@ -55,9 +58,11 @@ public class ContainerResourceControllerTest {
     public void getContainerDetailsById() throws Exception {
         String containerId = RandomStringUtils.random(10);
         ContainerResource containerResource = mock(ContainerResource.class);
+        ContainerResource containerResourcePostProcess = mock(ContainerResource.class);
 
         when(this.service.getContainer(containerId)).thenReturn(containerResource);
+        when(this.resourceProcessor.process(containerResource)).thenReturn(containerResourcePostProcess);
 
-        assertThat(this.controller.inspectContainer(containerId), is(containerResource));
+        assertThat(this.controller.inspectContainer(containerId), is(containerResourcePostProcess));
     }
 }

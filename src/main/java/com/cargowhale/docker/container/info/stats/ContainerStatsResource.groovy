@@ -1,11 +1,14 @@
 package com.cargowhale.docker.container.info.stats
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import groovy.transform.Canonical
 import org.springframework.hateoas.ResourceSupport
 
 @Canonical
 class ContainerStatsResource extends ResourceSupport {
 
+    @JsonIgnore
+    String containerId
     Date read
     Map<String, NetworkStats> networks
     MemoryStats memoryStats
