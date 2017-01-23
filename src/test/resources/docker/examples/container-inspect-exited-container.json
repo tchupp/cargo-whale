@@ -1,0 +1,219 @@
+{
+  "Id": "f911b0f4e0b19e3da3bae6dcff82195",
+  "Created": "2017-01-09T04:14:26.16642975Z",
+  "Path": "/bin/sh",
+  "Args": [
+    "-c",
+    "java -jar /app.war"
+  ],
+  "State": {
+    "Status": "exited",
+    "Running": false,
+    "Paused": false,
+    "Restarting": false,
+    "OOMKilled": false,
+    "Dead": false,
+    "Pid": 0,
+    "ExitCode": 137,
+    "Error": "",
+    "StartedAt": "2017-01-09T04:14:27.421940487Z",
+    "FinishedAt": "2017-01-09T04:17:19.963623431Z"
+  },
+  "Image": "sha256:4c1f14549b305625d5749b1ffc2ba89a2ba18d8ca326410f07f4ca982c5836e3",
+  "ResolvConfPath": "/var/lib/docker/containers/0e95264c088255032372059cd2641b3734a93e2071938c56fe808b38d3fe5156/resolv.conf",
+  "HostnamePath": "/var/lib/docker/containers/0e95264c088255032372059cd2641b3734a93e2071938c56fe808b38d3fe5156/hostname",
+  "HostsPath": "/var/lib/docker/containers/0e95264c088255032372059cd2641b3734a93e2071938c56fe808b38d3fe5156/hosts",
+  "LogPath": "/var/lib/docker/containers/0e95264c088255032372059cd2641b3734a93e2071938c56fe808b38d3fe5156/0e95264c088255032372059cd2641b3734a93e2071938c56fe808b38d3fe5156-json.log",
+  "Name": "/exited_container",
+  "RestartCount": 0,
+  "Driver": "aufs",
+  "MountLabel": "",
+  "ProcessLabel": "",
+  "AppArmorProfile": "",
+  "ExecIDs": null,
+  "HostConfig": {
+    "Binds": [
+      "/var/run/docker.sock:/var/run/docker.sock:rw",
+      "5d0610992cd9a210b68e11f030d4771326420775b7d1c34fc9820f2b818e8047:/tmp:rw"
+    ],
+    "ContainerIDFile": "",
+    "LogConfig": {
+      "Type": "json-file",
+      "Config": {}
+    },
+    "NetworkMode": "docker_default",
+    "PortBindings": {
+      "8081/tcp": [
+        {
+          "HostIp": "",
+          "HostPort": "8081"
+        }
+      ]
+    },
+    "RestartPolicy": {
+      "Name": "",
+      "MaximumRetryCount": 0
+    },
+    "AutoRemove": false,
+    "VolumeDriver": "",
+    "VolumesFrom": [],
+    "CapAdd": null,
+    "CapDrop": null,
+    "Dns": null,
+    "DnsOptions": null,
+    "DnsSearch": null,
+    "ExtraHosts": null,
+    "GroupAdd": null,
+    "IpcMode": "",
+    "Cgroup": "",
+    "Links": null,
+    "OomScoreAdj": 0,
+    "PidMode": "",
+    "Privileged": false,
+    "PublishAllPorts": false,
+    "ReadonlyRootfs": false,
+    "SecurityOpt": null,
+    "UTSMode": "",
+    "UsernsMode": "",
+    "ShmSize": 67108864,
+    "Runtime": "runc",
+    "ConsoleSize": [
+      0,
+      0
+    ],
+    "Isolation": "",
+    "CpuShares": 0,
+    "Memory": 0,
+    "CgroupParent": "",
+    "BlkioWeight": 0,
+    "BlkioWeightDevice": null,
+    "BlkioDeviceReadBps": null,
+    "BlkioDeviceWriteBps": null,
+    "BlkioDeviceReadIOps": null,
+    "BlkioDeviceWriteIOps": null,
+    "CpuPeriod": 0,
+    "CpuQuota": 0,
+    "CpusetCpus": "",
+    "CpusetMems": "",
+    "Devices": null,
+    "DiskQuota": 0,
+    "KernelMemory": 0,
+    "MemoryReservation": 0,
+    "MemorySwap": 0,
+    "MemorySwappiness": -1,
+    "OomKillDisable": false,
+    "PidsLimit": 0,
+    "Ulimits": null,
+    "CpuCount": 0,
+    "CpuPercent": 0,
+    "IOMaximumIOps": 0,
+    "IOMaximumBandwidth": 0
+  },
+  "GraphDriver": {
+    "Name": "aufs",
+    "Data": null
+  },
+  "Mounts": [
+    {
+      "Name": "5d0610992cd9a210b68e11f030d4771326420775b7d1c34fc9820f2b818e8047",
+      "Source": "/var/lib/docker/volumes/5d0610992cd9a210b68e11f030d4771326420775b7d1c34fc9820f2b818e8047/_data",
+      "Destination": "/tmp",
+      "Driver": "local",
+      "Mode": "rw",
+      "RW": true,
+      "Propagation": "rprivate"
+    },
+    {
+      "Source": "/var/run/docker.sock",
+      "Destination": "/var/run/docker.sock",
+      "Mode": "rw",
+      "RW": true,
+      "Propagation": "rprivate"
+    }
+  ],
+  "Config": {
+    "Hostname": "0e95264c0882",
+    "Domainname": "",
+    "User": "",
+    "AttachStdin": false,
+    "AttachStdout": false,
+    "AttachStderr": false,
+    "ExposedPorts": {
+      "5701/udp": {},
+      "8081/tcp": {}
+    },
+    "Tty": false,
+    "OpenStdin": false,
+    "StdinOnce": false,
+    "Env": [
+      "affinity:container==a91e5d3e0487c326603db66b52538b53b7e8725d10bc03376b41918ebeeb9d05",
+      "no_proxy=*.local, 169.254/16",
+      "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/lib/jvm/java-1.8-openjdk/jre/bin:/usr/lib/jvm/java-1.8-openjdk/bin",
+      "LANG=C.UTF-8",
+      "JAVA_HOME=/usr/lib/jvm/java-1.8-openjdk/jre",
+      "JAVA_VERSION=8u92",
+      "JAVA_ALPINE_VERSION=8.92.14-r1"
+    ],
+    "Cmd": [
+      "/bin/sh",
+      "-c",
+      "java -jar /app.war"
+    ],
+    "Image": "rxnctrllabs/cargo-whale",
+    "Volumes": {
+      "/tmp": {},
+      "/var/run/docker.sock": {}
+    },
+    "WorkingDir": "",
+    "Entrypoint": null,
+    "OnBuild": null,
+    "Labels": {
+      "com.docker.compose.config-hash": "060355474ff1632b8857f8d70183b6defb0675031cf078a748381471848495e3",
+      "com.docker.compose.container-number": "1",
+      "com.docker.compose.oneoff": "False",
+      "com.docker.compose.project": "docker",
+      "com.docker.compose.service": "cargowhale",
+      "com.docker.compose.version": "1.9.0"
+    }
+  },
+  "NetworkSettings": {
+    "Bridge": "",
+    "SandboxID": "36b613a6e65e53edc8414c90e71b2dd5e3e7e6d9c8d39476ea32e3cc62636134",
+    "HairpinMode": false,
+    "LinkLocalIPv6Address": "",
+    "LinkLocalIPv6PrefixLen": 0,
+    "Ports": null,
+    "SandboxKey": "/var/run/docker/netns/36b613a6e65e",
+    "SecondaryIPAddresses": null,
+    "SecondaryIPv6Addresses": null,
+    "EndpointID": "",
+    "Gateway": "",
+    "GlobalIPv6Address": "",
+    "GlobalIPv6PrefixLen": 0,
+    "IPAddress": "",
+    "IPPrefixLen": 0,
+    "IPv6Gateway": "",
+    "MacAddress": "",
+    "Networks": {
+      "docker_default": {
+        "IPAMConfig": null,
+        "Links": [
+          "graphite:graphite"
+        ],
+        "Aliases": [
+          "cargowhale",
+          "0e95264c0882"
+        ],
+        "NetworkID": "d90d0e26c6c2c8693c190ed6d41be3a08931140a604458047087cbbcb3b07b38",
+        "EndpointID": "",
+        "Gateway": "",
+        "IPAddress": "",
+        "IPPrefixLen": 0,
+        "IPv6Gateway": "",
+        "GlobalIPv6Address": "",
+        "GlobalIPv6PrefixLen": 0,
+        "MacAddress": ""
+      }
+    }
+  }
+}

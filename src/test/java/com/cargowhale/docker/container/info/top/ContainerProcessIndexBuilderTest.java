@@ -1,6 +1,6 @@
 package com.cargowhale.docker.container.info.top;
 
-import com.cargowhale.docker.client.containers.info.top.ContainerTop;
+import com.spotify.docker.client.messages.TopResults;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -13,6 +13,8 @@ import static java.util.Collections.singletonList;
 import static org.assertj.core.util.Lists.newArrayList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ContainerProcessIndexBuilderTest {
@@ -24,12 +26,13 @@ public class ContainerProcessIndexBuilderTest {
     public void returnsProcessIndex_WithCorrectContainerId() throws Exception {
         String containerId = "contain_this";
         List<List<String>> processList = newArrayList();
-
         List<String> titles = newArrayList("PID", "USER", "TIME", "COMMAND");
 
-        ContainerTop containerTopResponse = new ContainerTop(processList, titles);
+        TopResults results = mock(TopResults.class);
+        when(results.titles()).thenReturn(titles);
+        when(results.processes()).thenReturn(processList);
 
-        ContainerProcessIndex index = this.builder.buildProcessIndex(containerId, containerTopResponse);
+        ContainerProcessIndex index = this.builder.buildProcessIndex(containerId, results);
 
         assertThat(index.getId(), is(containerId));
     }
@@ -38,12 +41,13 @@ public class ContainerProcessIndexBuilderTest {
     public void returnsProcessIndex_NoProcesses() throws Exception {
         String containerId = "contain_this";
         List<List<String>> processList = newArrayList();
-
         List<String> titles = newArrayList("PID", "USER", "TIME", "COMMAND");
 
-        ContainerTop containerTopResponse = new ContainerTop(processList, titles);
+        TopResults results = mock(TopResults.class);
+        when(results.titles()).thenReturn(titles);
+        when(results.processes()).thenReturn(processList);
 
-        ContainerProcessIndex index = this.builder.buildProcessIndex(containerId, containerTopResponse);
+        ContainerProcessIndex index = this.builder.buildProcessIndex(containerId, results);
 
         List<Map<String, String>> processes = index.getProcesses();
         assertThat(processes, hasSize(0));
@@ -54,12 +58,13 @@ public class ContainerProcessIndexBuilderTest {
         String containerId = "contain_this";
         List<String> process1 = newArrayList("10892", "root", "0:00", "/bin/sh -c echo");
         List<List<String>> processList = singletonList(process1);
-
         List<String> titles = newArrayList("PID", "USER", "TIME", "COMMAND");
 
-        ContainerTop containerTopResponse = new ContainerTop(processList, titles);
+        TopResults results = mock(TopResults.class);
+        when(results.titles()).thenReturn(titles);
+        when(results.processes()).thenReturn(processList);
 
-        ContainerProcessIndex index = this.builder.buildProcessIndex(containerId, containerTopResponse);
+        ContainerProcessIndex index = this.builder.buildProcessIndex(containerId, results);
 
         List<Map<String, String>> processes = index.getProcesses();
         assertThat(processes, hasSize(1));
@@ -76,12 +81,13 @@ public class ContainerProcessIndexBuilderTest {
         List<String> process2 = newArrayList("10932", "root", "0:00", "socat -v TCP-LISTEN:2375,reuseaddr,fork UNIX-CLIENT:/var/run/docker.sock");
         List<String> process3 = newArrayList("16227", "root", "0:00", "socat -v TCP-LISTEN:2375,reuseaddr,fork UNIX-CLIENT:/var/run/docker.sock");
         List<List<String>> processList = newArrayList(process1, process2, process3);
-
         List<String> titles = newArrayList("PID", "USER", "TIME", "COMMAND");
 
-        ContainerTop containerTopResponse = new ContainerTop(processList, titles);
+        TopResults results = mock(TopResults.class);
+        when(results.titles()).thenReturn(titles);
+        when(results.processes()).thenReturn(processList);
 
-        ContainerProcessIndex index = this.builder.buildProcessIndex(containerId, containerTopResponse);
+        ContainerProcessIndex index = this.builder.buildProcessIndex(containerId, results);
 
         List<Map<String, String>> processes = index.getProcesses();
         assertThat(processes, hasSize(3));

@@ -1,11 +1,16 @@
 package com.cargowhale.docker.test;
 
+import org.hamcrest.Matchers;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.ResourceSupport;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Collections;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -23,5 +28,11 @@ public class ControllerTestUtils {
 
         ServletRequestAttributes servletRequestAttributes = new ServletRequestAttributes(httpServletRequestMock);
         RequestContextHolder.setRequestAttributes(servletRequestAttributes);
+    }
+
+    public static void verifyLink(final ResourceSupport containerIndex, final String rel, final String path) {
+        assertThat(containerIndex.hasLink(rel), is(true));
+        Link upLink = containerIndex.getLink(rel);
+        assertThat(upLink.getHref(), Matchers.endsWith(path));
     }
 }

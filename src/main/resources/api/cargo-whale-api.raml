@@ -2,9 +2,7 @@
 title: Cargo Whale API
 
 uses:
-  Containers: libraries/container-common.raml
-  ContainerIndex: libraries/container-index.raml
-  ContainerDetails: libraries/container-details.raml
+  Containers: libraries/containers.raml
   Index: libraries/index.raml
 
 /api:
@@ -21,7 +19,7 @@ uses:
       description: Index for all containers
       queryParameters:
         state:
-          type: Containers.State[]
+          type: Containers.ContainerState[]
           description: List of states to filter by
           example: [created, running, dead]
           required: false
@@ -29,7 +27,7 @@ uses:
         200:
           body:
             application/hal+json:
-              type: ContainerIndex.Index
+#              type: Containers.Index
               examples:
                 all: !include examples/container-index.json
                 created: !include examples/container-index-created.json
@@ -50,7 +48,7 @@ uses:
           200:
             body:
               application/hal+json:
-                type: ContainerDetails.Details
+#                type: Containers.Container
                 example: !include examples/container-details.json
 
       /top:

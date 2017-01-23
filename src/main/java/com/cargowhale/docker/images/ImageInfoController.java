@@ -1,6 +1,6 @@
 package com.cargowhale.docker.images;
 
-import com.cargowhale.docker.config.DockerProperties;
+import com.cargowhale.docker.config.docker.DockerProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.web.bind.annotation.RequestMapping;

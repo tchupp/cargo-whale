@@ -1,8 +1,8 @@
 package com.cargowhale.docker;
 
 import com.cargowhale.docker.config.DefaultProfileUtil;
-import com.cargowhale.docker.config.DockerProperties;
 import com.cargowhale.docker.config.ProfileConstants;
+import com.cargowhale.docker.config.docker.DockerProperties;
 import com.cargowhale.docker.config.metrics.MetricsGraphiteProperties;
 import com.cargowhale.docker.config.metrics.MetricsJvmProperties;
 import com.cargowhale.docker.config.metrics.MetricsLogsProperties;

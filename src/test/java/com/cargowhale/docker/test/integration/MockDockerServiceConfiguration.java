@@ -2,7 +2,7 @@ package com.cargowhale.docker.test.integration;
 
 import com.cargowhale.division.MockServiceBuilder;
 import com.cargowhale.docker.client.core.DockerRestTemplate;
-import com.cargowhale.docker.config.DockerProperties;
+import com.cargowhale.docker.config.docker.DockerProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;

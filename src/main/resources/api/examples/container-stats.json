@@ -1,70 +1,98 @@
 {
-  "time": "2016-12-26T18:49:04.392441645Z",
-  "pidStats": {
-    "current": 24
-  },
-  "networkStats": {
-    "eth0": {
-      "rxBytes": 40826,
-      "rxDropped": 0,
-      "rxErrors": 0,
-      "rxPackets": 110,
-      "txBytes": 14333,
-      "txDropped": 0,
-      "txErrors": 0,
-      "txPackets": 26
-    }
-  },
-  "memoryStats": {
-    "maxUsage": 499884032,
-    "usage": 490655744,
-    "failCount": 0,
-    "limit": 6202036224
-  },
-  "cpuStats": {
+  "read": 1482778144392,
+  "precpuStats": {
     "cpuUsage": {
-      "cpuCoreUsage": [
-        12102485667,
-        10720048873,
-        8701023483,
-        11679578220
-      ],
-      "userModeUsage": 41740000000,
-      "kernelModeUsage": 1380000000,
-      "totalUsage": 43203136243
-    },
-    "systemCpuUsage": 6469770000000,
-    "throttlingData": {
-      "periods": 0,
-      "throttled_periods": 0,
-      "throttled_time": 0
-    }
-  },
-  "preCpuStats": {
-    "cpuUsage": {
-      "cpuCoreUsage": [
+      "totalUsage": 43201327519,
+      "usageInKernelmode": 1380000000,
+      "usageInUsermode": 41740000000,
+      "percpuUsage": [
         12102336105,
         10719377004,
         8700337946,
         11679276464
-      ],
-      "userModeUsage": 41740000000,
-      "kernelModeUsage": 1380000000,
-      "totalUsage": 43201327519
+      ]
     },
     "systemCpuUsage": 6465890000000,
     "throttlingData": {
+      "throttledTime": 0,
       "periods": 0,
-      "throttled_periods": 0,
-      "throttled_time": 0
+      "throttledPeriods": 0
+    }
+  },
+  "memoryStats": {
+    "stats": {
+      "totalInactiveFile": 25501696,
+      "totalPageFault": 237788,
+      "totalActiveAnon": 458248192,
+      "totalMappedFile": 10555392,
+      "totalUnevictable": 0,
+      "totalPgpgout": 196437,
+      "rss": 458235904,
+      "pageFault": 237788,
+      "hierarchicalMemoryLimit": 9223372036854771712,
+      "totalInactiveAnon": 16384,
+      "cache": 32419840,
+      "majorPageFault": 73,
+      "mappedFile": 10555392,
+      "totalActiveFile": 6889472,
+      "totalPgpgin": 244686,
+      "unevictable": 0,
+      "rssHuge": 291504128,
+      "inactiveFile": 25501696,
+      "totalRssHuge": 291504128,
+      "pgpgin": 244686,
+      "activeFile": 6889472,
+      "writeback": 0,
+      "totalWriteback": 0,
+      "pgpgout": 196437,
+      "totalRss": 458235904,
+      "activeAnon": 458248192,
+      "inactiveAnon": 16384,
+      "totalMajorPageFault": 73,
+      "totalCache": 32419840
+    },
+    "failCount": 0,
+    "usage": 490655744,
+    "maxUsage": 499884032,
+    "limit": 6202036224
+  },
+  "cpuStats": {
+    "cpuUsage": {
+      "totalUsage": 43203136243,
+      "usageInKernelmode": 1380000000,
+      "usageInUsermode": 41740000000,
+      "percpuUsage": [
+        12102485667,
+        10720048873,
+        8701023483,
+        11679578220
+      ]
+    },
+    "systemCpuUsage": 6469770000000,
+    "throttlingData": {
+      "throttledTime": 0,
+      "periods": 0,
+      "throttledPeriods": 0
+    }
+  },
+  "networks": {
+    "eth0": {
+      "rxPackets": 110,
+      "txErrors": 0,
+      "rxBytes": 40826,
+      "txBytes": 14333,
+      "txPackets": 26,
+      "txDropped": 0,
+      "rxDropped": 0,
+      "rxErrors": 0
     }
   },
   "_links": {
     "self": {
-      "href": "http://localhost/api/containers/running-container/stats"
+      "href": "http://localhost/api/containers/f911b0f4e0b19e3da3bae6dcff82195/stats"
     },
     "up": {
-      "href": "http://localhost/api/containers/running-container"
+      "href": "http://localhost/api/containers/f911b0f4e0b19e3da3bae6dcff82195"
     }
   }
 }

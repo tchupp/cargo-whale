@@ -1,6 +1,5 @@
 package com.cargowhale.docker.container.management;
 
-import com.cargowhale.docker.client.containers.management.ContainerManagementClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

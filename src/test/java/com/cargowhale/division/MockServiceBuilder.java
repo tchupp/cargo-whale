@@ -14,6 +14,7 @@ import org.springframework.web.util.UriUtils;
 
 import java.io.UnsupportedEncodingException;
 
+import static org.springframework.test.web.client.ExpectedCount.min;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withStatus;
 
@@ -30,7 +31,7 @@ public class MockServiceBuilder {
     }
 
     public static MockServiceBuilder fromRestTemplate(final RestTemplate restTemplate, final String ramlSpecFilePath, final String baseUrl) {
-        MockRestServiceServer server = MockRestServiceServer.createServer(restTemplate);
+        MockRestServiceServer server = MockRestServiceServer.bindTo(restTemplate).build();
         RamlModelResult ramlModelResult = new RamlModelBuilder().buildApi(ramlSpecFilePath);
         RamlSpec ramlSpec = RamlSpecBuilder.fromRamlApi10(ramlModelResult, ramlSpecFilePath);
 
@@ -41,7 +42,7 @@ public class MockServiceBuilder {
         String example = this.ramlSpec.findExample(path, method, status, mediaType);
         RequestMatcher requestTo = requestTo(this.baseUrl + UriUtils.encodeQuery(path, "UTF-8"));
 
-        this.server.expect(requestTo).andRespond(withStatus(status).contentType(mediaType).body(example));
+        this.server.expect(min(1), requestTo).andRespond(withStatus(status).contentType(mediaType).body(example));
     }
 
     public void reset() {

@@ -1,7 +1,5 @@
 package com.cargowhale.docker.container.management;
 
-import com.cargowhale.docker.client.containers.management.ContainerManagementClient;
-import com.cargowhale.docker.client.containers.management.state.ContainerChangeState;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
