@@ -41,10 +41,12 @@ $bootstrap-panel-bg: $content;
 $bootstrap-panel-header-bg: $content-bg;
 $bootstrap-panel-header-border: 1px solid $content-shadow;
 $bootstrap-panel-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.25);
+$bootstrap-panel-shadow-hover: 0 8px 8px 0 rgba(0, 0, 0, 0.5);
 
 $card-border-radius: $bootstrap-panel-radius;
 $card-panel-bg: $content;
 $card-panel-shadow: $bootstrap-panel-shadow;
+$card-panel-shadow-hover: $bootstrap-panel-shadow-hover;
 
 $primary: #209e91 !default;
 $info: #2dacd1 !default;
@@ -89,11 +91,5 @@ $hover-link: $primary-dark;
     }
     &:after {
         clear: both;
-    }
-}
-
-@mixin cw-hover {
-    &:hover {
-        color: $primary;
     }
 }

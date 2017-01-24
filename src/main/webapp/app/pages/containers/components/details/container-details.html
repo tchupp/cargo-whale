@@ -12,9 +12,9 @@
             <div class="col-sm-12 col-md-5">
                 <div *ngIf="details" class="container-phase bg {{details.state.state}}">
                     <p>
-                        <span class="container-status">{{details.state.status}}</span>
+                        <span class="container-state">{{details.state.state}}</span>
                         <br/>
-                        <span class="container-name">{{details.name | replace : '/'}}</span>
+                        <span class="container-status">{{details.state.status}}</span>
                     </p>
                 </div>
             </div>
@@ -93,16 +93,6 @@
 
         <div card-body>
             <router-outlet></router-outlet>
-        </div>
-    </cw-card>
-</div>
-
-<div class="col-xs-12">
-    <cw-card>
-        <div card-body>
-            <pre>
-                {{details | json}}
-            </pre>
         </div>
     </cw-card>
 </div>
