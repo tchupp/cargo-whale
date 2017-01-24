@@ -1,6 +1,6 @@
 import {Component, OnInit} from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
-import {ContainerNetworkSettings} from "../../container-details.model";
+import {ContainerNetworkSettings} from "../../../container.model";
 
 @Component({
     selector: 'cw-container-network',
