@@ -1,10 +1,8 @@
 import {Component, OnInit} from "@angular/core";
-
-import {ContainersService} from "../../containers.service";
-import {ContainerIndexItem} from "./container-index-item.model";
-import {ContainerIndex} from "./container-index.model";
-import {StateMetadata} from "./state-metadata.model";
 import {Router} from "@angular/router";
+import {ContainersService} from "../../containers.service";
+import {ContainerIndex, StateMetadata} from "./container-index.model";
+import {Container} from "../container.model";
 
 @Component({
     selector: 'cw-container-list',
@@ -12,7 +10,7 @@ import {Router} from "@angular/router";
 })
 export class ContainerIndexComponent implements OnInit {
 
-    private containers: ContainerIndexItem[];
+    private containers: Container[];
     private stateMetadata: StateMetadata;
 
     constructor(private router: Router, private containerService: ContainersService) {
@@ -20,12 +18,12 @@ export class ContainerIndexComponent implements OnInit {
 
     ngOnInit(): void {
         this.containerService.getContainerIndex<ContainerIndex>().subscribe(containerIndex => {
-            this.containers = containerIndex.containers;
+            this.containers = containerIndex._embedded.containers;
             this.stateMetadata = containerIndex.stateMetadata;
         });
     }
 
-    onClickContainer(container: ContainerIndexItem): void {
+    onClickContainer(container: Container): void {
         this.router.navigate(['/containers', container.id]);
     }
 }

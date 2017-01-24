@@ -1,18 +1,18 @@
 import {Resolve, ActivatedRouteSnapshot, RouterStateSnapshot} from "@angular/router";
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs/Rx";
-import {ContainerDetails} from "./container-details.model";
 import {ContainersService} from "../../containers.service";
+import {Container} from "../container.model";
 
 @Injectable()
-export class ContainerDetailsResolver implements Resolve<ContainerDetails> {
+export class ContainerDetailsResolver implements Resolve<Container> {
 
     constructor(private service: ContainersService) {
     }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ContainerDetails> {
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Container> {
         let id: string = route.params['id'];
 
-        return this.service.getContainerDetails<ContainerDetails>(id);
+        return this.service.getContainerDetails<Container>(id);
     }
 }
