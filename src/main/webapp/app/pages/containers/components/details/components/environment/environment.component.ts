@@ -1,5 +1,6 @@
 import {Component, OnInit} from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
+import {ContainerConfig} from "../../../container.model";
 
 @Component({
     selector: 'cw-container-environment',
@@ -17,6 +18,7 @@ export class ContainerEnvironmentComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.environment = this.route.snapshot.parent.data['container'].config.environment;
+        const config: ContainerConfig = this.route.snapshot.parent.data['container'].config;
+        this.environment = config.env;
     }
 }
