@@ -35,6 +35,8 @@
         background-color: $sidebar;
         cursor: pointer;
 
+        transition: all 0.3s;
+
         &:hover {
             color: $primary;
         }
@@ -69,7 +71,7 @@
         background-color: $sidebar-item;
         border-right: 4px solid $primary;
 
-        a.al-sidebar-list-link {
+        a.sidebar-list-link {
             color: $sidebar-text;
 
             &:hover {
@@ -92,6 +94,8 @@
         text-shadow: none;
         font-size: 13px;
         color: $sidebar-text;
+
+        transition: all 0.3s;
 
         &:hover {
             color: $primary;
