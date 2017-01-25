@@ -6,6 +6,7 @@ import {containersRoutes} from "./containers.routes";
 import {ContainersComponent} from "./containers.component";
 import {ContainersService} from "./containers.service";
 import {ContainerDetailsComponent} from "./components/details/container-details.component";
+import {ContainerConfigComponent} from "./components/details/components/config/container-config.component";
 import {ContainerEnvironmentComponent} from "./components/details/components/environment/environment.component";
 import {ContainerNetworkComponent} from "./components/details/components/networks/networks.component";
 import {ContainerDetailsResolver} from "./components/details/container-details.resolver";
@@ -27,6 +28,7 @@ import {PipesModule} from "../../shared/pipes";
         ContainerDetailsComponent,
         ContainerIndexComponent,
         InfoItemComponent,
+        ContainerConfigComponent,
         ContainerEnvironmentComponent,
         ContainerNetworkComponent
     ],

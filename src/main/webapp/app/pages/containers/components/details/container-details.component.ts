@@ -1,6 +1,6 @@
 import {Component, OnInit} from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
-import {ContainerDetails} from "./container-details.model";
+import {Container} from "../container.model";
 
 @Component({
     selector: 'cw-container-details',
@@ -8,7 +8,7 @@ import {ContainerDetails} from "./container-details.model";
 })
 export class ContainerDetailsComponent implements OnInit {
 
-    private details: ContainerDetails;
+    private details: Container;
 
     constructor(private route: ActivatedRoute) {
     }

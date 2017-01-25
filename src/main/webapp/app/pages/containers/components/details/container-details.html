@@ -10,11 +10,11 @@
 
         <div class="row vertical-align" card-body>
             <div class="col-sm-12 col-md-5">
-                <div *ngIf="details" class="container-phase bg {{details.state.status}}">
+                <div *ngIf="details" class="container-phase bg {{details.state.state}}">
                     <p>
-                        <span class="container-state">{{details.state.status}}</span>
+                        <span class="container-state">{{details.state.state}}</span>
                         <br/>
-                        <span class="container-name">{{details.name | replace : '/'}}</span>
+                        <span class="container-status">{{details.state.status}}</span>
                     </p>
                 </div>
             </div>
@@ -29,7 +29,7 @@
                 </cw-info-item>
 
                 <cw-info-item [name]="'Image'">
-                    <span class="value">{{details?.config.image}}</span>
+                    <span class="value">{{details?.image}}</span>
                 </cw-info-item>
 
                 <cw-info-item [name]="'Image ID'">
@@ -54,19 +54,19 @@
                 <cw-info-item *ngIf="details?.state.running"
                               [name]="'Started Time'"
                               [divider]="details?.config.command">
-                    <span class="value">{{details?.state.startedTime | date: 'yyyy/MM/dd hh:mm:ss'}}</span>
+                    <span class="value">{{details?.state.startedAt | date: 'yyyy/MM/dd hh:mm:ss'}}</span>
                 </cw-info-item>
 
                 <cw-info-item *ngIf="!details?.state.running"
                               [name]="'Finished Time'"
                               [divider]="details?.config.command">
-                    <span class="value">{{details?.state.finishedTime | date: 'yyyy/MM/dd hh:mm:ss'}}</span>
+                    <span class="value">{{details?.state.finishedAt | date: 'yyyy/MM/dd hh:mm:ss'}}</span>
                 </cw-info-item>
 
                 <cw-info-item *ngIf="details?.config.command"
                               [name]="'Command'"
                               [divider]="false">
-                    <code class="value">{{details?.config.command | join}}</code>
+                    <code class="value">{{details?.config.command}}</code>
                 </cw-info-item>
             </div>
         </div>
@@ -79,7 +79,7 @@
             <ul class="card-tabs">
                 <li routerLinkActive="selected">
                     <a [routerLink]="'./environment'">
-                        <span>Environment</span>
+                        <span>Env Variables</span>
                     </a>
                 </li>
 
@@ -93,16 +93,6 @@
 
         <div card-body>
             <router-outlet></router-outlet>
-        </div>
-    </cw-card>
-</div>
-
-<div class="col-xs-12">
-    <cw-card>
-        <div card-body>
-            <pre>
-                {{details | json}}
-            </pre>
         </div>
     </cw-card>
 </div>
