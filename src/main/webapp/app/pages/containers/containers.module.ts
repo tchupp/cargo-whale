@@ -1,8 +1,8 @@
 import {NgModule, CUSTOM_ELEMENTS_SCHEMA} from "@angular/core";
 import {CommonModule} from "@angular/common";
-import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import {RouterModule} from "@angular/router";
 
-import {containersRoutes} from "./containers.routes";
+import {containersRoute} from "./containers.routes";
 import {ContainersComponent} from "./containers.component";
 import {ContainersService} from "./containers.service";
 import {ContainerDetailsComponent} from "./components/details/container-details.component";
@@ -20,8 +20,7 @@ import {PipesModule} from "../../shared/pipes";
         CommonModule,
         LayoutsModule,
         PipesModule,
-        NgbModule,
-        containersRoutes
+        RouterModule.forChild([containersRoute])
     ],
     declarations: [
         ContainersComponent,

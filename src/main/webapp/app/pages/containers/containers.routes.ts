@@ -1,4 +1,5 @@
-import {Routes, RouterModule} from "@angular/router";
+import {Route} from "@angular/router";
+
 import {ContainersComponent} from "./containers.component";
 import {ContainerIndexComponent} from "./components/index/container-index.component";
 import {ContainerDetailsComponent} from "./components/details/container-details.component";
@@ -7,7 +8,7 @@ import {ContainerEnvironmentComponent} from "./components/details/components/env
 import {ContainerNetworkComponent} from "./components/details/components/networks/networks.component";
 import {ContainerDetailsResolver} from "./components/details/container-details.resolver";
 
-const routes: Routes = [{
+export const containersRoute: Route = {
     path: 'containers',
     component: ContainersComponent,
     children: [
@@ -29,7 +30,4 @@ const routes: Routes = [{
             ]
         }
     ]
-}
-];
-
-export const containersRoutes = RouterModule.forChild(routes);
+};

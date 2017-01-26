@@ -9,7 +9,7 @@
 </div>
 
 <div *ngFor="let container of containers" class="col-lg-4 col-md-6 col-xs-12">
-    <cw-card [link]="true" (click)="onClickContainer(container)">
+    <cw-card [link]="true" [routerLink]="[container.id]">
         <div card-header>
             <h3 class="card-title">{{container.name | replace : '/'}}</h3>
         </div>

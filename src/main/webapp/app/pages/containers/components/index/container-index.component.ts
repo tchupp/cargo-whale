@@ -1,5 +1,4 @@
 import {Component, OnInit} from "@angular/core";
-import {Router} from "@angular/router";
 import {ContainersService} from "../../containers.service";
 import {ContainerIndex, StateMetadata} from "./container-index.model";
 import {Container} from "../container.model";
@@ -13,7 +12,7 @@ export class ContainerIndexComponent implements OnInit {
     private containers: Container[];
     private stateMetadata: StateMetadata;
 
-    constructor(private router: Router, private containerService: ContainersService) {
+    constructor(private containerService: ContainersService) {
     }
 
     ngOnInit(): void {
@@ -21,9 +20,5 @@ export class ContainerIndexComponent implements OnInit {
             this.containers = containerIndex._embedded.containers;
             this.stateMetadata = containerIndex.stateMetadata;
         });
-    }
-
-    onClickContainer(container: Container): void {
-        this.router.navigate(['/containers', container.id]);
     }
 }

@@ -16,6 +16,7 @@
         'ng2-webstorage': 'vendor/ng2-webstorage',
         // app barrels
         'containers': 'app/pages/containers',
+        'dashboard': 'app/pages/dashboard',
         'pages': 'app/pages',
         'layouts': 'app/shared/layouts',
         'pipes': 'app/shared/pipes'
@@ -30,6 +31,7 @@
         'ng2-webstorage': {main: 'bundles/core.umd.js', defaultExtension: 'js'},
         // app barrels
         'containers': {main: 'index', defaultExtension: 'js'},
+        'dashboard': {main: 'index', defaultExtension: 'js'},
         'pages': {main: 'index', defaultExtension: 'js'},
         'layouts': {main: 'index', defaultExtension: 'js'},
         'pipes': {main: 'index', defaultExtension: 'js'}
