@@ -9,7 +9,7 @@ import {ContainerNetworkComponent} from "./components/details/components/network
 import {ContainerDetailsResolver} from "./components/details/container-details.resolver";
 
 export const containersRoute: Route = {
-    path: 'containers',
+    path: '',
     component: ContainersComponent,
     children: [
         {

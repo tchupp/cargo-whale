@@ -37,5 +37,5 @@ import {PipesModule} from "../../shared/pipes";
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class ContainersModule {
+export default class ContainersModule {
 }

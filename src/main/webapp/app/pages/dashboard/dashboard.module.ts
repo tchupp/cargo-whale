@@ -19,5 +19,5 @@ import {dashboardRoute} from "./dashboard.routes";
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class DashboardModule {
+export default class DashboardModule {
 }
