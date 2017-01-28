@@ -7,6 +7,7 @@ import {MainComponent} from "./main/main.component";
 import {SidebarComponent} from "./sidebar/sidebar.component";
 import {SidebarItemComponent} from "./sidebar/sidebar-item/sidebar-item.component";
 import {DividerComponent} from "./divider/divider.component";
+import {OverlayComponent} from "./overlay/overlay.component";
 import {PipesModule} from "../pipes";
 
 const DECLARED_COMPONENTS = [
@@ -15,13 +16,15 @@ const DECLARED_COMPONENTS = [
     MainComponent,
     DividerComponent,
     SidebarComponent,
-    SidebarItemComponent
+    SidebarItemComponent,
+    OverlayComponent
 ];
 
 const EXPORTED_COMPONENTS = [
     CardComponent,
     MainComponent,
-    DividerComponent
+    DividerComponent,
+    OverlayComponent
 ];
 
 @NgModule({
