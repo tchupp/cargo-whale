@@ -11,6 +11,7 @@ export class ContainerIndexComponent implements OnInit {
 
     private containers: Container[];
     private stateMetadata: StateMetadata;
+    private loading: boolean = true;
 
     constructor(private containerService: ContainersService) {
     }
@@ -19,6 +20,7 @@ export class ContainerIndexComponent implements OnInit {
         this.containerService.getContainerIndex<ContainerIndex>().subscribe(containerIndex => {
             this.containers = containerIndex._embedded.containers;
             this.stateMetadata = containerIndex.stateMetadata;
+            this.loading = false;
         });
     }
 }
