@@ -15,9 +15,10 @@
         'jquery': 'vendor/jquery/dist',
         'ng2-webstorage': 'vendor/ng2-webstorage',
         // app barrels
+        'pages': 'app/pages',
+        'login': 'app/pages/login',
         'containers': 'app/pages/containers',
         'dashboard': 'app/pages/dashboard',
-        'pages': 'app/pages',
         'layouts': 'app/shared/layouts',
         'pipes': 'app/shared/pipes'
     };
@@ -30,9 +31,10 @@
         'jquery': {main: 'jquery.min', defaultExtension: 'js'},
         'ng2-webstorage': {main: 'bundles/core.umd.js', defaultExtension: 'js'},
         // app barrels
+        'pages': {main: 'index', defaultExtension: 'js'},
+        'login': {main: 'index', defaultExtension: 'js'},
         'containers': {main: 'index', defaultExtension: 'js'},
         'dashboard': {main: 'index', defaultExtension: 'js'},
-        'pages': {main: 'index', defaultExtension: 'js'},
         'layouts': {main: 'index', defaultExtension: 'js'},
         'pipes': {main: 'index', defaultExtension: 'js'}
     };

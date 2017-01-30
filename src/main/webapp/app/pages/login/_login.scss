@@ -1,0 +1,72 @@
+@import "../../shared/styles/theme";
+@import "../../shared/styles/variables";
+
+.auth-main {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+
+    @include body-bg();
+}
+
+.auth-block {
+    width: 540px;
+    padding: 32px;
+    margin: 0 auto;
+    border-radius: 5px;
+
+    background-color: $card-panel-bg;
+    box-shadow: $card-panel-shadow;
+    color: $label-text;
+
+    h1 {
+        font-weight: $font-light;
+        margin-bottom: 28px;
+        text-align: center;
+    }
+
+    p {
+        font-size: 16px;
+    }
+
+    a {
+        text-decoration: none;
+        outline: none;
+        transition: all 0.2s ease;
+
+        color: $primary;
+
+        &:hover {
+            color: $primary-dark;
+        }
+    }
+
+    .control-label {
+        padding-top: 11px;
+        text-align: left;
+        color: $label-text;
+    }
+
+    .form-group {
+        margin-bottom: 12px;
+    }
+}
+
+.auth-input {
+    width: 300px;
+    margin-bottom: 24px;
+
+    input {
+        display: block;
+        width: 100%;
+        border: none;
+        font-size: 16px;
+        padding: 4px 10px;
+        outline: none;
+    }
+}
+
+.btn-auth {
+    color: $label-text !important;
+}
