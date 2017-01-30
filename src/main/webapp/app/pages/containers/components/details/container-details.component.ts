@@ -9,11 +9,13 @@ import {Container} from "../container.model";
 export class ContainerDetailsComponent implements OnInit {
 
     private details: Container;
+    private loading: boolean = true;
 
     constructor(private route: ActivatedRoute) {
     }
 
     ngOnInit(): void {
         this.details = this.route.snapshot.data['container'];
+        this.loading = false;
     }
 }

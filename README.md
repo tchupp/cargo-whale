@@ -1,6 +1,7 @@
 # CargoWhaleDocker
 [![Build Status](https://travis-ci.org/tclchiam/cargo-whale-docker.svg?branch=master)](https://travis-ci.org/tclchiam/cargo-whale-docker)
 [![Coverage Status](https://coveralls.io/repos/github/tclchiam/cargo-whale-docker/badge.svg?branch=master)](https://coveralls.io/github/tclchiam/cargo-whale-docker?branch=master)
+[![Docker Pulls](https://img.shields.io/docker/pulls/rxnctrllabs/argo-whale.svg)](https://hub.docker.com/r/rxnctrllabs/argo-whale/)
 
 ## Development
 

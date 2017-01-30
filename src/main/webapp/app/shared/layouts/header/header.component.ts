@@ -21,9 +21,11 @@ export class HeaderComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.router.events.subscribe((end: NavigationEnd) => {
-            this.segments = [];
-            this.parseSegments(end.urlAfterRedirects ? end.urlAfterRedirects : end.url);
+        this.router.events.subscribe((event: NavigationEnd) => {
+            if (event instanceof NavigationEnd) {
+                this.segments = [];
+                this.parseSegments(event.urlAfterRedirects ? event.urlAfterRedirects : event.url);
+            }
         });
     }
 

@@ -91,15 +91,27 @@
     text-align: center;
 
     .name {
-        color: $default;
         float: left;
+        text-align: left;
+        width: 40%;
+
+        color: $default;
     }
 
     .value {
         float: right;
         text-align: right;
-        max-width: 85%;
-        word-wrap: break-word;
+        max-width: 60%;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    .value-left {
+        float: left;
+        text-align: left;
+        max-width: 60%;
+        white-space: nowrap;
+        overflow: hidden;
     }
 }
 
