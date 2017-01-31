@@ -11,6 +11,9 @@
 # http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
 # ===================================================================
 
+management:
+    context-path: /management
+
 spring:
   application:
     name: CargoWhale
@@ -30,6 +33,9 @@ endpoints:
       gauge-submissions: per_http_method
       counter-submissions: per_http_method
 
+security:
+  basic:
+    enabled: false
 
 # ===================================================================
 # CargoWhale specific properties
