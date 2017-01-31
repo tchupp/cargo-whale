@@ -36,6 +36,10 @@ endpoints:
 security:
   basic:
     enabled: false
+  user:
+    name: cargo
+    password: whale
+    role: USER, ADMIN
 
 # ===================================================================
 # CargoWhale specific properties
