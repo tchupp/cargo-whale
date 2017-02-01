@@ -1,6 +1,7 @@
 import {Component, OnInit} from "@angular/core";
 import {FormGroup, AbstractControl, FormBuilder, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
+import {LoginService} from "./login.service";
 
 @Component({
     selector: 'cw-login',
@@ -9,20 +10,21 @@ import {Router} from "@angular/router";
 export class LoginComponent implements OnInit {
 
     public form: FormGroup;
-    public user: AbstractControl;
+    public username: AbstractControl;
     public password: AbstractControl;
     public submitted: boolean = false;
+    private error: boolean = false;
 
-    constructor(private router: Router, private formBuilder: FormBuilder) {
+    constructor(private router: Router, private formBuilder: FormBuilder, private loginService: LoginService) {
     }
 
     ngOnInit(): void {
         this.form = this.formBuilder.group({
-            'user': ['', Validators.compose([Validators.required, Validators.minLength(4)])],
+            'username': ['', Validators.compose([Validators.required, Validators.minLength(4)])],
             'password': ['', Validators.compose([Validators.required, Validators.minLength(4)])]
         });
 
-        this.user = this.form.controls['user'];
+        this.username = this.form.controls['username'];
         this.password = this.form.controls['password'];
     }
 
@@ -30,8 +32,18 @@ export class LoginComponent implements OnInit {
         this.submitted = true;
 
         if (this.form.valid) {
-            console.log(values);
-            this.router.navigate(['/dashboard']);
+            const credentials = {
+                username: values['username'],
+                password: values['password']
+            };
+
+            this.loginService.login(credentials).subscribe(() => {
+                this.error = false;
+
+                this.router.navigate(['/dashboard']);
+            }, () => {
+                this.error = true;
+            });
         }
     }
 }
