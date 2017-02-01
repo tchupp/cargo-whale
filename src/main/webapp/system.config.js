@@ -19,6 +19,7 @@
         'login': 'app/pages/login',
         'containers': 'app/pages/containers',
         'dashboard': 'app/pages/dashboard',
+        'auth': 'app/shared/auth',
         'layouts': 'app/shared/layouts',
         'pipes': 'app/shared/pipes'
     };
@@ -35,6 +36,7 @@
         'login': {main: 'index', defaultExtension: 'js'},
         'containers': {main: 'index', defaultExtension: 'js'},
         'dashboard': {main: 'index', defaultExtension: 'js'},
+        'auth': {main: 'index', defaultExtension: 'js'},
         'layouts': {main: 'index', defaultExtension: 'js'},
         'pipes': {main: 'index', defaultExtension: 'js'}
     };

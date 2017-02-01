@@ -2,22 +2,20 @@ import {Injectable} from "@angular/core";
 import {Http, Response} from "@angular/http";
 import {Observable} from "rxjs/Rx";
 import {CredentialsModel} from "./credentials.model";
-import {LocalStorageService} from "ng2-webstorage";
+import {AuthTokenService} from "../../shared/auth/auth-token.service";
 
 @Injectable()
 export class LoginService {
 
-    private static authTokenKey = 'authenticationToken';
-
-    constructor(private http: Http, private localStorage: LocalStorageService) {
+    constructor(private http: Http, private authTokenService: AuthTokenService) {
     }
 
     login(credentials: CredentialsModel): Observable<any> {
         function loginSuccess(res: Response) {
             const body = res.json();
+            const token: string = body.token;
 
-            const token = body.token;
-            this.localStorage.store(LoginService.authTokenKey, token);
+            this.authTokenService.storeToken(token);
             return token;
         }
 

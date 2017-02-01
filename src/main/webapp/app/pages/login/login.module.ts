@@ -8,10 +8,12 @@ import {PipesModule} from "../../shared/pipes";
 import {LoginComponent} from "./login.component";
 import {loginRoute} from "./login.routes";
 import {LoginService} from "./login.service";
+import {AuthModule} from "../../shared/auth";
 
 @NgModule({
     imports: [
         CommonModule,
+        AuthModule,
         ReactiveFormsModule,
         FormsModule,
         RouterModule.forChild([loginRoute])
