@@ -21,6 +21,9 @@ import java.util.Date;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static com.cargowhale.docker.test.integration.TestAuthenticationConstants.TEST_USER_PASS;
+import static com.cargowhale.docker.test.integration.TestAuthenticationConstants.TEST_USER_NAME_BAD;
+import static com.cargowhale.docker.test.integration.TestAuthenticationConstants.TEST_USER_NAME;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.lessThan;
@@ -32,10 +35,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class AuthenticationControllerIT {
 
-    private static final String TEST_USER_GOOD = "testuser";
-    private static final String TEST_PASS_GOOD = "testpass";
-    private static final String TEST_USER_BAD = "testuser bad";
-
     @Autowired
     private MockMvc client;
 
@@ -45,7 +44,7 @@ public class AuthenticationControllerIT {
     @Test
     public void authenticationSuccessful() throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
-        UserCredentials userCredentials = new UserCredentials(TEST_USER_GOOD, TEST_PASS_GOOD);
+        UserCredentials userCredentials = new UserCredentials(TEST_USER_NAME, TEST_USER_PASS);
 
         String expectedAuthorities = Stream.of(AuthoritiesConstants.ADMIN, AuthoritiesConstants.USER).collect(Collectors.joining(","));
         long expiration = (new Date()).getTime() + (this.properties.getTokenValidityInSeconds() * 1000);
@@ -65,14 +64,14 @@ public class AuthenticationControllerIT {
         assertThat(SignatureAlgorithm.forName(header.getAlgorithm()), is(SignatureAlgorithm.HS512));
 
         Claims body = claimsJws.getBody();
-        assertThat(body.getSubject(), is(TEST_USER_GOOD));
+        assertThat(body.getSubject(), is(TEST_USER_NAME));
         assertThat(body.get(TokenProvider.AUTHORITIES_KEY), is(expectedAuthorities));
         assertThat(body.getExpiration().getTime(), lessThan(expiration));
     }
 
     @Test
     public void authenticationFailed() throws Exception {
-        UserCredentials userCredentials = new UserCredentials(TEST_USER_BAD, TEST_PASS_GOOD);
+        UserCredentials userCredentials = new UserCredentials(TEST_USER_NAME_BAD, TEST_USER_PASS);
 
         MockHttpServletRequestBuilder requestBuilder = post("/api/authenticate")
             .contentType(MediaType.APPLICATION_JSON)
