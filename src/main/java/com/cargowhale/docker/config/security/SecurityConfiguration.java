@@ -1,8 +1,10 @@
 package com.cargowhale.docker.config.security;
 
 import com.cargowhale.docker.config.security.jwt.JWTConfiguration;
+import com.cargowhale.docker.config.security.jwt.JwtProperties;
 import com.cargowhale.docker.config.security.jwt.TokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -17,6 +19,7 @@ import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 @EnableWebSecurity
+@EnableConfigurationProperties({JwtProperties.class})
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final TokenProvider tokenProvider;
@@ -67,8 +70,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
             .antMatchers("/api", "/api/authenticate").permitAll()
             .antMatchers("/api/**").authenticated()
-        .and()
-            .formLogin()
         .and()
             .apply(securityConfigurerAdapter());
     }

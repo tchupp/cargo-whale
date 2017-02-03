@@ -1,8 +1,12 @@
 package com.cargowhale.docker.config.security.jwt;
 
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -18,10 +22,16 @@ import java.util.stream.Collectors;
 @Component
 public class TokenProvider {
 
+    public static final String AUTHORITIES_KEY = "auth";
+
     private static final Logger log = LoggerFactory.getLogger(TokenProvider.class);
 
-    private static final String AUTHORITIES_KEY = "auth";
-    private static final long TOKEN_VALIDITY_SECONDS = 36000;
+    private final JwtProperties properties;
+
+    @Autowired
+    public TokenProvider(final JwtProperties properties) {
+        this.properties = properties;
+    }
 
     public String createToken(final Authentication authentication) {
         String authorities = authentication.getAuthorities().stream()
@@ -34,14 +44,14 @@ public class TokenProvider {
         return Jwts.builder()
             .setSubject(authentication.getName())
             .claim(AUTHORITIES_KEY, authorities)
-            .signWith(SignatureAlgorithm.HS512, secretKey())
+            .signWith(SignatureAlgorithm.HS512, this.properties.getSecret())
             .setExpiration(validity)
             .compact();
     }
 
     Authentication getAuthentication(final String token) {
         Claims claims = Jwts.parser()
-            .setSigningKey(secretKey())
+            .setSigningKey(this.properties.getSecret())
             .parseClaimsJws(token)
             .getBody();
 
@@ -56,7 +66,7 @@ public class TokenProvider {
 
     boolean validateToken(final String authToken) {
         try {
-            Jwts.parser().setSigningKey(secretKey()).parseClaimsJws(authToken);
+            Jwts.parser().setSigningKey(this.properties.getSecret()).parseClaimsJws(authToken);
             return true;
         } catch (final SignatureException e) {
             log.info("Invalid JWT signature: " + e.getMessage());
@@ -64,11 +74,7 @@ public class TokenProvider {
         }
     }
 
-    private String secretKey() {
-        return "SUPER_SECRET_KEY";
-    }
-
     private long validityInMS() {
-        return 1000 * TOKEN_VALIDITY_SECONDS;
+        return 1000 * this.properties.getTokenValidityInSeconds();
     }
 }

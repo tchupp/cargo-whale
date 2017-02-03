@@ -44,3 +44,9 @@ security:
 # ===================================================================
 # CargoWhale specific properties
 # ===================================================================
+
+cargowhale:
+  security:
+    jwt:
+      secret: super-secret-token
+      token-validity-in-seconds: 86400
