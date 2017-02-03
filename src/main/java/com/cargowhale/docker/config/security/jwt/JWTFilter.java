@@ -3,6 +3,7 @@ package com.cargowhale.docker.config.security.jwt;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
@@ -48,15 +49,12 @@ public class JWTFilter extends GenericFilterBean {
     }
 
     private String resolveToken(final HttpServletRequest request) {
-        String bearerToken = request.getHeader(JWTConfiguration.AUTHORIZATION_HEADER);
+        String bearerToken = request.getHeader(HttpHeaders.AUTHORIZATION);
+
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
             return bearerToken.substring(7, bearerToken.length());
         }
 
-        String jwt = request.getParameter(JWTConfiguration.AUTHORIZATION_TOKEN);
-        if (StringUtils.hasText(jwt)) {
-            return jwt;
-        }
         return null;
     }
 }
