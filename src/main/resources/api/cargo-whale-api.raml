@@ -27,7 +27,7 @@ uses:
         200:
           body:
             application/hal+json:
-#              type: Containers.Index
+              type: Containers.Index
               examples:
                 all: !include examples/container-index.json
                 created: !include examples/container-index-created.json
@@ -48,7 +48,7 @@ uses:
           200:
             body:
               application/hal+json:
-#                type: Containers.Container
+                type: Containers.Container
                 example: !include examples/container-details.json
 
       /top:
@@ -104,6 +104,10 @@ uses:
               body:
                 application/hal+json:
                   example: !include examples/container-logs.json
+            401:
+              body:
+                application/json:
+                  example: !include examples/unauthenticated.json
 
       /stats:
         get:
