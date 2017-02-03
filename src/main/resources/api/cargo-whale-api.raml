@@ -3,6 +3,7 @@ title: Cargo Whale API
 
 uses:
   Containers: libraries/containers.raml
+  Authentication: libraries/authentication.raml
   Index: libraries/index.raml
 
 /api:
@@ -13,6 +14,13 @@ uses:
           application/hal+json:
             type: Index.Index
             example: !include examples/index.json
+  /authenticate:
+    post:
+      description: Authenticate with credentials
+      body:
+        application/json:
+          type: Authentication.Credentials
+          example: !include examples/credentials.json
 
   /containers:
     get:
@@ -40,6 +48,10 @@ uses:
           body:
             application/hal+json:
               example: !include examples/container-index-400.json
+        401:
+          body:
+            application/json:
+              example: !include examples/unauthenticated.json
 
     /{id}:
       get:
@@ -50,6 +62,10 @@ uses:
               application/hal+json:
                 type: Containers.Container
                 example: !include examples/container-details.json
+          401:
+            body:
+              application/json:
+                example: !include examples/unauthenticated.json
 
       /top:
         get:
@@ -59,6 +75,10 @@ uses:
               body:
                 application/hal+json:
                   example: !include examples/container-top.json
+            401:
+              body:
+                application/json:
+                  example: !include examples/unauthenticated.json
 
       /logs:
         get:
@@ -117,3 +137,7 @@ uses:
               body:
                 application/hal+json:
                   example: !include examples/container-stats.json
+            401:
+              body:
+                application/json:
+                  example: !include examples/unauthenticated.json
