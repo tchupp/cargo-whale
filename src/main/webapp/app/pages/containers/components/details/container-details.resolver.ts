@@ -13,6 +13,6 @@ export class ContainerDetailsResolver implements Resolve<Container> {
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Container> {
         let id: string = route.params['id'];
 
-        return this.service.getContainerDetails<Container>(id);
+        return this.service.getContainerDetails(id);
     }
 }

@@ -25,7 +25,8 @@ $hover: 24;
 @mixin buttonColor($color, $borderColor) {
     @include styleButton($color, $borderColor);
 
-    &.disabled, &[disabled],
+    &.disabled,
+    &[disabled],
     fieldset[disabled] &,
     &.disabled:hover,
     &[disabled]:hover,

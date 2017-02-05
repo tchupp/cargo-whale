@@ -1,5 +1,4 @@
 import {Component, OnInit} from "@angular/core";
-
 import {SidebarItem} from "./sidebar-item/sidebar-item.model";
 
 @Component({
@@ -13,6 +12,6 @@ export class SidebarComponent implements OnInit {
     ngOnInit(): void {
         this.sidebarItems = [
             {title: 'Dashboard', icon: 'dashboard', path: '/dashboard'},
-            {title: 'Containers', icon: 'list', path: '/containers'}];
+            {title: 'Containers', icon: 'list', path: '/containers', query: {state: 'all'}}];
     }
 }

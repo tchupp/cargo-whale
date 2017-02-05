@@ -115,29 +115,31 @@
     }
 }
 
-.container-btn {
-    color: $default;
-    background-color: $content-item;
+.btn.btn-container {
+    @include buttonColor($content-item, $content-shadow);
 
-    border: $bootstrap-panel-header-border;
     text-transform: capitalize;
+    color: $default;
 
-    &:hover, &:focus, &:active {
-        color: $default;
+    &:hover, &.active {
         background-color: $content-item-selected;
     }
 
-    .state-icon {
-        width: 8px;
-        height: 8px;
-        display: inline-block;
-
-        border: 4px solid;
-        border-radius: 4px;
+    &.disabled {
+        background-color: $default-text;
     }
+}
 
-    .state-badge {
-        color: $content-item;
-        background-color: $default;
-    }
+.icon-state {
+    width: 8px;
+    height: 8px;
+    display: inline-block;
+
+    border: 4px solid;
+    border-radius: 4px;
+}
+
+.badge-state {
+    color: $content-item;
+    background-color: $default;
 }
