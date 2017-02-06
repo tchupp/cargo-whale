@@ -39,9 +39,8 @@ public class DockerRestTemplateConfiguration {
             new StringHttpMessageConverter()
         );
 
-        DockerRestTemplate restTemplate = new DockerRestTemplate(this.errorHandler, requestFactory);
+        DockerRestTemplate restTemplate = new DockerRestTemplate(this.errorHandler, requestFactory, messageConverters);
         RootUriTemplateHandler.addTo(restTemplate, this.properties.getUri());
-        restTemplate.setMessageConverters(messageConverters);
 
         return restTemplate;
     }
