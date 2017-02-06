@@ -16,7 +16,7 @@ public abstract class RamlSpecErrorMessageFormatter {
         return String.format("%1s for: %2s and %3s %4s. Options are: %5s", formatStatus(status), formatMethod(method), formatPath(path), formatNotSetupForFileMessage(ramlSpecFile), keySet);
     }
 
-    public static String formatRamlSpecErrorMessage(final MediaType mediaType, final HttpStatus status, final HttpMethod method, final String path, final String ramlSpecFile, final Set<String> keySet) {
+    public static String formatRamlSpecErrorMessage(final MediaType mediaType, final HttpStatus status, final HttpMethod method, final String path, final String ramlSpecFile, final Set<MediaType> keySet) {
         return String.format("%1s for: %2s, %3s and %4s %5s. Options are: %6s", formatMediaType(mediaType), formatStatus(status), formatMethod(method), formatPath(path), formatNotSetupForFileMessage(ramlSpecFile), keySet);
     }
 

@@ -10,7 +10,6 @@ import {dashboardRoute} from "./dashboard.routes";
 @NgModule({
     imports: [
         CommonModule,
-        LayoutsModule,
         PipesModule,
         RouterModule.forChild([dashboardRoute])
     ],

@@ -2,15 +2,10 @@ package com.cargowhale.docker;
 
 import com.cargowhale.docker.config.DefaultProfileUtil;
 import com.cargowhale.docker.config.ProfileConstants;
-import com.cargowhale.docker.config.docker.DockerProperties;
-import com.cargowhale.docker.config.metrics.MetricsGraphiteProperties;
-import com.cargowhale.docker.config.metrics.MetricsJvmProperties;
-import com.cargowhale.docker.config.metrics.MetricsLogsProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.core.env.Environment;
 
 import java.net.InetAddress;
@@ -18,7 +13,6 @@ import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.Collection;
 
-@EnableConfigurationProperties({DockerProperties.class, MetricsLogsProperties.class, MetricsGraphiteProperties.class, MetricsJvmProperties.class})
 @SpringBootApplication
 public class CargoWhaleApplication {
 

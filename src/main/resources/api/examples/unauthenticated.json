@@ -1,0 +1,7 @@
+{
+  "timestamp": 1,
+  "status": 401,
+  "error": "Unauthorized",
+  "message": "Access Denied",
+  "path": "**"
+}
