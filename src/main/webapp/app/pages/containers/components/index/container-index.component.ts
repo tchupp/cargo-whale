@@ -1,9 +1,9 @@
 import {Component, OnInit, OnDestroy} from "@angular/core";
-import {ActivatedRoute} from "@angular/router";
-import {Observable, Subscription} from "rxjs/Rx";
-import {ContainerIndex, StateMetadata} from "./container-index.model";
+import {ActivatedRoute, Params} from "@angular/router";
+import {Subscription} from "rxjs/Rx";
+import {ContainerIndex, StateMetadata, ContainerIndexEmbedded, ContainerIndexLinks} from "./container-index.model";
+import {ContainerIndexService} from "./container-index.service";
 import {Container} from "../container.model";
-import {ContainersService} from "../../containers.service";
 
 @Component({
     selector: 'cw-container-list',
@@ -16,12 +16,16 @@ export class ContainerIndexComponent implements OnInit, OnDestroy {
     private subscription: Subscription;
     private loading: boolean = true;
 
-    constructor(private route: ActivatedRoute, private containerService: ContainersService) {
+    constructor(private route: ActivatedRoute, private containerIndexService: ContainerIndexService) {
     }
 
     ngOnInit(): void {
-        this.subscription = this.route.queryParams.subscribe(query => {
-            this.getContainerIndex(query['state']);
+        this.containerIndexService.getContainerIndexLinks().subscribe((links: ContainerIndexLinks) => {
+            this.subscription = this.route.queryParams.subscribe((query: Params) => {
+                const state = query['state'] || 'all';
+
+                this.getContainerIndex(links, state);
+            });
         });
     }
 
@@ -29,20 +33,16 @@ export class ContainerIndexComponent implements OnInit, OnDestroy {
         this.subscription.unsubscribe();
     }
 
-    private getContainerIndex(state: string = null) {
+    private getContainerIndex(links: ContainerIndexLinks, state: string) {
         this.loading = true;
 
-        let response: Observable<ContainerIndex>;
-        if (!state || state === 'all') {
-            response = this.containerService.getContainerIndex();
-        } else {
-            response = this.containerService.getFilteredContainerIndex(state);
-        }
-        response.subscribe(containerIndex => {
-            const embedded = containerIndex._embedded || {containers: []};
+        this.containerIndexService.follow(links, state).subscribe((containerIndex: ContainerIndex) => {
+            const embedded = containerIndex._embedded || new ContainerIndexEmbedded();
 
             this.containers = embedded.containers;
             this.stateMetadata = containerIndex.stateMetadata;
+            this.loading = false;
+        }, () => {
             this.loading = false;
         });
     }

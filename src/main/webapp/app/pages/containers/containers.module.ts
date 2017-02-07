@@ -11,6 +11,7 @@ import {ContainerConfigComponent} from "./components/details/components/config/c
 import {ContainerEnvironmentComponent} from "./components/details/components/environment/environment.component";
 import {ContainerNetworkComponent} from "./components/details/components/networks/networks.component";
 import {ContainerIndexComponent} from "./components/index/container-index.component";
+import {ContainerIndexService} from "./components/index/container-index.service";
 import {InfoItemComponent} from "./components/info-item/info-item.component";
 import {LayoutsModule} from "../../shared/layouts";
 import {PipesModule} from "../../shared/pipes";
@@ -33,6 +34,7 @@ import {PipesModule} from "../../shared/pipes";
     ],
     providers: [
         ContainersService,
+        ContainerIndexService,
         ContainerDetailsResolver
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]

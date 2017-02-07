@@ -36,7 +36,7 @@
 }
 
 .dead {
-    @include state-color($disabled);
+    @include state-color($default);
 }
 
 .container-phase {
@@ -125,8 +125,9 @@
         background-color: $content-item-selected;
     }
 
-    &.disabled {
-        background-color: $default-text;
+    &.disabled, &[disabled], fieldset[disabled] & {
+        color: $content-item;
+        @include buttonColor($body-bg, $content-shadow);
     }
 }
 
