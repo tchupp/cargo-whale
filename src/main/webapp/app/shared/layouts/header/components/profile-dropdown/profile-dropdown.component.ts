@@ -11,7 +11,18 @@ import {Component} from "@angular/core";
     
     <ul class="dropdown-menu profile-dropdown" aria-labelledby="user-profile-dd">
         <li class="dropdown-item"><i class="dropdown-arr"></i></li>
-        <li class="dropdown-item"><a><i class="fa fa-power-off"></i>Sign out</a></li>
+        
+        <li class="dropdown-item">
+            <a class="username">Username</a>
+        </li>
+        
+        <li class="dropdown-item profile-img">
+            <svg width="250" height="250" cwProfileImg></svg>
+        </li>
+        
+        <li class="dropdown-item">
+            <a class="signout"><i class="fa fa-power-off"></i>Sign out</a>
+        </li>
     </ul>
 </div>
 `

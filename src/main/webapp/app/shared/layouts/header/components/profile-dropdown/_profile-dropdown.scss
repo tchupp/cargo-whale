@@ -43,26 +43,6 @@
 
     font-size: inherit;
 
-    .header {
-        padding: 10px 12px;
-        border-bottom: 1px solid $default;
-        font-size: 12px;
-
-        strong {
-            float: left;
-            color: $dropdown-text;
-        }
-
-        & > a {
-            float: right;
-            margin-left: 12px;
-            text-decoration: none;
-            &:hover {
-                color: $dropdown-text;
-            }
-        }
-    }
-
     & > a {
         border-top: 1px solid $default;
         display: block;
@@ -86,14 +66,21 @@
             border: none;
             text-decoration: none;
             color: $dropdown-text;
-            padding: 4px 16px 4px 20px;
+            padding: 8px 16px 8px 20px;
+
+            &.username {
+                padding-left: 42px;
+                border-bottom: 1px solid $default;
+            }
 
             &.signout {
                 border-top: 1px solid $default;
             }
+
             i {
                 margin-right: 10px;
             }
+
             &:hover {
                 background: #f4fcff;
             }
@@ -101,6 +88,13 @@
 
         i.dropdown-arr {
             right: 25px;
+        }
+
+        .profile-img {
+            svg {
+                width: 100%;
+                height: auto;
+            }
         }
     }
 
@@ -130,7 +124,7 @@
 }
 
 @media (max-width: 415px) {
-    .top-dropdown-menu {
+    .dropdown-menu {
         right: -81px;
 
         i.dropdown-arr {
