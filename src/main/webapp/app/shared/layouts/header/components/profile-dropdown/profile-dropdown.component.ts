@@ -1,4 +1,6 @@
 import {Component} from "@angular/core";
+import {AuthTokenService} from "../../../../auth/auth-token.service";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'cw-profile-dropdown',
@@ -21,11 +23,19 @@ import {Component} from "@angular/core";
         </li>
         
         <li class="dropdown-item">
-            <a class="signout"><i class="fa fa-power-off"></i>Sign out</a>
+            <a class="signout" (click)="signOut()"><i class="fa fa-power-off"></i>Sign out</a>
         </li>
     </ul>
 </div>
 `
 })
 export class ProfileDropdownComponent {
+
+    constructor(private router: Router, private authTokenService: AuthTokenService) {
+    }
+
+    signOut() {
+        this.authTokenService.clearToken();
+        this.router.navigate(['/login']);
+    }
 }
