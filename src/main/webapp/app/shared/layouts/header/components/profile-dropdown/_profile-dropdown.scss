@@ -1,0 +1,140 @@
+@import "../../../../styles/theme";
+@import "../../../../styles/variables";
+
+.user-profile {
+    float: right;
+    margin-right: 12px;
+    transition: all .15s ease-in-out;
+    padding: 0;
+    line-height: $header-height;
+    border: 0;
+    opacity: 1;
+    position: relative;
+
+    a {
+        display: block;
+        color: $default;
+
+        &:hover {
+            text-decoration: none;
+        }
+    }
+
+    img {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+    }
+}
+
+.dropdown-item {
+    line-height: 1;
+}
+
+.dropdown-toggle {
+    cursor: pointer;
+}
+
+.dropdown-menu {
+    width: 316px;
+    left: auto;
+    right: -47px;
+    top: 26px;
+
+    font-size: inherit;
+
+    .header {
+        padding: 10px 12px;
+        border-bottom: 1px solid $default;
+        font-size: 12px;
+
+        strong {
+            float: left;
+            color: $dropdown-text;
+        }
+
+        & > a {
+            float: right;
+            margin-left: 12px;
+            text-decoration: none;
+            &:hover {
+                color: $dropdown-text;
+            }
+        }
+    }
+
+    & > a {
+        border-top: 1px solid $default;
+        display: block;
+        text-align: center;
+        padding: 10px;
+        font-size: 12px;
+        text-decoration: none;
+
+        &:hover {
+            color: $dropdown-text;
+        }
+    }
+
+    &.profile-dropdown {
+        width: 145px;
+        top: 60px;
+        right: -25px;
+
+        a {
+            text-align: left;
+            border: none;
+            text-decoration: none;
+            color: $dropdown-text;
+            padding: 4px 16px 4px 20px;
+
+            &.signout {
+                border-top: 1px solid $default;
+            }
+            i {
+                margin-right: 10px;
+            }
+            &:hover {
+                background: #f4fcff;
+            }
+        }
+
+        i.dropdown-arr {
+            right: 25px;
+        }
+    }
+
+    i.dropdown-arr {
+        position: absolute;
+        top: -22px;
+        right: 42px;
+        display: block;
+        width: 0;
+        height: 0;
+        border: 11px solid transparent;
+        border-bottom-color: rgba(0, 0, 0, .15);
+
+        &:after {
+            top: -9px;
+            left: 0;
+            margin-left: -10px;
+            content: " ";
+            position: absolute;
+            display: block;
+            width: 0;
+            height: 0;
+            border: 10px solid transparent;
+            border-bottom-color: $default;
+        }
+    }
+}
+
+@media (max-width: 415px) {
+    .top-dropdown-menu {
+        right: -81px;
+
+        i.dropdown-arr {
+            right: 75px;
+        }
+    }
+}

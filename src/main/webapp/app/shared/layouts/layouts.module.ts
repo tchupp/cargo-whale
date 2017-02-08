@@ -1,8 +1,10 @@
 import {NgModule, CUSTOM_ELEMENTS_SCHEMA} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {RouterModule} from "@angular/router";
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {CardComponent} from "./card/card.component";
 import {HeaderComponent} from "./header/header.component";
+import {ProfileDropdownComponent} from "./header/components/profile-dropdown/profile-dropdown.component";
 import {SidebarComponent} from "./sidebar/sidebar.component";
 import {SidebarItemComponent} from "./sidebar/sidebar-item/sidebar-item.component";
 import {DividerComponent} from "./divider/divider.component";
@@ -12,6 +14,7 @@ import {PipesModule} from "../pipes";
 const COMPONENTS = [
     CardComponent,
     HeaderComponent,
+    ProfileDropdownComponent,
     DividerComponent,
     SidebarComponent,
     SidebarItemComponent,
@@ -22,7 +25,8 @@ const COMPONENTS = [
     imports: [
         CommonModule,
         RouterModule,
-        PipesModule
+        PipesModule,
+        NgbModule.forRoot()
     ],
     declarations: [
         ...COMPONENTS

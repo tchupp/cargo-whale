@@ -1,5 +1,4 @@
 @import "../../shared/styles/theme";
-@import "../../shared/styles/variables";
 
 @mixin state-color($color) {
     border-color: $color;
@@ -11,7 +10,7 @@
     height: $diameter;
     line-height: $diameter - 5px;
 
-    border-radius: $diameter / 2;
+    border-radius: 50%;
     border: round($diameter / 100) solid;
 }
 
