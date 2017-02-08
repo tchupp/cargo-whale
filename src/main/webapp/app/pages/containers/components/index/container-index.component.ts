@@ -20,12 +20,13 @@ export class ContainerIndexComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.containerIndexService.getContainerIndexLinks().subscribe((links: ContainerIndexLinks) => {
-            this.subscription = this.route.queryParams.subscribe((query: Params) => {
-                const state = query['state'] || 'all';
+        const links: ContainerIndexLinks = this.route.snapshot.data['containerIndexLinks'];
 
-                this.getContainerIndex(links, state);
-            });
+        this.subscription = this.route.queryParams.subscribe((query: Params) => {
+            this.loading = true;
+
+            const state = query['state'] || 'all';
+            this.getContainerIndex(links, state);
         });
     }
 
@@ -34,8 +35,6 @@ export class ContainerIndexComponent implements OnInit, OnDestroy {
     }
 
     private getContainerIndex(links: ContainerIndexLinks, state: string) {
-        this.loading = true;
-
         this.containerIndexService.follow(links, state).subscribe((containerIndex: ContainerIndex) => {
             const embedded = containerIndex._embedded || new ContainerIndexEmbedded();
 

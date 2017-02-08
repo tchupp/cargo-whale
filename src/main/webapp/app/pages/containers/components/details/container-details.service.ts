@@ -1,10 +1,10 @@
 import {Injectable} from "@angular/core";
 import {Http, Response} from "@angular/http";
 import {Observable} from "rxjs/Rx";
-import {Container} from "./components/container.model";
+import {Container} from "../container.model";
 
 @Injectable()
-export class ContainersService {
+export class ContainerDetailsService {
 
     constructor(private http: Http) {
     }
