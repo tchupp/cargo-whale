@@ -11,6 +11,7 @@ export class ProfileImageDirective implements OnInit {
     }
 
     ngOnInit() {
-        $(this.element.nativeElement).jdenticon(Md5.hashStr(this.authTokenService.getToken()));
+        const token: string = this.authTokenService.getToken() || '';
+        $(this.element.nativeElement).jdenticon(Md5.hashStr(token));
     }
 }
