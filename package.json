@@ -31,6 +31,7 @@
     "@types/angular-animate": "1.5.5",
     "@types/angular-mocks": "1.5.5",
     "@types/jasmine": "2.2.34",
+    "@types/jquery": "^2.0.40",
     "bower": "1.7.9",
     "browser-sync": "2.15.0",
     "del": "2.2.2",

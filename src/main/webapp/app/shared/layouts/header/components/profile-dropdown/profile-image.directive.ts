@@ -1,6 +1,7 @@
 import {Directive, ElementRef, OnInit} from "@angular/core";
 import {Md5} from "ts-md5/dist/md5";
 import {AuthTokenService} from "../../../../auth/auth-token.service";
+import $ from "jquery";
 
 @Directive({
     selector: '[cwProfileImg]'
