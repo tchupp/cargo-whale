@@ -7,7 +7,7 @@ import {Router} from "@angular/router";
     template: `
 <div class="user-profile" ngbDropdown>
     <a class="dropdown-toggle" id="user-profile-dd" ngbDropdownToggle>
-        <span class="glyphicon glyphicon-user"></span>
+        <svg width="250" height="250" cwProfileImg></svg>
         <span class="caret"></span>
     </a>
     
@@ -15,7 +15,7 @@ import {Router} from "@angular/router";
         <li class="dropdown-item"><i class="dropdown-arr"></i></li>
         
         <li class="dropdown-item">
-            <a class="username">Username</a>
+            <a class="username"><i class="fa fa-user"></i>Username</a>
         </li>
         
         <li class="dropdown-item profile-img">
