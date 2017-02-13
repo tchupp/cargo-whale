@@ -38,6 +38,11 @@ export class HeaderComponent implements OnInit {
     }
 
     private prettyName(url: string): string {
-        return url.substr(url.lastIndexOf('/') + 1);
+        let newUrl = url.substr(url.lastIndexOf('/') + 1);
+
+        if (newUrl.lastIndexOf('?') > 0) {
+            newUrl = newUrl.substr(0, newUrl.lastIndexOf('?'));
+        }
+        return newUrl;
     }
 }

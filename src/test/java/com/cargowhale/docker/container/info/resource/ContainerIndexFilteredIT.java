@@ -2,6 +2,7 @@ package com.cargowhale.docker.container.info.resource;
 
 import com.cargowhale.division.MockServiceBuilder;
 import com.cargowhale.docker.test.integration.RamlSpecFiles;
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,11 @@ public class ContainerIndexFilteredIT {
     @Autowired
     private MockMvc client;
 
+    @After
+    public void tearDown() throws Exception {
+        this.dockerServiceBuilder.reset();
+    }
+
     @Test
     public void getFilteredContainers_Created() throws Exception {
         verifySingleStateFilter(ContainerState.CREATED);
@@ -58,8 +64,15 @@ public class ContainerIndexFilteredIT {
     }
 
     @Test
-    public void getFilteredContainers_Dead() throws Exception {
-        verifySingleStateFilter(ContainerState.DEAD);
+    public void getFilteredContainers_Dead_Empty() throws Exception {
+        final ContainerState containerState = ContainerState.DEAD;
+
+        this.dockerServiceBuilder.expectRequest("/v1.24/containers/json?filters={\"status\":[\"" + containerState.getState() + "\"]}", HttpMethod.GET, HttpStatus.OK, MediaType.APPLICATION_JSON);
+        this.dockerServiceBuilder.expectRequest("/v1.24/containers/json?all=1", HttpMethod.GET, HttpStatus.OK, MediaType.APPLICATION_JSON);
+
+        this.client.perform(get(CONTAINER_INDEX_ENDPOINT + "?state=" + containerState.getState()).with(TEST_USER_AUTH))
+            .andExpect(responseIsInSpec(RamlSpecFiles.CARGO_WHALE_RAML_SPEC_FILE)
+                .with(CONTAINER_INDEX_ENDPOINT, HttpMethod.GET, HttpStatus.OK, MediaTypes.HAL_JSON, "empty"));
     }
 
     private void verifySingleStateFilter(final ContainerState containerState) throws Exception {
@@ -70,8 +83,6 @@ public class ContainerIndexFilteredIT {
         this.client.perform(get(CONTAINER_INDEX_ENDPOINT + "?state=" + containerState.getState()).with(TEST_USER_AUTH))
             .andExpect(responseIsInSpec(RamlSpecFiles.CARGO_WHALE_RAML_SPEC_FILE)
                 .with(CONTAINER_INDEX_ENDPOINT, HttpMethod.GET, HttpStatus.OK, MediaTypes.HAL_JSON, containerState.getState()));
-
-        this.dockerServiceBuilder.reset();
     }
 
     @Test

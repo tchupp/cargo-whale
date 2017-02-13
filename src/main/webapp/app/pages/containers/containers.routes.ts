@@ -2,6 +2,7 @@ import {Route} from "@angular/router";
 
 import {ContainersComponent} from "./containers.component";
 import {ContainerIndexComponent} from "./components/index/container-index.component";
+import {ContainerIndexResolver} from "./components/index/container-index.resolver";
 import {ContainerDetailsComponent} from "./components/details/container-details.component";
 import {ContainerConfigComponent} from "./components/details/components/config/container-config.component";
 import {ContainerEnvironmentComponent} from "./components/details/components/environment/environment.component";
@@ -14,7 +15,10 @@ export const containersRoute: Route = {
     children: [
         {
             path: '',
-            component: ContainerIndexComponent
+            component: ContainerIndexComponent,
+            resolve: {
+                containerIndexLinks: ContainerIndexResolver
+            }
         },
         {
             path: ':id',

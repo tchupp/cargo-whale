@@ -1,0 +1,37 @@
+{
+  "_links": {
+    "all": {
+      "href": "http://localhost/api/containers"
+    },
+    "running": {
+      "href": "http://localhost/api/containers?state=RUNNING"
+    },
+    "restarting": {
+      "href": "http://localhost/api/containers?state=RESTARTING"
+    },
+    "paused": {
+      "href": "http://localhost/api/containers?state=PAUSED"
+    },
+    "created": {
+      "href": "http://localhost/api/containers?state=CREATED"
+    },
+    "exited": {
+      "href": "http://localhost/api/containers?state=EXITED"
+    },
+    "dead": {
+      "href": "http://localhost/api/containers?state=DEAD"
+    },
+    "up": {
+      "href": "http://localhost/api"
+    }
+  },
+  "stateMetadata": {
+    "all": 3,
+    "running": 1,
+    "restarting": 0,
+    "paused": 0,
+    "created": 1,
+    "exited": 1,
+    "dead": 0
+  }
+}
