@@ -9,7 +9,7 @@ import static org.skyscreamer.jsonassert.JSONAssert.assertEquals;
 
 public class JsonMatcher extends TypeSafeMatcher<String> {
 
-    public static Matcher<String> equalToJsonString(final String expected) {
+    static Matcher<String> equalToJsonString(final String expected) {
         return new JsonMatcher(expected);
     }
 
@@ -22,7 +22,7 @@ public class JsonMatcher extends TypeSafeMatcher<String> {
     @Override
     protected boolean matchesSafely(final String actual) {
         try {
-            assertEquals(actual, this.expected, false);
+            assertEquals(actual, this.expected, true);
             return true;
         } catch (AssertionError | Exception ae) {
             return false;

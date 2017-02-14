@@ -4,7 +4,8 @@
   "appPath": "src/main/webapp/",
   "testPath": "src/test/javascript/spec",
   "dependencies": {
-    "bootstrap-sass": "3.3.6"
+    "bootstrap-sass": "3.3.6",
+    "font-awesome": "^4.7.0"
   },
   "overrides": {
     "bootstrap-sass": {

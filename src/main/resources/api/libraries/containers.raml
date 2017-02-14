@@ -16,10 +16,10 @@ types:
     properties:
       globalIPv6Address: string
       macAddress: string
-      ipV6Gateway: string
+      ipv6Gateway: string
       endpointId: string
-      ipPrefixLen: string
-      globalIPv6PrefixLen: string
+      ipPrefixLen: number
+      globalIPv6PrefixLen: number
       ipAddress: string
       networkId: string
       gateway: string
@@ -33,15 +33,15 @@ types:
 
   NetworkSettings:
     properties:
-      ipAddress: string
-      ipPrefixLen: integer
-      gateway: string
-      bridge: string
       macAddress: string
+      ipAddress: string
+      ipPrefixLen: number
+      bridge: string
+      gateway: string
       ports: Port[]
       networks:
         properties:
-          .*: AttachedNetwork
+          //?: AttachedNetwork
 
   Config:
     properties:
@@ -58,14 +58,13 @@ types:
 
   State:
     properties:
-      pid: integer
+      pid: number
       state: ContainerState
       status: string
       error: string
-      exitCode: integer
-      startedAt: integer
-      finishedAt: integer
-      dead: boolean
+      exitCode: number
+      startedAt: number
+      finishedAt: number
       paused: boolean
       restarting: boolean
       running: boolean
@@ -80,7 +79,7 @@ types:
 
   Lables:
     properties:
-      .*: string
+      //?: string
 
   Container:
     properties:
@@ -88,7 +87,7 @@ types:
       name: string
       image: string
       imageId: string
-      created: integer
+      created: number
       networkSettings: NetworkSettings
       config: Config
       state: State
@@ -104,17 +103,23 @@ types:
 
   Index:
     properties:
-      containers: Container[]
+      _embedded:
+        type: object
+        required: false
+        properties:
+          containers: Container[]
+
       stateMetadata:
         type: object
         properties:
-          all: integer
-          created: integer
-          restarting: integer
-          running: integer
-          paused: integer
-          exited: integer
-          dead: integer
+          all: number
+          created: number
+          restarting: number
+          running: number
+          paused: number
+          exited: number
+          dead: number
+
       _links:
         properties:
           all: Link

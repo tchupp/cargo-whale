@@ -3,6 +3,7 @@ title: Cargo Whale API
 
 uses:
   Containers: libraries/containers.raml
+  Authentication: libraries/authentication.raml
   Index: libraries/index.raml
 
 /api:
@@ -13,6 +14,13 @@ uses:
           application/hal+json:
             type: Index.Index
             example: !include examples/index.json
+  /authenticate:
+    post:
+      description: Authenticate with credentials
+      body:
+        application/json:
+          type: Authentication.Credentials
+          example: !include examples/credentials.json
 
   /containers:
     get:
@@ -27,7 +35,7 @@ uses:
         200:
           body:
             application/hal+json:
-#              type: Containers.Index
+              type: Containers.Index
               examples:
                 all: !include examples/container-index.json
                 created: !include examples/container-index-created.json
@@ -36,10 +44,15 @@ uses:
                 paused: !include examples/container-index-paused.json
                 restarting: !include examples/container-index-restarting.json
                 running: !include examples/container-index-running.json
+                empty: !include examples/container-index-empty.json
         400:
           body:
             application/hal+json:
               example: !include examples/container-index-400.json
+        401:
+          body:
+            application/json:
+              example: !include examples/unauthenticated.json
 
     /{id}:
       get:
@@ -48,8 +61,12 @@ uses:
           200:
             body:
               application/hal+json:
-#                type: Containers.Container
+                type: Containers.Container
                 example: !include examples/container-details.json
+          401:
+            body:
+              application/json:
+                example: !include examples/unauthenticated.json
 
       /top:
         get:
@@ -59,6 +76,10 @@ uses:
               body:
                 application/hal+json:
                   example: !include examples/container-top.json
+            401:
+              body:
+                application/json:
+                  example: !include examples/unauthenticated.json
 
       /logs:
         get:
@@ -104,6 +125,10 @@ uses:
               body:
                 application/hal+json:
                   example: !include examples/container-logs.json
+            401:
+              body:
+                application/json:
+                  example: !include examples/unauthenticated.json
 
       /stats:
         get:
@@ -113,3 +138,7 @@ uses:
               body:
                 application/hal+json:
                   example: !include examples/container-stats.json
+            401:
+              body:
+                application/json:
+                  example: !include examples/unauthenticated.json

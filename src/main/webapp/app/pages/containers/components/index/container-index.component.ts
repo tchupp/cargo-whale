@@ -1,29 +1,48 @@
-import {Component, OnInit} from "@angular/core";
-import {Router} from "@angular/router";
-import {ContainersService} from "../../containers.service";
-import {ContainerIndex, StateMetadata} from "./container-index.model";
+import {Component, OnInit, OnDestroy} from "@angular/core";
+import {ActivatedRoute, Params} from "@angular/router";
+import {Subscription} from "rxjs/Rx";
+import {ContainerIndex, StateMetadata, ContainerIndexEmbedded, ContainerIndexLinks} from "./container-index.model";
+import {ContainerIndexService} from "./container-index.service";
 import {Container} from "../container.model";
 
 @Component({
     selector: 'cw-container-list',
     templateUrl: 'app/pages/containers/components/index/container-index.html'
 })
-export class ContainerIndexComponent implements OnInit {
+export class ContainerIndexComponent implements OnInit, OnDestroy {
 
     private containers: Container[];
     private stateMetadata: StateMetadata;
+    private subscription: Subscription;
+    private loading: boolean = true;
 
-    constructor(private router: Router, private containerService: ContainersService) {
+    constructor(private route: ActivatedRoute, private containerIndexService: ContainerIndexService) {
     }
 
     ngOnInit(): void {
-        this.containerService.getContainerIndex<ContainerIndex>().subscribe(containerIndex => {
-            this.containers = containerIndex._embedded.containers;
-            this.stateMetadata = containerIndex.stateMetadata;
+        const links: ContainerIndexLinks = this.route.snapshot.data['containerIndexLinks'];
+
+        this.subscription = this.route.queryParams.subscribe((query: Params) => {
+            this.loading = true;
+
+            const state = query['state'] || 'all';
+            this.getContainerIndex(links, state);
         });
     }
 
-    onClickContainer(container: Container): void {
-        this.router.navigate(['/containers', container.id]);
+    ngOnDestroy(): void {
+        this.subscription.unsubscribe();
+    }
+
+    private getContainerIndex(links: ContainerIndexLinks, state: string) {
+        this.containerIndexService.follow(links, state).subscribe((containerIndex: ContainerIndex) => {
+            const embedded = containerIndex._embedded || new ContainerIndexEmbedded();
+
+            this.containers = embedded.containers;
+            this.stateMetadata = containerIndex.stateMetadata;
+            this.loading = false;
+        }, () => {
+            this.loading = false;
+        });
     }
 }

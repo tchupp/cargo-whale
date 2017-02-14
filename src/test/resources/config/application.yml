@@ -23,6 +23,11 @@ cargowhale:
   docker:
     uri: http://fakehost:287331
 
+  security:
+    jwt:
+      secret: super-secret-token
+      token-validity-in-seconds: 86400
+
   metrics:
     jvm:
       enabled: false
@@ -30,3 +35,11 @@ cargowhale:
       enabled: false
     graphite:
       enabled: false
+
+security:
+  basic:
+    enabled: false
+  user:
+    name: testuser
+    password: testpass
+    role: USER, ADMIN

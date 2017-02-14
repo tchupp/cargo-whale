@@ -1,5 +1,8 @@
 <div class="page-top">
-    <h1 class="page-title">Container {{details?.name | replace : '/'}}</h1>
+    <h1 class="page-title">
+        <span>Container {{details?.name | replace : '/'}}</span>
+        <i class="fa fa-cog fa-spin" *ngIf="loading"></i>
+    </h1>
 </div>
 
 <div class="col-xs-12">
