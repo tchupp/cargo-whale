@@ -58,6 +58,7 @@ function deps() {
         'node_modules/@ng-bootstrap/ng-bootstrap/**/*.js',
         'node_modules/rxjs/**/*.js',
         'node_modules/ng2-webstorage/bundles/**/*.js',
+        'node_modules/ts-md5/dist/**/*.js',
         'node_modules/jquery/dist/*.js'
     ], {base: 'node_modules'})
         .pipe(gulp.dest(config.dist + 'vendor'));

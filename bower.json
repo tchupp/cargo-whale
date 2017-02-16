@@ -5,7 +5,8 @@
   "testPath": "src/test/javascript/spec",
   "dependencies": {
     "bootstrap-sass": "3.3.6",
-    "font-awesome": "^4.7.0"
+    "font-awesome": "^4.7.0",
+    "Jdenticon": "jdenticon#^1.4.0"
   },
   "overrides": {
     "bootstrap-sass": {

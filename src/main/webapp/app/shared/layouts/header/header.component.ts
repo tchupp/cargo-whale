@@ -11,6 +11,8 @@ import {Router, NavigationEnd} from "@angular/router";
             <span *ngIf="last">{{prettyName(segment) | truncate : 12 }}</span>
         </li>
     </ol>
+    
+    <cw-profile-dropdown></cw-profile-dropdown>
 </div>`
 })
 export class HeaderComponent implements OnInit {
