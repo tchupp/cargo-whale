@@ -11,6 +11,9 @@
 # http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
 # ===================================================================
 
+management:
+    context-path: /management
+
 spring:
   application:
     name: CargoWhale
@@ -19,6 +22,9 @@ spring:
 
 server:
   port: 8081
+  session:
+    cookie:
+      http-only: true
 
 logging:
   level:
@@ -30,7 +36,20 @@ endpoints:
       gauge-submissions: per_http_method
       counter-submissions: per_http_method
 
+security:
+  basic:
+    enabled: false
+  user:
+    name: cargo
+    password: whale
+    role: USER, ADMIN
 
 # ===================================================================
 # CargoWhale specific properties
 # ===================================================================
+
+cargowhale:
+  security:
+    jwt:
+      secret: super-secret-token
+      token-validity-in-seconds: 86400

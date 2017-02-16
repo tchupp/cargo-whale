@@ -1,24 +1,28 @@
 import {NgModule, CUSTOM_ELEMENTS_SCHEMA} from "@angular/core";
 import {BrowserModule} from "@angular/platform-browser";
 import {HttpModule} from "@angular/http";
-import {RouterModule} from "@angular/router";
-import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
-import {PagesModule} from "./pages/pages.module";
+import {PagesModule} from "./pages";
 import {LayoutsModule} from "./shared/layouts";
-import {appRoutes} from "./app.routes";
-import {PagesComponent} from "./pages/pages.component";
+import {AppComponent} from "./app.component";
+import {AuthModule} from "./shared/auth";
+import {httpProvider} from "./http/http.provider";
 
 @NgModule({
     imports: [
         BrowserModule,
+        AuthModule,
         HttpModule,
-        RouterModule,
-        PagesModule,
-        NgbModule.forRoot(),
-        appRoutes
+        LayoutsModule,
+        PagesModule
     ],
-    bootstrap: [PagesComponent],
+    declarations: [
+        AppComponent
+    ],
+    providers: [
+        httpProvider()
+    ],
+    bootstrap: [AppComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class CargoWhaleAppModule {

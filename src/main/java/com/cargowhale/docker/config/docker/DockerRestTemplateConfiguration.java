@@ -6,6 +6,7 @@ import com.cargowhale.docker.client.core.UnixComponentsClientHttpRequestFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spotify.docker.client.ObjectMapperProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.client.RootUriTemplateHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Configuration
+@EnableConfigurationProperties({DockerProperties.class})
 public class DockerRestTemplateConfiguration {
 
     private final DockerProperties properties;
@@ -37,9 +39,8 @@ public class DockerRestTemplateConfiguration {
             new StringHttpMessageConverter()
         );
 
-        DockerRestTemplate restTemplate = new DockerRestTemplate(this.errorHandler, requestFactory);
+        DockerRestTemplate restTemplate = new DockerRestTemplate(this.errorHandler, requestFactory, messageConverters);
         RootUriTemplateHandler.addTo(restTemplate, this.properties.getUri());
-        restTemplate.setMessageConverters(messageConverters);
 
         return restTemplate;
     }

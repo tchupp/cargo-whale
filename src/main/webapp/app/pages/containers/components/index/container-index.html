@@ -1,15 +1,33 @@
 <div class="page-top">
-    <h1 class="page-title">Containers</h1>
+    <h1 class="page-title">
+        <span>Containers</span>
+        <i class="fa fa-cog fa-spin" *ngIf="loading"></i>
+    </h1>
     <br>
     <div class="btn-group">
-        <button *ngFor="let state of stateMetadata | keys" class="btn container-btn">
-            <span class="state-icon {{state}}"></span>&nbsp;{{state}}&nbsp;<span class="badge state-badge">{{stateMetadata[state]}}</span>
+        <button *ngFor="let state of stateMetadata | keys"
+                class="btn btn-container" [disabled]="stateMetadata[state] === 0"
+                routerLinkActive="active">
+
+            <span *ngIf="stateMetadata[state] !== 0"
+                  [routerLink]="['/containers']" [queryParams]="{'state': state}">
+                <span class="icon-state {{state}}"></span>
+                <span>&nbsp;{{state}}&nbsp;</span>
+                <span class="badge badge-state">{{stateMetadata[state]}}</span>
+            </span>
+
+            <span *ngIf="stateMetadata[state] === 0">
+                <span class="icon-state {{state}}"></span>
+                <span>&nbsp;{{state}}&nbsp;</span>
+                <span class="badge badge-state">{{stateMetadata[state]}}</span>
+            </span>
+
         </button>
     </div>
 </div>
 
 <div *ngFor="let container of containers" class="col-lg-4 col-md-6 col-xs-12">
-    <cw-card [link]="true" (click)="onClickContainer(container)">
+    <cw-card [link]="true" [routerLink]="[container.id]">
         <div card-header>
             <h3 class="card-title">{{container.name | replace : '/'}}</h3>
         </div>

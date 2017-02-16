@@ -36,7 +36,7 @@
 }
 
 .dead {
-    @include state-color($disabled);
+    @include state-color($default);
 }
 
 .container-phase {
@@ -91,41 +91,56 @@
     text-align: center;
 
     .name {
-        color: $default;
         float: left;
+        text-align: left;
+        width: 40%;
+
+        color: $default;
     }
 
     .value {
         float: right;
         text-align: right;
-        max-width: 85%;
-        word-wrap: break-word;
+        max-width: 60%;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    .value-left {
+        float: left;
+        text-align: left;
+        max-width: 60%;
+        white-space: nowrap;
+        overflow: hidden;
     }
 }
 
-.container-btn {
-    color: $default;
-    background-color: $content-item;
+.btn.btn-container {
+    @include buttonColor($content-item, $content-shadow);
 
-    border: $bootstrap-panel-header-border;
     text-transform: capitalize;
+    color: $default;
 
-    &:hover, &:focus, &:active {
-        color: $default;
+    &:hover, &.active {
         background-color: $content-item-selected;
     }
 
-    .state-icon {
-        width: 8px;
-        height: 8px;
-        display: inline-block;
-
-        border: 4px solid;
-        border-radius: 4px;
-    }
-
-    .state-badge {
+    &.disabled, &[disabled], fieldset[disabled] & {
         color: $content-item;
-        background-color: $default;
+        @include buttonColor($body-bg, $content-shadow);
     }
+}
+
+.icon-state {
+    width: 8px;
+    height: 8px;
+    display: inline-block;
+
+    border: 4px solid;
+    border-radius: 4px;
+}
+
+.badge-state {
+    color: $content-item;
+    background-color: $default;
 }

@@ -49,7 +49,7 @@ public class RamlSpec {
         RamlMediaTypes mediaTypes = findMediaTypes(path, method, status);
 
         RamlExamples exampleMap = mediaTypes.get(mediaType);
-        Validate.notNull(exampleMap, RamlSpecErrorMessageFormatter.formatRamlSpecErrorMessage(mediaType, status, method, path, this.ramlSpecFile, exampleMap.keySet()));
+        Validate.notNull(exampleMap, RamlSpecErrorMessageFormatter.formatRamlSpecErrorMessage(mediaType, status, method, path, this.ramlSpecFile, mediaTypes.keySet()));
 
         return exampleMap;
     }
