@@ -17,12 +17,12 @@ import java.io.IOException;
 public class LogStreamMessageConverter extends AbstractHttpMessageConverter<LogStream> {
 
     public LogStreamMessageConverter() {
-        super(MediaType.TEXT_PLAIN, MediaType.ALL);
+        super(Charsets.UTF_8, MediaType.TEXT_PLAIN, MediaType.ALL);
     }
 
     @Override
     protected boolean supports(final Class<?> clazz) {
-        return LogStream.class == clazz;
+        return LogStream.class == clazz || LogStream.class.isAssignableFrom(clazz);
     }
 
     @Override

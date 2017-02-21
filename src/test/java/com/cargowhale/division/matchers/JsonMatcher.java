@@ -31,7 +31,7 @@ public class JsonMatcher extends TypeSafeMatcher<String> {
 
     @Override
     public void describeTo(final Description description) {
-        description.appendValue(new JSONObject(this.expected).toString(2));
+        description.appendValue(new JSONObject(this.expected).toString(2)).appendText("\n");
     }
 
     @Override

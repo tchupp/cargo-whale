@@ -1,6 +1,7 @@
 package com.cargowhale.division.raml;
 
 import com.cargowhale.division.raml.model.*;
+import groovy.json.StringEscapeUtils;
 import org.raml.v2.api.RamlModelResult;
 import org.raml.v2.api.model.v10.api.Api;
 import org.raml.v2.api.model.v10.bodies.Response;
@@ -83,9 +84,9 @@ public abstract class RamlSpecBuilder {
         RamlExamples examplesMap = new RamlExamples();
 
         if (mediaType.examples().isEmpty()) {
-            examplesMap.put("default", mediaType.example().value());
+            examplesMap.put("default", StringEscapeUtils.unescapeJava(mediaType.example().value()));
         } else {
-            mediaType.examples().forEach(example -> examplesMap.put(example.name(), example.value()));
+            mediaType.examples().forEach(example -> examplesMap.put(example.name(), StringEscapeUtils.unescapeJava(example.value())));
         }
 
         return examplesMap;

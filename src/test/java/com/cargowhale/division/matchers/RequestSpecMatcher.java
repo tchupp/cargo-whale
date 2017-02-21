@@ -48,7 +48,12 @@ public class RequestSpecMatcher {
 
             assertThat(response.getStatus(), is(status.value()));
             assertThat(response.getContentType(), isCompatibleMediaType(mediaType));
-            assertThat(response.getContentAsString(), equalToJsonString(example));
+
+            if (mediaType.isCompatibleWith(MediaType.APPLICATION_JSON)) {
+                assertThat(response.getContentAsString(), equalToJsonString(example));
+            } else {
+                assertThat(response.getContentAsString(), is(example));
+            }
         };
     }
 }
