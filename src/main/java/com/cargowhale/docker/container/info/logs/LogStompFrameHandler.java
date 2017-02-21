@@ -1,5 +1,6 @@
 package com.cargowhale.docker.container.info.logs;
 
+import com.spotify.docker.client.LogStream;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.stomp.StompFrameHandler;
 import org.springframework.messaging.simp.stomp.StompHeaders;
@@ -8,23 +9,23 @@ import java.lang.reflect.Type;
 
 public class LogStompFrameHandler implements StompFrameHandler {
 
-    public static final String DESTINATION = "/%s/logs";
-    private SimpMessagingTemplate messageSender;
-    private String containerId;
+    private static final String DESTINATION = "/%s/logs";
+    private final SimpMessagingTemplate messageSender;
+    private final String containerId;
 
-    public LogStompFrameHandler(SimpMessagingTemplate template, String containerId){
+    LogStompFrameHandler(final SimpMessagingTemplate template, final String containerId) {
         this.messageSender = template;
         this.containerId = containerId;
     }
 
     @Override
-    public Type getPayloadType(StompHeaders headers) {
+    public Type getPayloadType(final StompHeaders headers) {
         return null;
     }
 
     @Override
-    public void handleFrame(StompHeaders headers, Object payload) {
-        ContainerLogs logs = (ContainerLogs) payload;
-        messageSender.convertAndSend(String.format(DESTINATION, this.containerId), logs);
+    public void handleFrame(final StompHeaders headers, final Object payload) {
+        LogStream logs = (LogStream) payload;
+        this.messageSender.convertAndSend(String.format(DESTINATION, this.containerId), logs);
     }
 }

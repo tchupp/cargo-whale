@@ -73,22 +73,30 @@ public abstract class RamlSpecBuilder {
     private static RamlMediaTypes buildMediaTypeMap(final Response response) {
         final RamlMediaTypes mediaTypeMap = new RamlMediaTypes();
 
-        for (final TypeDeclaration mediaType : response.body()) {
-            mediaTypeMap.put(MediaType.valueOf(mediaType.name()), buildExampleMap(mediaType));
+        for (final TypeDeclaration mediaTypeDeclaration : response.body()) {
+            MediaType mediaType = MediaType.valueOf(mediaTypeDeclaration.name());
+            mediaTypeMap.put(mediaType, buildExampleMap(mediaType, mediaTypeDeclaration));
         }
 
         return mediaTypeMap;
     }
 
-    private static RamlExamples buildExampleMap(final TypeDeclaration mediaType) {
+    private static RamlExamples buildExampleMap(final MediaType mediaType, final TypeDeclaration mediaTypeDeclaration) {
         RamlExamples examplesMap = new RamlExamples();
 
-        if (mediaType.examples().isEmpty()) {
-            examplesMap.put("default", StringEscapeUtils.unescapeJava(mediaType.example().value()));
+        if (!mediaTypeDeclaration.examples().isEmpty()) {
+            mediaTypeDeclaration.examples().forEach(example -> examplesMap.put(example.name(), escapeExample(mediaType, example.value())));
         } else {
-            mediaType.examples().forEach(example -> examplesMap.put(example.name(), StringEscapeUtils.unescapeJava(example.value())));
+            examplesMap.put("default", escapeExample(mediaType, mediaTypeDeclaration.example().value()));
         }
 
         return examplesMap;
+    }
+
+    private static String escapeExample(final MediaType mediaType, final String example) {
+        if (mediaType.isCompatibleWith(MediaType.TEXT_PLAIN)) {
+            return StringEscapeUtils.unescapeJava(example);
+        }
+        return example;
     }
 }

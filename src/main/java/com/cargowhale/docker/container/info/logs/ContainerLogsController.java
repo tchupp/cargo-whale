@@ -1,13 +1,9 @@
 package com.cargowhale.docker.container.info.logs;
 
-import com.cargowhale.docker.client.core.DockerEndpointBuilder;
 import com.spotify.docker.client.LogStream;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.MediaTypes;
-import org.springframework.messaging.converter.MappingJackson2MessageConverter;
-import org.springframework.messaging.converter.StringMessageConverter;
-import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.http.MediaType;
+import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,21 +11,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/containers")
 public class ContainerLogsController {
 
-    private final SimpMessagingTemplate messageSender;
-    private final DockerEndpointBuilder endpointBuilder;
-    private final ContainerLogsService logsService;
-    private final ContainerLogsResourceAssembler logsResourceAssembler;
-    private final SimpMessagingTemplate messageSender;
     private final ContainerLogsClient logsClient;
+    private final SimpMessagingTemplate messageSender;
 
     @Autowired
-    public ContainerLogsController(final ContainerLogsService logsService, final ContainerLogsResourceAssembler logsResourceAssembler, final SimpMessagingTemplate messageSender, final DockerEndpointBuilder endpointBuilder) {
-        this.logsService = logsService;
-        this.logsResourceAssembler = logsResourceAssembler;
     public ContainerLogsController(final ContainerLogsClient logsClient, final SimpMessagingTemplate messageSender) {
         this.logsClient = logsClient;
         this.messageSender = messageSender;
-        this.endpointBuilder = endpointBuilder;
     }
 
     @RequestMapping(value = "/{id}/logs",
@@ -66,9 +54,9 @@ public class ContainerLogsController {
     }
 
     @MessageMapping("/hello")
-    public void greeting(String message) throws Exception {
+    public void greeting(final String message) throws Exception {
         System.out.println("Hello?");
-        messageSender.convertAndSend("/topic/api/containers/hello", message);
+        this.messageSender.convertAndSend("/topic/api/containers/hello", message);
     }
 
 //    @SubscribeMapping("/{id}/logs")

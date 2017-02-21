@@ -4,6 +4,7 @@ import com.cargowhale.division.raml.RamlSpecBuilder;
 import com.cargowhale.division.raml.model.RamlSpec;
 import org.raml.v2.api.RamlModelBuilder;
 import org.raml.v2.api.RamlModelResult;
+import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -49,7 +50,7 @@ public class RequestSpecMatcher {
             assertThat(response.getStatus(), is(status.value()));
             assertThat(response.getContentType(), isCompatibleMediaType(mediaType));
 
-            if (mediaType.isCompatibleWith(MediaType.APPLICATION_JSON)) {
+            if (mediaType.isCompatibleWith(MediaType.APPLICATION_JSON) || mediaType.isCompatibleWith(MediaTypes.HAL_JSON)) {
                 assertThat(response.getContentAsString(), equalToJsonString(example));
             } else {
                 assertThat(response.getContentAsString(), is(example));
