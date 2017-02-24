@@ -6,6 +6,11 @@ import org.springframework.http.MediaType;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
 
 @RestController
 @RequestMapping("/api/containers")
@@ -56,25 +61,6 @@ public class ContainerLogsController {
     @MessageMapping("/hello")
     public void greeting(final String message) throws Exception {
         System.out.println("Hello?");
-        this.messageSender.convertAndSend("/topic/api/containers/hello", message);
+        messageSender.convertAndSend("/test/topic/hello", message);
     }
-
-//    @SubscribeMapping("/{id}/logs")
-//    public void getTailedLogs(@PathVariable final String id){
-//        System.out.println("HANDLING");
-//        WebSocketClient webSocketClient = new StandardWebSocketClient();
-//        WebSocketStompClient stompClient = new WebSocketStompClient(webSocketClient);
-//        stompClient.setMessageConverter(new MappingJackson2MessageConverter());
-////        stompClient.setTaskScheduler(taskScheduler); // for heartbeats
-//
-//        String dockerLogsUrl = endpointBuilder.getContainerLogsEndpoint(id);
-//        //String url = "ws://127.0.0.1:8080/endpoint";
-//        String url = dockerLogsUrl + "/stream=1";
-//        StompSessionHandler sessionHandler = new LogStompSessionHandler(messageSender, id);
-//        stompClient.connect(url, sessionHandler);
-//
-//        String DESTINATION = "/%s/logs";
-//        messageSender.convertAndSend(String.format(DESTINATION, id), "WELCOME TO " +id);
-//
-//    }
 }
