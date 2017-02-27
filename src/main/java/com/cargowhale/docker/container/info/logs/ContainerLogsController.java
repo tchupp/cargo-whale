@@ -3,8 +3,6 @@ package com.cargowhale.docker.container.info.logs;
 import com.spotify.docker.client.LogStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,12 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class ContainerLogsController {
 
     private final ContainerLogsClient logsClient;
-    private final SimpMessagingTemplate messageSender;
 
     @Autowired
-    public ContainerLogsController(final ContainerLogsClient logsClient, final SimpMessagingTemplate messageSender) {
+    public ContainerLogsController(final ContainerLogsClient logsClient) {
         this.logsClient = logsClient;
-        this.messageSender = messageSender;
     }
 
     @RequestMapping(value = "/{id}/logs",
@@ -56,11 +52,5 @@ public class ContainerLogsController {
         logFilters.setStderr(true);
 
         return this.logsClient.getContainerLogStream(id, logFilters);
-    }
-
-    @MessageMapping("/hello")
-    public void greeting(final String message) throws Exception {
-        System.out.println("Hello?");
-        messageSender.convertAndSend("/test/topic/hello", message);
     }
 }
