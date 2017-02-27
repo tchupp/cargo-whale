@@ -11,7 +11,12 @@ export class SidebarComponent implements OnInit {
 
     ngOnInit(): void {
         this.sidebarItems = [
-            {title: 'Dashboard', icon: 'dashboard', path: '/dashboard'},
-            {title: 'Containers', icon: 'list', path: '/containers', query: {state: 'all'}}];
+            {title: 'Dashboard', icon: 'tachometer', path: '/dashboard'},
+            {title: 'Containers', icon: 'server', path: '/containers'},
+            {title: 'Images', icon: 'clone', path: '/images'},
+            {title: 'Networks', icon: 'sitemap', path: '/networks'},
+            {title: 'Volumes', icon: 'cubes', path: '/volumes'},
+            {title: 'Events', icon: 'history', path: '/events'},
+            {title: 'Docker', icon: 'th', path: '/docker'}];
     }
 }
