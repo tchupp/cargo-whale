@@ -43,3 +43,7 @@ security:
     name: testuser
     password: testpass
     role: USER, ADMIN
+
+management:
+  security:
+    enabled: false

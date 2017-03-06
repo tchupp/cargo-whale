@@ -3,6 +3,7 @@ package com.cargowhale.division.matchers;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import static org.skyscreamer.jsonassert.JSONAssert.assertEquals;
@@ -31,7 +32,12 @@ public class JsonMatcher extends TypeSafeMatcher<String> {
 
     @Override
     public void describeTo(final Description description) {
-        description.appendValue(new JSONObject(this.expected).toString(2));
+        String jsonString = this.expected;
+        try {
+            jsonString = new JSONObject(this.expected).toString(2);
+        } catch (final JSONException ignored) {
+        }
+        description.appendValue(jsonString);
     }
 
     @Override
@@ -39,7 +45,12 @@ public class JsonMatcher extends TypeSafeMatcher<String> {
         if (actual == null) {
             super.describeMismatch(null, mismatch);
         } else {
-            mismatch.appendText("was ").appendValue(new JSONObject(actual).toString(2)).appendText("\n");
+            String jsonString = actual;
+            try {
+                jsonString = new JSONObject(actual).toString(2);
+            } catch (final JSONException ignored) {
+            }
+            mismatch.appendText("was ").appendValue(jsonString).appendText("\n");
         }
     }
 }
