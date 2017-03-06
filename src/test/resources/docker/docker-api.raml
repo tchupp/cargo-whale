@@ -92,7 +92,7 @@ title: Docker API
           application/json:
             example: !include examples/container-top.json
 
-/v1.24/containers/f911b0f4e0b19e3da3bae6dcff82195/logs?details=false&follow=false&stdout=true&stderr=true&timestamps=true&since=0&tail=100:
+/v1.24/containers/f911b0f4e0b19e3da3bae6dcff82195/logs?follow=false&stdout=true&stderr=true&timestamps=false&since=0&tail=100:
   get:
     responses:
       200:

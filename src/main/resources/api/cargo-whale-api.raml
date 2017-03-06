@@ -85,30 +85,20 @@ uses:
         get:
           description: Logs from a specific container
           queryParameters:
-            details:
-              type: boolean
-              description: Show extra details provided to logs
-              default: false
-              required: false
-            follow:
-              type: boolean
-              description: Return a stream
-              default: false
-              required: false
             stdout:
               type: boolean
               description: Show standard out log
-              default: true
+              default: false
               required: false
             stderr:
               type: boolean
               description: Show standard error log
-              default: true
+              default: false
               required: false
             timestamps:
               type: boolean
               description: Print timestamps for every log line
-              default: true
+              default: false
               required: false
             since:
               type: number
@@ -123,8 +113,8 @@ uses:
           responses:
             200:
               body:
-                application/hal+json:
-                  example: !include examples/container-logs.json
+                text/plain:
+                  example: !include examples/container-logs.txt
             401:
               body:
                 application/json:
