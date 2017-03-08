@@ -86,7 +86,7 @@ public class ContainerLogStream extends AbstractIterator<LogMessage> implements 
                         break;
                 }
             }
-        } catch (Throwable t) {
+        } catch (final Throwable t) {
             throw closer.rethrow(t);
         } finally {
             closer.close();
