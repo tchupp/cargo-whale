@@ -10,11 +10,10 @@ import java.lang.reflect.Field
 @Canonical
 class LogFilters implements QueryParameters {
 
-    Boolean details = false
     Boolean follow = false
-    Boolean stdout = true
-    Boolean stderr = true
-    Boolean timestamps = true
+    Boolean stdout = false
+    Boolean stderr = false
+    Boolean timestamps = false
     Integer since = 0
     String tail = '100'
 

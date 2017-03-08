@@ -3,6 +3,7 @@ package com.cargowhale.docker.config.docker;
 import com.cargowhale.docker.client.core.DockerErrorHandler;
 import com.cargowhale.docker.client.core.DockerRestTemplate;
 import com.cargowhale.docker.client.core.UnixComponentsClientHttpRequestFactory;
+import com.cargowhale.docker.client.logs.LogStreamMessageConverter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spotify.docker.client.ObjectMapperProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,15 +33,19 @@ public class DockerRestTemplateConfiguration {
 
     @Bean
     public DockerRestTemplate dockerRestTemplate() {
-        UnixComponentsClientHttpRequestFactory requestFactory = new UnixComponentsClientHttpRequestFactory(this.properties.getUri());
+        String rootUri = this.properties.getUri();
+
+        UnixComponentsClientHttpRequestFactory requestFactory = new UnixComponentsClientHttpRequestFactory(rootUri);
+        RootUriTemplateHandler uriTemplateHandler = new RootUriTemplateHandler(rootUri);
 
         List<HttpMessageConverter<?>> messageConverters = Arrays.asList(
             new MappingJackson2HttpMessageConverter(getDockerObjectMapper()),
+            new LogStreamMessageConverter(),
             new StringHttpMessageConverter()
         );
 
-        DockerRestTemplate restTemplate = new DockerRestTemplate(this.errorHandler, requestFactory, messageConverters);
-        RootUriTemplateHandler.addTo(restTemplate, this.properties.getUri());
+        DockerRestTemplate restTemplate = new DockerRestTemplate(this.errorHandler, requestFactory, messageConverters, uriTemplateHandler);
+        restTemplate.setUriTemplateHandler(uriTemplateHandler);
 
         return restTemplate;
     }
