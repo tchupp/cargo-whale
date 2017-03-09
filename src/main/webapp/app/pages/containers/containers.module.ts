@@ -9,6 +9,8 @@ import {ContainerDetailsComponent} from "./components/details/container-details.
 import {ContainerDetailsResolver} from "./components/details/container-details.resolver";
 import {ContainerConfigComponent} from "./components/details/components/config/container-config.component";
 import {ContainerEnvironmentComponent} from "./components/details/components/environment/environment.component";
+import {ContainerLogsComponent} from "./components/details/components/logs/container-logs.component";
+import {ContainerLogsService} from "./components/details/components/logs/container-logs.service";
 import {ContainerNetworkComponent} from "./components/details/components/networks/networks.component";
 import {ContainerIndexComponent} from "./components/index/container-index.component";
 import {ContainerIndexService} from "./components/index/container-index.service";
@@ -29,6 +31,7 @@ import {ContainerIndexResolver} from "./components/index/container-index.resolve
         ContainerDetailsComponent,
         ContainerIndexComponent,
         InfoItemComponent,
+        ContainerLogsComponent,
         ContainerConfigComponent,
         ContainerEnvironmentComponent,
         ContainerNetworkComponent
@@ -36,6 +39,7 @@ import {ContainerIndexResolver} from "./components/index/container-index.resolve
     providers: [
         ContainerDetailsService,
         ContainerDetailsResolver,
+        ContainerLogsService,
         ContainerIndexService,
         ContainerIndexResolver
     ],

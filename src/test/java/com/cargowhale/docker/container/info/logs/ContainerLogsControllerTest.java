@@ -1,5 +1,6 @@
 package com.cargowhale.docker.container.info.logs;
 
+import com.spotify.docker.client.LogStream;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -18,22 +19,45 @@ public class ContainerLogsControllerTest {
     private ContainerLogsController controller;
 
     @Mock
-    private ContainerLogsService logsService;
-
-    @Mock
-    private ContainerLogsResourceAssembler logsResourceAssembler;
+    private ContainerLogsClient logsClient;
 
     @Test
-    public void getContainerLogsById() {
+    public void getStdOutLogs_ReturnsLogsFromServiceWithStdOutTrue() {
         String containerId = "container id!";
         LogFilters filters = new LogFilters();
+        filters.setStdout(true);
 
-        ContainerLogs containerLogs = mock(ContainerLogs.class);
-        ContainerLogsResource containerLogsResource = mock(ContainerLogsResource.class);
+        LogStream containerLogs = mock(LogStream.class);
 
-        when(this.logsService.getContainerLogsById(containerId, filters)).thenReturn(containerLogs);
-        when(this.logsResourceAssembler.toResource(containerLogs)).thenReturn(containerLogsResource);
+        when(this.logsClient.getContainerLogStream(containerId, filters)).thenReturn(containerLogs);
 
-        assertThat(this.controller.getContainerLogsById(containerId, filters), is(containerLogsResource));
+        assertThat(this.controller.getStdOutLogs(containerId, true), is(containerLogs));
+    }
+
+    @Test
+    public void getStdErrLogs_ReturnsLogsFromServiceWithStdErrTrue() {
+        String containerId = "container id!";
+        LogFilters filters = new LogFilters();
+        filters.setStderr(true);
+
+        LogStream containerLogs = mock(LogStream.class);
+
+        when(this.logsClient.getContainerLogStream(containerId, filters)).thenReturn(containerLogs);
+
+        assertThat(this.controller.getStdErrLogs(containerId, true), is(containerLogs));
+    }
+
+    @Test
+    public void getAllLogs_ReturnsLogsFromServiceWithBothStdOutAndStdErrTrue() {
+        String containerId = "container id!";
+        LogFilters filters = new LogFilters();
+        filters.setStdout(true);
+        filters.setStderr(true);
+
+        LogStream containerLogs = mock(LogStream.class);
+
+        when(this.logsClient.getContainerLogStream(containerId, filters)).thenReturn(containerLogs);
+
+        assertThat(this.controller.getAllLogs(containerId), is(containerLogs));
     }
 }
