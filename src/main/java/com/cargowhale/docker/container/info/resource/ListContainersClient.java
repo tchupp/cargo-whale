@@ -28,7 +28,7 @@ public class ListContainersClient {
         this.endpointBuilder = endpointBuilder;
     }
 
-    List<Container> listContainers(final ListContainersParam... params) {
+    public List<Container> listContainers(final ListContainersParam... params) {
         String listContainersEndpoint = this.endpointBuilder.getListContainersEndpoint();
 
         MultiValueMap<String, String> filters = new LinkedMultiValueMap<>();
