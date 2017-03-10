@@ -16,4 +16,8 @@ export class AuthTokenService {
     public storeToken(token: string) {
         this.localStorage.store(AuthTokenService.authTokenKey, token);
     }
+
+    public clearToken() {
+        this.localStorage.clear(AuthTokenService.authTokenKey);
+    }
 }

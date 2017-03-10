@@ -21,9 +21,7 @@ import java.util.Date;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static com.cargowhale.docker.test.integration.TestAuthenticationConstants.TEST_USER_PASS;
-import static com.cargowhale.docker.test.integration.TestAuthenticationConstants.TEST_USER_NAME_BAD;
-import static com.cargowhale.docker.test.integration.TestAuthenticationConstants.TEST_USER_NAME;
+import static com.cargowhale.docker.test.integration.TestAuthenticationConstants.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.lessThan;
@@ -46,7 +44,7 @@ public class AuthenticationControllerIT {
         ObjectMapper objectMapper = new ObjectMapper();
         UserCredentials userCredentials = new UserCredentials(TEST_USER_NAME, TEST_USER_PASS);
 
-        String expectedAuthorities = Stream.of(AuthoritiesConstants.ADMIN, AuthoritiesConstants.USER).collect(Collectors.joining(","));
+        String expectedAuthorities = Stream.of(AuthoritiesConstants.ACTUATOR, AuthoritiesConstants.ADMIN, AuthoritiesConstants.USER).collect(Collectors.joining(","));
         long expiration = (new Date()).getTime() + (this.properties.getTokenValidityInSeconds() * 1000);
 
         MockHttpServletRequestBuilder requestBuilder = post("/api/authenticate")

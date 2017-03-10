@@ -11,7 +11,6 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.converter.HttpMessageNotWritableException;
 import org.springframework.util.StreamUtils;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 public class LogStreamMessageConverter extends AbstractHttpMessageConverter<LogStream> {
@@ -27,9 +26,7 @@ public class LogStreamMessageConverter extends AbstractHttpMessageConverter<LogS
 
     @Override
     protected LogStream readInternal(final Class<? extends LogStream> clazz, final HttpInputMessage inputMessage) throws IOException, HttpMessageNotReadableException {
-        byte[] contentBuffer = StreamUtils.copyToByteArray(inputMessage.getBody());
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(contentBuffer);
-        LogReader logReader = new LogReader(inputStream);
+        LogReader logReader = new LogReader(inputMessage.getBody());
 
         return new ContainerLogStream(logReader);
     }

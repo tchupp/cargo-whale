@@ -2,6 +2,8 @@ package com.cargowhale.docker.config.security;
 
 public abstract class AuthoritiesConstants {
 
+    public static final String ACTUATOR = "ROLE_ACTUATOR";
+
     public static final String ADMIN = "ROLE_ADMIN";
 
     public static final String USER = "ROLE_USER";

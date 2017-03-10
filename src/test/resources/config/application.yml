@@ -22,6 +22,7 @@ server:
 cargowhale:
   docker:
     uri: http://fakehost:287331
+    enable-events: false
 
   security:
     jwt:
@@ -43,3 +44,7 @@ security:
     name: testuser
     password: testpass
     role: USER, ADMIN
+
+management:
+  security:
+    enabled: false
