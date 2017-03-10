@@ -6,7 +6,6 @@ import com.cargowhale.docker.container.info.resource.ListContainersParam;
 import com.spotify.docker.client.messages.Container;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 

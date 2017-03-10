@@ -3,14 +3,12 @@ package com.cargowhale.docker.container.info.logs;
 import com.cargowhale.docker.container.info.resource.ContainerState;
 import com.cargowhale.docker.container.info.resource.ListContainersClient;
 import com.cargowhale.docker.container.info.resource.ListContainersParam;
-import com.google.common.collect.Lists;
 import com.spotify.docker.client.messages.Container;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.mockito.verification.VerificationMode;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 
 import static com.google.common.collect.Lists.newArrayList;
