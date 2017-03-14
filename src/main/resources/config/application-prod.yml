@@ -19,6 +19,7 @@
 cargowhale:
   docker:
     uri: unix:///var/run/docker.sock
+    enable-log-tailing: true
 
   metrics:
     jvm:

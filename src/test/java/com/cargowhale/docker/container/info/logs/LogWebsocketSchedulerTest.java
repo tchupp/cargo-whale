@@ -30,7 +30,7 @@ public class LogWebsocketSchedulerTest {
     private LogWebsocketScheduler scheduler;
 
     @Test
-    public void scheduledTaskDoesNothingWhenNoRunningContainers() {
+    public void scheduledTaskDoesNothingWhenNoRunningContainers() throws Exception {
         when(this.listContainersClient.listContainers(ListContainersParam.state(ContainerState.RUNNING)))
             .thenReturn(newArrayList());
         this.scheduler.reportCurrentTime();
@@ -38,7 +38,7 @@ public class LogWebsocketSchedulerTest {
     }
 
     @Test
-    public void scheduledTaskSendsLogForOneRunningContainer() {
+    public void scheduledTaskSendsLogForOneRunningContainer() throws Exception{
         Container container = mock(Container.class);
         when(this.listContainersClient.listContainers(ListContainersParam.state(ContainerState.RUNNING)))
             .thenReturn(newArrayList(container));
@@ -48,7 +48,7 @@ public class LogWebsocketSchedulerTest {
     }
 
     @Test
-    public void scheduledTaskSendsLogsForManyRunningContainers(){
+    public void scheduledTaskSendsLogsForManyRunningContainers() throws Exception{
         Container container1 = mock(Container.class);
         Container container2 = mock(Container.class);
         when(this.listContainersClient.listContainers(ListContainersParam.state(ContainerState.RUNNING)))

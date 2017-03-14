@@ -7,6 +7,7 @@ public class DockerProperties {
 
     private String uri;
     private Boolean enableEvents;
+    private Boolean enableLogTailing;
 
     public String getUri() {
         return this.uri;
@@ -23,4 +24,8 @@ public class DockerProperties {
     public void setEnableEvents(final Boolean enableEvents) {
         this.enableEvents = enableEvents;
     }
+
+    public Boolean getEnableLogTailing() { return this.enableLogTailing; }
+
+    public void setEnableLogTailing(final Boolean enableLogTailing) { this.enableLogTailing = enableLogTailing; }
 }
