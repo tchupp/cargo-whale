@@ -1,6 +1,5 @@
 package com.cargowhale.docker.events;
 
-import com.cargowhale.docker.config.docker.DockerProperties;
 import io.reactivex.schedulers.Schedulers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -9,32 +8,30 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class EventRepositoryConfiguration {
+public class EventsRepositoryConfiguration {
 
-    private final EventClient client;
-    private final DockerProperties properties;
+    private final EventsClient client;
 
     @Autowired
-    public EventRepositoryConfiguration(final EventClient client, final DockerProperties properties) {
+    public EventsRepositoryConfiguration(final EventsClient client) {
         this.client = client;
-        this.properties = properties;
     }
 
     @Bean
     @ConditionalOnProperty(prefix = "cargowhale.docker", name = "enable-events", matchIfMissing = true)
-    public EventRepository eventRepository() {
-        EventRepository eventRepository = new EventRepository(Schedulers.io());
+    public EventsRepository eventRepository() {
+        EventsRepository eventsRepository = new EventsRepository(Schedulers.io());
 
         this.client.getEvents()
             .subscribeOn(Schedulers.io())
-            .subscribe(eventRepository::addEvent);
+            .subscribe(eventsRepository::addEvent);
 
-        return eventRepository;
+        return eventsRepository;
     }
 
     @Bean
-    @ConditionalOnMissingBean(EventRepository.class)
-    public EventRepository emptyEventRepository() {
-        return new EventRepository(Schedulers.io());
+    @ConditionalOnMissingBean(EventsRepository.class)
+    public EventsRepository emptyEventRepository() {
+        return new EventsRepository(Schedulers.io());
     }
 }

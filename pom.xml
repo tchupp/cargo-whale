@@ -33,6 +33,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <project.testresult.directory>${project.build.directory}/test-results</project.testresult.directory>
         <raml-parser.version>1.0.4</raml-parser.version>
+        <rxjava-spring-boot-starter.version>2.0.0</rxjava-spring-boot-starter.version>
         <rxjava.version>2.0.5</rxjava.version>
         <sortpom-maven-plugin.version>2.5.0</sortpom-maven-plugin.version>
     </properties>
@@ -86,6 +87,11 @@
             <groupId>io.dropwizard.metrics</groupId>
             <artifactId>metrics-jvm</artifactId>
             <version>${dropwizard-metrics.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.jmnarloch</groupId>
+            <artifactId>rxjava-spring-boot-starter</artifactId>
+            <version>${rxjava-spring-boot-starter.version}</version>
         </dependency>
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
