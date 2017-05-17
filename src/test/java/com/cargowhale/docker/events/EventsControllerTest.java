@@ -20,6 +20,7 @@ import static com.cargowhale.docker.test.ControllerTestUtils.toJsonString;
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Matchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.asyncDispatch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -36,15 +37,20 @@ public class EventsControllerTest {
     @MockBean
     private EventsRepository eventsRepository;
 
+    @MockBean
+    private EventsResourceProcessor eventsResourceProcessor;
+
     @Test
     public void getEvents_ReturnsListOfEventsPublishedBeforeRequest() throws Exception {
         ReplayProcessor<Event> publisher = ReplayProcessor.create();
         Event event1 = new Event(Event.Type.CONTAINER, "start", new Event.Actor("me!"));
-        Event event2 = new Event(Event.Type.NETWORK, "start", new Event.Actor("me!"));
+        Event event2 = new Event(Event.Type.NETWORK, "start", new Event.Actor("not me.."));
         Event event3 = new Event(Event.Type.NETWORK, "stop", new Event.Actor("me!"));
         Event event4 = new Event(Event.Type.CONTAINER, "stop", new Event.Actor("me!"));
+        EventsResource expectedResponse = new EventsResource(asList(event1, event2, event3));
 
         given(this.eventsRepository.getAllEvents()).willReturn(Flowable.fromPublisher(publisher));
+        given(this.eventsResourceProcessor.processPastEvents(any(EventsResource.class))).willReturn(expectedResponse);
 
         publisher.onNext(event1);
         publisher.onNext(event2);
@@ -57,7 +63,7 @@ public class EventsControllerTest {
 
         dispatch
             .andExpect(status().isOk())
-            .andExpect(content().json(toJsonString(asList(event1, event2, event3))));
+            .andExpect(content().string(toJsonString(expectedResponse)));
     }
 
     @Test
@@ -88,8 +94,10 @@ public class EventsControllerTest {
         ReplayProcessor<Event> publisher = ReplayProcessor.create();
         Event event1 = new Event(Event.Type.CONTAINER, "start", new Event.Actor("me!"));
         Event event2 = new Event(Event.Type.CONTAINER, "stop", new Event.Actor("me!"));
+        EventsResource expectedResponse = new EventsResource(singletonList(event1));
 
         given(this.eventsRepository.getEventsByType(Event.Type.CONTAINER)).willReturn(Flowable.fromPublisher(publisher));
+        given(this.eventsResourceProcessor.processPastContainerEvents(any(EventsResource.class))).willReturn(expectedResponse);
 
         publisher.onNext(event1);
 
@@ -100,7 +108,7 @@ public class EventsControllerTest {
 
         dispatch
             .andExpect(status().isOk())
-            .andExpect(content().json(toJsonString(singletonList(event1))));
+            .andExpect(content().string(toJsonString(expectedResponse)));
     }
 
     @Test
@@ -116,7 +124,6 @@ public class EventsControllerTest {
         ResultActions resultActions = this.mvc.perform(get("/api/events/container?follow=true").accept(MediaType.TEXT_EVENT_STREAM));
 
         publisher.onNext(event2);
-        publisher.onComplete();
 
         resultActions
             .andExpect(status().isOk())

@@ -8,8 +8,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -37,8 +35,8 @@ public class EventsClientTest {
         when(this.eventsMapper.toEvent(spotifyEvent1)).thenReturn(domainEvent1);
         when(this.eventsMapper.toEvent(spotifyEvent2)).thenReturn(domainEvent2);
 
-        Flowable<Event> actual = this.client.getEvents();
-
-        assertThat(actual, is(Flowable.just(domainEvent1, domainEvent2)));
+        this.client.getEvents()
+            .test()
+            .assertResult(domainEvent1, domainEvent2);
     }
 }
