@@ -28,7 +28,7 @@ public class EventsResourceProcessorTest {
         EventsResource eventsResource = this.resourceProcessor.processPastEvents(new EventsResource(new ArrayList<>()));
 
         verifyLink(eventsResource, Link.REL_SELF, "/api/events");
-        verifyLink(eventsResource, "container", "/api/events/container");
+        verifyLink(eventsResource, "container", "/api/events/containers");
     }
 
     @Test
@@ -36,6 +36,6 @@ public class EventsResourceProcessorTest {
         EventsResource eventsResource = this.resourceProcessor.processPastContainerEvents(new EventsResource(new ArrayList<>()));
 
         verifyLink(eventsResource, "up", "/api/events");
-        verifyLink(eventsResource, Link.REL_SELF, "/api/events/container");
+        verifyLink(eventsResource, Link.REL_SELF, "/api/events/containers");
     }
 }

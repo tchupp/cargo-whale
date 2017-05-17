@@ -101,7 +101,7 @@ public class EventsControllerTest {
 
         publisher.onNext(event1);
 
-        MvcResult result = this.mvc.perform(get("/api/events/container").accept(MediaType.APPLICATION_JSON)).andReturn();
+        MvcResult result = this.mvc.perform(get("/api/events/containers").accept(MediaType.APPLICATION_JSON)).andReturn();
         ResultActions dispatch = this.mvc.perform(asyncDispatch(result));
 
         publisher.onNext(event2);
@@ -121,7 +121,7 @@ public class EventsControllerTest {
 
         publisher.onNext(event1);
 
-        ResultActions resultActions = this.mvc.perform(get("/api/events/container?follow=true").accept(MediaType.TEXT_EVENT_STREAM));
+        ResultActions resultActions = this.mvc.perform(get("/api/events/containers?follow=true").accept(MediaType.TEXT_EVENT_STREAM));
 
         publisher.onNext(event2);
 

@@ -1,0 +1,77 @@
+{
+  "events": [
+    {
+      "type": "container",
+      "action": "die",
+      "actor": {
+        "id": "0193ca8d75f79b7d6845e334ae6ef063783000e59d910e3d966a8d836533811a",
+        "attributes": {
+          "com.docker.compose.config-hash": "e6b75eaf38286673014e2ae2130cafb6bed0cc2018e6b89c7462eecc14bdc895",
+          "com.docker.compose.container-number": "1",
+          "com.docker.compose.oneoff": "False",
+          "com.docker.compose.project": "gitlabs",
+          "com.docker.compose.service": "gitlab",
+          "com.docker.compose.version": "1.11.2",
+          "exitCode": "255",
+          "image": "sameersbn/gitlab:8.16.3",
+          "name": "gitlabs_gitlab_1"
+        }
+      },
+      "time": 1494949292000
+    },
+    {
+      "type": "network",
+      "action": "connect",
+      "actor": {
+        "id": "fe071650fffb5dc3f6b1d2ba2b8c885daf0b73765df9d96e273fdb01bf922e7d",
+        "attributes": {
+          "container": "f4821330cac23c65eec9b3ee0f159e409520d558f2333013ae87426797920471",
+          "name": "gitlabs_default",
+          "type": "bridge"
+        }
+      },
+      "time": 1494949297000
+    },
+    {
+      "type": "volume",
+      "action": "mount",
+      "actor": {
+        "id": "f0e8ed0a4927546755ffa9547e241948f574f8890c572347ecc462666146771d",
+        "attributes": {
+          "container": "0193ca8d75f79b7d6845e334ae6ef063783000e59d910e3d966a8d836533811a",
+          "destination": "/var/log/gitlab",
+          "driver": "local",
+          "propagation": "",
+          "read/write": "true"
+        }
+      },
+      "time": 1494949298000
+    },
+    {
+      "type": "container",
+      "action": "start",
+      "actor": {
+        "id": "0193ca8d75f79b7d6845e334ae6ef063783000e59d910e3d966a8d836533811a",
+        "attributes": {
+          "com.docker.compose.config-hash": "e6b75eaf38286673014e2ae2130cafb6bed0cc2018e6b89c7462eecc14bdc895",
+          "com.docker.compose.container-number": "1",
+          "com.docker.compose.oneoff": "False",
+          "com.docker.compose.project": "gitlabs",
+          "com.docker.compose.service": "gitlab",
+          "com.docker.compose.version": "1.11.2",
+          "image": "sameersbn/gitlab:8.16.3",
+          "name": "gitlabs_gitlab_1"
+        }
+      },
+      "time": 1494949299000
+    }
+  ],
+  "_links": {
+    "self": {
+      "href": "http://localhost:8081/api/events"
+    },
+    "container": {
+      "href": "http://localhost:8081/api/events/container"
+    }
+  }
+}

@@ -17,7 +17,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
@@ -25,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.fail;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -42,7 +42,7 @@ public class DocumentationIT {
         RamlSpec ramlSpec = RamlSpecBuilder.fromRamlApi10(ramlModelResult, RamlSpecFiles.CARGO_WHALE_RAML_SPEC_FILE);
 
         ObjectMapper objectMapper = new ObjectMapper();
-        MvcResult mvcResult = this.client.perform(MockMvcRequestBuilders.get("/mappings")).andReturn();
+        MvcResult mvcResult = this.client.perform(get("/mappings")).andReturn();
 
         UserDefinedEndpoints userDefinedEndpoints = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), UserDefinedEndpoints.class);
 
@@ -64,7 +64,7 @@ public class DocumentationIT {
             for (final Map.Entry<String, List<HttpMethod>> endpoint : undocumentedEndpoints.entrySet()) {
                 for (final HttpMethod method : endpoint.getValue()) {
                     String path = endpoint.getKey();
-                    this.log.warn(String.format("Path : '%1s' with Method: '%2s' mapped in application but missing from RamlSpec: '%3s'", path, method, RamlSpecFiles.CARGO_WHALE_RAML_SPEC_FILE));
+                    this.log.error(String.format("Path : '%1s' with Method: '%2s' mapped in application but missing from RamlSpec: '%3s'", path, method, RamlSpecFiles.CARGO_WHALE_RAML_SPEC_FILE));
                 }
             }
 

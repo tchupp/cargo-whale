@@ -3,6 +3,7 @@ title: Cargo Whale API
 
 uses:
   Containers: libraries/containers.raml
+  Events: libraries/events.raml
   Authentication: libraries/authentication.raml
   Index: libraries/index.raml
 
@@ -132,3 +133,31 @@ uses:
               body:
                 application/json:
                   example: !include examples/unauthenticated.json
+
+  /events:
+    get:
+      description: Get all past events
+      queryParameters:
+        follow:
+          type: boolean
+          description: True to return server sent events stream
+          default: false
+          required: false
+      body:
+        application/json:
+          type:
+          example: !include examples/events-past.json
+
+  /events/containers:
+    get:
+      description: Get past events for containers
+      queryParameters:
+        follow:
+          type: boolean
+          description: True to return server sent events stream
+          default: false
+          required: false
+      body:
+        application/json:
+          type:
+          example: !include examples/events-past.json

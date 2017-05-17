@@ -46,7 +46,7 @@ public class EventsController {
         return new ObservableSseEmitter<>(60000L, MediaType.APPLICATION_JSON, eventObservable);
     }
 
-    @GetMapping(path = "/api/events/container")
+    @GetMapping(path = "/api/events/containers")
     public Single<EventsResource> getPastContainerEvents() {
         return this.eventsRepository
             .getEventsByType(CONTAINER)
@@ -57,7 +57,7 @@ public class EventsController {
             .map(this.resourceProcessor::processPastContainerEvents);
     }
 
-    @GetMapping(path = "/api/events/container", params = {"follow=true"})
+    @GetMapping(path = "/api/events/containers", params = {"follow=true"})
     public ObservableSseEmitter<Event> followContainerEvents() {
         Observable<Event> eventObservable = this.eventsRepository
             .getEventsByType(CONTAINER)
