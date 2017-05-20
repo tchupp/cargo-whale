@@ -1,0 +1,26 @@
+#%RAML 1.0 Library
+
+types:
+  Link: !include ../types/link.raml
+
+  Event:
+    properties:
+      type: string
+      action: string
+      time: number
+      actor:
+        type: object
+        properties:
+          id: string
+          attributes:
+            type: object
+            properties:
+              //?: string
+
+  Events:
+    properties:
+      events: Event[]
+
+      _links:
+        properties:
+          containers: Link

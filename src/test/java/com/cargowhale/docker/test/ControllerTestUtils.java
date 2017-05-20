@@ -1,5 +1,7 @@
 package com.cargowhale.docker.test;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.Matchers;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.ResourceSupport;
@@ -15,6 +17,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class ControllerTestUtils {
+
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     public static void setupMockRequestContextHolder() {
         String localHost = "http://localhost";
@@ -34,5 +38,9 @@ public class ControllerTestUtils {
         assertThat(containerIndex.hasLink(rel), is(true));
         Link upLink = containerIndex.getLink(rel);
         assertThat(upLink.getHref(), Matchers.endsWith(path));
+    }
+
+    public static String toJsonString(final Object obj) throws JsonProcessingException {
+        return OBJECT_MAPPER.writeValueAsString(obj);
     }
 }
