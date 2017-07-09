@@ -35,31 +35,23 @@ public class EventsControllerTest {
     private MockMvc mvc;
 
     @MockBean
-    private EventsRepository eventsRepository;
+    private EventsService eventsService;
 
     @MockBean
     private EventsResourceProcessor eventsResourceProcessor;
 
     @Test
     public void getEvents_ReturnsListOfEventsPublishedBeforeRequest() throws Exception {
-        ReplayProcessor<Event> publisher = ReplayProcessor.create();
         Event event1 = new Event(Event.Type.CONTAINER, "start", new Event.Actor("me!"));
         Event event2 = new Event(Event.Type.NETWORK, "start", new Event.Actor("not me.."));
         Event event3 = new Event(Event.Type.NETWORK, "stop", new Event.Actor("me!"));
-        Event event4 = new Event(Event.Type.CONTAINER, "stop", new Event.Actor("me!"));
         EventsResource expectedResponse = new EventsResource(asList(event1, event2, event3));
 
-        given(this.eventsRepository.getAllEvents()).willReturn(Flowable.fromPublisher(publisher));
+        given(this.eventsService.getPastEvents()).willReturn(Flowable.fromArray(event1, event2, event3));
         given(this.eventsResourceProcessor.processPastEvents(any(EventsResource.class))).willReturn(expectedResponse);
-
-        publisher.onNext(event1);
-        publisher.onNext(event2);
-        publisher.onNext(event3);
 
         MvcResult result = this.mvc.perform(get("/api/events").accept(MediaType.APPLICATION_JSON)).andReturn();
         ResultActions dispatch = this.mvc.perform(asyncDispatch(result));
-
-        publisher.onNext(event4);
 
         dispatch
             .andExpect(status().isOk())
@@ -74,7 +66,7 @@ public class EventsControllerTest {
         Event event3 = new Event(Event.Type.NETWORK, "stop", new Event.Actor("me!"));
         Event event4 = new Event(Event.Type.CONTAINER, "stop", new Event.Actor("me!"));
 
-        given(this.eventsRepository.getAllEvents()).willReturn(Flowable.fromPublisher(publisher));
+        given(this.eventsService.getNewEvents()).willReturn(Flowable.fromPublisher(publisher));
 
         publisher.onNext(event1);
         publisher.onNext(event2);
@@ -91,20 +83,14 @@ public class EventsControllerTest {
 
     @Test
     public void getContainerEvents_ReturnsListOfContainerEventsPublishedBeforeRequest() throws Exception {
-        ReplayProcessor<Event> publisher = ReplayProcessor.create();
         Event event1 = new Event(Event.Type.CONTAINER, "start", new Event.Actor("me!"));
-        Event event2 = new Event(Event.Type.CONTAINER, "stop", new Event.Actor("me!"));
         EventsResource expectedResponse = new EventsResource(singletonList(event1));
 
-        given(this.eventsRepository.getEventsByType(Event.Type.CONTAINER)).willReturn(Flowable.fromPublisher(publisher));
+        given(this.eventsService.getPastEventsByType(Event.Type.CONTAINER)).willReturn(Flowable.fromArray(event1));
         given(this.eventsResourceProcessor.processPastContainerEvents(any(EventsResource.class))).willReturn(expectedResponse);
-
-        publisher.onNext(event1);
 
         MvcResult result = this.mvc.perform(get("/api/events/containers").accept(MediaType.APPLICATION_JSON)).andReturn();
         ResultActions dispatch = this.mvc.perform(asyncDispatch(result));
-
-        publisher.onNext(event2);
 
         dispatch
             .andExpect(status().isOk())
@@ -117,7 +103,7 @@ public class EventsControllerTest {
         Event event1 = new Event(Event.Type.CONTAINER, "start", new Event.Actor("me!"));
         Event event2 = new Event(Event.Type.CONTAINER, "stop", new Event.Actor("me!"));
 
-        given(this.eventsRepository.getEventsByType(Event.Type.CONTAINER)).willReturn(Flowable.fromPublisher(publisher));
+        given(this.eventsService.getNewEventsByType(Event.Type.CONTAINER)).willReturn(Flowable.fromPublisher(publisher));
 
         publisher.onNext(event1);
 

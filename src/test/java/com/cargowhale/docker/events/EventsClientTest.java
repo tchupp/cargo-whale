@@ -24,7 +24,7 @@ public class EventsClientTest {
     private EventsClient client;
 
     @Test
-    public void getEventsReturnsObservableEvents_NoParams() throws Exception {
+    public void getAllEvents_ReturnsObservableEvents_NoParams() throws Exception {
         Event domainEvent1 = mock(Event.class);
         Event domainEvent2 = mock(Event.class);
 
@@ -35,7 +35,24 @@ public class EventsClientTest {
         when(this.eventsMapper.toEvent(spotifyEvent1)).thenReturn(domainEvent1);
         when(this.eventsMapper.toEvent(spotifyEvent2)).thenReturn(domainEvent2);
 
-        this.client.getEvents()
+        this.client.getAllEvents()
+            .test()
+            .assertResult(domainEvent1, domainEvent2);
+    }
+
+    @Test
+    public void getNewEvents_ReturnsObservableEvents_NoParams() throws Exception {
+        Event domainEvent1 = mock(Event.class);
+        Event domainEvent2 = mock(Event.class);
+
+        com.spotify.docker.client.messages.Event spotifyEvent1 = mock(com.spotify.docker.client.messages.Event.class);
+        com.spotify.docker.client.messages.Event spotifyEvent2 = mock(com.spotify.docker.client.messages.Event.class);
+
+        when(this.restTemplate.getForEventStream("/v1.26/events")).thenReturn(Flowable.just(spotifyEvent1, spotifyEvent2));
+        when(this.eventsMapper.toEvent(spotifyEvent1)).thenReturn(domainEvent1);
+        when(this.eventsMapper.toEvent(spotifyEvent2)).thenReturn(domainEvent2);
+
+        this.client.getNewEvents()
             .test()
             .assertResult(domainEvent1, domainEvent2);
     }

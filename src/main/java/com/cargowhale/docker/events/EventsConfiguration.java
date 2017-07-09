@@ -8,21 +8,21 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class EventsRepositoryConfiguration {
+public class EventsConfiguration {
 
     private final EventsClient client;
 
     @Autowired
-    public EventsRepositoryConfiguration(final EventsClient client) {
+    public EventsConfiguration(final EventsClient client) {
         this.client = client;
     }
 
     @Bean
     @ConditionalOnProperty(prefix = "cargowhale.docker", name = "enable-events", matchIfMissing = true)
     public EventsRepository eventRepository() {
-        EventsRepository eventsRepository = new EventsRepository(Schedulers.io());
+        EventsRepository eventsRepository = new EventsRepository();
 
-        this.client.getEvents()
+        this.client.getAllEvents()
             .subscribeOn(Schedulers.io())
             .subscribe(eventsRepository::addEvent);
 
@@ -32,6 +32,11 @@ public class EventsRepositoryConfiguration {
     @Bean
     @ConditionalOnMissingBean(EventsRepository.class)
     public EventsRepository emptyEventRepository() {
-        return new EventsRepository(Schedulers.io());
+        return new EventsRepository();
+    }
+
+    @Bean
+    public EventsService eventsService(final EventsClient eventClient, final EventsRepository eventRepository) {
+        return new EventsService(eventClient, eventRepository, Schedulers.io());
     }
 }
