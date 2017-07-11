@@ -50,9 +50,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/vendor/**");
     }
 
-    // @formatter:off
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
+        // @formatter:off
         http
             .addFilterBefore(corsFilter(), UsernamePasswordAuthenticationFilter.class)
             .exceptionHandling()
@@ -72,8 +72,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/api/**").authenticated()
         .and()
             .apply(securityConfigurerAdapter());
+        // @formatter:on
     }
-    // @formatter:on
 
     private JWTConfiguration securityConfigurerAdapter() {
         return new JWTConfiguration(this.tokenProvider);

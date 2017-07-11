@@ -2,16 +2,12 @@ package com.cargowhale.docker.events;
 
 import com.cargowhale.docker.rx.RequestAttributesAwareSingleObserver;
 import io.jmnarloch.spring.boot.rxjava.async.ObservableSseEmitter;
-import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.SingleOperator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import static com.cargowhale.docker.events.Event.Type.CONTAINER;
 
@@ -38,11 +34,9 @@ public class EventsController {
     }
 
     @GetMapping(path = "/api/events", params = {"follow=true"})
-    public ObservableSseEmitter<List<Event>> followEvents() {
-        Observable<List<Event>> eventObservable = this.eventsService
+    public ObservableSseEmitter<Event> followEvents() {
+        Observable<Event> eventObservable = this.eventsService
             .getNewEvents()
-            .window(5, TimeUnit.SECONDS)
-            .flatMapSingle(Flowable::toList)
             .toObservable();
 
         return new ObservableSseEmitter<>(eventObservable);
@@ -59,11 +53,9 @@ public class EventsController {
     }
 
     @GetMapping(path = "/api/events/containers", params = {"follow=true"})
-    public ObservableSseEmitter<List<Event>> followContainerEvents() {
-        Observable<List<Event>> eventObservable = this.eventsService
+    public ObservableSseEmitter<Event> followContainerEvents() {
+        Observable<Event> eventObservable = this.eventsService
             .getNewEventsByType(CONTAINER)
-            .window(5, TimeUnit.SECONDS)
-            .flatMapSingle(Flowable::toList)
             .toObservable();
 
         return new ObservableSseEmitter<>(eventObservable);
