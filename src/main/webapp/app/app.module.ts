@@ -1,4 +1,4 @@
-import {NgModule, CUSTOM_ELEMENTS_SCHEMA} from "@angular/core";
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from "@angular/core";
 import {BrowserModule} from "@angular/platform-browser";
 import {HttpModule} from "@angular/http";
 
@@ -7,6 +7,7 @@ import {LayoutsModule} from "./shared/layouts";
 import {AppComponent} from "./app.component";
 import {AuthModule} from "./shared/auth";
 import {httpProvider} from "./http/http.provider";
+import {Sse} from "./sse/sse.service";
 
 @NgModule({
     imports: [
@@ -20,7 +21,8 @@ import {httpProvider} from "./http/http.provider";
         AppComponent
     ],
     providers: [
-        httpProvider()
+        httpProvider(),
+        Sse
     ],
     bootstrap: [AppComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]

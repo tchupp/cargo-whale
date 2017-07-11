@@ -190,8 +190,10 @@ gulp.task('eslint:fix', function () {
 
 gulp.task('tslint', function () {
     return gulp.src('app/**/*.ts')
-        .pipe(tslint())
-        .pipe(tslint.report('verbose'));
+        .pipe(tslint({
+            formatter: "verbose"
+        }))
+        .pipe(tslint.report())
 });
 
 
