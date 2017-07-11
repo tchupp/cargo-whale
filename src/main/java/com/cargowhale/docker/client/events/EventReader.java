@@ -1,8 +1,8 @@
 package com.cargowhale.docker.client.events;
 
+import com.cargowhale.docker.events.Event;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
-import com.spotify.docker.client.messages.Event;
 import org.springframework.http.client.ClientHttpResponse;
 
 import java.io.Closeable;

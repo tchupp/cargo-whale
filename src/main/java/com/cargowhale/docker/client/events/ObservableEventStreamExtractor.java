@@ -1,11 +1,13 @@
 package com.cargowhale.docker.client.events;
 
+import com.cargowhale.docker.events.Event;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spotify.docker.client.ObjectMapperProvider;
-import com.spotify.docker.client.messages.Event;
-import io.reactivex.Emitter;
+import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.web.client.ResponseExtractor;
 
@@ -13,19 +15,24 @@ import java.io.IOException;
 
 public class ObservableEventStreamExtractor implements ResponseExtractor<Flowable<Event>> {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(ObservableEventStreamExtractor.class);
+
     @Override
     public Flowable<Event> extractData(final ClientHttpResponse response) throws IOException {
-        EventReader eventReader = new EventReader(response, getDockerJsonFactory());
+        return Flowable.create(subscriber -> {
+            try (EventReader eventReader = new EventReader(response, getDockerJsonFactory())) {
+                while (!subscriber.isCancelled()) {
+                    Event event = eventReader.nextMessage();
 
-        return Flowable.generate((Emitter<Event> emitter) -> {
-            Event event = eventReader.nextMessage();
-
-            if (event == null) {
-                emitter.onComplete();
-            } else {
-                emitter.onNext(event);
+                    if (event == null) {
+                        subscriber.onComplete();
+                        break;
+                    } else {
+                        subscriber.onNext(event);
+                    }
+                }
             }
-        }).doOnError(__ -> eventReader.close());
+        }, BackpressureStrategy.BUFFER);
     }
 
     private static JsonFactory getDockerJsonFactory() {

@@ -5,12 +5,10 @@ import io.reactivex.Scheduler;
 
 public class EventsService {
 
-    private final EventsClient eventsClient;
     private final EventsRepository eventsRepository;
     private final Scheduler scheduler;
 
-    public EventsService(final EventsClient eventsClient, final EventsRepository eventsRepository, final Scheduler scheduler) {
-        this.eventsClient = eventsClient;
+    public EventsService(final EventsRepository eventsRepository, final Scheduler scheduler) {
         this.eventsRepository = eventsRepository;
         this.scheduler = scheduler;
     }
@@ -20,7 +18,7 @@ public class EventsService {
     }
 
     Flowable<Event> getNewEvents() {
-        return this.eventsClient.getNewEvents()
+        return this.eventsRepository.getNewEvents()
             .subscribeOn(this.scheduler);
     }
 
@@ -30,7 +28,7 @@ public class EventsService {
     }
 
     Flowable<Event> getNewEventsByType(final Event.Type type) {
-        return this.eventsClient.getNewEvents()
+        return this.eventsRepository.getNewEvents()
             .subscribeOn(this.scheduler)
             .filter(event -> event.getType().equals(type));
     }

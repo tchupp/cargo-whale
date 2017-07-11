@@ -2,12 +2,25 @@ package com.cargowhale.docker.events
 
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonInclude
+import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonValue
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize
+import com.spotify.docker.client.jackson.UnixTimestampDeserializer
 import groovy.transform.Canonical
 
 @Canonical
 @JsonInclude(JsonInclude.Include.NON_NULL)
 class Event {
+
+    @JsonCreator
+    static Event build(
+        @JsonProperty("Type") final Type type,
+        @JsonProperty("Action") final String action,
+        @JsonProperty("Actor") final Actor actor,
+        @JsonProperty("time")
+        @JsonDeserialize(using = UnixTimestampDeserializer.class) final Date time) {
+        new Event(type, action, actor, time)
+    }
 
     Type type
     String action
@@ -27,7 +40,9 @@ class Event {
         IMAGE("image"),
         VOLUME("volume"),
         NETWORK("network"),
-        DAEMON("daemon")
+        DAEMON("daemon"),
+        NODE("node"),
+        SERVICE("service")
 
         private final String name
 

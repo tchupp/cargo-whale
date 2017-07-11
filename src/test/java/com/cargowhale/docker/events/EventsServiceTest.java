@@ -28,7 +28,7 @@ public class EventsServiceTest {
 
     @Before
     public void setUp() throws Exception {
-        this.eventsService = new EventsService(this.eventsClient, this.eventsRepository, Schedulers.trampoline());
+        this.eventsService = new EventsService(this.eventsRepository, Schedulers.trampoline());
     }
 
     @Test
@@ -56,7 +56,7 @@ public class EventsServiceTest {
         Event newEvent1 = new Event(Event.Type.IMAGE, "", null, Date.from(futureTime));
         Event newEvent2 = new Event(Event.Type.NETWORK, "", null, Date.from(futureTime));
 
-        when(this.eventsClient.getNewEvents()).thenReturn(Flowable.fromPublisher(publisher));
+        when(this.eventsRepository.getNewEvents()).thenReturn(Flowable.fromPublisher(publisher));
 
         TestSubscriber<Event> testSubscriber = this.eventsService.getNewEvents().test();
 
@@ -105,7 +105,7 @@ public class EventsServiceTest {
         Event newEvent1 = new Event(Event.Type.IMAGE, "", null, Date.from(pastTime));
         Event newEvent2 = new Event(correctEventType, "", null, Date.from(futureTime));
 
-        when(this.eventsClient.getNewEvents()).thenReturn(Flowable.fromPublisher(publisher));
+        when(this.eventsRepository.getNewEvents()).thenReturn(Flowable.fromPublisher(publisher));
 
         TestSubscriber<Event> testSubscriber = this.eventsService.getNewEventsByType(correctEventType).test();
 

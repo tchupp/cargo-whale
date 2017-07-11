@@ -36,7 +36,7 @@ public class EventsConfiguration {
     }
 
     @Bean
-    public EventsService eventsService(final EventsClient eventClient, final EventsRepository eventRepository) {
-        return new EventsService(eventClient, eventRepository, Schedulers.io());
+    public EventsService eventsService(final EventsRepository eventRepository) {
+        return new EventsService(eventRepository, Schedulers.io());
     }
 }

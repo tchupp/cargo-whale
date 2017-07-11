@@ -1,7 +1,7 @@
 package com.cargowhale.docker.client.core;
 
 import com.cargowhale.docker.client.events.ObservableEventStreamExtractor;
-import com.spotify.docker.client.messages.Event;
+import com.cargowhale.docker.events.Event;
 import io.reactivex.Flowable;
 import org.springframework.boot.web.client.RootUriTemplateHandler;
 import org.springframework.core.ParameterizedTypeReference;
