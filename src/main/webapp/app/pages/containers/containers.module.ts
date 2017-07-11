@@ -1,4 +1,4 @@
-import {NgModule, CUSTOM_ELEMENTS_SCHEMA} from "@angular/core";
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {RouterModule} from "@angular/router";
 
@@ -18,12 +18,14 @@ import {InfoItemComponent} from "./components/info-item/info-item.component";
 import {LayoutsModule} from "../../shared/layouts";
 import {PipesModule} from "../../shared/pipes";
 import {ContainerIndexResolver} from "./components/index/container-index.resolver";
+import {EventsModule} from "../../shared/events/events.module";
 
 @NgModule({
     imports: [
         CommonModule,
         LayoutsModule,
         PipesModule,
+        EventsModule,
         RouterModule.forChild([containersRoute])
     ],
     declarations: [

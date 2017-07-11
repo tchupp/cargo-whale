@@ -11,10 +11,8 @@ export class ContainerIndexService {
 
     getContainerIndexLinks(): Observable<ContainerIndexLinks> {
         return this.http.get("/api/containers")
-            .map((res: Response) => {
-                const containerIndex: ContainerIndex = res.json();
-                return containerIndex._links;
-            })
+            .map(res => res.json())
+            .map(containerIndex => containerIndex._links)
             .catch((res: Response) => Observable.throw(res.toString()));
     }
 
