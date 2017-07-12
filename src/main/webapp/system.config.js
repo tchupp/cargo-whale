@@ -13,6 +13,7 @@
         'main': 'app.main',
         '@ng-bootstrap': 'vendor/@ng-bootstrap',
         'jquery': 'vendor/jquery/dist',
+        'event-source': 'vendor/event-source',
         'ng2-webstorage': 'vendor/ng2-webstorage',
         'ts-md5': 'vendor/ts-md5',
         // app barrels
@@ -31,6 +32,7 @@
         '@ng-bootstrap/ng-bootstrap': {main: '/bundles/ng-bootstrap', defaultExtension: 'js'},
         'ui-router-ng2': {},
         'jquery': {main: 'jquery.min', defaultExtension: 'js'},
+        'event-source': {main: 'eventsource.js', defaultExtension: 'js'},
         'ng2-webstorage': {main: 'bundles/core.umd.js', defaultExtension: 'js'},
         'ts-md5': {main: 'dist/md5.js', defaultExtension: 'js'},
         // app barrels

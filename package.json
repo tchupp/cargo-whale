@@ -18,7 +18,7 @@
     "@angular/router": "3.4.2",
     "@ng-bootstrap/ng-bootstrap": "1.0.0-alpha.7",
     "core-js": "2.4.1",
-    "eventsource": "^1.0.2",
+    "event-source": "git://github.com/AlexGalays/EventSource.git#923b9a0998fcfd7753040e09aa83764b3cc0230d",
     "jquery": "^3.2.1",
     "ng2-webstorage": "^1.8.0",
     "reflect-metadata": "^0.1.10",

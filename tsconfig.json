@@ -9,6 +9,7 @@
     "removeComments": false,
     "noImplicitAny": false,
     "suppressImplicitAnyIndexErrors": true,
+    "allowSyntheticDefaultImports": true,
     "outDir": "target/www/app",
     "lib": [
       "es6",
