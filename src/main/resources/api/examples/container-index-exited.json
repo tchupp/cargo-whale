@@ -65,12 +65,12 @@
           "paused": false,
           "restarting": false,
           "exitCode": 0,
-          "startedAt": 1484444960837,
+          "startedAt": "2017-01-15T01:49:20Z",
           "pid": 10494,
           "state": "running",
           "error": "",
           "status": "Exited (0) 4 minutes ago",
-          "finishedAt": 1484099846490
+          "finishedAt": "2017-01-11T01:57:26Z"
         },
         "id": "f911b0f4e0b19e3da3bae6dcff82195",
         "config": {

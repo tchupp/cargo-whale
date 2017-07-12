@@ -46,12 +46,12 @@
     "paused": false,
     "restarting": false,
     "exitCode": 0,
-    "startedAt": 1484444960837,
+    "startedAt": "2017-01-15T01:49:20Z",
     "pid": 10494,
     "state": "running",
     "error": "",
     "status": "Up 2 days",
-    "finishedAt": 1484099846490
+    "finishedAt": "2017-01-11T01:57:26Z"
   },
   "config": {
     "attachStderr": false,

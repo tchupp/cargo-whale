@@ -48,12 +48,12 @@
           "paused": false,
           "restarting": false,
           "exitCode": 0,
-          "startedAt": -62135769600000,
+          "startedAt": "0001-01-01T00:00:00Z",
           "pid": 0,
           "state": "created",
           "error": "",
           "status": "Created",
-          "finishedAt": -62135769600000
+          "finishedAt": "0001-01-01T00:00:00Z"
         },
         "id": "92c23fc9e379630e6f9a17b19e3da3b",
         "config": {
@@ -135,12 +135,12 @@
           "paused": false,
           "restarting": false,
           "exitCode": 137,
-          "startedAt": 1483935267421,
+          "startedAt": "2017-01-09T04:14:27Z",
           "pid": 0,
           "state": "exited",
           "error": "",
           "status": "Exited (137) 8 days ago",
-          "finishedAt": 1483935439963
+          "finishedAt": "2017-01-09T04:17:19Z"
         },
         "id": "270f2e51eed51e3c5d5d6b13cdd18d5",
         "config": {
@@ -236,12 +236,12 @@
           "paused": false,
           "restarting": false,
           "exitCode": 0,
-          "startedAt": 1484444960837,
+          "startedAt": "2017-01-15T01:49:20Z",
           "pid": 10494,
           "state": "running",
           "error": "",
           "status": "Up 2 days",
-          "finishedAt": 1484099846490
+          "finishedAt": "2017-01-11T01:57:26Z"
         },
         "id": "f911b0f4e0b19e3da3bae6dcff82195",
         "config": {

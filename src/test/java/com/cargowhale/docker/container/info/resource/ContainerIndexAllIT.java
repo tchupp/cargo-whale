@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class ContainerIndexAllIT {
 
-    private static final String CONATINER_INDEX_ENDPOINT = "/api/containers";
+    private static final String CONTAINER_INDEX_ENDPOINT = "/api/containers";
 
     @Autowired
     private MockMvc client;
@@ -39,16 +39,16 @@ public class ContainerIndexAllIT {
         this.dockerServiceBuilder.expectRequest("/v1.24/containers/270f2e51eed51e3c5d5d6b13cdd18d5/json", HttpMethod.GET, HttpStatus.OK, MediaType.APPLICATION_JSON);
         this.dockerServiceBuilder.expectRequest("/v1.24/containers/f911b0f4e0b19e3da3bae6dcff82195/json", HttpMethod.GET, HttpStatus.OK, MediaType.APPLICATION_JSON);
 
-        this.client.perform(get(CONATINER_INDEX_ENDPOINT).with(TEST_USER_AUTH))
+        this.client.perform(get(CONTAINER_INDEX_ENDPOINT).with(TEST_USER_AUTH))
             .andExpect(responseIsInSpec(RamlSpecFiles.CARGO_WHALE_RAML_SPEC_FILE)
-                .with(CONATINER_INDEX_ENDPOINT, HttpMethod.GET, HttpStatus.OK, MediaTypes.HAL_JSON, "all"));
+                .with(CONTAINER_INDEX_ENDPOINT, HttpMethod.GET, HttpStatus.OK, MediaTypes.HAL_JSON, "all"));
 
         this.dockerServiceBuilder.reset();
     }
 
     @Test
     public void getContainerIndex_NoAuthentication() throws Exception {
-        this.client.perform(get(CONATINER_INDEX_ENDPOINT))
+        this.client.perform(get(CONTAINER_INDEX_ENDPOINT))
             .andExpect(status().isUnauthorized());
     }
 }
