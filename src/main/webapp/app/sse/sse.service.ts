@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs/Rx";
 import {AuthTokenService} from "../shared/auth/auth-token.service";
-import EventSource from "event-source";
+import EventSource from "./event-source.local";
 
 @Injectable()
 export class Sse {

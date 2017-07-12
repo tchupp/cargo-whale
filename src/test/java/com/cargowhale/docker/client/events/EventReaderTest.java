@@ -1,9 +1,9 @@
 package com.cargowhale.docker.client.events;
 
+import com.cargowhale.docker.events.Event;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
-import com.spotify.docker.client.messages.Event;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -31,7 +31,7 @@ public class EventReaderTest {
     private EventReader eventReader;
 
     @Test
-    public void nextMessageReturnsValueAsEvent() throws Exception {
+    public void nextMessage_ReturnsValueAsEvent() throws Exception {
         Event event = mock(Event.class);
         JsonParser jsonParser = mock(JsonParser.class);
         InputStream inputStream = mock(InputStream.class);
@@ -46,7 +46,7 @@ public class EventReaderTest {
     }
 
     @Test
-    public void nextMessageReturnsNull_IfParserIsClosed() throws Exception {
+    public void nextMessage_ReturnsNull_IfParserIsClosed() throws Exception {
         Event event = mock(Event.class);
         JsonParser jsonParser = mock(JsonParser.class);
         InputStream inputStream = mock(InputStream.class);
@@ -60,7 +60,7 @@ public class EventReaderTest {
     }
 
     @Test
-    public void nextMessageCallsIsClosedOnParser() throws Exception {
+    public void nextMessage_CallsIsClosedOnParser() throws Exception {
         JsonParser jsonParser = mock(JsonParser.class);
         InputStream inputStream = mock(InputStream.class);
 
@@ -73,7 +73,7 @@ public class EventReaderTest {
     }
 
     @Test
-    public void nextMessageCachesParserForFutureCalls() throws Exception {
+    public void nextMessage_CachesParserForFutureCalls() throws Exception {
         JsonParser jsonParser = mock(JsonParser.class);
         InputStream inputStream = mock(InputStream.class);
 
@@ -87,7 +87,7 @@ public class EventReaderTest {
     }
 
     @Test
-    public void nextMessageReturnsNull_IfParserDoesNotHaveNextToken() throws Exception {
+    public void nextMessage_ReturnsNull_IfParserDoesNotHaveNextToken() throws Exception {
         Event event = mock(Event.class);
         JsonParser jsonParser = mock(JsonParser.class);
         InputStream inputStream = mock(InputStream.class);
