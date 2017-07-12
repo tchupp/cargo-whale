@@ -1,9 +1,10 @@
-import {Component, OnInit, OnDestroy} from "@angular/core";
+import {ChangeDetectorRef, Component, OnDestroy, OnInit} from "@angular/core";
 import {ActivatedRoute, Params} from "@angular/router";
-import {Subscription} from "rxjs/Rx";
-import {ContainerIndex, StateMetadata, ContainerIndexEmbedded, ContainerIndexLinks} from "./container-index.model";
+import {Observable, Subscription} from "rxjs/Rx";
+import {ContainerIndex, ContainerIndexEmbedded, ContainerIndexLinks, StateMetadata} from "./container-index.model";
 import {ContainerIndexService} from "./container-index.service";
 import {Container} from "../container.model";
+import {EventsService} from "../../../../shared/events/events.service";
 
 @Component({
     selector: 'cw-container-list',
@@ -16,33 +17,36 @@ export class ContainerIndexComponent implements OnInit, OnDestroy {
     private subscription: Subscription;
     private loading: boolean = true;
 
-    constructor(private route: ActivatedRoute, private containerIndexService: ContainerIndexService) {
+    constructor(private route: ActivatedRoute,
+                private containerIndexService: ContainerIndexService,
+                private eventsService: EventsService,
+                private changeDetector: ChangeDetectorRef) {
     }
 
     ngOnInit(): void {
         const links: ContainerIndexLinks = this.route.snapshot.data['containerIndexLinks'];
 
-        this.subscription = this.route.queryParams.subscribe((query: Params) => {
-            this.loading = true;
+        this.subscription = Observable.combineLatest(
+            this.route.queryParams,
+            this.eventsService.followContainerEvents()
+                .startWith({})
+        )
+            .map(latest => latest[0])
+            .do(() => this.loading = true)
+            .map((query: Params) => query['state'] || 'all')
+            .mergeMap((state: string) => this.containerIndexService.follow(links, state))
+            .do(() => this.loading = false)
+            .subscribe((containerIndex: ContainerIndex) => {
+                this.stateMetadata = containerIndex.stateMetadata;
+                this.containers = (containerIndex._embedded || new ContainerIndexEmbedded()).containers;
 
-            const state = query['state'] || 'all';
-            this.getContainerIndex(links, state);
-        });
+                this.changeDetector.detectChanges();
+            }, (error: any) => {
+                console.error(error);
+            });
     }
 
     ngOnDestroy(): void {
         this.subscription.unsubscribe();
-    }
-
-    private getContainerIndex(links: ContainerIndexLinks, state: string) {
-        this.containerIndexService.follow(links, state).subscribe((containerIndex: ContainerIndex) => {
-            const embedded = containerIndex._embedded || new ContainerIndexEmbedded();
-
-            this.containers = embedded.containers;
-            this.stateMetadata = containerIndex.stateMetadata;
-            this.loading = false;
-        }, () => {
-            this.loading = false;
-        });
     }
 }

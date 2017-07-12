@@ -1,41 +1,32 @@
 package com.cargowhale.docker.events;
 
 import io.reactivex.Flowable;
-import io.reactivex.Scheduler;
 import io.reactivex.processors.FlowableProcessor;
-import io.reactivex.processors.ReplayProcessor;
+import io.reactivex.processors.PublishProcessor;
+
+import java.util.Deque;
+import java.util.concurrent.ConcurrentLinkedDeque;
 
 class EventsRepository {
 
-    private final FlowableProcessor<Event> eventReplayProcessor;
-    private final Scheduler scheduler;
+    private final Deque<Event> eventStorage;
+    private final FlowableProcessor<Event> eventBus;
 
-    EventsRepository(final Scheduler scheduler) {
-        this.scheduler = scheduler;
-        this.eventReplayProcessor = ReplayProcessor.create();
+    EventsRepository() {
+        this.eventStorage = new ConcurrentLinkedDeque<>();
+        this.eventBus = PublishProcessor.create();
     }
 
     Flowable<Event> getAllEvents() {
-        return this.eventReplayProcessor.subscribeOn(this.scheduler);
+        return Flowable.fromIterable(this.eventStorage);
     }
 
-    Flowable<Event> getEventsByType(final Event.Type eventType) {
-        return getAllEvents().filter((event) -> filterByType(event, eventType));
-    }
-
-    private boolean filterByType(final Event event, final Event.Type eventType) {
-        return event.getType().equals(eventType);
-    }
-
-    Flowable<Event> getEventsById(final String id) {
-        return getAllEvents().filter(event -> filterById(event, id));
-    }
-
-    private boolean filterById(final Event event, final String id) {
-        return event.getActor().getId().equals(id);
+    Flowable<Event> getNewEvents() {
+        return this.eventBus;
     }
 
     void addEvent(final Event event) {
-        this.eventReplayProcessor.onNext(event);
+        this.eventStorage.add(event);
+        this.eventBus.onNext(event);
     }
 }

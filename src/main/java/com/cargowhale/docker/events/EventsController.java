@@ -6,31 +6,27 @@ import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.SingleOperator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.concurrent.TimeUnit;
 
 import static com.cargowhale.docker.events.Event.Type.CONTAINER;
 
 @RestController
 public class EventsController {
 
-    private final EventsRepository eventsRepository;
+    private final EventsService eventsService;
     private final EventsResourceProcessor resourceProcessor;
 
     @Autowired
-    public EventsController(final EventsRepository eventsRepository, final EventsResourceProcessor resourceProcessor) {
-        this.eventsRepository = eventsRepository;
+    public EventsController(final EventsService eventsService, final EventsResourceProcessor resourceProcessor) {
+        this.eventsService = eventsService;
         this.resourceProcessor = resourceProcessor;
     }
 
     @GetMapping(path = "/api/events")
     public Single<EventsResource> getPastEvents() {
-        return this.eventsRepository
-            .getAllEvents()
-            .take(5, TimeUnit.MILLISECONDS)
+        return this.eventsService
+            .getPastEvents()
             .toList()
             .map(EventsResource::new)
             .lift((SingleOperator<EventsResource, EventsResource>) RequestAttributesAwareSingleObserver::build)
@@ -39,18 +35,17 @@ public class EventsController {
 
     @GetMapping(path = "/api/events", params = {"follow=true"})
     public ObservableSseEmitter<Event> followEvents() {
-        Observable<Event> eventObservable = this.eventsRepository
-            .getAllEvents()
+        Observable<Event> eventObservable = this.eventsService
+            .getNewEvents()
             .toObservable();
 
-        return new ObservableSseEmitter<>(60000L, MediaType.APPLICATION_JSON, eventObservable);
+        return new ObservableSseEmitter<>(eventObservable);
     }
 
     @GetMapping(path = "/api/events/containers")
     public Single<EventsResource> getPastContainerEvents() {
-        return this.eventsRepository
-            .getEventsByType(CONTAINER)
-            .take(5, TimeUnit.MILLISECONDS)
+        return this.eventsService
+            .getPastEventsByType(CONTAINER)
             .toList()
             .map(EventsResource::new)
             .lift((SingleOperator<EventsResource, EventsResource>) RequestAttributesAwareSingleObserver::build)
@@ -59,10 +54,10 @@ public class EventsController {
 
     @GetMapping(path = "/api/events/containers", params = {"follow=true"})
     public ObservableSseEmitter<Event> followContainerEvents() {
-        Observable<Event> eventObservable = this.eventsRepository
-            .getEventsByType(CONTAINER)
+        Observable<Event> eventObservable = this.eventsService
+            .getNewEventsByType(CONTAINER)
             .toObservable();
 
-        return new ObservableSseEmitter<>(60000L, MediaType.APPLICATION_JSON, eventObservable);
+        return new ObservableSseEmitter<>(eventObservable);
     }
 }

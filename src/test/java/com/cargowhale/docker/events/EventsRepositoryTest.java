@@ -1,106 +1,69 @@
 package com.cargowhale.docker.events;
 
-import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subscribers.TestSubscriber;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
+@RunWith(MockitoJUnitRunner.class)
 public class EventsRepositoryTest {
 
-    @Test
-    public void getAllEvents_ReceivesAddedEvent_One() throws Exception {
-        Event event = mock(Event.class);
+    private EventsRepository eventsRepository;
 
-        EventsRepository eventsRepository = new EventsRepository(Schedulers.trampoline());
-
-        TestSubscriber<Event> testSubscriber = eventsRepository.getAllEvents().test();
-
-        eventsRepository.addEvent(event);
-
-        testSubscriber
-            .assertSubscribed()
-            .assertValues(event)
-            .assertNoErrors();
+    @Before
+    public void setUp() throws Exception {
+        this.eventsRepository = new EventsRepository();
     }
 
     @Test
-    public void getAllEvents_ReceivesAllAddedEvents_Many() throws Exception {
-        Event event1 = mock(Event.class);
-        Event event2 = mock(Event.class);
+    public void getAllEvents_ReceivesAllAddedEvents() throws Exception {
+        Event event1 = new Event(Event.Type.DAEMON);
+        Event event2 = new Event(Event.Type.CONTAINER);
+        Event event3 = new Event(Event.Type.IMAGE);
 
-        EventsRepository eventsRepository = new EventsRepository(Schedulers.trampoline());
+        this.eventsRepository.addEvent(event1);
+        this.eventsRepository.addEvent(event2);
 
-        TestSubscriber<Event> testSubscriber = eventsRepository.getAllEvents().test();
-
-        eventsRepository.addEvent(event1);
-        eventsRepository.addEvent(event2);
+        TestSubscriber<Event> testSubscriber = this.eventsRepository.getAllEvents().test();
 
         testSubscriber
-            .assertSubscribed()
-            .assertValues(event1, event2)
-            .assertNoErrors();
+            .assertResult(event1, event2);
+
+        this.eventsRepository.addEvent(event3);
+
+        testSubscriber = this.eventsRepository.getAllEvents().test();
+
+        testSubscriber
+            .assertResult(event1, event2, event3);
     }
 
     @Test
-    public void getEventsByType_ReturnsOnlyContainerEvents() throws Exception {
-        Event.Type correctEventType = Event.Type.CONTAINER;
+    public void getNewEvents_ReturnsStreamOfEventsAddedAfterSubscription() throws Exception {
+        Event event1 = new Event(Event.Type.DAEMON);
+        Event event2 = new Event(Event.Type.CONTAINER);
+        Event event3 = new Event(Event.Type.IMAGE);
 
-        Event event1 = mock(Event.class);
-        Event event2 = mock(Event.class);
+        this.eventsRepository.addEvent(event1);
 
-        when(event1.getType()).thenReturn(correctEventType);
-        when(event2.getType()).thenReturn(Event.Type.IMAGE);
-
-        EventsRepository eventsRepository = new EventsRepository(Schedulers.trampoline());
-
-        TestSubscriber<Event> testSubscriber = eventsRepository.getEventsByType(correctEventType).test();
-
-        eventsRepository.addEvent(event1);
-        eventsRepository.addEvent(event2);
+        TestSubscriber<Event> testSubscriber = this.eventsRepository.getNewEvents().test();
 
         testSubscriber
             .assertSubscribed()
-            .assertValues(event1)
-            .assertNoErrors();
-    }
+            .assertNoErrors()
+            .assertNotComplete()
+            .assertValues();
 
-    @Test
-    public void getEventsById_ByIdReturnsOnlySpecificEvents() throws Exception {
-        String correctActorId = "CORRECT";
-
-        Event event1 = mock(Event.class);
-        Event event2 = mock(Event.class);
-        Event event3 = mock(Event.class);
-
-        Event.Actor actor1 = mock(Event.Actor.class);
-        Event.Actor actor2 = mock(Event.Actor.class);
-        Event.Actor actor3 = mock(Event.Actor.class);
-
-        when(event1.getType()).thenReturn(Event.Type.CONTAINER);
-        when(event2.getType()).thenReturn(Event.Type.CONTAINER);
-        when(event3.getType()).thenReturn(Event.Type.IMAGE);
-
-        when(event1.getActor()).thenReturn(actor1);
-        when(event2.getActor()).thenReturn(actor2);
-        when(event3.getActor()).thenReturn(actor3);
-
-        when(actor1.getId()).thenReturn(correctActorId);
-        when(actor2.getId()).thenReturn("INCORRECT");
-        when(actor3.getId()).thenReturn(correctActorId);
-
-        EventsRepository eventsRepository = new EventsRepository(Schedulers.trampoline());
-
-        TestSubscriber<Event> testSubscriber = eventsRepository.getEventsById(correctActorId).test();
-
-        eventsRepository.addEvent(event1);
-        eventsRepository.addEvent(event2);
-        eventsRepository.addEvent(event3);
+        this.eventsRepository.addEvent(event2);
 
         testSubscriber
-            .assertSubscribed()
-            .assertValues(event1, event3)
-            .assertNoErrors();
+            .assertNotComplete()
+            .assertValues(event2);
+
+        this.eventsRepository.addEvent(event3);
+
+        testSubscriber
+            .assertNotComplete()
+            .assertValues(event2, event3);
     }
 }

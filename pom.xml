@@ -9,13 +9,13 @@
         <version>1.5.2.RELEASE</version>
     </parent>
 
-    <groupId>com.cargowhale.docker</groupId>
+    <groupId>com.cargowhale</groupId>
     <artifactId>cargo-whale</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
 
     <name>cargo-whale</name>
-    <description>Cargo Whale Docker</description>
+    <description>Cargo Whale</description>
 
     <properties>
         <docker-client.version>6.2.5</docker-client.version>
